@@ -5,19 +5,19 @@ import java.util.Collections;
 
 public class Deck {
 	
-	ArrayList<Card> cards = new ArrayList<>();
+	ArrayList<Card> deck = new ArrayList<>();
 		
 	public Deck(){
 		for(int i = 0; i < 52; i++){
-			cards.add(new Card());
+			deck.add(new Card());
 		}
-		for(Card card:cards){
+		for(Card card:deck){
 			System.out.println("Card number: " + card.getNumber() + "\t Type: " + card.getSuite());
 		}
 		System.out.println(Card.id);
 	}	
 	
 	public void shuffle(){
-		Collections.shuffle(cards);
+		Collections.shuffle(deck);
 	}
 }
