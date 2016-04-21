@@ -71,14 +71,28 @@ public class Hand {
 		return strength;
 	}
 
+    private ArrayList<Integer> dupeNumberLogic(){
+    	ArrayList<Integer> dupes = new ArrayList<>();
+    	Set<Integer> set = new HashSet<>();
+    	int count = 0;
+    	for(Card card : totalCards){
+    		if(set.add(card.getNumber())==false){
+    			if(dupes.size()==0) dupes.add(card.getNumber());
+    			else if(card.getNumber()!=dupes.get(0)){
+    				for(int check: dupes){
+    					if(card.getNumber()!=check) count++;   				    			
+    			    }    		
+    				if(count == dupes.size()) dupes.add(card.getNumber());
+    		    }
+    			dupes.add(card.getNumber());
+    	    }
+    	}
+    	return dupes;
+    }
+    
 	// Checks For Such Hands
 	public boolean fourOfAKind() {
-		int check = 0;
-		for(int i = 0; i < totalCards.size()-1; i++){
-			if(totalCards.get(i).getNumber() == totalCards.get(i+1).getNumber())check++;
-		}
-		if(check ==4){
-		}
+		if(dupeNumberLogic().size()==4) return true;
 		return false;
 	}
 
@@ -95,6 +109,7 @@ public class Hand {
 	}
 
 	public boolean trips() {
+		if(dupeNumberLogic().size()==3) return true;
 		return false;
 	}
 
@@ -103,6 +118,7 @@ public class Hand {
 	}
 	
 	public boolean pair() {
+		if(dupeNumberLogic().size()==2) return true;
 		return false;
 	}
 }
