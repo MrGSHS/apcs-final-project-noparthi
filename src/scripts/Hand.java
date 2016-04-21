@@ -90,35 +90,33 @@ public class Hand {
     	return dupes;
     }
     
+    private ArrayList<Integer> dupeSuitLogic(){
+    	ArrayList<Integer> dupes = new ArrayList<>();
+    	Set<Integer> set = new HashSet<>();
+    	for(Card card : totalCards){
+    		if(set.add(card.getSuite())==false){
+    			if(dupes.size()==0) dupes.add(card.getSuite());
+    			dupes.add(card.getSuite());
+    		}
+    	}
+    	return dupes;
+    }
+    
 	// Checks For Such Hands
-	public boolean fourOfAKind() {
-		if(dupeNumberLogic().size()==4) return true;
-		return false;
-	}
-
-	public boolean flush() {
-		return false;
-	}
-
-	public boolean straight() {
-		return false;
-	}
-
-	public boolean fullHouse() {
-		return false;
-	}
-
-	public boolean trips() {
-		if(dupeNumberLogic().size()==3) return true;
-		return false;
-	}
-
+	public boolean fourOfAKind() { return false;}
+	public boolean flush() {return (dupeSuitLogic().size() == 5);}
+	public boolean straight() {return false;}
+	public boolean fullHouse() {return (dupeNumberLogic().size()>=5);}
+	public boolean trips() {return(dupeNumberLogic().size()==3);}
 	public boolean twoPair() {
-		return false;
-	}
-	
-	public boolean pair() {
-		if(dupeNumberLogic().size()==2) return true;
-		return false;
-	}
+		int count = 0;
+		ArrayList<Integer> pairs = dupeNumberLogic();
+		Set<Integer> set = new HashSet<>();
+    	for(Integer cardNumber : pairs){
+    		if(set.add(cardNumber)==false) count++;
+    	}
+		return ((count == 2 && !trips())||((count==3) && !fullHouse() && !fourOfAKind()));
+    }
+	public boolean pair() {	return(dupeNumberLogic().size()==2);}
+	public boolean highCard(){ return (dupeNumberLogic().size() == 0);}
 }
