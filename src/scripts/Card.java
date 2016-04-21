@@ -7,7 +7,7 @@ public class Card {
 	public static int id;
 	
 	public Card(){		
-		number = id % 13 + 1;
+		number = id % 13 + 2; //Ace = 14
 		suite = id % 4;
 		id++;
 	}
