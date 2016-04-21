@@ -8,9 +8,7 @@ public class Deck {
 	ArrayList<Card> deck = new ArrayList<>();
 		
 	public Deck(){
-		for(int i = 0; i < 52; i++){
-			deck.add(new Card());
-		}
+		make();
 		for(Card card:deck){
 			System.out.println("Card number: " + card.getNumber() + "\t Type: " + card.getSuite());
 		}
@@ -19,5 +17,17 @@ public class Deck {
 	
 	public void shuffle(){
 		Collections.shuffle(deck);
+	}
+	
+	public Card deal(){
+		return deck.remove(0);
+	}
+	
+	public ArrayList<Card> make(){
+		deck = new ArrayList<>();
+		for(int i = 0; i < 52; i++){
+			deck.add(new Card());
+		}
+		return deck;
 	}
 }
