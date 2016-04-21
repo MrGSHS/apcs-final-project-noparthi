@@ -1,6 +1,7 @@
 package scripts;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,7 +46,7 @@ public class Hand {
 		totalCards.add(cardsOnTable.get(4));
 	}
 
-	public int initalHandstrength() {
+	public int initalHandStrength() {
 		// Check High Card
 		if (card1.getNumber() <= 5 || card2.getNumber() <= 5)
 			strength += 1;
@@ -141,11 +142,22 @@ public class Hand {
 	}
 
 	public boolean flush() {
-		return (dupeSuitLogic().size() == 5);
+		return (dupeSuitLogic().size() >= 5);
 	}
 
 	public boolean straight() {
-		return false;
+		ArrayList<Integer> temp = dupeNumberLogic();
+		Collections.sort(temp);
+		int straightCheck = 0;
+		int maxStraightCheck = 0;
+		for(int i = 0; i < temp.size()-1; i++){
+			if(temp.get(i+1)-temp.get(i)==1){
+				straightCheck++;
+				if(straightCheck>maxStraightCheck) maxStraightCheck=straightCheck;
+			}
+			else straightCheck = 0;
+		}
+		return (maxStraightCheck>=5);
 	}
 
 	public boolean fullHouse() {
