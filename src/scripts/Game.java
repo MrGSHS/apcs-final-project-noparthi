@@ -1,13 +1,14 @@
 package scripts;
 
 public class Game {
-	
+	Player user;
+	Player computer;
 	
 	public Game(){
-		loop();
+		user = new User();
+		computer = new Computer();
 	}
 	
-	private void loop(){
-		
-	}
+	public Player getPlayer(){ return user; }	
+	public Player getComputer(){ return computer; }
 }
