@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Table extends Game{
 	ArrayList<Card> cardsOnTable;
-	int maxBet = 0;
+	int maxBet;
 	
 	public Table(){
 		cardsOnTable = new ArrayList<>();

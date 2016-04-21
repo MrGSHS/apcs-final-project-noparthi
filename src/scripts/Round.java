@@ -5,25 +5,24 @@ import java.util.Scanner;
 public class Round extends Game{
 	
 	Scanner sc;
-	Actions actions;
-	int currentBet = 0;
-	int maxBet = 0;
-	
-	int pot;
-	public int getPot(){return pot;}
-	public void setPot(int amt){ pot = amt; }
+	int maxBet = 0;	
+	int currentBet = 0;	
+	int pot = 0;
+
 	
 	static Table table = new Table();
 	static int roundNumber = 0;
 	public Round(){
 		roundNumber++;
-		pot = 0;
 		System.out.println("\nRound Numer: " + roundNumber + "\n");
 		sc = new Scanner(System.in);
 		getPlayer().newHand();
 		getComputer().newHand();
 		preFlop();
 	}
+	
+	public int getPot(){return pot;}
+	public void setPot(int amt){ pot = amt; }
 	
 	public void preFlop(){ 
 		printHand();
@@ -43,12 +42,11 @@ public class Round extends Game{
 		System.out.println("What would you like to do?");
 		String action = sc.nextLine();
 		action = action.toUpperCase();
-		if(action.equals(actions.CHECK)) getPlayer().check();
-		if(action.equals(actions.FOLD)) getPlayer().fold();
-		if(action.equals(actions.RAISE)) {
-			System.out.println("How much would you like to raise?");
+		if(action.equals(Actions.CHECK.toString())) getPlayer().check();
+		if(action.equals(Actions.FOLD.toString())) getPlayer().fold();
+		if(action.equals(Actions.RAISE.toString())) {
+			//System.out.println("How much would you like to raise?");
 			int raiseAmt = sc.nextInt();
-			sc.nextLine();
 			getPlayer().raise(raiseAmt);
 		}
 

@@ -6,6 +6,7 @@ public class Game {
 	
 	static Deck deck;
 	static Round round;
+	public Game(){}
 	
 	public static void main(String[] args){
 		deck = new Deck();
@@ -14,7 +15,8 @@ public class Game {
 		round = new Round();
 	}
 	
-	public static Round getRound(){ return round; }
+	public void newRound(){ round = new Round(); }
+	public Round getRound(){ return round; }
 	public static Deck getDeck(){ return deck; } 
 	public Player getPlayer(){ return user; }	
 	public Player getComputer(){ return computer; }

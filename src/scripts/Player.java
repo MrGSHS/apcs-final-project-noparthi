@@ -26,7 +26,7 @@ public class Player extends Game{
 	}
 	
 	public void raise(int amt){
-		getRound().setPot(getRound().getPot() + amt);
+		Round num = getRound();
 		points -= amt;
 	}
 	
