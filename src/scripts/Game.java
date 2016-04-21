@@ -1,18 +1,20 @@
 package scripts;
 
 public class Game {
-	static Player user;
-	static Player computer;
+	Player user;
+	Player computer;
 	Round round;
-	
+	Table table;
 	public Game(){
+		table = new Table();
 		System.out.println("Game");
-		user = new Player();
-		computer = new Computer();
+		user = new Player(this);
+		//computer = new Computer(this);
+		round = new Round(this);
+
 	}
 	
-	public void newRound(){ round = new Round(); }
-	public Round getRound(){ return round; } 
+	public Table getTable(){ return table; }
 	public Player getPlayer(){ return user; }	
 	public Player getComputer(){ return computer; }
 }

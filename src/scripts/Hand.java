@@ -1,16 +1,22 @@
 package scripts;
-import java.util.*;
 
-public class Hand extends Table{
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+public class Hand {
+	
+	Game game;
 	Card card1;
 	Card card2;
 	int strength;
-    ArrayList<Card> totalCards = new ArrayList<>();
+	ArrayList<Card> totalCards = new ArrayList<>();
 	ArrayList<Card> cardsOnTable;
 
-	public Hand() {
-		card1 = getDeck().deal();
-		card2 = getDeck().deal();
+	public Hand(Game game, Card fcard, Card scard) {
+		this.game = game;
+		card1 = fcard;
+		card2 = scard;
 		totalCards.add(card1);
 		totalCards.add(card2);
 	}
@@ -18,21 +24,24 @@ public class Hand extends Table{
 	public Card[] getHand() {
 		return new Card[] { card1, card2 };
 	}
-	//Adds Flop To Entire Hand Combination
-	public void addFlopToHandList(){
-		cardsOnTable = getTable().getCardsOnTable();
+
+	// Adds Flop To Entire Hand Combination
+	public void addFlopToHandList() {
+		cardsOnTable = game.getTable().getCardsOnTable();
 		totalCards.add(cardsOnTable.get(0));
 		totalCards.add(cardsOnTable.get(1));
 		totalCards.add(cardsOnTable.get(2));
 	}
-	//Adds Turn To Entire Hand Combination
-	public void addTurnToHandList(){
-		cardsOnTable = getTable().getCardsOnTable();
+
+	// Adds Turn To Entire Hand Combination
+	public void addTurnToHandList() {
+		cardsOnTable = game.getTable().getCardsOnTable();
 		totalCards.add(cardsOnTable.get(3));
 	}
-	//Adds River To Entire Hand Combination
-	public void addRiverToHandList(){
-		cardsOnTable = getTable().getCardsOnTable();
+
+	// Adds River To Entire Hand Combination
+	public void addRiverToHandList() {
+		cardsOnTable = game.getTable().getCardsOnTable();
 		totalCards.add(cardsOnTable.get(4));
 	}
 
@@ -71,37 +80,41 @@ public class Hand extends Table{
 		return strength;
 	}
 
-    private ArrayList<Integer> dupeNumberLogic(){
-    	ArrayList<Integer> dupes = new ArrayList<>();
-    	Set<Integer> set = new HashSet<>();
-    	int count = 0;
-    	for(Card card : totalCards){
-    		if(set.add(card.getNumber())==false){
-    			if(dupes.size()==0) dupes.add(card.getNumber());
-    			else if(card.getNumber()!=dupes.get(0)){
-    				for(int check: dupes){
-    					if(card.getNumber()!=check) count++;   				    			
-    			    }    		
-    				if(count == dupes.size()) dupes.add(card.getNumber());
-    		    }
-    			dupes.add(card.getNumber());
-    	    }
-    	}
-    	return dupes;
-    }
-    
-    private ArrayList<Integer> dupeSuitLogic(){
-    	ArrayList<Integer> dupes = new ArrayList<>();
-    	Set<Integer> set = new HashSet<>();
-    	for(Card card : totalCards){
-    		if(set.add(card.getSuite())==false){
-    			if(dupes.size()==0) dupes.add(card.getSuite());
-    			dupes.add(card.getSuite());
-    		}
-    	}
-    	return dupes;
-    }
-    
+	private ArrayList<Integer> dupeNumberLogic() {
+		ArrayList<Integer> dupes = new ArrayList<>();
+		Set<Integer> set = new HashSet<>();
+		int count = 0;
+		for (Card card : totalCards) {
+			if (set.add(card.getNumber()) == false) {
+				if (dupes.size() == 0)
+					dupes.add(card.getNumber());
+				else if (card.getNumber() != dupes.get(0)) {
+					for (int check : dupes) {
+						if (card.getNumber() != check)
+							count++;
+					}
+					if (count == dupes.size())
+						dupes.add(card.getNumber());
+				}
+				dupes.add(card.getNumber());
+			}
+		}
+		return dupes;
+	}
+
+	private ArrayList<Integer> dupeSuitLogic() {
+		ArrayList<Integer> dupes = new ArrayList<>();
+		Set<Integer> set = new HashSet<>();
+		for (Card card : totalCards) {
+			if (set.add(card.getSuite()) == false) {
+				if (dupes.size() == 0)
+					dupes.add(card.getSuite());
+				dupes.add(card.getSuite());
+			}
+		}
+		return dupes;
+	}
+
 	// Checks For Such Hands
 	public boolean fourOfAKind() {
 		ArrayList<Integer> quadToTrip = dupeNumberLogic();
@@ -111,31 +124,54 @@ public class Hand extends Table{
 		Set<Integer> set1 = new HashSet<>();
 		Set<Integer> set2 = new HashSet<>();
 		Set<Integer> set3 = new HashSet<>();
-		
-		for(Integer cardNumber : quadToTrip){
-			if(set1.add(cardNumber)==false) tripsToPair.add(cardNumber);
-		}		
-		for(Integer cardNumber : tripsToPair){
-			if(set2.add(cardNumber)==false) pairToSingle.add(cardNumber);
+
+		for (Integer cardNumber : quadToTrip) {
+			if (set1.add(cardNumber) == false)
+				tripsToPair.add(cardNumber);
 		}
-		for(Integer cardNumber : pairToSingle){
-		    if(set3.add(cardNumber)==false) single.add(cardNumber); 
+		for (Integer cardNumber : tripsToPair) {
+			if (set2.add(cardNumber) == false)
+				pairToSingle.add(cardNumber);
 		}
-		return (single.size()==1);
+		for (Integer cardNumber : pairToSingle) {
+			if (set3.add(cardNumber) == false)
+				single.add(cardNumber);
+		}
+		return (single.size() == 1);
 	}
-	public boolean flush() {return (dupeSuitLogic().size() == 5);}
-	public boolean straight() {return false;}
-	public boolean fullHouse() {return false;}
-	public boolean trips() {return(dupeNumberLogic().size()==3);}
+
+	public boolean flush() {
+		return (dupeSuitLogic().size() == 5);
+	}
+
+	public boolean straight() {
+		return false;
+	}
+
+	public boolean fullHouse() {
+		return false;
+	}
+
+	public boolean trips() {
+		return (dupeNumberLogic().size() == 3);
+	}
+
 	public boolean twoPair() {
 		int count = 0;
 		ArrayList<Integer> pairs = dupeNumberLogic();
-		Set<Integer> set = new HashSet<>();
-    	for(Integer cardNumber : pairs){
-    		if(set.add(cardNumber)==false) count++;
-    	}
-		return ((count == 2 && !trips())||((count==3) && !fullHouse() && !fourOfAKind()));
-    }
-	public boolean pair() {	return(dupeNumberLogic().size()==2);}
-	public boolean highCard(){ return (dupeNumberLogic().size() == 0);}
+		Set<Integer> set = new HashSet<Integer>();
+		for (Integer cardNumber : pairs) {
+			if (set.add(cardNumber) == false)
+				count++;
+		}
+		return ((count == 2 && !trips()) || ((count == 3) && !fullHouse() && !fourOfAKind()));
+	}
+
+	public boolean pair() {
+		return (dupeNumberLogic().size() == 2);
+	}
+
+	public boolean highCard() {
+		return (dupeNumberLogic().size() == 0);
+	}
 }

@@ -1,37 +1,45 @@
 package scripts;
 
-public class Player {
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
+public class Player {
+	
+	Game game;
 	Hand hand;
 	
 	int points;
 	int meter = 0; // Meter Goes From 1 - 10
 
-	public Player() {
+	public Player(Game game) {
+		this.game = game;
 		newHand();
 		points = 10000;
 	}
-	public int getPoints(){ return points;}
-	public void newHand(){
-		fold();
-		hand = new Hand();
-	}
 	
-	public void fold(){
-		hand = null;
+	public int getPoints() {
+		return points;
+	} 
+
+	public void newHand() {
+		hand = new Hand(game, game.getTable().getDeck().deal(), game.getTable().getDeck().deal());
+		//hand = new Hand();
 	}
-	
-	public boolean check(){
+
+	public void fold() {
+		//hand = null;
+	}
+
+	public boolean check() {
 		return true;
 	}
-	
-	public void raise(int amt){
+
+	public void raise(int amt) {
+		
 		points -= amt;
 	}
-	
-	public Card[] getCurrentHand(){ return hand.getHand(); }
-	
-
+	public Card[] getCurrentHand() {
+		return hand.getHand();
+	}
 }
-
-

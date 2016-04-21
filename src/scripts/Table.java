@@ -5,10 +5,12 @@ import java.util.ArrayList;
 public class Table{
 	ArrayList<Card> cardsOnTable;
 	int maxBet;
-	Deck deck;
-	
+	Deck deck = new Deck();
+	static int tables = 0;
+	int pot = 0;
 	public Table(){
-		deck = new Deck();
+		tables ++;
+		System.out.println(tables);
 		cardsOnTable = new ArrayList<>();
 	}
 	
@@ -26,5 +28,5 @@ public class Table{
 	public int getMaxBet(){ return maxBet; }
 	
 	public Deck getDeck(){ return deck; }
-	public Table getTable(){ return this; }
+	
 }
