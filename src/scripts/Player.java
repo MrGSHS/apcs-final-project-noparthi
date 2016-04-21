@@ -15,6 +15,15 @@ public class Player extends Hand{
 	public void newHand(){
 		hand = new Hand();
 	}
+	
+	public void fold(){
+		hand = null;
+	}
+	
+	public boolean check(){
+		return false;
+		
+	}
 
 }
 

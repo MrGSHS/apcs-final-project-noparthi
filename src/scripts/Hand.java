@@ -6,7 +6,7 @@ public class Hand {
 	Card card2;
 	int strength;
     ArrayList<Card> totalCards = new ArrayList<>();
-	ArrayList<Card> cardsOnTable = Table.getCardsOnTable();
+	ArrayList<Card> cardsOnTable;
 
 	public Hand() {
 		card1 = Game.getDeck().deal();
@@ -20,19 +20,19 @@ public class Hand {
 	}
 	//Adds Flop To Entire Hand Combination
 	public void addFlopToHandList(){
-		cardsOnTable = Table.getCardsOnTable();
+		cardsOnTable = Round.getTable().getCardsOnTable();
 		totalCards.add(cardsOnTable.get(0));
 		totalCards.add(cardsOnTable.get(1));
 		totalCards.add(cardsOnTable.get(2));
 	}
 	//Adds Turn To Entire Hand Combination
 	public void addTurnToHandList(){
-		cardsOnTable = Table.getCardsOnTable();
+		cardsOnTable = Round.getTable().getCardsOnTable();
 		totalCards.add(cardsOnTable.get(3));
 	}
 	//Adds River To Entire Hand Combination
 	public void addRiverToHandList(){
-		cardsOnTable = Table.getCardsOnTable();
+		cardsOnTable = Round.getTable().getCardsOnTable();
 		totalCards.add(cardsOnTable.get(4));
 	}
 
