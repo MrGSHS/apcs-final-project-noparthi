@@ -6,24 +6,25 @@ public class Game {
 	
 	private final int ANTE = 500;
 	
-	ArrayList<Player> players = new ArrayList<>();
-	
-	Player user;
-	Player computer;
-	Round round;
-	Table table;
+	private ArrayList<Player> players = new ArrayList<>();
+
+	private Player user;
+	private Player computer;
+	private Round round;
+	private Table table;
 	public Table getTable(){ return table; }
 	public Round getRound(){ return round; }
 	public Player getPlayer(){ return user; }	
 	public Player getComputer(){ return computer; }
+	public int getAnte(){return ANTE;}
+	public ArrayList<Player> getPlayers(){ return players; }
 	
 	public Game(){
 		table = new Table();
-		System.out.println("Game");
 		user = new Player(this);
+		players.add(user);
 		//computer = new Computer(this);
 		round = new Round(this);
-		players.add(user);
 		round.preFlop();
 	}
 	

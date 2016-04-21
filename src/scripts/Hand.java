@@ -7,12 +7,12 @@ import java.util.Set;
 
 public class Hand {
 	
-	Game game;
-	Card card1;
-	Card card2;
-	int strength;
-	ArrayList<Card> totalCards = new ArrayList<>();
-	ArrayList<Card> cardsOnTable;
+	private Game game;
+	private Card card1;
+	private Card card2;
+	private int strength;
+	private ArrayList<Card> totalCards = new ArrayList<>();
+	private ArrayList<Card> cardsOnTable;
 
 	public Hand(Game game, Card fcard, Card scard) {
 		this.game = game;

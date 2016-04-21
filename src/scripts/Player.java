@@ -2,11 +2,11 @@ package scripts;
 
 public class Player {
 
-	Game game;
-	Hand hand;
+	private Game game;
+	private Hand hand;
 
-	int points;
-	int meter = 0; // Meter Goes From 1 - 10
+	private int points;
+	private int meter = 0; // Meter Goes From 1 - 10
 
 	public Player(Game game) {
 		this.game = game;
@@ -57,7 +57,7 @@ public class Player {
 		System.out.println("Must raise at least something greater than " + game.getRound().getBet());
 		return false;
 	}
-
+	public Hand getHand(){ return hand; }
 	public Card[] getCurrentHand() {
 		return hand.getHand();
 	}

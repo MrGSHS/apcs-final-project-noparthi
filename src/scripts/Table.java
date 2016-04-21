@@ -3,14 +3,11 @@ package scripts;
 import java.util.ArrayList;
 
 public class Table{
-	ArrayList<Card> cardsOnTable;
-	int maxBet;
-	Deck deck = new Deck();
-	static int tables = 0;
-	int pot = 0;
+	
+	private ArrayList<Card> cardsOnTable;
+	private Deck deck = new Deck();
+	
 	public Table(){
-		tables ++;
-		System.out.println(tables);
 		cardsOnTable = new ArrayList<>();
 	}
 	
@@ -25,7 +22,6 @@ public class Table{
 	public ArrayList<Card> getCardsOnTable(){
 		return cardsOnTable;
 	}
-	public int getMaxBet(){ return maxBet; }
 	
 	public Deck getDeck(){ return deck; }
 	

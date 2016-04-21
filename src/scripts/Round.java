@@ -4,22 +4,23 @@ import java.util.Scanner;
 
 public class Round {
 	
-	Scanner sc;
-	static int roundNumber = 0;
-	Game game;
+	private Scanner sc;
+	private static int roundNumber = 0;
+	private Game game;
 	
-	int pot;
-	int bet;
+	private int pot;
+	private int bet;
 	
 	public Round(Game game){
 		pot = 0;
 		bet = 0;
 		this.game = game;
-		System.out.println("\nRound Numer: " + roundNumber + "\n");
+		roundNumber++;
+		setPot(game.getAnte() * game.getPlayers().size());
+		setBet(pot);
 		sc = new Scanner(System.in);
 		game.getPlayer().newHand();
 		game.takeAnte();
-		System.out.println(game.getPlayer().getPoints());
 		//game.getComputer().newHand();
 	}
 	
@@ -35,9 +36,24 @@ public class Round {
 	}
 	
 	private void printHand(){
-		System.out.println("Your hand is: ");
+		System.out.println("*********************************");
+		System.out.println("Round Number: " + roundNumber + "\n\n");
+		System.out.println("The current pot is: " + pot);
+		System.out.println("The max bet is: " + bet);
+		System.out.println("Your hand is: \n");
 	    System.out.println("Number: " + game.getPlayer().getCurrentHand()[0].getNumber() + "\t Type: " + game.getPlayer().getCurrentHand()[0].getSuite()); 
 	    System.out.println("Number: " + game.getPlayer().getCurrentHand()[1].getNumber() + "\t Type: " + game.getPlayer().getCurrentHand()[1].getSuite());
+	    String meter = "[";
+	    int strength = game.getPlayer().getHand().initalHandStrength();
+	    for(int i = 0; i < 10; i++) {
+	    	if(strength > 0) meter += "=";
+	    	else meter += " ";
+	    	strength--;
+	    }
+	    meter += "]";
+	    System.out.println("\n" + "Hand Strength: " + meter + "\n");
+	    System.out.println("You have: " + game.getPlayer().getPoints() + " points");
+		System.out.println("*********************************");
 	}
 	
 
