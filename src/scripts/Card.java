@@ -9,7 +9,7 @@ public class Card {
 	public Card(){		
 		number = id % 13 + 1;
 		suite = id % 4;
-		id++;		
+		id++;
 	}
 	
 	public int getNumber(){ return number;}	

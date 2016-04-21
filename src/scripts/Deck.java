@@ -1,6 +1,7 @@
 package scripts;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Deck {
 	
@@ -15,4 +16,8 @@ public class Deck {
 		}
 		System.out.println(Card.id);
 	}	
+	
+	public void shuffle(){
+		Collections.shuffle(cards);
+	}
 }
