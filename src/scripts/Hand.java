@@ -1,22 +1,41 @@
 package scripts;
+import java.util.*;
 
 public class Hand {
-	
-
 	Card card1;
 	Card card2;
-
 	int strength;
+    ArrayList<Card> totalCards = new ArrayList<>();
+	ArrayList<Card> cardsOnTable = Table.getCardsOnTable();
 
 	public Hand() {
 		card1 = Game.getDeck().deal();
 		card2 = Game.getDeck().deal();
+		totalCards.add(card1);
+		totalCards.add(card2);
 	}
 
 	public Card[] getHand() {
 		return new Card[] { card1, card2 };
 	}
-/*
+	//Adds Flop To Entire Hand Combination
+	public void addFlopToHandList(){
+		cardsOnTable = Table.getCardsOnTable();
+		totalCards.add(cardsOnTable.get(0));
+		totalCards.add(cardsOnTable.get(1));
+		totalCards.add(cardsOnTable.get(2));
+	}
+	//Adds Turn To Entire Hand Combination
+	public void addTurnToHandList(){
+		cardsOnTable = Table.getCardsOnTable();
+		totalCards.add(cardsOnTable.get(3));
+	}
+	//Adds River To Entire Hand Combination
+	public void addRiverToHandList(){
+		cardsOnTable = Table.getCardsOnTable();
+		totalCards.add(cardsOnTable.get(4));
+	}
+
 	public int initalHandstrength() {
 		// Check High Card
 		if (card1.getNumber() <= 5 || card2.getNumber() <= 5)
@@ -52,29 +71,38 @@ public class Hand {
 		return strength;
 	}
 
-	// Checks Probability For Such Hands (1-100)
-	public int fourOfAKind() {
-		return -1;
+	// Checks For Such Hands
+	public boolean fourOfAKind() {
+		int check = 0;
+		for(int i = 0; i < totalCards.size()-1; i++){
+			if(totalCards.get(i).getNumber() == totalCards.get(i+1).getNumber())check++;
+		}
+		if(check ==4){
+		}
+		return false;
 	}
 
-	public int flush() {
-		return -1;
+	public boolean flush() {
+		return false;
 	}
 
-	public int straight() {
-		return -1;
+	public boolean straight() {
+		return false;
 	}
 
-	public int fullHouse() {
-		return -1;
+	public boolean fullHouse() {
+		return false;
 	}
 
-	public int trips() {
-		return -1;
+	public boolean trips() {
+		return false;
 	}
 
-	public int twoPair() {
-		return -1;
+	public boolean twoPair() {
+		return false;
 	}
-	*/
+	
+	public boolean pair() {
+		return false;
+	}
 }

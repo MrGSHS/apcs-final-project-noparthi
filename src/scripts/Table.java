@@ -3,8 +3,7 @@ package scripts;
 import java.util.ArrayList;
 
 public class Table extends Deck{
-	//TODO create a table
-	ArrayList<Card> cardsOnTable;
+	static ArrayList<Card> cardsOnTable;
 	
 	public Table(){
 		cardsOnTable = new ArrayList<>();
@@ -18,7 +17,7 @@ public class Table extends Deck{
 	public void dealTurn(){ cardsOnTable.add(deal()); }
 	public void dealRiver(){ cardsOnTable.add(deal()); }
 	
-	public ArrayList<Card> getCardsOnTable(){
+	public static ArrayList<Card> getCardsOnTable(){
 		return cardsOnTable;
 	}
 }
