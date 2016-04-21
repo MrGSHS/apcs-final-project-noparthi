@@ -28,6 +28,7 @@ public class Deck {
 		for(int i = 0; i < 52; i++){
 			deck.add(new Card());
 		}
+		shuffle();
 		return deck;
 	}
 }
