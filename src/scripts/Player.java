@@ -34,10 +34,17 @@ public class Player {
 		return true;
 	}
 
-	public void raise(int amt) {
+	public boolean raise(int amt) {
+		if(amt > points){
+			game.getRound().setPot(points);
+			points = 0;
+			return false;
+		}
 		game.getRound().setPot(game.getRound().getPot() + amt);
 		points -= amt;
+		return true;
 	}
+	
 	public Card[] getCurrentHand() {
 		return hand.getHand();
 	}
