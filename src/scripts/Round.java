@@ -8,10 +8,8 @@ public class Round extends Game{
 	int maxBet = 0;	
 	int currentBet = 0;	
 	int pot = 0;
-
-	
-	static Table table = new Table();
 	static int roundNumber = 0;
+	Table table = new Table();
 	public Round(){
 		roundNumber++;
 		System.out.println("\nRound Numer: " + roundNumber + "\n");
@@ -24,12 +22,13 @@ public class Round extends Game{
 	public int getPot(){return pot;}
 	public void setPot(int amt){ pot = amt; }
 	
+	public void raise(){ pot += 100; }
 	public void preFlop(){ 
 		printHand();
 	    requestAction();
 	}
 	
-	public static Table getTable(){ return table; }
+	public Table getTable(){ return table; }
 	
 	private void printHand(){
 		System.out.println("Your hand is: ");

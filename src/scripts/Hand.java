@@ -1,7 +1,7 @@
 package scripts;
 import java.util.*;
 
-public class Hand {
+public class Hand extends Table{
 	Card card1;
 	Card card2;
 	int strength;
@@ -9,8 +9,8 @@ public class Hand {
 	ArrayList<Card> cardsOnTable;
 
 	public Hand() {
-		card1 = Game.getDeck().deal();
-		card2 = Game.getDeck().deal();
+		card1 = getDeck().deal();
+		card2 = getDeck().deal();
 		totalCards.add(card1);
 		totalCards.add(card2);
 	}
@@ -20,19 +20,19 @@ public class Hand {
 	}
 	//Adds Flop To Entire Hand Combination
 	public void addFlopToHandList(){
-		cardsOnTable = Round.getTable().getCardsOnTable();
+		cardsOnTable = getTable().getCardsOnTable();
 		totalCards.add(cardsOnTable.get(0));
 		totalCards.add(cardsOnTable.get(1));
 		totalCards.add(cardsOnTable.get(2));
 	}
 	//Adds Turn To Entire Hand Combination
 	public void addTurnToHandList(){
-		cardsOnTable = Round.getTable().getCardsOnTable();
+		cardsOnTable = getTable().getCardsOnTable();
 		totalCards.add(cardsOnTable.get(3));
 	}
 	//Adds River To Entire Hand Combination
 	public void addRiverToHandList(){
-		cardsOnTable = Round.getTable().getCardsOnTable();
+		cardsOnTable = getTable().getCardsOnTable();
 		totalCards.add(cardsOnTable.get(4));
 	}
 

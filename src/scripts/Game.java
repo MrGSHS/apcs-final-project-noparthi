@@ -3,21 +3,16 @@ package scripts;
 public class Game {
 	static Player user;
 	static Player computer;
+	Round round;
 	
-	static Deck deck;
-	static Round round;
-	public Game(){}
-	
-	public static void main(String[] args){
-		deck = new Deck();
+	public Game(){
+		System.out.println("Game");
 		user = new Player();
 		computer = new Computer();
-		round = new Round();
 	}
 	
 	public void newRound(){ round = new Round(); }
-	public Round getRound(){ return round; }
-	public static Deck getDeck(){ return deck; } 
+	public Round getRound(){ return round; } 
 	public Player getPlayer(){ return user; }	
 	public Player getComputer(){ return computer; }
 }

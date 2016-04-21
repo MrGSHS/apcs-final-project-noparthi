@@ -12,6 +12,7 @@ public class Deck {
 		System.out.println("There are this many cards: " + Card.id);
 	}	
 	
+	
 	public void shuffle(){
 		Collections.shuffle(deck);
 	}

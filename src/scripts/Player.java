@@ -1,6 +1,6 @@
 package scripts;
 
-public class Player extends Game{
+public class Player {
 
 	Hand hand;
 	
@@ -26,7 +26,6 @@ public class Player extends Game{
 	}
 	
 	public void raise(int amt){
-		Round num = getRound();
 		points -= amt;
 	}
 	
