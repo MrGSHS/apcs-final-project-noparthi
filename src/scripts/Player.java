@@ -1,14 +1,10 @@
 package scripts;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-
 public class Player {
-	
+
 	Game game;
 	Hand hand;
-	
+
 	int points;
 	int meter = 0; // Meter Goes From 1 - 10
 
@@ -17,10 +13,11 @@ public class Player {
 		newHand();
 		points = 10000;
 	}
-	
+
 	public int getPoints() {
 		return points;
-	} 
+	}
+	public void setPoints(int num) { points = num; }
 
 	public void newHand() {
 		hand = new Hand(game, game.getTable().getDeck().deal(), game.getTable().getDeck().deal());
@@ -34,17 +31,33 @@ public class Player {
 		return true;
 	}
 
-	public boolean raise(int amt) {
-		if(amt > points){
-			game.getRound().setPot(points);
+	public boolean call() {
+		if (game.getRound().getBet() > points) {
+			game.getRound().setPot(game.getRound().getPot() + points);
 			points = 0;
 			return false;
 		}
-		game.getRound().setPot(game.getRound().getPot() + amt);
-		points -= amt;
+		game.getRound().setPot(game.getRound().getPot() + game.getRound().getBet());
+		points -= game.getRound().getBet();
 		return true;
 	}
-	
+
+	public boolean raise(int amt) {
+		if (amt > game.getRound().getBet()) {
+			if (amt > points) {
+				game.getRound().setPot(points);
+				points = 0;
+				return false;
+			}
+			game.getRound().setPot(game.getRound().getPot() + amt);
+			game.getRound().setBet(points);
+			points -= amt;
+			return true;
+		}
+		System.out.println("Must raise at least something greater than " + game.getRound().getBet());
+		return false;
+	}
+
 	public Card[] getCurrentHand() {
 		return hand.getHand();
 	}

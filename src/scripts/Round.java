@@ -9,20 +9,25 @@ public class Round {
 	Game game;
 	
 	int pot;
-	int maxBet;
+	int bet;
 	
 	public Round(Game game){
 		pot = 0;
-		maxBet = 0;
+		bet = 0;
 		this.game = game;
 		System.out.println("\nRound Numer: " + roundNumber + "\n");
 		sc = new Scanner(System.in);
 		game.getPlayer().newHand();
+		game.takeAnte();
+		System.out.println(game.getPlayer().getPoints());
 		//game.getComputer().newHand();
 	}
 	
-	public void setPot(int amt){ pot = amt; }
 	public int getPot(){ return pot; }
+	public int getBet(){ return bet; }
+	
+	public void setPot(int amt){ pot = amt; }
+	public void setBet(int amt){ bet = amt; }
 	
 	public void preFlop(){ 
 		printHand();
@@ -43,10 +48,11 @@ public class Round {
 		if(action.equals(Actions.CHECK.toString())) game.getPlayer().check();
 		if(action.equals(Actions.FOLD.toString())) game.getPlayer().fold();
 		if(action.equals(Actions.RAISE.toString())) {
-			//System.out.println("How much would you like to raise?");
+			System.out.println("How much would you like to raise?");
 			int raiseAmt = sc.nextInt();
 			game.getPlayer().raise(raiseAmt);
 		}
+		if(action.equals(Actions.CALL.toString())) game.getPlayer().call();
 
 	}
 	
