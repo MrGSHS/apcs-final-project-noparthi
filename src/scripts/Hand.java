@@ -103,10 +103,29 @@ public class Hand {
     }
     
 	// Checks For Such Hands
-	public boolean fourOfAKind() { return false;}
+	public boolean fourOfAKind() {
+		ArrayList<Integer> quadToTrip = dupeNumberLogic();
+		ArrayList<Integer> tripsToPair = new ArrayList<>();
+		ArrayList<Integer> pairToSingle = new ArrayList<>();
+		ArrayList<Integer> single = new ArrayList<>();
+		Set<Integer> set1 = new HashSet<>();
+		Set<Integer> set2 = new HashSet<>();
+		Set<Integer> set3 = new HashSet<>();
+		
+		for(Integer cardNumber : quadToTrip){
+			if(set1.add(cardNumber)==false) tripsToPair.add(cardNumber);
+		}		
+		for(Integer cardNumber : tripsToPair){
+			if(set2.add(cardNumber)==false) pairToSingle.add(cardNumber);
+		}
+		for(Integer cardNumber : pairToSingle){
+		    if(set3.add(cardNumber)==false) single.add(cardNumber); 
+		}
+		return (single.size()==1);
+	}
 	public boolean flush() {return (dupeSuitLogic().size() == 5);}
 	public boolean straight() {return false;}
-	public boolean fullHouse() {return (dupeNumberLogic().size()>=5);}
+	public boolean fullHouse() {return false;}
 	public boolean trips() {return(dupeNumberLogic().size()==3);}
 	public boolean twoPair() {
 		int count = 0;
