@@ -18,4 +18,7 @@ public class Table extends Deck{
 	public void dealTurn(){ cardsOnTable.add(deal()); }
 	public void dealRiver(){ cardsOnTable.add(deal()); }
 	
+	public ArrayList<Card> getCardsOnTable(){
+		return cardsOnTable;
+	}
 }
