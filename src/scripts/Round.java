@@ -7,15 +7,22 @@ public class Round {
 	Scanner sc;
 	static int roundNumber = 0;
 	Game game;
+	
+	int pot;
+	int maxBet;
+	
 	public Round(Game game){
+		pot = 0;
+		maxBet = 0;
 		this.game = game;
-		roundNumber++;
 		System.out.println("\nRound Numer: " + roundNumber + "\n");
 		sc = new Scanner(System.in);
 		game.getPlayer().newHand();
 		//game.getComputer().newHand();
-		preFlop();
 	}
+	
+	public void setPot(int amt){ pot = amt; }
+	public int getPot(){ return pot; }
 	
 	public void preFlop(){ 
 		printHand();

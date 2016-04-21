@@ -24,11 +24,10 @@ public class Player {
 
 	public void newHand() {
 		hand = new Hand(game, game.getTable().getDeck().deal(), game.getTable().getDeck().deal());
-		//hand = new Hand();
 	}
 
 	public void fold() {
-		//hand = null;
+		hand = null;
 	}
 
 	public boolean check() {
@@ -36,7 +35,7 @@ public class Player {
 	}
 
 	public void raise(int amt) {
-		
+		game.getRound().setPot(game.getRound().getPot() + amt);
 		points -= amt;
 	}
 	public Card[] getCurrentHand() {
