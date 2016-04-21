@@ -1,5 +1,5 @@
 package scripts;
 
-public class User {
+public class User extends Player{
 
 }
