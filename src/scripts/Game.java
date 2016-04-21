@@ -1,14 +1,20 @@
 package scripts;
 
 public class Game {
-	Player user;
-	Player computer;
+	static Player user;
+	static Player computer;
 	
-	public Game(){
-		user = new User();
+	static Deck deck;
+	
+	
+	public static void main(String[] args){
+		deck = new Deck();
+		user = new Player();
 		computer = new Computer();
+		new Round();
 	}
 	
+	public static Deck getDeck(){ return deck; } 
 	public Player getPlayer(){ return user; }	
 	public Player getComputer(){ return computer; }
 }

@@ -9,10 +9,7 @@ public class Deck {
 		
 	public Deck(){
 		make();
-		for(Card card:deck){
-			System.out.println("Card number: " + card.getNumber() + "\t Type: " + card.getSuite());
-		}
-		System.out.println(Card.id);
+		System.out.println("There are this many cards: " + Card.id);
 	}	
 	
 	public void shuffle(){
