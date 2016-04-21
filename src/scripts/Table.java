@@ -7,7 +7,6 @@ public class Table extends Game{
 	int maxBet = 0;
 	
 	public Table(){
-		System.out.println("Table is initialized!");
 		cardsOnTable = new ArrayList<>();
 	}
 	

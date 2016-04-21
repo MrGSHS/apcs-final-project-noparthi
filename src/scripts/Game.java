@@ -8,7 +8,6 @@ public class Game {
 	static Round round;
 	
 	public static void main(String[] args){
-		System.out.println("Game init");
 		deck = new Deck();
 		user = new Player();
 		computer = new Computer();
