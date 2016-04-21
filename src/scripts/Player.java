@@ -1,6 +1,6 @@
 package scripts;
 
-public class Player extends Hand{
+public class Player extends Game{
 
 	Hand hand;
 	
@@ -13,6 +13,7 @@ public class Player extends Hand{
 	}
 	public int getPoints(){ return points;}
 	public void newHand(){
+		fold();
 		hand = new Hand();
 	}
 	
@@ -21,9 +22,16 @@ public class Player extends Hand{
 	}
 	
 	public boolean check(){
-		return false;
-		
+		return true;
 	}
+	
+	public void raise(int amt){
+		getRound().setPot(getRound().getPot() + amt);
+		points -= amt;
+	}
+	
+	public Card[] getCurrentHand(){ return hand.getHand(); }
+	
 
 }
 
