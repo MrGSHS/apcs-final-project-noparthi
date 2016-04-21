@@ -1,6 +1,7 @@
 package scripts;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -82,7 +83,7 @@ public class Hand {
 	}
 
 	private ArrayList<Integer> dupeNumberLogic() {
-		ArrayList<Integer> dupes = new ArrayList<>();
+		ArrayList<Integer> dupes = new ArrayList<Integer>();		
 		Set<Integer> set = new HashSet<>();
 		int count = 0;
 		for (Card card : totalCards) {
@@ -100,6 +101,7 @@ public class Hand {
 				dupes.add(card.getNumber());
 			}
 		}
+		Collections.sort(dupes);
 		return dupes;
 	}
 
@@ -118,27 +120,7 @@ public class Hand {
 
 	// Checks For Such Hands
 	public boolean fourOfAKind() {
-		ArrayList<Integer> quadToTrip = dupeNumberLogic();
-		ArrayList<Integer> tripsToPair = new ArrayList<>();
-		ArrayList<Integer> pairToSingle = new ArrayList<>();
-		ArrayList<Integer> single = new ArrayList<>();
-		Set<Integer> set1 = new HashSet<>();
-		Set<Integer> set2 = new HashSet<>();
-		Set<Integer> set3 = new HashSet<>();
-
-		for (Integer cardNumber : quadToTrip) {
-			if (set1.add(cardNumber) == false)
-				tripsToPair.add(cardNumber);
-		}
-		for (Integer cardNumber : tripsToPair) {
-			if (set2.add(cardNumber) == false)
-				pairToSingle.add(cardNumber);
-		}
-		for (Integer cardNumber : pairToSingle) {
-			if (set3.add(cardNumber) == false)
-				single.add(cardNumber);
-		}
-		return (single.size() == 1);
+		return false;
 	}
 
 	public boolean flush() {
@@ -147,7 +129,6 @@ public class Hand {
 
 	public boolean straight() {
 		ArrayList<Integer> temp = dupeNumberLogic();
-		Collections.sort(temp);
 		int straightCheck = 0;
 		int maxStraightCheck = 0;
 		for(int i = 0; i < temp.size()-1; i++){
@@ -165,25 +146,18 @@ public class Hand {
 	}
 
 	public boolean trips() {
-		return (dupeNumberLogic().size() == 3);
+		return false;
 	}
 
 	public boolean twoPair() {
-		int count = 0;
-		ArrayList<Integer> pairs = dupeNumberLogic();
-		Set<Integer> set = new HashSet<Integer>();
-		for (Integer cardNumber : pairs) {
-			if (set.add(cardNumber) == false)
-				count++;
-		}
-		return ((count == 2 && !trips()) || ((count == 3) && !fullHouse() && !fourOfAKind()));
+		return false;
 	}
 
 	public boolean pair() {
-		return (dupeNumberLogic().size() == 2);
+		return false;
 	}
 
 	public boolean highCard() {
-		return (dupeNumberLogic().size() == 0);
+		return (!twoPair() && !trips() && !fullHouse() && !straight() && !flush() && !fourOfAKind());
 	}
 }
