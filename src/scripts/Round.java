@@ -76,7 +76,7 @@ public class Round {
 	}
 	
 
-	private void requestAction(){
+	public void requestAction(){
 		System.out.println("What would you like to do?");
 		String action = sc.nextLine();
 		action = action.toUpperCase();

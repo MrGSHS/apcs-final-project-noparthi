@@ -28,6 +28,12 @@ public class Game {
 		roundActive = true;
 		round = new Round(this);
 		round.preFlop();
+		table.dealFlop();
+		round.preTurn();
+		table.dealTurn();
+		round.preRiver();
+		table.dealRiver();
+		round.postRiver();
 	}
 	
 	public void takeAnte(){
@@ -44,9 +50,5 @@ public class Game {
 		round = new Round(this);
 		round.preFlop();
 		return false;
-	}
-	
-	
-	
-	
+	}	
 }
