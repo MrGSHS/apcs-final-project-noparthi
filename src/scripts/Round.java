@@ -88,7 +88,6 @@ public class Round {
 			game.getPlayer().raise(raiseAmt);
 		}
 		if(action.equals(Actions.CALL.toString())) game.getPlayer().call();
-		printTable();
 	}
 	
 }
