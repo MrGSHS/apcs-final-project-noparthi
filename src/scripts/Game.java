@@ -8,10 +8,11 @@ public class Game {
 	
 	private ArrayList<Player> players = new ArrayList<>();
 
-	private Player user;
+	private Player user; 
 	private Player computer;
 	private Round round;
 	private Table table;
+	private boolean roundActive;
 	public Table getTable(){ return table; }
 	public Round getRound(){ return round; }
 	public Player getPlayer(){ return user; }	
@@ -24,16 +25,28 @@ public class Game {
 		user = new Player(this);
 		players.add(user);
 		//computer = new Computer(this);
+		roundActive = true;
 		round = new Round(this);
 		round.preFlop();
-		table.dealFlop();
-		round.playFlop();
 	}
 	
 	public void takeAnte(){
 		for(Player p : players)
 			p.setPoints(p.getPoints() - ANTE);
 	}
+	
+	public boolean isRoundActive(){
+		int numberOfPlayers = players.size();
+		int count = 0;
+		for(Player p : players)
+			if(p.isFolded()) count++;
+		if(count > 0 && count < numberOfPlayers){ return true; }
+		round = new Round(this);
+		round.preFlop();
+		return false;
+	}
+	
+	
 	
 	
 }

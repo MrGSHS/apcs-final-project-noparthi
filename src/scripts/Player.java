@@ -6,7 +6,8 @@ public class Player {
 	private Hand hand;
 
 	private int points;
-	private int meter = 0; // Meter Goes From 1 - 10
+	
+	private boolean folded;
 
 	public Player(Game game) {
 		this.game = game;
@@ -14,6 +15,7 @@ public class Player {
 		points = 10000;
 	}
 
+	public boolean isFolded(){ return folded; }
 	public int getPoints() {
 		return points;
 	}
@@ -25,6 +27,8 @@ public class Player {
 
 	public void fold() {
 		hand = null;
+		folded = true;
+		game.isRoundActive();
 	}
 
 	public boolean check() {
@@ -50,7 +54,7 @@ public class Player {
 				return false;
 			}
 			game.getRound().setPot(game.getRound().getPot() + amt);
-			game.getRound().setBet(points);
+			game.getRound().setBet(amt);
 			points -= amt;
 			return true;
 		}

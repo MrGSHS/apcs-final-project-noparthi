@@ -31,28 +31,42 @@ public class Round {
 	public void setBet(int amt){ bet = amt; }
 	
 	public void preFlop(){ 
-		printHand();
+		printTable();
 		requestAction();
+	}	
+	public void preTurn(){
+	    printTable();
+		requestAction();
+	}	
+	public void preRiver(){
+	    printTable();
+		requestAction();
+	}	
+	public void postRiver(){
+	    printTable();
+		requestAction();		
 	}
 	
-	public void playFlop(){
-	    printFlop();
-		requestAction();
-	}
-	
-	private void printHand(){
+	private void printTable(){
 		System.out.println("*********************************");
-		System.out.println("Round Number: " + roundNumber + "\n\n");
+		System.out.println("Round: " + roundNumber + "\n");
 		System.out.println("The current pot is: " + pot);
 		System.out.println("The max bet is: " + bet);
-		System.out.println("Your hand is: \n");
+		
+		System.out.println("\n" + "Current cards on the table: ");
+		for(int i = 0; i < game.getTable().getCardsOnTable().size(); i++){
+			System.out.println("Number: " + game.getTable().getCardsOnTable().get(i).getNumber() + "\t Type: " + game.getTable().getCardsOnTable().get(i).getSuite());
+		}
+		System.out.println();
+		
+		System.out.println("Your hand is:");
 	    System.out.println("Number: " + game.getPlayer().getCurrentHand()[0].getNumber() + "\t Type: " + game.getPlayer().getCurrentHand()[0].getSuite()); 
 	    System.out.println("Number: " + game.getPlayer().getCurrentHand()[1].getNumber() + "\t Type: " + game.getPlayer().getCurrentHand()[1].getSuite());
 	    String meter = "[";
-	    int strength = game.getPlayer().getHand().initalHandStrength();
+	    int strength = game.getPlayer().getHand().initialHandStrength();
 	    for(int i = 0; i < 10; i++) {
-	    	if(strength > 0) meter += "0";
-	    	else meter += "-";
+	    	if(strength > 0) meter += "=";
+	    	else meter += " ";
 	    	strength--;
 	    }
 	    meter += "]";
@@ -74,25 +88,7 @@ public class Round {
 			game.getPlayer().raise(raiseAmt);
 		}
 		if(action.equals(Actions.CALL.toString())) game.getPlayer().call();
-
+		printTable();
 	}
 	
-	public void printFlop(){
-		System.out.println("*********************************");
-		System.out.println("The Flop Is: " + "\n");
-		for(int i = 0; i < game.getTable().getCardsOnTable().size(); i++){
-			System.out.println("Number: " + game.getTable().getCardsOnTable().get(i).getNumber() + "\t Type: " + game.getTable().getCardsOnTable().get(i).getSuite());
-		}
-		String meter = "[";
-	    int strength = game.getPlayer().getHand().updateHandStrength();
-	    for(int i = 0; i < 10; i++) {
-	    	if(strength > 0) meter += "0";
-	    	else meter += "-";
-	    	strength--;
-	    }
-	    meter += "]";
-	    System.out.println("\n" + "Hand Strength: " + meter + "\n");
-	    System.out.println("You have: " + game.getPlayer().getPoints() + " points");
-		System.out.println("*********************************");
-	}	
 }

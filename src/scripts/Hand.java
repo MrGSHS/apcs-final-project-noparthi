@@ -47,7 +47,7 @@ public class Hand {
 		totalCards.add(cardsOnTable.get(4));
 	}
 
-	public int initalHandStrength() {
+	public int initialHandStrength() {
 		// Check High Card
 		if (card1.getNumber() <= 5 || card2.getNumber() <= 5)
 			strength += 1;
