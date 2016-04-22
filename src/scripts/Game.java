@@ -13,6 +13,8 @@ public class Game {
 	private Round round;
 	private Table table;
 	private boolean roundActive;
+	
+	
 	public Table getTable(){ return table; }
 	public Round getRound(){ return round; }
 	public Player getPlayer(){ return user; }	
@@ -44,6 +46,7 @@ public class Game {
 		for(Player p : players)
 			if(p.isFolded()) count++;
 		if(count > 0 && count < numberOfPlayers){ return true; }
+		table = new Table();
 		round = new Round(this);
 		round.preFlop();
 		return false;
