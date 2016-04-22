@@ -78,8 +78,17 @@ public class Hand {
 	}
 
 	// Update Hand strength
-	public int updateHandstrength() {
-		return strength;
+	public int updateHandStrength() {
+		if(royalFlush() || straightFlush()) return 10;
+		if(fourOfAKind() || fullHouse()) return 9;
+		if(straight() || flush()) return 8;
+		if(trips() && (card1.getNumber()>=9 || card2.getNumber()>=9)) return 7;
+		if(trips() && (card1.getNumber()<9 || card2.getNumber()<9)) return 6;
+		if(twoPair() && (card1.getNumber()>=8 || card2.getNumber()>=8)) return 5;
+		if(twoPair() && (card1.getNumber()<8 || card2.getNumber()<8)) return 4;
+		if(pair() && (card1.getNumber()>=7 || card2.getNumber()>=7)) return 3;
+		if(pair() && (card1.getNumber()<7 || card2.getNumber()<7)) return 2;
+		else return 1;
 	}
 
 	private ArrayList<Integer> dupeNumberLogic() {
@@ -138,6 +147,16 @@ public class Hand {
 		}
 		return (maxInARow==4);
 	}
+	public boolean fullHouse() {
+		ArrayList<Integer> temp = dupeNumberLogic();
+		int tripsValue = 0;
+		int pairValue = 0;
+		for(int i = 0; i < temp.size()-2; i++){
+			if(!fourOfAKind() && temp.get(i)==temp.get(i+1) && temp.get(i)==temp.get(i+2))tripsValue = temp.get(i);
+			else pairValue = temp.get(i);
+		}
+		return (tripsValue!=0 && pairValue!=0);
+	}
 	public boolean flush() {
 		return (dupeSuitLogic().size() >= 5);
 	}
@@ -155,16 +174,6 @@ public class Hand {
 		}
 		return (maxStraightCheck>=5);
 	}
-	public boolean fullHouse() {
-		ArrayList<Integer> temp = dupeNumberLogic();
-		int tripsValue = 0;
-		int pairValue = 0;
-		for(int i = 0; i < temp.size()-2; i++){
-			if(!fourOfAKind() && temp.get(i)==temp.get(i+1) && temp.get(i)==temp.get(i+2))tripsValue = temp.get(i);
-			else pairValue = temp.get(i);
-		}
-		return (tripsValue!=0 && pairValue!=0);
-	}
 	public boolean trips() {
 		ArrayList<Integer> temp = dupeNumberLogic();
 		int inARow = 1;
@@ -180,6 +189,7 @@ public class Hand {
 	}
 	public boolean twoPair() {
 		ArrayList<Integer> temp = dupeNumberLogic();
+		if(temp.size()==0)return false;
 		int pairOneValue = temp.get(0);
 		int pairTwoValue = temp.get(temp.size()-1);
 		return (pairOneValue!=pairTwoValue && !trips() && !fullHouse());

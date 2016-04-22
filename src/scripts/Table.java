@@ -19,9 +19,7 @@ public class Table{
 	public void dealTurn(){ cardsOnTable.add(deck.deal()); }
 	public void dealRiver(){ cardsOnTable.add(deck.deal()); }
 	
-	public ArrayList<Card> getCardsOnTable(){
-		return cardsOnTable;
-	}
+	public  ArrayList<Card> getCardsOnTable(){return cardsOnTable;}
 	
 	public Deck getDeck(){ return deck; }
 	

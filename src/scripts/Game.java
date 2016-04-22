@@ -26,6 +26,8 @@ public class Game {
 		//computer = new Computer(this);
 		round = new Round(this);
 		round.preFlop();
+		table.dealFlop();
+		round.playFlop();
 	}
 	
 	public void takeAnte(){

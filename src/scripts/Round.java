@@ -32,7 +32,12 @@ public class Round {
 	
 	public void preFlop(){ 
 		printHand();
-	    requestAction();
+		requestAction();
+	}
+	
+	public void playFlop(){
+	    printFlop();
+		requestAction();
 	}
 	
 	private void printHand(){
@@ -46,8 +51,8 @@ public class Round {
 	    String meter = "[";
 	    int strength = game.getPlayer().getHand().initalHandStrength();
 	    for(int i = 0; i < 10; i++) {
-	    	if(strength > 0) meter += "=";
-	    	else meter += " ";
+	    	if(strength > 0) meter += "0";
+	    	else meter += "-";
 	    	strength--;
 	    }
 	    meter += "]";
@@ -57,7 +62,7 @@ public class Round {
 	}
 	
 
-	public void requestAction(){
+	private void requestAction(){
 		System.out.println("What would you like to do?");
 		String action = sc.nextLine();
 		action = action.toUpperCase();
@@ -72,4 +77,22 @@ public class Round {
 
 	}
 	
+	public void printFlop(){
+		System.out.println("*********************************");
+		System.out.println("The Flop Is: " + "\n");
+		for(int i = 0; i < game.getTable().getCardsOnTable().size(); i++){
+			System.out.println("Number: " + game.getTable().getCardsOnTable().get(i).getNumber() + "\t Type: " + game.getTable().getCardsOnTable().get(i).getSuite());
+		}
+		String meter = "[";
+	    int strength = game.getPlayer().getHand().updateHandStrength();
+	    for(int i = 0; i < 10; i++) {
+	    	if(strength > 0) meter += "0";
+	    	else meter += "-";
+	    	strength--;
+	    }
+	    meter += "]";
+	    System.out.println("\n" + "Hand Strength: " + meter + "\n");
+	    System.out.println("You have: " + game.getPlayer().getPoints() + " points");
+		System.out.println("*********************************");
+	}	
 }
