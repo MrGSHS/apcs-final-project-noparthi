@@ -119,45 +119,77 @@ public class Hand {
 	}
 
 	// Checks For Such Hands
-	public boolean fourOfAKind() {
-		return false;
+	public boolean royalFlush(){
+		return false; //Never Ever Will Happen
 	}
-
+	public boolean straightFlush(){
+		return (flush() && straight());
+	}
+	public boolean fourOfAKind() {
+		ArrayList<Integer> temp = dupeNumberLogic();
+		int inARow = 1;
+		int maxInARow = 1;
+		for(int i = 0; i < temp.size()-1; i++){
+			if(temp.get(i+1)==temp.get(i)){
+				inARow++;
+				if(inARow > maxInARow) maxInARow=inARow;
+			}
+			else inARow=1;
+		}
+		return (maxInARow==4);
+	}
 	public boolean flush() {
 		return (dupeSuitLogic().size() >= 5);
 	}
-
 	public boolean straight() {
-		ArrayList<Integer> temp = dupeNumberLogic();
-		int straightCheck = 0;
-		int maxStraightCheck = 0;
-		for(int i = 0; i < temp.size()-1; i++){
-			if(temp.get(i+1)-temp.get(i)==1){
-				straightCheck++;
-				if(straightCheck>maxStraightCheck) maxStraightCheck=straightCheck;
+		int straightCheck = 1;
+		int maxStraightCheck = 1;
+		for(int i = 0; i < totalCards.size()-1; i++){
+			if(totalCards.get(i+1).getNumber()-totalCards.get(i).getNumber()<=1){
+				if(totalCards.get(i+1).getNumber()-totalCards.get(i).getNumber()!=0){
+					straightCheck++;
+					if(straightCheck>maxStraightCheck) maxStraightCheck=straightCheck;
+				}
 			}
-			else straightCheck = 0;
+			else straightCheck = 1;
 		}
 		return (maxStraightCheck>=5);
 	}
-
 	public boolean fullHouse() {
-		return false;
+		ArrayList<Integer> temp = dupeNumberLogic();
+		int tripsValue = 0;
+		int pairValue = 0;
+		for(int i = 0; i < temp.size()-2; i++){
+			if(!fourOfAKind() && temp.get(i)==temp.get(i+1) && temp.get(i)==temp.get(i+2))tripsValue = temp.get(i);
+			else pairValue = temp.get(i);
+		}
+		return (tripsValue!=0 && pairValue!=0);
 	}
-
 	public boolean trips() {
-		return false;
+		ArrayList<Integer> temp = dupeNumberLogic();
+		int inARow = 1;
+		int maxInARow = 1;
+		for(int i = 0; i < temp.size()-1; i++){
+			if(temp.get(i+1)==temp.get(i)){
+				inARow++;
+				if(inARow > maxInARow) maxInARow=inARow;
+			}
+			else inARow=1;
+		}
+		return (maxInARow==3);
 	}
-
 	public boolean twoPair() {
-		return false;
+		ArrayList<Integer> temp = dupeNumberLogic();
+		int pairOneValue = temp.get(0);
+		int pairTwoValue = temp.get(temp.size()-1);
+		return (pairOneValue!=pairTwoValue && !trips() && !fullHouse());
 	}
-
 	public boolean pair() {
-		return false;
+		ArrayList<Integer> temp = dupeNumberLogic();
+		return (temp.size()==2);
 	}
-
 	public boolean highCard() {
-		return (!twoPair() && !trips() && !fullHouse() && !straight() && !flush() && !fourOfAKind());
+		ArrayList<Integer> temp = dupeNumberLogic();
+		return (temp.size()==0);
 	}
 }
