@@ -30,24 +30,33 @@ public class Round {
 	public void setPot(int amt){ pot = amt; }
 	public void setBet(int amt){ bet = amt; }
 	
-	public void preFlop(){ 
+	public void preFlop(){
+		//Prints  Out Hand Before Flop, Then Deals Flop
 		printTable();
 		requestAction();
+		game.getTable().dealFlop();
+
 	}	
 	public void preTurn(){
+		//Prints Out Hand Before Turn, Then Deals Turn
 	    printTable();
 		requestAction();
+		game.getTable().dealTurn();
 	}	
 	public void preRiver(){
+		//Prints Out Hand Before River, Then Deals River
 	    printTable();
 		requestAction();
+		game.getTable().dealRiver();
 	}	
 	public void postRiver(){
+		//Prints Hand Before Show-down, And Asks For Final Raise/Check/Fold
 	    printTable();
 		requestAction();		
 	}
 	
 	private void printTable(){
+		int strength;
 		System.out.println("*********************************");
 		System.out.println("Round: " + roundNumber + "\n");
 		System.out.println("The current pot is: " + pot);
@@ -63,7 +72,11 @@ public class Round {
 	    System.out.println("Number: " + game.getPlayer().getCurrentHand()[0].getNumber() + "\t Type: " + game.getPlayer().getCurrentHand()[0].getSuite()); 
 	    System.out.println("Number: " + game.getPlayer().getCurrentHand()[1].getNumber() + "\t Type: " + game.getPlayer().getCurrentHand()[1].getSuite());
 	    String meter = "[";
-	    int strength = game.getPlayer().getHand().initialHandStrength();
+	    
+	    if(game.getTable().getCardsOnTable().size()==0) strength = game.getPlayer().getHand().initialHandStrength();
+	    else strength = game.getPlayer().getHand().updateHandStrength();
+	    
+	    //Print Meter
 	    for(int i = 0; i < 10; i++) {
 	    	if(strength > 0) meter += "=";
 	    	else meter += " ";
@@ -85,6 +98,12 @@ public class Round {
 		if(action.equals(Actions.RAISE.toString())) {
 			System.out.println("How much would you like to raise?");
 			int raiseAmt = sc.nextInt();
+			sc.nextLine();
+			while(!game.getPlayer().raise(raiseAmt)){
+				System.out.println("How much would you like to raise?");
+				raiseAmt = sc.nextInt();
+				sc.nextLine();
+			}
 			game.getPlayer().raise(raiseAmt);
 		}
 		if(action.equals(Actions.CALL.toString())) game.getPlayer().call();

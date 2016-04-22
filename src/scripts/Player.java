@@ -58,7 +58,7 @@ public class Player {
 			points -= amt;
 			return true;
 		}
-		System.out.println("Must raise at least something greater than " + game.getRound().getBet());
+		System.out.println("Must raise at least something greater than " + game.getRound().getBet());		
 		return false;
 	}
 	public Hand getHand(){ return hand; }

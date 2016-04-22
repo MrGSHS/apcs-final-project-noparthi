@@ -28,6 +28,9 @@ public class Game {
 		roundActive = true;
 		round = new Round(this);
 		round.preFlop();
+		round.preTurn();
+		round.preRiver();
+		round.postRiver();
 	}
 	
 	public void takeAnte(){
