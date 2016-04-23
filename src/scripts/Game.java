@@ -63,9 +63,6 @@ public class Game {
 		// players.add(computer1);
 		round = new Round(this);
 		round.preFlop();
-		round.preTurn();
-		round.preRiver();
-		round.postRiver();
 	}
 
 	public void takeBlinds() {

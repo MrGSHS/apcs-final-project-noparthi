@@ -37,6 +37,7 @@ public class Round {
 		printTable();
 		requestAction();
 		game.getTable().dealFlop();
+		preTurn();
 
 	}	
 	public void preTurn(){
@@ -45,6 +46,7 @@ public class Round {
 	    printTable();
 		requestAction();
 		game.getTable().dealTurn();
+		preRiver();
 	}	
 	public void preRiver(){
 		bet = 500;;
@@ -52,6 +54,7 @@ public class Round {
 	    printTable();
 		requestAction();
 		game.getTable().dealRiver();
+		postRiver();
 	}	
 	public void postRiver(){
 		//Prints Hand Before Show-down, And Asks For Final Raise/Check/Fold
@@ -97,7 +100,10 @@ public class Round {
 	public void requestAction(){
 		System.out.println("What would you like to do?");
 		String action = sc.nextLine();
+		action= action.replaceAll("\\s+","");
 		action = action.toUpperCase();
+		
+		if(action.equals("")) System.exit(0);
 		if(action.equals(Actions.CHECK.toString())) game.getPlayer().check();
 		if(action.equals(Actions.FOLD.toString())) game.getPlayer().fold();
 		if(action.equals(Actions.RAISE.toString())) {
