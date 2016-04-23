@@ -8,18 +8,22 @@ public class Player {
 	private int points;
 	
 	private boolean folded;
-
+	private boolean bigBlind;
+	
 	public Player(Game game) {
 		this.game = game;
 		newHand();
 		points = 10000;
 	}
-
-	public boolean isFolded(){ return folded; }
-	public int getPoints() {
-		return points;
-	}
+	
+	public int getPoints() { return points; }
+	public Hand getHand(){ return hand; }
+	public Card[] getCurrentHand() { return hand.getHand(); }
+	public boolean isBigBlind(){ return bigBlind; }
+	public boolean isFolded(){ return folded; }	
+	
 	public void setPoints(int num) { points = num; }
+	public void setBigBlind(boolean bb){ bigBlind = bb; }
 
 	public void newHand() {
 		hand = new Hand(game, game.getTable().getDeck().deal(), game.getTable().getDeck().deal());
@@ -59,11 +63,7 @@ public class Player {
 			return true;
 		}
 		System.out.println("Must raise at least something greater than or equal to " + game.getRound().getBet());		
-		return false;
-		
+		return false;		
 	}
-	public Hand getHand(){ return hand; }
-	public Card[] getCurrentHand() {
-		return hand.getHand();
-	}
+	
 }

@@ -6,6 +6,7 @@ public class Game {
 	
 	private final int BIGBLIND = 500;
 	private final int SMALLBLIND = 250; 
+	private final int ANTE = 50;
 	
 	private ArrayList<Player> players = new ArrayList<>();
 
@@ -13,7 +14,6 @@ public class Game {
 	private Player computer1;
 	private Round round;
 	private Table table;
-	private boolean roundActive;
 	private int dealerIndex = 0;
 	
 	
@@ -21,9 +21,11 @@ public class Game {
 	public Round getRound(){ return round; }
 	public Player getPlayer(){ return user; }	
 	public Player getComputer(){ return computer1; }
+	
 	public int getBigBlind(){return BIGBLIND;}
 	public int getSmallBlind(){return SMALLBLIND;}
 	public int getDealerIndex(){return dealerIndex;}
+	
 	public void setDealerIndex(int index) {
 		if(index>=players.size()) dealerIndex = 0;
 		else dealerIndex = index;
@@ -36,7 +38,6 @@ public class Game {
 		players.add(user);
 		//computer1 = new Computer(this);
 		//players.add(computer1);
-		roundActive = true;
 		round = new Round(this);
 		round.preFlop();
 		round.preTurn();
@@ -46,14 +47,18 @@ public class Game {
 	
 	public void takeBlinds(){
 		//Set Index Of Big Blind Player
-		int bigBlindPlayerIndex = dealerIndex + 1;
-		if(bigBlindPlayerIndex>=players.size()) bigBlindPlayerIndex = 0;
+		int bigBlindIndex = dealerIndex + 1;
+		if(bigBlindIndex>=players.size()) bigBlindIndex = 0;
 		//Set Index Of Small Blind Player
-		int smallBlindPlayerIndex = bigBlindPlayerIndex + 1;
-		if(smallBlindPlayerIndex>=players.size()) smallBlindPlayerIndex = 0; 
+		int smallBlindIndex = bigBlindIndex + 1;
+		if(smallBlindIndex>=players.size()) smallBlindIndex = 0; 
 		//Takes The Big And Small Blind
-		players.get(bigBlindPlayerIndex).setPoints(players.get(bigBlindPlayerIndex).getPoints()-BIGBLIND);
-		players.get(smallBlindPlayerIndex).setPoints(players.get(smallBlindPlayerIndex).getPoints()-SMALLBLIND);
+		players.get(bigBlindIndex).setPoints(players.get(bigBlindIndex).getPoints()-BIGBLIND);
+		players.get(smallBlindIndex).setPoints(players.get(smallBlindIndex).getPoints()-SMALLBLIND);
+	}
+	
+	public void takeAnte(){
+		for(Player p : players) p.setPoints(p.getPoints()-ANTE);		
 	}
 	
 	public boolean isRoundActive(){

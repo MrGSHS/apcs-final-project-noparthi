@@ -109,6 +109,7 @@ public class Round {
 			}
 		}
 		if(action.equals(Actions.CALL.toString())) game.getPlayer().call();
+		if(action.equals(Actions.END_GAME.toString())) System.exit(0);
 	}
 	
 }
