@@ -86,7 +86,7 @@ public class Hand {
 		if(twoPair() && (card1.getNumber()>=8 || card2.getNumber()>=8)) return 5;
 		if(twoPair() && (card1.getNumber()<8 || card2.getNumber()<8)) return 4;
 		if(pair() && (card1.getNumber()>=7 || card2.getNumber()>=7)) return 3;
-		if(pair() && (card1.getNumber()<7 || card2.getNumber()<7)) return 2;
+		if(pair() && (card1.getNumber()<7 || card2.getNumber()<7))return 2;
 		else return 1;
 	}
 
@@ -96,16 +96,6 @@ public class Hand {
 		int count = 0;
 		for (Card card : totalCards) {
 			if (set.add(card.getNumber()) == false) {
-				if (dupes.size() == 0)
-					dupes.add(card.getNumber());
-				else if (card.getNumber() != dupes.get(0)) {
-					for (int check : dupes) {
-						if (card.getNumber() != check)
-							count++;
-					}
-					if (count == dupes.size())
-						dupes.add(card.getNumber());
-				}
 				dupes.add(card.getNumber());
 			}
 		}
@@ -144,7 +134,7 @@ public class Hand {
 			}
 			else inARow=1;
 		}
-		return (maxInARow==4);
+		return (maxInARow==3);
 	}
 	public boolean flush() {
 		return (dupeSuitLogic().size() >= 5);
@@ -168,8 +158,8 @@ public class Hand {
 		if(temp.size()==0) return false;
 		int tripsValue = 0;
 		int pairValue = 0;
-		for(int i = 0; i < temp.size()-2; i++){
-			if(!fourOfAKind() && temp.get(i)==temp.get(i+1) && temp.get(i)==temp.get(i+2))tripsValue = temp.get(i);
+		for(int i = 0; i < temp.size()-1; i++){
+			if(!fourOfAKind() && temp.get(i)==temp.get(i+1))tripsValue = temp.get(i);
 			else pairValue = temp.get(i);
 		}
 		return (tripsValue!=0 && pairValue!=0);
@@ -185,7 +175,7 @@ public class Hand {
 			}
 			else inARow=1;
 		}
-		return (maxInARow==3);
+		return (maxInARow==2);
 	}
 	public boolean twoPair() {
 		ArrayList<Integer> temp = dupeNumberLogic();
@@ -196,7 +186,7 @@ public class Hand {
 	}
 	public boolean pair() {
 		ArrayList<Integer> temp = dupeNumberLogic();
-		return (temp.size()==2);
+		return (temp.size()==1);
 	}
 	public boolean highCard() {
 		ArrayList<Integer> temp = dupeNumberLogic();

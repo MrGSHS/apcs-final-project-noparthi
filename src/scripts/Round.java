@@ -77,10 +77,8 @@ public class Round {
 	    String meter = "[";
 	    
 	    if(game.getTable().getCardsOnTable().size()==0) strength = game.getPlayer().getHand().initialHandStrength();
-	    else{
-	    	System.out.println(game.getPlayer().getHand().updateHandStrength());
-	    	strength = game.getPlayer().getHand().updateHandStrength();
-	    }
+	    else strength = game.getPlayer().getHand().updateHandStrength();
+	    
 	    
 	    //Print Meter
 	    for(int i = 0; i < 10; i++) {
