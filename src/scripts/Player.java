@@ -6,6 +6,7 @@ public class Player {
 	private Hand hand;
 
 	private int points;
+	private int pointsInvested;
 	
 	private boolean folded;
 	private boolean bigBlind;
@@ -17,12 +18,14 @@ public class Player {
 	}
 	
 	public int getPoints() { return points; }
+	public int getPointsInvested(){ return pointsInvested; }
 	public Hand getHand(){ return hand; }
 	public Card[] getCurrentHand() { return hand.getHand(); }
 	public boolean isBigBlind(){ return bigBlind; }
 	public boolean isFolded(){ return folded; }	
-	
+
 	public void setPoints(int num) { points = num; }
+	public void setPointsInvested(int amt){ pointsInvested = amt; }
 	public void setBigBlind(boolean bb){ bigBlind = bb; }
 
 	public void newHand() {
@@ -40,6 +43,7 @@ public class Player {
 	}
 
 	public boolean call() {
+		if(pointsInvested >= game.getRound().getBet()){ System.out.println("no need to call boy"); return false; }
 		if (game.getRound().getBet() > points) {
 			game.getRound().setPot(game.getRound().getPot() + points);
 			points = 0;

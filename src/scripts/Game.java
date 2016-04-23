@@ -54,11 +54,16 @@ public class Game {
 		if(smallBlindIndex>=players.size()) smallBlindIndex = 0; 
 		//Takes The Big And Small Blind
 		players.get(bigBlindIndex).setPoints(players.get(bigBlindIndex).getPoints()-BIGBLIND);
+		players.get(bigBlindIndex).setPointsInvested(players.get(bigBlindIndex).getPointsInvested() + BIGBLIND);
 		players.get(smallBlindIndex).setPoints(players.get(smallBlindIndex).getPoints()-SMALLBLIND);
+		//players.get(smallBlindIndex).setPointsInvested(players.get(smallBlindIndex).getPointsInvested() + SMALLBLIND);
 	}
 	
 	public void takeAnte(){
-		for(Player p : players) p.setPoints(p.getPoints()-ANTE);		
+		for(Player p : players){
+			p.setPoints(p.getPoints()-ANTE);
+			p.setPointsInvested(p.getPointsInvested() + ANTE);
+		}
 	}
 	
 	public boolean isRoundActive(){

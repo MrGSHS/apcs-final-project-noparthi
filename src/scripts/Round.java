@@ -20,6 +20,7 @@ public class Round {
 		setBet(game.getBigBlind());
 		sc = new Scanner(System.in);
 		game.getPlayer().newHand();
+		game.takeAnte();
 		game.takeBlinds();
 		//game.getComputer().newHand();
 	}	
