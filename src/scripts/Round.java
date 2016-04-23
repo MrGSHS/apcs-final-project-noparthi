@@ -21,8 +21,9 @@ public class Round {
 		setBet(game.getBigBlind());
 		sc = new Scanner(System.in);
 		game.getPlayer().newHand();
-		game.takeBlinds();
 		//game.getComputer().newHand();
+		game.takeBlinds();
+		
 	}	
 	public int getPot(){ return pot; }
 	public int getBet(){ return bet; }
