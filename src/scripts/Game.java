@@ -14,6 +14,7 @@ public class Game {
 	private Round round;
 	private Table table;
 	private boolean roundActive;
+	private int dealerIndex = 0;
 	
 	
 	public Table getTable(){ return table; }
@@ -22,6 +23,11 @@ public class Game {
 	public Player getComputer(){ return computer1; }
 	public int getBigBlind(){return BIGBLIND;}
 	public int getSmallBlind(){return SMALLBLIND;}
+	public int getDealerIndex(){return dealerIndex;}
+	public void setDealerIndex(int index) {
+		if(index>=players.size()) dealerIndex = 0;
+		else dealerIndex = index;
+	}
 	public ArrayList<Player> getPlayers(){ return players; }
 	
 	public Game(){
@@ -38,9 +44,16 @@ public class Game {
 		round.postRiver();
 	}
 	
-	public void takeBigBlind(){
-		for(Player p : players)
-			p.setPoints(p.getPoints() - BIGBLIND);
+	public void takeBlinds(){
+		//Set Index Of Big Blind Player
+		int bigBlindPlayerIndex = dealerIndex + 1;
+		if(bigBlindPlayerIndex>=players.size()) bigBlindPlayerIndex = 0;
+		//Set Index Of Small Blind Player
+		int smallBlindPlayerIndex = bigBlindPlayerIndex + 1;
+		if(smallBlindPlayerIndex>=players.size()) smallBlindPlayerIndex = 0; 
+		//Takes The Big And Small Blind
+		players.get(bigBlindPlayerIndex).setPoints(players.get(bigBlindPlayerIndex).getPoints()-BIGBLIND);
+		players.get(smallBlindPlayerIndex).setPoints(players.get(smallBlindPlayerIndex).getPoints()-SMALLBLIND);
 	}
 	
 	public boolean isRoundActive(){

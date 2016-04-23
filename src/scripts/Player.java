@@ -49,7 +49,7 @@ public class Player {
 	public boolean raise(int amt) {
 		if (amt >= game.getRound().getBet()) {
 			if (amt > points) {
-				game.getRound().setPot(points);
+				game.getRound().setPot(game.getRound().getPot()+points);
 				points = 0;
 				return false;
 			}
