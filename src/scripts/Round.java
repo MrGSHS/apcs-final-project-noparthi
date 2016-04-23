@@ -39,21 +39,19 @@ public class Round {
 
 	}	
 	public void preTurn(){
+		
 		//Prints Out Hand Before Turn, Then Deals Turn
-		setBet(game.getBigBlind());
 	    printTable();
 		requestAction();
 		game.getTable().dealTurn();
 	}	
 	public void preRiver(){
 		//Prints Out Hand Before River, Then Deals River
-		setBet(game.getBigBlind());
 	    printTable();
 		requestAction();
 		game.getTable().dealRiver();
 	}	
 	public void postRiver(){
-		setBet(game.getBigBlind());
 		//Prints Hand Before Show-down, And Asks For Final Raise/Check/Fold
 	    printTable();
 		requestAction();		

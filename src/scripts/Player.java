@@ -43,7 +43,7 @@ public class Player {
 	}
 
 	public boolean call() {
-		if(pointsInvested >= game.getRound().getBet()){ System.out.println("no need to call boy"); return false; }
+		if(pointsInvested >= game.getRound().getBet()) return false; 
 		if (game.getRound().getBet() > points) {
 			game.getRound().setPot(game.getRound().getPot() + points);
 			points = 0;

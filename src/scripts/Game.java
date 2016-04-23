@@ -64,8 +64,10 @@ public class Game {
 			p.setPoints(p.getPoints()-ANTE);
 			p.setPointsInvested(p.getPointsInvested() + ANTE);
 		}
-	}
-	
+	}	
+	public void resetPointsInvested(){
+		for(Player p: players) p.setPointsInvested(0); 
+	}	
 	public boolean isRoundActive(){
 		int numberOfPlayers = players.size();
 		int count = 0;
