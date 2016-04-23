@@ -5,9 +5,10 @@ import java.util.ArrayList;
 public class Table{
 	
 	private ArrayList<Card> cardsOnTable;
-	private Deck deck = new Deck();
+	private Deck deck;
 	
 	public Table(){
+		deck = new Deck();
 		cardsOnTable = new ArrayList<>();
 	}
 	

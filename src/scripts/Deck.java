@@ -6,10 +6,9 @@ import java.util.Collections;
 public class Deck {
 	
 	private ArrayList<Card> deck = new ArrayList<>();
-		
 	public Deck(){
 		make();
-		System.out.println("There are this many cards: " + Card.id);
+		System.out.println("Number of cards in deck: " + deck.size());
 	}	
 	
 	
