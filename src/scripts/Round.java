@@ -15,6 +15,7 @@ public class Round {
 		pot = 0;
 		bet = 0;
 		this.game = game;
+		game.resetPointsInvested();
 		roundNumber++;
 		setPot(game.getBigBlind() + game.getSmallBlind());
 		setBet(game.getBigBlind());
