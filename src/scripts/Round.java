@@ -17,7 +17,7 @@ public class Round {
 		this.game = game;
 		roundNumber++;
 		setPot(game.getBigBlind() * game.getPlayers().size());
-		setBet(pot);
+		setBet(game.getBigBlind());
 		sc = new Scanner(System.in);
 		game.getPlayer().newHand();
 		game.takeBigBlind();

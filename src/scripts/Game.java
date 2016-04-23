@@ -10,7 +10,7 @@ public class Game {
 	private ArrayList<Player> players = new ArrayList<>();
 
 	private Player user; 
-	private Player computer;
+	private Player computer1;
 	private Round round;
 	private Table table;
 	private boolean roundActive;
@@ -19,7 +19,7 @@ public class Game {
 	public Table getTable(){ return table; }
 	public Round getRound(){ return round; }
 	public Player getPlayer(){ return user; }	
-	public Player getComputer(){ return computer; }
+	public Player getComputer(){ return computer1; }
 	public int getBigBlind(){return BIGBLIND;}
 	public int getSmallBlind(){return SMALLBLIND;}
 	public ArrayList<Player> getPlayers(){ return players; }
@@ -28,7 +28,8 @@ public class Game {
 		table = new Table();
 		user = new Player(this);
 		players.add(user);
-		//computer = new Computer(this);
+		//computer1 = new Computer(this);
+		//players.add(computer1);
 		roundActive = true;
 		round = new Round(this);
 		round.preFlop();

@@ -47,7 +47,7 @@ public class Player {
 	}
 
 	public boolean raise(int amt) {
-		if (amt >= game.getBigBlind()) {
+		if (amt >= game.getRound().getBet()) {
 			if (amt > points) {
 				game.getRound().setPot(points);
 				points = 0;
