@@ -72,13 +72,13 @@ public class Round {
 		
 		System.out.println("\n" + "Current cards on the table: ");
 		for(int i = 0; i < game.getTable().getCardsOnTable().size(); i++){
-			System.out.println("Number: " + game.getTable().getCardsOnTable().get(i).getNumber() + "\t Type: " + game.getTable().getCardsOnTable().get(i).getSuite());
+			System.out.print("[" + game.getTable().getCardsOnTable().get(i).getNumber() + game.getTable().getCardsOnTable().get(i).getEncodedSuite() + "]" + " ");
 		}
-		System.out.println();
+		System.out.println("\n");
 		
 		System.out.println("Your hand is:");
-	    System.out.println("Number: " + game.getPlayer().getCurrentHand()[0].getNumber() + "\t Type: " + game.getPlayer().getCurrentHand()[0].getSuite()); 
-	    System.out.println("Number: " + game.getPlayer().getCurrentHand()[1].getNumber() + "\t Type: " + game.getPlayer().getCurrentHand()[1].getSuite());
+	    System.out.print("[" + game.getPlayer().getCurrentHand()[0].getNumber() + game.getPlayer().getCurrentHand()[0].getEncodedSuite() + "] "); 
+	    System.out.println("[" + game.getPlayer().getCurrentHand()[1].getNumber() + game.getPlayer().getCurrentHand()[1].getEncodedSuite() + "]");
 	    String meter = "[";
 	    
 	    if(game.getTable().getCardsOnTable().size()==0) strength = game.getPlayer().getHand().initialHandStrength();
@@ -87,7 +87,7 @@ public class Round {
 	    
 	    //Print Meter
 	    for(int i = 0; i < 10; i++) {
-	    	if(strength > 0) meter += "=";
+	    	if(strength > 0) meter += "\u25A0";
 	    	else meter += " ";
 	    	strength--;
 	    }
