@@ -75,12 +75,8 @@ public class Hand {
 		if(trips() && (card1.getNumber()<9 || card2.getNumber()<9)) return 6;
 		if(twoPair() && (card1.getNumber()>=8 || card2.getNumber()>=8)) return 5;
 		if(twoPair() && (card1.getNumber()<8 || card2.getNumber()<8)) return 4;
-		if(pair() && (card1.getNumber()>=7 || card2.getNumber()>=7)){
-			System.out.print("Have Pair");
-			return 3;}
-		if(pair() && (card1.getNumber()<7 || card2.getNumber()<7)){
-			System.out.print("Have Pair");
-			return 2;}
+		if(pair() && (card1.getNumber()>=7 || card2.getNumber()>=7)) return 3;
+		if(pair() && (card1.getNumber()<7 || card2.getNumber()<7)) return 2;
 		else return 1;
 	}
 
