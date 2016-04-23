@@ -78,6 +78,7 @@ public class Game {
 		int smallBlindIndex = bigBlindIndex + 1;
 		if (smallBlindIndex >= players.size())
 			smallBlindIndex = 0;
+		players.get(smallBlindIndex).setSmallBlind(true);
 		// Takes The Big And Small Blind
 		players.get(bigBlindIndex).setPoints(players.get(bigBlindIndex).getPoints() - BIGBLIND);
 		players.get(bigBlindIndex).setPointsInvested(players.get(bigBlindIndex).getPointsInvested() + BIGBLIND);
@@ -88,9 +89,10 @@ public class Game {
 
 	public void takeAnte() {
 		for (Player p : players) {
-			if (!p.isBigBlind()) {
+			if (!p.isBigBlind()&&!p.isSmallBlind()) {
 				p.setPoints(p.getPoints() - ANTE);
 				p.setPointsInvested(p.getPointsInvested() + ANTE);
+				round.setPot(round.getPot() + ANTE);
 			}
 		}
 	}

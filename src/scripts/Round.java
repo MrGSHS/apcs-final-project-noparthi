@@ -20,7 +20,6 @@ public class Round {
 		setBet(game.getBigBlind());
 		sc = new Scanner(System.in);
 		game.getPlayer().newHand();
-		game.takeAnte();
 		game.takeBlinds();
 		//game.getComputer().newHand();
 	}	
@@ -31,6 +30,7 @@ public class Round {
 	public void setBet(int amt){ bet = amt; }
 	
 	public void preFlop(){
+		game.takeAnte();
 		//Prints  Out Hand Before Flop, Then Deals Flop
 		setBet(game.getBigBlind());
 		printTable();
@@ -39,13 +39,14 @@ public class Round {
 
 	}	
 	public void preTurn(){
-		
+		bet = 500;
 		//Prints Out Hand Before Turn, Then Deals Turn
 	    printTable();
 		requestAction();
 		game.getTable().dealTurn();
 	}	
 	public void preRiver(){
+		bet = 500;;
 		//Prints Out Hand Before River, Then Deals River
 	    printTable();
 		requestAction();
@@ -76,7 +77,10 @@ public class Round {
 	    String meter = "[";
 	    
 	    if(game.getTable().getCardsOnTable().size()==0) strength = game.getPlayer().getHand().initialHandStrength();
-	    else strength = game.getPlayer().getHand().updateHandStrength();
+	    else{
+	    	System.out.println(game.getPlayer().getHand().updateHandStrength());
+	    	strength = game.getPlayer().getHand().updateHandStrength();
+	    }
 	    
 	    //Print Meter
 	    for(int i = 0; i < 10; i++) {

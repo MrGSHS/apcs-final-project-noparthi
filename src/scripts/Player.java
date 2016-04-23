@@ -10,6 +10,7 @@ public class Player {
 	
 	private boolean folded;
 	private boolean bigBlind;
+	private boolean smallBlind; 
 	
 	public Player(Game game) {
 		this.game = game;
@@ -22,12 +23,13 @@ public class Player {
 	public Hand getHand(){ return hand; }
 	public Card[] getCurrentHand() { return hand.getHand(); }
 	public boolean isBigBlind(){ return bigBlind; }
+	public boolean isSmallBlind() {return smallBlind; }
 	public boolean isFolded(){ return folded; }	
 
 	public void setPoints(int num) { points = num; }
 	public void setPointsInvested(int amt){ pointsInvested = amt; }
 	public void setBigBlind(boolean bb){ bigBlind = bb; }
-
+    public void setSmallBlind(boolean sb) {smallBlind = sb;}
 	public void newHand() {
 		hand = new Hand(game, game.getTable().getDeck().deal(), game.getTable().getDeck().deal());
 	}
