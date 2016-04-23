@@ -16,14 +16,13 @@ public class Round {
 		bet = 0;
 		this.game = game;
 		roundNumber++;
-		setPot(game.getAnte() * game.getPlayers().size());
+		setPot(game.getBigBlind() * game.getPlayers().size());
 		setBet(pot);
 		sc = new Scanner(System.in);
 		game.getPlayer().newHand();
-		game.takeAnte();
+		game.takeBigBlind();
 		//game.getComputer().newHand();
-	}
-	
+	}	
 	public int getPot(){ return pot; }
 	public int getBet(){ return bet; }
 	

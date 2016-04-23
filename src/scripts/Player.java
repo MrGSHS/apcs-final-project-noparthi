@@ -47,7 +47,7 @@ public class Player {
 	}
 
 	public boolean raise(int amt) {
-		if (amt > game.getRound().getBet()) {
+		if (amt >= game.getBigBlind()) {
 			if (amt > points) {
 				game.getRound().setPot(points);
 				points = 0;
@@ -58,8 +58,9 @@ public class Player {
 			points -= amt;
 			return true;
 		}
-		System.out.println("Must raise at least something greater than " + game.getRound().getBet());		
+		System.out.println("Must raise at least something greater than or equal to " + game.getRound().getBet());		
 		return false;
+		
 	}
 	public Hand getHand(){ return hand; }
 	public Card[] getCurrentHand() {

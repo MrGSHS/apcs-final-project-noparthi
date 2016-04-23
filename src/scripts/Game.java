@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class Game {
 	
-	private final int ANTE = 500;
+	private final int BIGBLIND = 500;
+	private final int SMALLBLIND = 250; 
 	
 	private ArrayList<Player> players = new ArrayList<>();
 
@@ -19,7 +20,8 @@ public class Game {
 	public Round getRound(){ return round; }
 	public Player getPlayer(){ return user; }	
 	public Player getComputer(){ return computer; }
-	public int getAnte(){return ANTE;}
+	public int getBigBlind(){return BIGBLIND;}
+	public int getSmallBlind(){return SMALLBLIND;}
 	public ArrayList<Player> getPlayers(){ return players; }
 	
 	public Game(){
@@ -35,9 +37,9 @@ public class Game {
 		round.postRiver();
 	}
 	
-	public void takeAnte(){
+	public void takeBigBlind(){
 		for(Player p : players)
-			p.setPoints(p.getPoints() - ANTE);
+			p.setPoints(p.getPoints() - BIGBLIND);
 	}
 	
 	public boolean isRoundActive(){
