@@ -26,26 +26,6 @@ public class Hand {
 		return new Card[] { card1, card2 };
 	}
 
-	// Adds Flop To Entire Hand Combination
-	public void addFlopToHandList() {
-		cardsOnTable = game.getTable().getCardsOnTable();
-		totalCards.add(cardsOnTable.get(0));
-		totalCards.add(cardsOnTable.get(1));
-		totalCards.add(cardsOnTable.get(2));
-	}
-
-	// Adds Turn To Entire Hand Combination
-	public void addTurnToHandList() {
-		cardsOnTable = game.getTable().getCardsOnTable();
-		totalCards.add(cardsOnTable.get(3));
-	}
-
-	// Adds River To Entire Hand Combination
-	public void addRiverToHandList() {
-		cardsOnTable = game.getTable().getCardsOnTable();
-		totalCards.add(cardsOnTable.get(4));
-	}
-
 	public int initialHandStrength() {
 		// Check High Card
 		if (card1.getNumber() <= 5 || card2.getNumber() <= 5)
@@ -78,6 +58,16 @@ public class Hand {
 
 	// Update Hand strength
 	public int updateHandStrength() {
+		//Adds Cards On Table To TotalCardsAvailableToPlayer Pool
+		cardsOnTable = game.getTable().getCardsOnTable();
+		if(cardsOnTable.size()==3){
+			totalCards.add(cardsOnTable.get(0));
+			totalCards.add(cardsOnTable.get(1));
+			totalCards.add(cardsOnTable.get(2));
+		}
+		else if(cardsOnTable.size()==4) totalCards.add(cardsOnTable.get(3));
+		else totalCards.add(cardsOnTable.get(4));
+		//Updates Hand Strength
 		if(royalFlush() || straightFlush()) return 10;
 		if(fourOfAKind() || fullHouse()) return 9;
 		if(straight() || flush()) return 8;
@@ -85,19 +75,20 @@ public class Hand {
 		if(trips() && (card1.getNumber()<9 || card2.getNumber()<9)) return 6;
 		if(twoPair() && (card1.getNumber()>=8 || card2.getNumber()>=8)) return 5;
 		if(twoPair() && (card1.getNumber()<8 || card2.getNumber()<8)) return 4;
-		if(pair() && (card1.getNumber()>=7 || card2.getNumber()>=7)) return 3;
-		if(pair() && (card1.getNumber()<7 || card2.getNumber()<7))return 2;
+		if(pair() && (card1.getNumber()>=7 || card2.getNumber()>=7)){
+			System.out.print("Have Pair");
+			return 3;}
+		if(pair() && (card1.getNumber()<7 || card2.getNumber()<7)){
+			System.out.print("Have Pair");
+			return 2;}
 		else return 1;
 	}
 
 	private ArrayList<Integer> dupeNumberLogic() {
 		ArrayList<Integer> dupes = new ArrayList<Integer>();		
 		Set<Integer> set = new HashSet<>();
-		int count = 0;
 		for (Card card : totalCards) {
-			if (set.add(card.getNumber()) == false) {
-				dupes.add(card.getNumber());
-			}
+			if (set.add(card.getNumber()) == false) dupes.add(card.getNumber());
 		}
 		Collections.sort(dupes);
 		return dupes;
@@ -107,11 +98,7 @@ public class Hand {
 		ArrayList<Integer> dupes = new ArrayList<>();
 		Set<Integer> set = new HashSet<>();
 		for (Card card : totalCards) {
-			if (set.add(card.getSuite()) == false) {
-				if (dupes.size() == 0)
-					dupes.add(card.getSuite());
-				dupes.add(card.getSuite());
-			}
+			if (set.add(card.getSuite()) == false) dupes.add(card.getSuite());
 		}
 		return dupes;
 	}
@@ -137,7 +124,7 @@ public class Hand {
 		return (maxInARow==3);
 	}
 	public boolean flush() {
-		return (dupeSuitLogic().size() >= 5);
+		return (dupeSuitLogic().size() >= 4);
 	}
 	public boolean straight() {
 		int straightCheck = 1;
