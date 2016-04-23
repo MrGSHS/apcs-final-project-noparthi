@@ -107,7 +107,7 @@ public class Round {
 				raiseAmt = sc.nextInt();
 				sc.nextLine();
 			}
-			game.getPlayer().raise(raiseAmt);
+			//game.getPlayer().raise(raiseAmt);
 		}
 		if(action.equals(Actions.CALL.toString())) game.getPlayer().call();
 	}
