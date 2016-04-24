@@ -28,7 +28,7 @@ public class Player {
 	public int getPoints() { return points; }
 	public int getPointsInvested(){ return pointsInvested; }
 	public Hand getHand(){ return hand; }
-	//public Card[] getCurrentHand() { return hand.getHand(); }
+	public Card[] getCurrentHand() { return hand.getHand(); }
 	
 	public boolean isBigBlind(){ return bigBlind; }
 	public boolean isSmallBlind() {return smallBlind; }

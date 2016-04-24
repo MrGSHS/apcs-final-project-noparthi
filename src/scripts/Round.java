@@ -81,11 +81,11 @@ public class Round {
 		System.out.println("\n");
 		
 		System.out.println("Your hand is:");
-	    System.out.print("[" + game.getPlayer().getHand().getHand()[0].getNumber() + game.getPlayer().getHand().getHand()[0].getEncodedSuite() + "] "); 
-	    System.out.println("[" + game.getPlayer().getHand().getHand()[1].getNumber() + game.getPlayer().getHand().getHand()[1].getEncodedSuite() + "]");
+	    System.out.print("[" + game.getPlayer().getCurrentHand()[0].getNumber() + game.getPlayer().getCurrentHand()[0].getEncodedSuite() + "] "); 
+	    System.out.println("[" + game.getPlayer().getCurrentHand()[1].getNumber() + game.getPlayer().getCurrentHand()[1].getEncodedSuite() + "]");
 	    System.out.println("Computer's hand is: ");
-	    System.out.print("[" + game.getComputer().getHand().getHand()[0].getNumber() + game.getComputer().getHand().getHand()[0].getEncodedSuite() + "] "); 
-	    System.out.println("[" + game.getComputer().getHand().getHand()[1].getNumber() + game.getComputer().getHand().getHand()[1].getEncodedSuite() + "]");
+	    System.out.print("[" + game.getComputer().getCurrentHand()[0].getNumber() + game.getComputer().getCurrentHand()[0].getEncodedSuite() + "] "); 
+	    System.out.println("[" + game.getComputer().getCurrentHand()[1].getNumber() + game.getComputer().getCurrentHand()[1].getEncodedSuite() + "]");
 	    String meter = "[";
 	    
 	    if(game.getTable().getCardsOnTable().size()==0) strength = game.getPlayer().getHand().initialHandStrength();
