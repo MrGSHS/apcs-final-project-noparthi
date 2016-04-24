@@ -26,7 +26,7 @@ public class Computer extends Player {
 				return;
 			}
 		} else if(game.getPlayer().getRaiseBoolean()) {
-			if (currentHandStrength > 7) {
+			if (currentHandStrength > 5) {
 				call();
 				return;
 			} else {

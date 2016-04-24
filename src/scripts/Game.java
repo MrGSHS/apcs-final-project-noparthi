@@ -104,9 +104,6 @@ public class Game {
 		for (Player p : players)
 			if (p.isFolded())
 				count++;
-		table = new Table();
-		round = new Round(this);
-		round.preFlop();
 		
 		if (count != 1) {
 			return true;
@@ -114,6 +111,10 @@ public class Game {
 		for(Player p : players){
 			p.resetActionBoolean();
 		}
+		
+		table = new Table();
+		round = new Round(this);
+		round.preFlop();
 
 		return false;
 	}
