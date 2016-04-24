@@ -6,7 +6,6 @@ public class Computer extends Player {
 	//private Hand hand;
 	public Computer(Game game) {
 		super(game);
-		newHand();
 		this.game = game;
 	}
 
@@ -27,7 +26,7 @@ public class Computer extends Player {
 				check();
 				return;
 			}
-		} else if (game.getPlayer().getRaiseBoolean()) {
+		} else if(game.getPlayer().getCheckBoolean()) {
 			if (currentHandStrength > 7) {
 				call();
 				System.out.print(getPoints());
@@ -37,7 +36,6 @@ public class Computer extends Player {
 				return;
 			}
 		}
-
 	}
 
 	public String logic() {

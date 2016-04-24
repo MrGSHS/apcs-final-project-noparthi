@@ -28,7 +28,7 @@ public class Player {
 	public int getPoints() { return points; }
 	public int getPointsInvested(){ return pointsInvested; }
 	public Hand getHand(){ return hand; }
-	public Card[] getCurrentHand() { return hand.getHand(); }
+	//public Card[] getCurrentHand() { return hand.getHand(); }
 	
 	public boolean isBigBlind(){ return bigBlind; }
 	public boolean isSmallBlind() {return smallBlind; }
@@ -38,6 +38,7 @@ public class Player {
 	public void setPointsInvested(int amt){ pointsInvested = amt; }
 	public void setBigBlind(boolean bb){ bigBlind = bb; }
     public void setSmallBlind(boolean sb) {smallBlind = sb;}
+    
 	public void newHand() {
 		hand = new Hand(game, game.getTable().getDeck().deal(), game.getTable().getDeck().deal());
 	}

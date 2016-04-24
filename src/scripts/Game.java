@@ -105,15 +105,17 @@ public class Game {
 		for (Player p : players)
 			if (p.isFolded())
 				count++;
-		if (count > 0 && count < numberOfPlayers) {
+		table = new Table();
+		round = new Round(this);
+		round.preFlop();
+		/*
+		if (count > 1 && count < numberOfPlayers) {
 			return true;
 		}
 		for(Player p : players){
 			p.resetActionBoolean();
 		}
-		table = new Table();
-		round = new Round(this);
-		round.preFlop();
+*/
 		return false;
 	}
 }
