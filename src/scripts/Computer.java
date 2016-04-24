@@ -17,7 +17,7 @@ public class Computer extends Player {
 
 	public void preFlopLogic() {
 		currentHandStrength = getHand().initialHandStrength();
-		if (game.getPlayer().getCheckBoolean()) {
+		if (game.getUser().getCheckBoolean()) {
 			if (currentHandStrength > 6) {
 				raise(game.getBigBlind() * 2);
 				return;
@@ -25,7 +25,7 @@ public class Computer extends Player {
 				check();
 				return;
 			}
-		} else if(game.getPlayer().getRaiseBoolean()) {
+		} else if(game.getUser().getRaiseBoolean()) {
 			if (currentHandStrength > 5) {
 				call();
 				return;

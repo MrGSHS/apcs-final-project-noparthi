@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Game {
 
 	private Display display;
-	private final int BIGBLIND = 500;
-	private final int SMALLBLIND = 250;
+	private final int BIGBLIND = 800;
+	private final int SMALLBLIND = 600;
 	private final int ANTE = 50;
 	private ArrayList<Player> players = new ArrayList<>();
 
@@ -25,7 +25,7 @@ public class Game {
 		return round;
 	}
 
-	public Player getPlayer() {
+	public Player getUser() {
 		return user;
 	}
 
@@ -66,6 +66,7 @@ public class Game {
 		computer1 = new Computer(this);
 		players.add(computer1);
 		round = new Round(this);
+		display.setRoundTitle();
 		round.preFlop();
 	}
 
@@ -127,6 +128,7 @@ public class Game {
 	public void newRound() {
 		table = new Table();
 		round = new Round(this);
+		display.setRoundTitle();
 		round.preFlop();
 	}
 }

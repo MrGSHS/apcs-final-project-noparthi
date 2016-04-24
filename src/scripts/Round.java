@@ -20,7 +20,7 @@ public class Round {
 		setPot(game.getBigBlind() + game.getSmallBlind());
 		setBet(game.getBigBlind());
 		sc = new Scanner(System.in);
-		game.getPlayer().newHand();
+		game.getUser().newHand();
 		game.getComputer().newHand();
 		game.takeBlinds();
 		
@@ -89,15 +89,15 @@ public class Round {
 		System.out.println("\n");
 		
 		System.out.println("Your hand is:");
-	    System.out.print("[" + game.getPlayer().getCurrentHand()[0].getNumber() + game.getPlayer().getCurrentHand()[0].getEncodedSuite() + "] "); 
-	    System.out.println("[" + game.getPlayer().getCurrentHand()[1].getNumber() + game.getPlayer().getCurrentHand()[1].getEncodedSuite() + "]");
+	    System.out.print("[" + game.getUser().getCurrentHand()[0].getNumber() + game.getUser().getCurrentHand()[0].getEncodedSuite() + "] "); 
+	    System.out.println("[" + game.getUser().getCurrentHand()[1].getNumber() + game.getUser().getCurrentHand()[1].getEncodedSuite() + "]");
 	    System.out.println("Computer's hand is: ");
 	    System.out.print("[" + game.getComputer().getCurrentHand()[0].getNumber() + game.getComputer().getCurrentHand()[0].getEncodedSuite() + "] "); 
 	    System.out.println("[" + game.getComputer().getCurrentHand()[1].getNumber() + game.getComputer().getCurrentHand()[1].getEncodedSuite() + "]");
 	    String meter = "[";
 	    
-	    if(game.getTable().getCardsOnTable().size()==0) strength = game.getPlayer().getHand().initialHandStrength();
-	    else strength = game.getPlayer().getHand().updateHandStrength();
+	    if(game.getTable().getCardsOnTable().size()==0) strength = game.getUser().getHand().initialHandStrength();
+	    else strength = game.getUser().getHand().updateHandStrength();
 	    
 	    
 	    //Print Meter
@@ -108,7 +108,7 @@ public class Round {
 	    }
 	    meter += "]";
 	    System.out.println("\n" + "Hand Strength: " + meter + "\n");
-	    System.out.println("You have: " + game.getPlayer().getPoints() + " points");
+	    System.out.println("You have: " + game.getUser().getPoints() + " points");
 		System.out.println("*********************************");
 	}
 	
@@ -120,19 +120,19 @@ public class Round {
 		action = action.toUpperCase();
 		
 		if(action.equals("")) System.exit(0);
-		if(action.equals(Actions.CHECK.toString())) game.getPlayer().check();
-		if(action.equals(Actions.FOLD.toString())) game.getPlayer().fold();
+		if(action.equals(Actions.CHECK.toString())) game.getUser().check();
+		if(action.equals(Actions.FOLD.toString())) game.getUser().fold();
 		if(action.equals(Actions.RAISE.toString())) {
 			System.out.println("How much would you like to raise?");
 			int raiseAmt = sc.nextInt();
 			sc.nextLine();
-			while(!game.getPlayer().raise(raiseAmt)){
+			while(!game.getUser().raise(raiseAmt)){
 				System.out.println("How much would you like to raise?");
 				raiseAmt = sc.nextInt();
 				sc.nextLine();
 			}
 		}
-		if(action.equals(Actions.CALL.toString())) game.getPlayer().call();
+		if(action.equals(Actions.CALL.toString())) game.getUser().call();
 		if(action.equals(Actions.END_GAME.toString())) System.exit(0);
 	}
 	

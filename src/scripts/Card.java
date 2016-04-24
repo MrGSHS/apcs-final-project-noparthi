@@ -21,11 +21,11 @@ public class Card {
 		}
 		else if (suite == 1){
 			suiteValue = "clubs";
-			encodedSuite = "\u2666";
+			encodedSuite = "\u2663";
 		}
 		else if (suite == 0){
 			suiteValue = "diamonds";
-			encodedSuite = "\u2663";
+			encodedSuite = "\u2666";
 		}
 		id++;
 	}

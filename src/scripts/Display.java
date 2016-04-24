@@ -17,12 +17,13 @@ public class Display {
 
 	private final int CARD_WIDTH = 111;
 	private final int CARD_HEIGHT = 190;
-	private final int WIDTH = 5*CARD_WIDTH+100;
-	private final int HEIGHT = CARD_HEIGHT;
+	private final int FRAMEWIDTH = 800;
+	private final int FRAMEHEIGHT = 600;
 	
 	private JFrame frame;
 	private TableDisplayPanel tablePanel;
 
+	private BufferedImage theme;
 	private BufferedImage card1;
 	private BufferedImage card2;
 	private ArrayList<BufferedImage> tableCards;
@@ -33,29 +34,35 @@ public class Display {
 	public Display(Game game) {
 		this.game = game;
 		tableCards = new ArrayList<BufferedImage>();
+		try {
+			theme = ImageIO.read(getClass().getResourceAsStream("/themes/red-velvet.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		frame = new JFrame();
 		frame.setTitle("Oker-pay: Round ");
 		tablePanel = new TableDisplayPanel();
-		frame.setSize(new Dimension(WIDTH, HEIGHT));
+		frame.setSize(new Dimension(FRAMEWIDTH, FRAMEHEIGHT));
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
-		frame.add(tablePanel, BorderLayout.CENTER);
+		frame.add(tablePanel);
 		frame.setVisible(true);
 	}
 	
+	public JFrame getFrame(){ return frame; }
 	public JPanel getTablePanel(){ return tablePanel; }
 	
 	private class TableDisplayPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
-
-		public void paint(Graphics g) {
+		
+		public void paintComponent(Graphics g) {
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setFont(new Font("Calibri", Font.BOLD, 32));
-			
+			g2d.drawImage(theme, 0, 0, null);
 			if (tableCards.size() > 0) {
 				for (int i = 0; i < tableCards.size(); i++) {
-					g.drawImage(tableCards.get(i), CARD_WIDTH * i + 20*i, 0, null);
+					g2d.drawImage(tableCards.get(i), CARD_WIDTH * i + 20*i, FRAMEHEIGHT/2-CARD_HEIGHT/2, null);
 				}
 			}
 		}
@@ -78,5 +85,9 @@ public class Display {
 			}
 		}
 
+	}
+
+	public void setRoundTitle() {
+		frame.setTitle("Oker-pay: Round " + game.getRound().getRoundNumber());
 	}
 }

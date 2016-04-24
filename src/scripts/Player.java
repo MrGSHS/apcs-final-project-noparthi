@@ -24,7 +24,7 @@ public class Player {
 	public boolean getCheckBoolean(){return checkBoolean;}
 	public boolean getRaiseBoolean(){return raiseBoolean;}
 	public boolean getCallBoolean(){return callBoolean;}
-
+	
 	public int getPoints() { return points; }
 	public int getPointsInvested(){ return pointsInvested; }
 	public Hand getHand(){ return hand; }
