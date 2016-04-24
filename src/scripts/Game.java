@@ -108,6 +108,9 @@ public class Game {
 		if (count > 0 && count < numberOfPlayers) {
 			return true;
 		}
+		for(Player p : players){
+			p.resetActionBoolean();
+		}
 		table = new Table();
 		round = new Round(this);
 		round.preFlop();

@@ -11,13 +11,19 @@ public class Player {
 	private boolean folded;
 	private boolean bigBlind;
 	private boolean smallBlind; 
+	public boolean checkBoolean = false;
+	public boolean raiseBoolean = false;
+	public boolean callBoolean = false;
 	
 	public Player(Game game) {
 		this.game = game;
 		newHand();
 		points = 10000;
 	}
-	
+	public boolean getCheckBoolean(){return checkBoolean;}
+	public boolean getRaiseBoolean(){return raiseBoolean;}
+	public boolean getCallBoolean(){return callBoolean;}
+
 	public int getPoints() { return points; }
 	public int getPointsInvested(){ return pointsInvested; }
 	public Hand getHand(){ return hand; }
@@ -34,7 +40,13 @@ public class Player {
 	public void newHand() {
 		hand = new Hand(game, game.getTable().getDeck().deal(), game.getTable().getDeck().deal());
 	}
-
+	
+	public void resetActionBoolean(){
+		checkBoolean = false;
+		raiseBoolean = false;
+		callBoolean = false;
+	}
+	
 	public void fold() {
 		hand = null;
 		folded = true;
@@ -42,6 +54,7 @@ public class Player {
 	}
 
 	public boolean check() {
+		checkBoolean = true;
 		return true;
 	}
 
@@ -54,6 +67,7 @@ public class Player {
 		}
 		game.getRound().setPot(game.getRound().getPot() + game.getRound().getBet());
 		points -= game.getRound().getBet();
+		callBoolean = true;
 		return true;
 	}
 
@@ -67,6 +81,7 @@ public class Player {
 			game.getRound().setPot(game.getRound().getPot() + amt);
 			game.getRound().setBet(amt);
 			points -= amt;
+			raiseBoolean = true;
 			return true;
 		}
 		System.out.println("Must raise at least something greater than or equal to " + game.getRound().getBet());		
