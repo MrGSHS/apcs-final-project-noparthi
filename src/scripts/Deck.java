@@ -28,4 +28,6 @@ public class Deck {
 		shuffle();
 		return deck;
 	}
+	
+	public int cardNum(){return deck.size();}
 }
