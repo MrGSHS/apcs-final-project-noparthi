@@ -25,6 +25,7 @@ public class Round {
 		game.takeBlinds();
 		
 	}	
+	public int getRoundNumber(){ return roundNumber; }
 	public int getPot(){ return pot; }
 	public int getBet(){ return bet; }
 	
@@ -32,6 +33,7 @@ public class Round {
 	public void setBet(int amt){ bet = amt; }
 	
 	public void preFlop(){
+		game.getDisplay().update();
 		game.takeAnte();
 		//Prints  Out Hand Before Flop, Then Deals Flop
 		setBet(game.getBigBlind());

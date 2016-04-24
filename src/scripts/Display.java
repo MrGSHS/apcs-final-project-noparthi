@@ -34,7 +34,7 @@ public class Display {
 		this.game = game;
 		tableCards = new ArrayList<BufferedImage>();
 		frame = new JFrame();
-		frame.setTitle("Oker-pay: Table 1");
+		frame.setTitle("Oker-pay: Round ");
 		tablePanel = new TableDisplayPanel();
 		frame.setSize(new Dimension(WIDTH, HEIGHT));
 		frame.setLocationRelativeTo(null);
