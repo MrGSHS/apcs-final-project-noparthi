@@ -43,6 +43,10 @@ public class Player {
 		hand = new Hand(game, game.getTable().getDeck().deal(), game.getTable().getDeck().deal());
 	}
 	
+	public int getBetAmount(){
+		return 1000;
+	}
+	
 	public void resetActionBoolean(){
 		checkBoolean = false;
 		raiseBoolean = false;
