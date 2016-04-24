@@ -100,7 +100,6 @@ public class Game {
 	}
 
 	public boolean isRoundActive() {
-		int numberOfPlayers = players.size();
 		int count = 0;
 		for (Player p : players)
 			if (p.isFolded())
@@ -108,14 +107,14 @@ public class Game {
 		table = new Table();
 		round = new Round(this);
 		round.preFlop();
-		/*
-		if (count > 1 && count < numberOfPlayers) {
+		
+		if (count != 1) {
 			return true;
 		}
 		for(Player p : players){
 			p.resetActionBoolean();
 		}
-*/
+
 		return false;
 	}
 }

@@ -20,19 +20,18 @@ public class Computer extends Player {
 		if (game.getPlayer().getCheckBoolean()) {
 			if (currentHandStrength > 6) {
 				raise(game.getBigBlind() * 2);
-				System.out.print(getPoints());
 				return;
 			} else {
 				check();
 				return;
 			}
-		} else if(game.getPlayer().getCheckBoolean()) {
+		} else if(game.getPlayer().getRaiseBoolean()) {
 			if (currentHandStrength > 7) {
 				call();
-				System.out.print(getPoints());
 				return;
 			} else {
 				fold();
+				System.out.println("The Computer Has Folded. New Round Will Start");
 				return;
 			}
 		}

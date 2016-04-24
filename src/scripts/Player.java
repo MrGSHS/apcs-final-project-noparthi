@@ -19,7 +19,7 @@ public class Player {
 		this.game = game;
 		points = 10000;
 	}
-	public void takeAction(){System.out.println("NONONONO");}
+	public void takeAction(){}
 	
 	public boolean getCheckBoolean(){return checkBoolean;}
 	public boolean getRaiseBoolean(){return raiseBoolean;}
