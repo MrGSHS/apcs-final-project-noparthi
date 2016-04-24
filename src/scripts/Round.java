@@ -43,6 +43,7 @@ public class Round {
 
 	}	
 	public void preTurn(){
+		game.getDisplay().update();
 		bet = 500;
 		//Prints Out Hand Before Turn, Then Deals Turn
 	    printTable();
@@ -52,6 +53,7 @@ public class Round {
 		preRiver();
 	}	
 	public void preRiver(){
+		game.getDisplay().update();
 		bet = 500;;
 		//Prints Out Hand Before River, Then Deals River
 	    printTable();
@@ -61,11 +63,15 @@ public class Round {
 		postRiver();
 	}	
 	public void postRiver(){
+		game.getDisplay().update();
 		//Prints Hand Before Show-down, And Asks For Final Raise/Check/Fold
 	    printTable();
 		requestAction();
 		game.getComputer().takeAction();
+		game.payout();
 	}
+	
+	
 	
 	private void printTable(){
 		int strength;

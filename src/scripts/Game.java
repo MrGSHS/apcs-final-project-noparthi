@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class Game {
 
+	private Display display;
 	private final int BIGBLIND = 500;
 	private final int SMALLBLIND = 250;
 	private final int ANTE = 50;
-
 	private ArrayList<Player> players = new ArrayList<>();
 
 	private Player user;
@@ -16,6 +16,7 @@ public class Game {
 	private Table table;
 	private int dealerIndex = 0;
 
+	public Display getDisplay(){ return display; }
 	public Table getTable() {
 		return table;
 	}
@@ -55,7 +56,10 @@ public class Game {
 		return players;
 	}
 
+
+
 	public Game() {
+		display = new Display(this);
 		table = new Table();
 		user = new Player(this);
 		players.add(user);
@@ -86,12 +90,17 @@ public class Game {
 
 	public void takeAnte() {
 		for (Player p : players) {
-			if (!p.isBigBlind()&&!p.isSmallBlind()) {
+			if (!p.isBigBlind() && !p.isSmallBlind()) {
 				p.setPoints(p.getPoints() - ANTE);
 				p.setPointsInvested(p.getPointsInvested() + ANTE);
 				round.setPot(round.getPot() + ANTE);
 			}
 		}
+	}
+
+	public void payout() {
+		user.setPoints(user.getPoints() + round.getPot());
+		newRound();
 	}
 
 	public void resetPointsInvested() {
@@ -104,18 +113,20 @@ public class Game {
 		for (Player p : players)
 			if (p.isFolded())
 				count++;
-		
+
 		if (count != 1) {
 			return true;
 		}
-		for(Player p : players){
+		for (Player p : players) {
 			p.resetActionBoolean();
 		}
-		
+		newRound();
+		return false;
+	}
+
+	public void newRound() {
 		table = new Table();
 		round = new Round(this);
 		round.preFlop();
-
-		return false;
 	}
 }

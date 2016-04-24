@@ -17,7 +17,7 @@ public class Player {
 	
 	public Player(Game game) {
 		this.game = game;
-		points = 10000;
+		points = 100000;
 	}
 	public void takeAction(){}
 	
