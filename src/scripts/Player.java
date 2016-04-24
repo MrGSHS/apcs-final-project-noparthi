@@ -17,9 +17,10 @@ public class Player {
 	
 	public Player(Game game) {
 		this.game = game;
-		newHand();
 		points = 10000;
 	}
+	public void takeAction(){System.out.println("NONONONO");}
+	
 	public boolean getCheckBoolean(){return checkBoolean;}
 	public boolean getRaiseBoolean(){return raiseBoolean;}
 	public boolean getCallBoolean(){return callBoolean;}
@@ -76,7 +77,8 @@ public class Player {
 			if (amt > points) {
 				game.getRound().setPot(game.getRound().getPot()+points);
 				points = 0;
-				return false;
+				raiseBoolean = true;
+				return true;
 			}
 			game.getRound().setPot(game.getRound().getPot() + amt);
 			game.getRound().setBet(amt);

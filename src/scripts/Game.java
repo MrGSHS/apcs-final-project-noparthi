@@ -59,8 +59,8 @@ public class Game {
 		table = new Table();
 		user = new Player(this);
 		players.add(user);
-		// computer1 = new Computer(this);
-		// players.add(computer1);
+		computer1 = new Computer(this);
+		players.add(computer1);
 		round = new Round(this);
 		round.preFlop();
 	}

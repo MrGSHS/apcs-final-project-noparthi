@@ -21,7 +21,7 @@ public class Round {
 		setBet(game.getBigBlind());
 		sc = new Scanner(System.in);
 		game.getPlayer().newHand();
-		//game.getComputer().newHand();
+		game.getComputer().newHand();
 		game.takeBlinds();
 		
 	}	
@@ -37,6 +37,7 @@ public class Round {
 		setBet(game.getBigBlind());
 		printTable();
 		requestAction();
+		game.getComputer().takeAction();
 		game.getTable().dealFlop();
 		preTurn();
 
@@ -46,6 +47,7 @@ public class Round {
 		//Prints Out Hand Before Turn, Then Deals Turn
 	    printTable();
 		requestAction();
+		game.getComputer().takeAction();
 		game.getTable().dealTurn();
 		preRiver();
 	}	
@@ -54,13 +56,15 @@ public class Round {
 		//Prints Out Hand Before River, Then Deals River
 	    printTable();
 		requestAction();
+		game.getComputer().takeAction();
 		game.getTable().dealRiver();
 		postRiver();
 	}	
 	public void postRiver(){
 		//Prints Hand Before Show-down, And Asks For Final Raise/Check/Fold
 	    printTable();
-		requestAction();		
+		requestAction();
+		game.getComputer().takeAction();
 	}
 	
 	private void printTable(){
@@ -79,6 +83,9 @@ public class Round {
 		System.out.println("Your hand is:");
 	    System.out.print("[" + game.getPlayer().getCurrentHand()[0].getNumber() + game.getPlayer().getCurrentHand()[0].getEncodedSuite() + "] "); 
 	    System.out.println("[" + game.getPlayer().getCurrentHand()[1].getNumber() + game.getPlayer().getCurrentHand()[1].getEncodedSuite() + "]");
+	    System.out.println("Computer's hand is: ");
+	    System.out.print("[" + game.getComputer().getCurrentHand()[0].getNumber() + game.getComputer().getCurrentHand()[0].getEncodedSuite() + "] "); 
+	    System.out.println("[" + game.getComputer().getCurrentHand()[1].getNumber() + game.getComputer().getCurrentHand()[1].getEncodedSuite() + "]");
 	    String meter = "[";
 	    
 	    if(game.getTable().getCardsOnTable().size()==0) strength = game.getPlayer().getHand().initialHandStrength();
