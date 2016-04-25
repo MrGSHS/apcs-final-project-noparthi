@@ -54,6 +54,8 @@ public class Player {
 
 	public void check() {
 		checkBoolean = true;
+		callBoolean = false;
+		raiseBoolean = false;
 	}
 
 	public void call() {
@@ -67,6 +69,8 @@ public class Player {
 		game.getRound().setPot(game.getRound().getPot() + maxBet);
 		points -= maxBet;
 		callBoolean = true;
+		checkBoolean = false;
+		raiseBoolean = false;
 	}
 
 	public boolean raise(int amt) {
@@ -77,6 +81,8 @@ public class Player {
 				game.getRound().setPot(game.getRound().getPot()+points);
 				points = 0;
 				raiseBoolean = true;
+				checkBoolean = false;
+				callBoolean = false;
 				return true;
 			}
 			betAmount = amt;
@@ -84,6 +90,8 @@ public class Player {
 			game.getRound().setMinBet(amt);
 			points -= amt;
 			raiseBoolean = true;
+			checkBoolean = false;
+			callBoolean = false;
 			return true;
 		}
 		System.out.println("Must raise at least something greater than or equal to " + game.getRound().getMinBet());		

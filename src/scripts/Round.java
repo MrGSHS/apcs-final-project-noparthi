@@ -33,8 +33,13 @@ public class Round {
 		//Prints  Out Hand Before Flop, Then Deals Flop
 		setMinBet(game.getBigBlind());
 		printTable();
-		requestAction();
-		game.getComputer().takeAction();
+		for(int i = 0; i < game.getPlayers().size(); i++){
+			if(game.getPlayers().get(i).getCallBoolean()==true || game.getPlayers().get(i).getCheckBoolean()==true){}
+			else{
+				if(i == 0) requestAction();		
+				else game.getComputer().takeAction();
+			}
+		}
 		game.getTable().dealFlop();
 		preTurn();
 
