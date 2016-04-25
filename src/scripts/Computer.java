@@ -53,7 +53,7 @@ public class Computer extends Player {
 			else if(currentHandStrength == 4 || currentHandStrength == 3 || (int)(Math.random()*11)+1 <=3){raise(game.getBigBlind()*2); return;}
 			else{check(); return;}
 		} 
-		if(game.getUser().getRaiseBoolean()) {
+		else if(game.getUser().getRaiseBoolean()) {
 			//DONT REMOVE. SAVE FOR FUTURE//if(currentHandStrength>=8 || (int)(Math.random()*11)+1 <=2){raise(game.getBigBlind()*((int)(Math.random()*6)+5)); return;}
 			if(currentHandStrength==10){call(); return;}
 			if(game.getUser().getBetAmount()>0.75*getPoints()){

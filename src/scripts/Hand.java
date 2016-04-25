@@ -68,15 +68,15 @@ public class Hand {
 		else if(cardsOnTable.size()==4) totalCards.add(cardsOnTable.get(3));
 		else totalCards.add(cardsOnTable.get(4));
 		//Updates Hand Strength
-		if(royalFlush() || straightFlush()) return 10;
-		if(fourOfAKind() || fullHouse()) return 9;
-		if(straight() || flush()) return 8;
-		if(trips() && (card1.getNumber()>=9 || card2.getNumber()>=9)) return 7;
-		if(trips() && (card1.getNumber()<9 || card2.getNumber()<9)) return 6;
-		if(twoPair() && (card1.getNumber()>=8 || card2.getNumber()>=8)) return 5;
-		if(twoPair() && (card1.getNumber()<8 || card2.getNumber()<8)) return 4;
-		if(pair() && (card1.getNumber()>=7 || card2.getNumber()>=7)) return 3;
 		if(pair() && (card1.getNumber()<7 || card2.getNumber()<7)) return 2;
+		else if(pair() && (card1.getNumber()>=7 || card2.getNumber()>=7)) return 3;
+		else if(twoPair() && (card1.getNumber()<8 || card2.getNumber()<8)) return 4;
+		else if(twoPair() && (card1.getNumber()>=8 || card2.getNumber()>=8)) return 5;
+		else if(trips() && (card1.getNumber()<9 || card2.getNumber()<9)) return 6;
+		else if(trips() && (card1.getNumber()>=9 || card2.getNumber()>=9)) return 7;		
+		else if(straight() || flush()) return 8;
+		else if(fourOfAKind() || fullHouse()||straightFlush()) return 9;
+		else if(royalFlush()) return 10;	
 		else return 1;
 	}
 
