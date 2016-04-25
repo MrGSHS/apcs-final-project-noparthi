@@ -46,17 +46,13 @@ public class Game {
 	}
 
 	public void setDealerIndex(int index) {
-		if (index >= players.size())
-			dealerIndex = 0;
-		else
-			dealerIndex = index;
+		if (index >= players.size()) dealerIndex = 0;
+		else dealerIndex = index;
 	}
 
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
-
-
 
 	public Game() {
 		display = new Display(this);
@@ -128,6 +124,7 @@ public class Game {
 
 	public void newRound() {
 		resetPlayerBetAmount();
+		setDealerIndex(dealerIndex+=1);
 		table = new Table();
 		round = new Round(this);
 		takeBlinds();
