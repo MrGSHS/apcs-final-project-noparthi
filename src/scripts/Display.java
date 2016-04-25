@@ -15,15 +15,18 @@ import javax.swing.JPanel;
 
 public class Display {
 
-	private final int CARD_WIDTH = 111;
-	private final int CARD_HEIGHT = 190;
-	private final int FRAMEWIDTH = 800;
-	private final int FRAMEHEIGHT = 600;
+	private final int CARD_WIDTH = 55;
+	private final int CARD_HEIGHT = 80;
+	private final int TABLE_WIDTH = 608;
+	private final int TABLE_HEIGHT = 308;
+	private final int FRAME_WIDTH = 800;
+	private final int FRAME_HEIGHT = 600;
 	
 	private JFrame frame;
 	private TableDisplayPanel tablePanel;
 
 	private BufferedImage theme;
+	private BufferedImage table;
 	private BufferedImage card1;
 	private BufferedImage card2;
 	private ArrayList<BufferedImage> tableCards;
@@ -36,13 +39,14 @@ public class Display {
 		tableCards = new ArrayList<BufferedImage>();
 		try {
 			theme = ImageIO.read(getClass().getResourceAsStream("/themes/red-velvet.jpg"));
+			table = ImageIO.read(getClass().getResourceAsStream("/other/poker-table.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
 		frame.setTitle("Oker-pay: Round ");
 		tablePanel = new TableDisplayPanel();
-		frame.setSize(new Dimension(FRAMEWIDTH, FRAMEHEIGHT));
+		frame.setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
@@ -60,9 +64,10 @@ public class Display {
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setFont(new Font("Calibri", Font.BOLD, 32));
 			g2d.drawImage(theme, 0, 0, null);
+			g2d.drawImage(table, FRAME_WIDTH/2-TABLE_WIDTH/2, FRAME_HEIGHT/2-TABLE_HEIGHT/2, null);
 			if (tableCards.size() > 0) {
 				for (int i = 0; i < tableCards.size(); i++) {
-					g2d.drawImage(tableCards.get(i), CARD_WIDTH * i + 20*i, FRAMEHEIGHT/2-CARD_HEIGHT/2, null);
+					g2d.drawImage(tableCards.get(i), 225 + (CARD_WIDTH + 15)* i , FRAME_HEIGHT/2-CARD_HEIGHT/2-18, null);
 				}
 			}
 		}
