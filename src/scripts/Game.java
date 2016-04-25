@@ -2,8 +2,8 @@ package scripts;
 
 import java.util.ArrayList;
 
-public class Game {
-
+public class Game{
+	
 	private Display display;
 	private final int BIGBLIND = 500;
 	private final int SMALLBLIND = 250;
@@ -53,15 +53,15 @@ public class Game {
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
-
+	
 	public Game() {
-		display = new Display(this);
 		table = new Table();
 		user = new Player(this);
 		players.add(user);
 		computer1 = new Computer(this);
 		players.add(computer1);
 		round = new Round(this);
+		display = new Display(this);
 		takeBlinds();
 		display.setRoundTitle();
 		round.preFlop();

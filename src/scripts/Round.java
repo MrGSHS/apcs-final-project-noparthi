@@ -1,22 +1,27 @@
 package scripts;
 
-import java.util.Scanner;
-
 public class Round {
 	
-	private Scanner sc;
 	private static int roundNumber = 0;
 	private Game game;
 	
 	private int pot;
 	private int minBet;
 	
+	/*
+	 * 0 = pre flop
+	 * 1 = pre turn
+	 * 2 = pre river
+	 * 3 = post river
+	 */
+	public int stageOfRound;
+	
 	public Round(Game game){
 		pot = 0;
 		minBet = 0;
+		stageOfRound = 0;
 		this.game = game;
 		roundNumber++;
-		sc = new Scanner(System.in);
 		game.getUser().newHand();
 		game.getComputer().newHand();		
 	}	
@@ -33,44 +38,24 @@ public class Round {
 		//Prints  Out Hand Before Flop, Then Deals Flop
 		setMinBet(game.getBigBlind());
 		printTable();
-		for(int i = 0; i < game.getPlayers().size(); i++){
-			if(game.getPlayers().get(i).getCallBoolean()==true || game.getPlayers().get(i).getCheckBoolean()==true){}
-			else{
-				if(i == 0) requestAction();		
-				else game.getComputer().takeAction();
-			}
-		}
-		game.getTable().dealFlop();
-		preTurn();
-
+		
 	}	
 	public void preTurn(){
 		game.getDisplay().update();
 		minBet = 500;
 		//Prints Out Hand Before Turn, Then Deals Turn
 	    printTable();
-		requestAction();
-		game.getComputer().takeAction();
-		game.getTable().dealTurn();
-		preRiver();
 	}	
 	public void preRiver(){
 		game.getDisplay().update();
 		minBet = 500;;
 		//Prints Out Hand Before River, Then Deals River
 	    printTable();
-		requestAction();
-		game.getComputer().takeAction();
-		game.getTable().dealRiver();
-		postRiver();
 	}	
 	public void postRiver(){
 		game.getDisplay().update();
 		//Prints Hand Before Show-down, And Asks For Final Raise/Check/Fold
 	    printTable();
-		requestAction();
-		game.getComputer().takeAction();
-		game.payout();
 	}
 	
 	
@@ -112,28 +97,27 @@ public class Round {
 		System.out.println("*********************************");
 	}
 	
+	public void moveOn(){
+		game.getComputer().takeAction();
 
-	public void requestAction(){
-		System.out.println("What would you like to do?");
-		String action = sc.nextLine();
-		action= action.replaceAll("\\s+","");
-		action = action.toUpperCase();
+		if(stageOfRound == 0){
+			stageOfRound++;
+			System.out.println(stageOfRound);
+			game.getTable().dealFlop();
+			preTurn();
+		}else if(stageOfRound == 1){
+			stageOfRound++;
+			System.out.println(stageOfRound);
+			game.getTable().dealTurn();
+			preRiver();
+		}else if(stageOfRound == 2){
+			stageOfRound++;
+			System.out.println(stageOfRound);
+			game.getTable().dealRiver();
+			postRiver();
+		}else game.payout();
 		
-		if(action.equals("")) System.exit(0);
-		if(action.equals(Actions.CHECK.toString())) game.getUser().check();
-		if(action.equals(Actions.FOLD.toString())) game.getUser().fold();
-		if(action.equals(Actions.RAISE.toString())) {
-			System.out.println("How much would you like to raise?");
-			int raiseAmt = sc.nextInt();
-			sc.nextLine();
-			while(!game.getUser().raise(raiseAmt)){
-				System.out.println("How much would you like to raise?");
-				raiseAmt = sc.nextInt();
-				sc.nextLine();
-			}
-		}
-		if(action.equals(Actions.CALL.toString())) game.getUser().call();
-		if(action.equals(Actions.END_GAME.toString())) System.exit(0);
+		
 	}
 	
 }
