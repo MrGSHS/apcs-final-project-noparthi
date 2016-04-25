@@ -74,8 +74,10 @@ public class Display {
 			g.fillRoundRect(FRAME_WIDTH/2-70, FRAME_HEIGHT/2+CARD_WIDTH-20, 140, 20, 15, 15);
 			g.setColor(new Color(246,246,246));
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
+			String potSize = "POT: " + game.getRound().getPot();
+			int potSizeWidth = g2d.getFontMetrics().stringWidth(potSize);
 			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g.drawString("POT: " + game.getRound().getPot(), FRAME_WIDTH/2-60, FRAME_HEIGHT/2+CARD_WIDTH-5);
+			g.drawString(potSize, FRAME_WIDTH/2-(int)(potSizeWidth/2), FRAME_HEIGHT/2+CARD_WIDTH-5);
 		}
 	}
 
