@@ -1,10 +1,11 @@
 package scripts;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,14 +63,19 @@ public class Display {
 		
 		public void paintComponent(Graphics g) {
 			Graphics2D g2d = (Graphics2D) g;
-			g2d.setFont(new Font("Calibri", Font.BOLD, 32));
-			g2d.drawImage(theme, 0, 0, null);
-			g2d.drawImage(table, FRAME_WIDTH/2-TABLE_WIDTH/2, FRAME_HEIGHT/2-TABLE_HEIGHT/2, null);
+			g.drawImage(theme, 0, 0, null);
+			g.drawImage(table, FRAME_WIDTH/2-TABLE_WIDTH/2, FRAME_HEIGHT/2-TABLE_HEIGHT/2, null);
 			if (tableCards.size() > 0) {
 				for (int i = 0; i < tableCards.size(); i++) {
-					g2d.drawImage(tableCards.get(i), 225 + (CARD_WIDTH + 15)* i , FRAME_HEIGHT/2-CARD_HEIGHT/2-18, null);
+					g.drawImage(tableCards.get(i), 225 + (CARD_WIDTH + 15)* i , FRAME_HEIGHT/2-CARD_HEIGHT/2-18, null);
 				}
 			}
+			g.setColor(new Color(55,53,53));
+			g.fillRoundRect(FRAME_WIDTH/2-70, FRAME_HEIGHT/2+CARD_WIDTH-20, 140, 20, 15, 15);
+			g.setColor(new Color(246,246,246));
+			g.setFont(new Font("Calibri", Font.BOLD, 16));
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			g.drawString("POT: " + game.getRound().getPot(), FRAME_WIDTH/2-60, FRAME_HEIGHT/2+CARD_WIDTH-5);
 		}
 	}
 
