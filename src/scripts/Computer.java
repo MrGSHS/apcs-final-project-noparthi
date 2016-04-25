@@ -45,31 +45,32 @@ public class Computer extends Player {
 	public void logic() {
 		currentHandStrength = getHand().updateHandStrength();
 		if (game.getUser().getCheckBoolean()) {
-			if (currentHandStrength <= 2){check(); return;}
-			else if(currentHandStrength <= 3 || (int)(Math.random()*11)+1 == 1){raise(game.getBigBlind()*2);}
-			else if(currentHandStrength <= 5 || (int)(Math.random()*11)+1 <=2){raise(game.getBigBlind()*4);}
-			else if(currentHandStrength <= 6 || (int)(Math.random()*11)+1 <=2){raise(game.getBigBlind()*8);}
-			else if(currentHandStrength <= 7 || (int)(Math.random()*11)+1 <=2){raise(game.getBigBlind()*16);}
-			else if(currentHandStrength >= 8 || (int)(Math.random()*11)+1 <=2){raise(game.getBigBlind()*32);}
-
-			else{ check(); return;}
+			if((int)(Math.random()*11)+1 <=2){raise(game.getBigBlind()*32);}
+			else if(currentHandStrength >= 8 || (int)(Math.random()*11)+1 <=2){raise(game.getBigBlind()*32); return;}
+			else if(currentHandStrength == 7 || (int)(Math.random()*11)+1 <=2){raise(game.getBigBlind()*16); return;}
+			else if(currentHandStrength == 6 || (int)(Math.random()*11)+1 <=2){raise(game.getBigBlind()*8); return;}
+			else if(currentHandStrength == 5 || (int)(Math.random()*11)+1 <=2){raise(game.getBigBlind()*4); return;}
+			else if(currentHandStrength == 4 || currentHandStrength == 3 || (int)(Math.random()*11)+1 <=3){raise(game.getBigBlind()*2); return;}
+			else{check(); return;}
 		} 
 		if(game.getUser().getRaiseBoolean()) {
+			//DONT REMOVE. SAVE FOR FUTURE//if(currentHandStrength>=8 || (int)(Math.random()*11)+1 <=2){raise(game.getBigBlind()*((int)(Math.random()*6)+5)); return;}
 			if(currentHandStrength==10){call(); return;}
 			if(game.getUser().getBetAmount()>0.75*getPoints()){
 				if(currentHandStrength>=8){ call(); return;}
 				else{fold(); System.out.println("The Computer Has Folded. New Round Will Start"); return;}
 			}
 			if(game.getUser().getBetAmount()>0.5*getPoints()){ 
-				if(currentHandStrength>=7 || (int)(Math.random()*11)+1 == 1){ call(); return;}
+				if(currentHandStrength>=7 || (int)(Math.random()*11)+1 <= 1){ call(); return;}
 				else{fold(); System.out.println("The Computer Has Folded. New Round Will Start"); return;}
 			}
 			if(game.getUser().getBetAmount()>0.25*getPoints()){ 
-				if(currentHandStrength>=6 || (int)(Math.random()*11)+1 <=2){ call(); return;}
+				if(currentHandStrength>=6 || (int)(Math.random()*11)+1 <=1){ call(); return;}
 				else{fold(); System.out.println("The Computer Has Folded. New Round Will Start"); return;}
 			}
 			else{
-				if(currentHandStrength>=5 || (int)(Math.random()*11)+1 <= 3){ call(); return;}
+				if(currentHandStrength>=7 || (int)(Math.random()*11)+1 <=2){raise(game.getBigBlind()*((int)(Math.random()*6)+7)); return;}
+				else if(currentHandStrength>=5 || (int)(Math.random()*11)+1 <= 2){ call(); return;}
 				else{fold(); System.out.println("The Computer Has Folded. New Round Will Start"); return;}
 			}
 		}
