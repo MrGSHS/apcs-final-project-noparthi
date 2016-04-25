@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Game {
 
 	private Display display;
-	private final int BIGBLIND = 800;
-	private final int SMALLBLIND = 600;
+	private final int BIGBLIND = 500;
+	private final int SMALLBLIND = 250;
 	private final int ANTE = 50;
 	private ArrayList<Player> players = new ArrayList<>();
 
@@ -66,6 +66,7 @@ public class Game {
 		computer1 = new Computer(this);
 		players.add(computer1);
 		round = new Round(this);
+		takeBlinds();
 		display.setRoundTitle();
 		round.preFlop();
 	}
@@ -82,18 +83,17 @@ public class Game {
 			smallBlindIndex = 0;
 		players.get(smallBlindIndex).setSmallBlind(true);
 		// Takes The Big And Small Blind
-		players.get(bigBlindIndex).setPoints(players.get(bigBlindIndex).getPoints() - BIGBLIND);
-		players.get(bigBlindIndex).setPointsInvested(players.get(bigBlindIndex).getPointsInvested() + BIGBLIND);
+		players.get(bigBlindIndex).raise(BIGBLIND);
 		players.get(smallBlindIndex).setPoints(players.get(smallBlindIndex).getPoints() - SMALLBLIND);
-		// players.get(smallBlindIndex).setPointsInvested(players.get(smallBlindIndex).getPointsInvested()
-		// + SMALLBLIND);
+		players.get(smallBlindIndex).setBetAmount(SMALLBLIND);
+		round.setPot(round.getPot() + SMALLBLIND);
 	}
 
 	public void takeAnte() {
 		for (Player p : players) {
 			if (!p.isBigBlind() && !p.isSmallBlind()) {
 				p.setPoints(p.getPoints() - ANTE);
-				p.setPointsInvested(p.getPointsInvested() + ANTE);
+				p.setBetAmount(ANTE);		
 				round.setPot(round.getPot() + ANTE);
 			}
 		}
@@ -104,9 +104,9 @@ public class Game {
 		newRound();
 	}
 
-	public void resetPointsInvested() {
+	public void resetPlayerBetAmount() {
 		for (Player p : players)
-			p.setPointsInvested(0);
+			p.setBetAmount(0);
 	}
 
 	public boolean isRoundActive() {
@@ -121,13 +121,16 @@ public class Game {
 		for (Player p : players) {
 			p.resetActionBoolean();
 		}
+		payout();
 		newRound();
 		return false;
 	}
 
 	public void newRound() {
+		resetPlayerBetAmount();
 		table = new Table();
 		round = new Round(this);
+		takeBlinds();
 		display.setRoundTitle();
 		round.preFlop();
 	}

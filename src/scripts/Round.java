@@ -9,34 +9,30 @@ public class Round {
 	private Game game;
 	
 	private int pot;
-	private int bet;
+	private int minBet;
 	
 	public Round(Game game){
 		pot = 0;
-		bet = 0;
+		minBet = 0;
 		this.game = game;
-		game.resetPointsInvested();
 		roundNumber++;
-		setPot(game.getBigBlind() + game.getSmallBlind());
-		setBet(game.getBigBlind());
+		//setPot(game.getBigBlind() + game.getSmallBlind());
 		sc = new Scanner(System.in);
 		game.getUser().newHand();
-		game.getComputer().newHand();
-		game.takeBlinds();
-		
+		game.getComputer().newHand();		
 	}	
 	public int getRoundNumber(){ return roundNumber; }
 	public int getPot(){ return pot; }
-	public int getBet(){ return bet; }
+	public int getMinBet(){ return minBet; }
 	
 	public void setPot(int amt){ pot = amt; }
-	public void setBet(int amt){ bet = amt; }
+	public void setMinBet(int amt){ minBet = amt; }
 	
 	public void preFlop(){
 		game.getDisplay().update();
 		game.takeAnte();
 		//Prints  Out Hand Before Flop, Then Deals Flop
-		setBet(game.getBigBlind());
+		setMinBet(game.getBigBlind());
 		printTable();
 		requestAction();
 		game.getComputer().takeAction();
@@ -46,7 +42,7 @@ public class Round {
 	}	
 	public void preTurn(){
 		game.getDisplay().update();
-		bet = 500;
+		minBet = 500;
 		//Prints Out Hand Before Turn, Then Deals Turn
 	    printTable();
 		requestAction();
@@ -56,7 +52,7 @@ public class Round {
 	}	
 	public void preRiver(){
 		game.getDisplay().update();
-		bet = 500;;
+		minBet = 500;;
 		//Prints Out Hand Before River, Then Deals River
 	    printTable();
 		requestAction();
@@ -80,7 +76,7 @@ public class Round {
 		System.out.println("*********************************");
 		System.out.println("Round: " + roundNumber + "\n");
 		System.out.println("The current pot is: " + pot);
-		System.out.println("The minimum bet is: " + bet);
+		System.out.println("The minimum bet is: " + minBet);
 		
 		System.out.println("\n" + "Current cards on the table: ");
 		for(int i = 0; i < game.getTable().getCardsOnTable().size(); i++){

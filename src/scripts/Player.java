@@ -6,7 +6,7 @@ public class Player {
 	private Hand hand;
 
 	private int points;
-	private int pointsInvested;
+	private int betAmount;
 	
 	private boolean folded;
 	private boolean bigBlind;
@@ -26,7 +26,6 @@ public class Player {
 	public boolean getCallBoolean(){return callBoolean;}
 	
 	public int getPoints() { return points; }
-	public int getPointsInvested(){ return pointsInvested; }
 	public Hand getHand(){ return hand; }
 	public Card[] getCurrentHand() { return hand.getHand(); }
 	
@@ -35,16 +34,11 @@ public class Player {
 	public boolean isFolded(){ return folded; }	
 
 	public void setPoints(int num) { points = num; }
-	public void setPointsInvested(int amt){ pointsInvested = amt; }
 	public void setBigBlind(boolean bb){ bigBlind = bb; }
     public void setSmallBlind(boolean sb) {smallBlind = sb;}
     
 	public void newHand() {
 		hand = new Hand(game, game.getTable().getDeck().deal(), game.getTable().getDeck().deal());
-	}
-	
-	public int getBetAmount(){
-		return 1000;
 	}
 	
 	public void resetActionBoolean(){
@@ -54,45 +48,54 @@ public class Player {
 	}
 	
 	public void fold() {
-		hand = null;
 		folded = true;
 		game.isRoundActive();
 	}
 
-	public boolean check() {
+	public void check() {
 		checkBoolean = true;
-		return true;
 	}
 
-	public boolean call() {
-		if(pointsInvested >= game.getRound().getBet()) return false; 
-		if (game.getRound().getBet() > points) {
-			game.getRound().setPot(game.getRound().getPot() + points);
-			points = 0;
-			return false;
+	public void call() {
+		int maxBet = 0;
+		int bet = 0;
+		for(Player p : game.getPlayers()){
+			bet = p.getBetAmount();
+			if(bet > maxBet)maxBet = bet;
 		}
-		game.getRound().setPot(game.getRound().getPot() + game.getRound().getBet());
-		points -= game.getRound().getBet();
+		maxBet -= betAmount;
+		game.getRound().setPot(game.getRound().getPot() + maxBet);
+		points -= maxBet;
 		callBoolean = true;
-		return true;
 	}
 
 	public boolean raise(int amt) {
-		if (amt >= game.getRound().getBet()) {
+		amt -= betAmount;
+		if (amt >= game.getRound().getMinBet()) {
 			if (amt > points) {
+				betAmount = points;
 				game.getRound().setPot(game.getRound().getPot()+points);
 				points = 0;
 				raiseBoolean = true;
 				return true;
 			}
+			betAmount = amt;
 			game.getRound().setPot(game.getRound().getPot() + amt);
-			game.getRound().setBet(amt);
+			game.getRound().setMinBet(amt);
 			points -= amt;
 			raiseBoolean = true;
 			return true;
 		}
-		System.out.println("Must raise at least something greater than or equal to " + game.getRound().getBet());		
+		System.out.println("Must raise at least something greater than or equal to " + game.getRound().getMinBet());		
 		return false;		
 	}
 	
+	public void setBetAmount(int amt){
+		betAmount = amt;
+	}
+
+	
+	public int getBetAmount(){
+		return betAmount;
+	}
 }
