@@ -27,23 +27,24 @@ public class Hand {
 	}
 
 	public int initialHandStrength() {
+		strength = 0;
 		// Check High Card
-		if (card1.getNumber() <= 5 || card2.getNumber() <= 5)
+		if ((card1.getNumber() <= 4 || card2.getNumber() <= 4)&&(card1.getNumber() >= 12 || card2.getNumber() <= 12))
 			strength += 1;
 		else if (card1.getNumber() <= 10 || card2.getNumber() <= 10)
 			strength += 3;
 		else
-			strength += 5;
+			strength += 4;
 		// Check Straight Draws
 		if (Math.abs(card1.getNumber() - card2.getNumber()) <= 4) {
 			if (Math.abs(card1.getNumber() - card2.getNumber()) == 1)
-				strength += 2;
+				strength += 3;
 			else
-				strength++;
+				strength += 2;
 		}
 		// Check Flush Draws
 		if (card1.getSuite() == card2.getSuite())
-			strength += 2;
+			strength += 3;
 		// Check Pocket Pairs
 		if (card1.getNumber() == card2.getNumber()) {
 			if (card1.getNumber() <= 5)

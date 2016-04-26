@@ -75,21 +75,22 @@ public class Display {
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			
-			// Background & theme
+			// Background & Theme
 			g.drawImage(theme, 0, 0, null);
 			g.drawImage(table, FRAME_WIDTH/2-TABLE_WIDTH/2, FRAME_HEIGHT/2-TABLE_HEIGHT/2 - 25, null);
 			
 			// Draw Cards
 			g.drawImage(card1, FRAME_WIDTH/2-userLabel.getWidth()/2+15,					FRAME_HEIGHT/2+TABLE_HEIGHT/2-20-CARD_HEIGHT/2 - 18, CARD_WIDTH+30, CARD_HEIGHT+40, null);
 			g.drawImage(card2, FRAME_WIDTH/2-userLabel.getWidth()/2+15+CARD_WIDTH+10, 	FRAME_HEIGHT/2+TABLE_HEIGHT/2-20-CARD_HEIGHT/2 - 18, CARD_WIDTH+30, CARD_HEIGHT+40, null);
-			// Player labels
+			
+			// Player Labels
 			g.drawImage(userLabel, FRAME_WIDTH/2-userLabel.getWidth()/2, FRAME_HEIGHT/2+TABLE_HEIGHT/2-20, null);
 			
-			// Player name & pot size
+			// Player Name & Pot Size
 			g.setColor(Color.BLACK);
 			g.drawString("Jerry", FRAME_WIDTH/2-userLabel.getWidth()/2+95, FRAME_HEIGHT/2+TABLE_HEIGHT/2+2);
 			g.setFont(new Font("Calibri", Font.PLAIN, 20));
-			g.setColor(new Color(3, 255, 70));
+			g.setColor(new Color(5, 145, 60));
 			g.drawString("" + game.getUser().getPoints(), FRAME_WIDTH/2-userLabel.getWidth()/2+90, FRAME_HEIGHT/2+TABLE_HEIGHT/2+30);
 			
 			if (tableCards.size() > 0) {
@@ -104,6 +105,19 @@ public class Display {
 			String potSize = "POT: " + game.getRound().getPot();
 			int potSizeWidth = g2d.getFontMetrics().stringWidth(potSize);
 			g.drawString(potSize, FRAME_WIDTH/2-(int)(potSizeWidth/2), FRAME_HEIGHT/2+CARD_WIDTH-30);
+			
+			//Hand Strength Meter - 6 Pixel Border
+			int handStrength = 0;
+			g.setColor(Color.DARK_GRAY);
+			g.fillRoundRect(500, 494, 296, 31, 10, 10);
+			g.setColor(Color.BLACK);
+			g.fillRoundRect(503, 497, 290, 25, 10, 10);
+			if(tableCards.size()==0) handStrength=game.getUser().getHand().initialHandStrength(); //Get Hand Strength
+			else handStrength = game.getUser().getHand().updateHandStrength();
+			if(handStrength<=3) g.setColor(Color.RED); //Changes Color Of Rectangle
+			else if(handStrength<=7) g.setColor(Color.YELLOW);
+			else g.setColor(Color.GREEN);
+			g.fillRoundRect(503, 497, 29*handStrength, 25, 10, 10);
 		}
 	}
 	private class ActionsDisplayPanel extends JPanel{
