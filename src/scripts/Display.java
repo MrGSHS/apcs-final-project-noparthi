@@ -32,6 +32,9 @@ public class Display {
 	private BufferedImage table;
 	private BufferedImage userLabel;
 	private BufferedImage computer1Label;
+	
+	private BufferedImage card1;
+	private BufferedImage card2;
 	private ArrayList<BufferedImage> tableCards;
 	private Game game;
 	
@@ -71,17 +74,27 @@ public class Display {
 			g.setFont(new Font("Calibri", Font.BOLD, 20));
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			
+			// Background & theme
 			g.drawImage(theme, 0, 0, null);
 			g.drawImage(table, FRAME_WIDTH/2-TABLE_WIDTH/2, FRAME_HEIGHT/2-TABLE_HEIGHT/2 - 25, null);
+			
+			// Draw Cards
+			g.drawImage(card1, FRAME_WIDTH/2-userLabel.getWidth()/2+15,					FRAME_HEIGHT/2+TABLE_HEIGHT/2-20-CARD_HEIGHT/2 - 18, CARD_WIDTH+30, CARD_HEIGHT+40, null);
+			g.drawImage(card2, FRAME_WIDTH/2-userLabel.getWidth()/2+15+CARD_WIDTH+10, 	FRAME_HEIGHT/2+TABLE_HEIGHT/2-20-CARD_HEIGHT/2 - 18, CARD_WIDTH+30, CARD_HEIGHT+40, null);
+			// Player labels
 			g.drawImage(userLabel, FRAME_WIDTH/2-userLabel.getWidth()/2, FRAME_HEIGHT/2+TABLE_HEIGHT/2-20, null);
+			
+			// Player name & pot size
 			g.setColor(Color.BLACK);
-			g.drawString("Jerry", FRAME_WIDTH/2-userLabel.getWidth()/2+75, FRAME_HEIGHT/2+TABLE_HEIGHT/2+2);
+			g.drawString("Jerry", FRAME_WIDTH/2-userLabel.getWidth()/2+95, FRAME_HEIGHT/2+TABLE_HEIGHT/2+2);
 			g.setFont(new Font("Calibri", Font.PLAIN, 20));
-			g.setColor(new Color(41, 124, 63));
-			g.drawString("" + game.getUser().getPoints(), FRAME_WIDTH/2-userLabel.getWidth()/2+72, FRAME_HEIGHT/2+TABLE_HEIGHT/2+30);
+			g.setColor(new Color(3, 255, 70));
+			g.drawString("" + game.getUser().getPoints(), FRAME_WIDTH/2-userLabel.getWidth()/2+90, FRAME_HEIGHT/2+TABLE_HEIGHT/2+30);
+			
 			if (tableCards.size() > 0) {
 				for (int i = 0; i < tableCards.size(); i++) {
-					g.drawImage(tableCards.get(i), 227 + (CARD_WIDTH + 15)* i , FRAME_HEIGHT/2-CARD_HEIGHT/2-55, null);
+					g.drawImage(tableCards.get(i), 227 + (CARD_WIDTH + 15)* i , FRAME_HEIGHT/2-CARD_HEIGHT/2-55, CARD_WIDTH, CARD_HEIGHT,  null);
 				}
 			}
 			g.setColor(new Color(55,53,53));
@@ -170,6 +183,14 @@ public class Display {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		try{
+			String card1Path = "/cards/" + game.getUser().getCurrentHand()[0].getNumber().toString() + "_of_" + game.getUser().getCurrentHand()[0].getSuiteValue() + ".jpg";
+			String card2Path = "/cards/" + game.getUser().getCurrentHand()[1].getNumber().toString() + "_of_" + game.getUser().getCurrentHand()[1].getSuiteValue() + ".jpg";
+			card1 = ImageIO.read(getClass().getResourceAsStream(card1Path));
+			card2 = ImageIO.read(getClass().getResourceAsStream(card2Path));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}
