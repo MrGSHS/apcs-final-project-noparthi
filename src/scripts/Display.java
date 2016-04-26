@@ -107,7 +107,6 @@ public class Display {
 			fold.addActionListener( new ActionListener () {
 				public void actionPerformed(ActionEvent e){
 					game.getUser().fold();
-					game.getRound().moveOn();
 				}
 			});
 			check.addActionListener( new ActionListener () {
@@ -124,7 +123,7 @@ public class Display {
 			});
 			raise.addActionListener( new ActionListener () {
 				public void actionPerformed(ActionEvent e){
-					game.getUser().raise(1000);
+					//game.getUser().raise(1000);
 					game.getRound().moveOn();
 				}
 			});

@@ -118,7 +118,6 @@ public class Game{
 			p.resetActionBoolean();
 		}
 		payout();
-		newRound();
 		return false;
 	}
 
