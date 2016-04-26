@@ -106,4 +106,12 @@ public class Player {
 	public int getBetAmount(){
 		return betAmount;
 	}
+	public void setTurn(boolean b) {
+		
+	}
+	public boolean getTurn() {
+		System.out.println("Parent called");
+		return false;
+	}
+
 }
