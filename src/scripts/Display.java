@@ -30,8 +30,8 @@ public class Display {
 	private ActionsDisplayPanel actionsPanel;
 	private BufferedImage theme;
 	private BufferedImage table;
-	//private BufferedImage card1;
-	//private BufferedImage card2;
+	private BufferedImage userLabel;
+	private BufferedImage computer1Label;
 	private ArrayList<BufferedImage> tableCards;
 	private Game game;
 	
@@ -43,6 +43,7 @@ public class Display {
 		try {
 			table = ImageIO.read(getClass().getResourceAsStream("/other/poker-table.png"));
 			theme = ImageIO.read(getClass().getResourceAsStream("/themes/red-velvet.jpg"));
+			userLabel = ImageIO.read(getClass().getResourceAsStream("/other/player-label.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -67,9 +68,17 @@ public class Display {
 		private static final long serialVersionUID = 1L;
 		
 		public void paintComponent(Graphics g) {
+			g.setFont(new Font("Calibri", Font.BOLD, 20));
 			Graphics2D g2d = (Graphics2D) g;
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			g.drawImage(theme, 0, 0, null);
 			g.drawImage(table, FRAME_WIDTH/2-TABLE_WIDTH/2, FRAME_HEIGHT/2-TABLE_HEIGHT/2, null);
+			g.drawImage(userLabel, FRAME_WIDTH/2-userLabel.getWidth()/2, FRAME_HEIGHT/2+TABLE_HEIGHT/2-20, null);
+			g.setColor(Color.BLACK);
+			g.drawString("Jerry", FRAME_WIDTH/2-userLabel.getWidth()/2+75, FRAME_HEIGHT/2+TABLE_HEIGHT/2+2);
+			g.setFont(new Font("Calibri", Font.PLAIN, 20));
+			g.setColor(new Color(41, 124, 63));
+			g.drawString("" + game.getUser().getPoints(), FRAME_WIDTH/2-userLabel.getWidth()/2+72, FRAME_HEIGHT/2+TABLE_HEIGHT/2+30);
 			if (tableCards.size() > 0) {
 				for (int i = 0; i < tableCards.size(); i++) {
 					g.drawImage(tableCards.get(i), 225 + (CARD_WIDTH + 15)* i , FRAME_HEIGHT/2-CARD_HEIGHT/2-18, null);
@@ -81,7 +90,6 @@ public class Display {
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
 			String potSize = "POT: " + game.getRound().getPot();
 			int potSizeWidth = g2d.getFontMetrics().stringWidth(potSize);
-			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			g.drawString(potSize, FRAME_WIDTH/2-(int)(potSizeWidth/2), FRAME_HEIGHT/2+CARD_WIDTH-5);
 		}
 	}
