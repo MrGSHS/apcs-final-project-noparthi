@@ -126,27 +126,27 @@ public class Display {
 			final int BORDER = 5;
 			int handStrength = 0;
 			g.setColor(Color.DARK_GRAY);
+			
+			if (tableCards.size() == 0)
+				handStrength = game.getUser().getHand().initialHandStrength(); // Get Hand Strength
+			else
+				handStrength = game.getUser().getHand().updateHandStrength();
 
 			Map<TextAttribute, Object> map = new Hashtable<TextAttribute, Object>();
 			map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 			Font underlineFont = new Font("Calibri", Font.BOLD, 16).deriveFont(map);
 			g.setFont(underlineFont);
-			String strengthString = "Hand Strength";
+			String strengthString = game.getUser().getHand().getCurrentHandStrengthString();
 			int strWidth = g2d.getFontMetrics().stringWidth(strengthString);
-			g.fillRoundRect(500, 474, strWidth + 15, 20 + BORDER, 10, 10);
+			g.fillRoundRect(500, 474, strWidth + 10, 20 + BORDER, 10, 10);
 			g.setColor(Color.WHITE);
-			g.drawString(strengthString, 500 + 7, 474 + 17);
+			g.drawString(strengthString, 500 + 5, 474 + 17);
 
 			g.setColor(Color.DARK_GRAY);
 			g.fillRoundRect(500, 494, 296, 31, 10, 10);
 			g.setColor(Color.BLACK);
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 290 - BORDER, 25 - BORDER, 10, 10);
-			if (tableCards.size() == 0)
-				handStrength = game.getUser().getHand().initialHandStrength(); // Get
-																				// Hand
-																				// Strength
-			else
-				handStrength = game.getUser().getHand().updateHandStrength();
+
 			if (handStrength <= 3)
 				g.setColor(Color.RED); // Changes Color Of Rectangle
 			else if (handStrength <= 7)

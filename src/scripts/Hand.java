@@ -13,7 +13,7 @@ public class Hand {
 	private int strength;
 	private ArrayList<Card> totalCards = new ArrayList<>();
 	private ArrayList<Card> cardsOnTable;
-
+    private String currentHandString = "High Card";
 	public Hand(Game game, Card fcard, Card scard) {
 		this.game = game;
 		card1 = fcard;
@@ -26,33 +26,38 @@ public class Hand {
 		return new Card[] { card1, card2 };
 	}
 
+	public String getCurrentHandStrengthString(){
+		return currentHandString;
+	}
+	
 	public int initialHandStrength() {
 		strength = 0;
 		// Check High Card
 		if ((card1.getNumber() <= 4 || card2.getNumber() <= 4)&&(card1.getNumber() >= 12 || card2.getNumber() <= 12))
-			strength += 1;
+			strength += 2;
 		else if (card1.getNumber() <= 10 || card2.getNumber() <= 10)
-			strength += 3;
-		else
 			strength += 4;
+		else
+			strength += 6;
 		// Check Straight Draws
 		if (Math.abs(card1.getNumber() - card2.getNumber()) <= 4) {
 			if (Math.abs(card1.getNumber() - card2.getNumber()) == 1)
-				strength += 3;
-			else
 				strength += 2;
+			else
+				strength += 1;
 		}
 		// Check Flush Draws
 		if (card1.getSuite() == card2.getSuite())
-			strength += 3;
+			strength += 2;
 		// Check Pocket Pairs
 		if (card1.getNumber() == card2.getNumber()) {
-			if (card1.getNumber() <= 5)
+			if (card1.getNumber() <= 6)
 				strength = 6;
 			else if (card1.getNumber() <= 11)
 				strength = 8;
 			else
 				strength = 10;
+			currentHandString = "Pair";
 		}
 		return strength;
 	}
@@ -69,16 +74,49 @@ public class Hand {
 		else if(cardsOnTable.size()==4) totalCards.add(cardsOnTable.get(3));
 		else totalCards.add(cardsOnTable.get(4));
 		//Updates Hand Strength
-		if(pair() && (card1.getNumber()<7 || card2.getNumber()<7)) return 2;
-		else if(pair() && (card1.getNumber()>=7 || card2.getNumber()>=7)) return 3;
-		else if(twoPair() && (card1.getNumber()<8 || card2.getNumber()<8)) return 4;
-		else if(twoPair() && (card1.getNumber()>=8 || card2.getNumber()>=8)) return 5;
-		else if(trips() && (card1.getNumber()<9 || card2.getNumber()<9)) return 6;
-		else if(trips() && (card1.getNumber()>=9 || card2.getNumber()>=9)) return 7;		
-		else if(straight() || flush()) return 8;
-		else if(fourOfAKind() || fullHouse()||straightFlush()) return 9;
-		else if(royalFlush()) return 10;	
-		else return 1;
+		if(pair() && (card1.getNumber()<7 || card2.getNumber()<7)){
+			currentHandString = "Pair";
+			return 2;
+		}
+		else if(pair() && (card1.getNumber()>=7 || card2.getNumber()>=7)){
+			currentHandString = "Pair";
+			return 3;
+		}
+		else if(twoPair() && (card1.getNumber()<8 || card2.getNumber()<8)){
+			currentHandString = "Two-Pair";
+			return 4;
+		}
+		else if(twoPair() && (card1.getNumber()>=8 || card2.getNumber()>=8)){
+			currentHandString = "Two-Pair";
+			return 5;
+		}
+		else if(trips() && (card1.getNumber()<9 || card2.getNumber()<9)){
+			currentHandString = "Three Of A Kind";
+			return 6;
+		}
+		else if(trips() && (card1.getNumber()>=9 || card2.getNumber()>=9)){
+			currentHandString = "Three Of A Kind";
+			return 7;
+		}
+		else if(straight() || flush()){
+			if(straight())currentHandString = "Straight";
+			else currentHandString = "Flush";
+			return 8;
+		}
+		else if(fourOfAKind() || fullHouse()||straightFlush()){
+			if(fullHouse())currentHandString = "Full House";
+			else if (fourOfAKind()) currentHandString = "Four Of A Kind";
+			else currentHandString = "Straight Flush";
+			return 9;
+		}
+		else if(royalFlush()){
+			currentHandString = "Royal Flush";
+			return 10;	
+		}
+		else{
+			currentHandString = "High Card";
+			return 1;
+		}
 	}
 
 	private ArrayList<Integer> dupeNumberLogic() {
@@ -97,6 +135,7 @@ public class Hand {
 		for (Card card : totalCards) {
 			if (set.add(card.getSuite()) == false) dupes.add(card.getSuite());
 		}
+		Collections.sort(dupes);
 		return dupes;
 	}
 
@@ -121,14 +160,29 @@ public class Hand {
 		return (maxInARow==3);
 	}
 	public boolean flush() {
-		return (dupeSuitLogic().size() >= 4);
+		ArrayList<Integer> temp = dupeSuitLogic();
+		int inARow = 1;
+		int maxInARow = 1;
+		for(int i = 0; i < temp.size()-1; i++){
+			if(temp.get(i+1)==temp.get(i)){
+				inARow++;
+				if(inARow > maxInARow) maxInARow=inARow;
+			}
+			else inARow=1;
+		}
+		return (maxInARow>=4);
 	}
 	public boolean straight() {
 		int straightCheck = 1;
 		int maxStraightCheck = 1;
+		ArrayList <Integer> straightList= new ArrayList<>();
+		for(Card c1 : totalCards){
+			straightList.add(c1.getNumber());
+		}
+		Collections.sort(straightList);
 		for(int i = 0; i < totalCards.size()-1; i++){
 			if(totalCards.get(i+1).getNumber()-totalCards.get(i).getNumber()<=1){
-				if(totalCards.get(i+1).getNumber()-totalCards.get(i).getNumber()!=0){
+				if(totalCards.get(i+1).getNumber()-totalCards.get(i).getNumber()==1){
 					straightCheck++;
 					if(straightCheck>maxStraightCheck) maxStraightCheck=straightCheck;
 				}
