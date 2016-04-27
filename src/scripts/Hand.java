@@ -13,6 +13,7 @@ public class Hand {
 	private int strength;
 	private ArrayList<Card> totalCards = new ArrayList<>();
 	private ArrayList<Card> cardsOnTable;
+	private ArrayList <Integer>  straightList = new ArrayList<>();
     private String currentHandString = "High Card";
 	public Hand(Game game, Card fcard, Card scard) {
 		this.game = game;
@@ -73,35 +74,17 @@ public class Hand {
 		}
 		else if(cardsOnTable.size()==4) totalCards.add(cardsOnTable.get(3));
 		else totalCards.add(cardsOnTable.get(4));
+		
+		//Re-Orders Cards On Table To Straight Check List
+		for(Card c1 : totalCards){
+			straightList.add(c1.getNumber());
+		}
+		Collections.sort(straightList);
+		
 		//Updates Hand Strength
-		if(pair() && (card1.getNumber()<7 || card2.getNumber()<7)){
-			currentHandString = "Pair";
-			return 2;
-		}
-		else if(pair() && (card1.getNumber()>=7 || card2.getNumber()>=7)){
-			currentHandString = "Pair";
-			return 3;
-		}
-		else if(twoPair() && (card1.getNumber()<8 || card2.getNumber()<8)){
-			currentHandString = "Two-Pair";
-			return 4;
-		}
-		else if(twoPair() && (card1.getNumber()>=8 || card2.getNumber()>=8)){
-			currentHandString = "Two-Pair";
-			return 5;
-		}
-		else if(trips() && (card1.getNumber()<9 || card2.getNumber()<9)){
-			currentHandString = "Three Of A Kind";
-			return 6;
-		}
-		else if(trips() && (card1.getNumber()>=9 || card2.getNumber()>=9)){
-			currentHandString = "Three Of A Kind";
-			return 7;
-		}
-		else if(straight() || flush()){
-			if(straight())currentHandString = "Straight";
-			else currentHandString = "Flush";
-			return 8;
+		if(royalFlush()){
+			currentHandString = "Royal Flush";
+			return 10;	
 		}
 		else if(fourOfAKind() || fullHouse()||straightFlush()){
 			if(fullHouse())currentHandString = "Full House";
@@ -109,9 +92,34 @@ public class Hand {
 			else currentHandString = "Straight Flush";
 			return 9;
 		}
-		else if(royalFlush()){
-			currentHandString = "Royal Flush";
-			return 10;	
+		else if(straight() || flush()){
+			if(straight())currentHandString = "Straight";
+			else currentHandString = "Flush";
+			return 8;
+		}
+		else if(trips() && (card1.getNumber()>=9 || card2.getNumber()>=9)){
+			currentHandString = "Three Of A Kind";
+			return 7;
+		}
+		else if(trips() && (card1.getNumber()<9 || card2.getNumber()<9)){
+			currentHandString = "Three Of A Kind";
+			return 6;
+		}
+		else if(twoPair() && (card1.getNumber()>=8 || card2.getNumber()>=8)){
+			currentHandString = "Two-Pair";
+			return 5;
+		}
+		else if(twoPair() && (card1.getNumber()<8 || card2.getNumber()<8)){
+			currentHandString = "Two-Pair";
+			return 4;
+		}
+		else if(pair() && (card1.getNumber()>=7 || card2.getNumber()>=7)){
+			currentHandString = "Pair";
+			return 3;
+		}
+		else if(pair() && (card1.getNumber()<7 || card2.getNumber()<7)){
+			currentHandString = "Pair";
+			return 2;
 		}
 		else{
 			currentHandString = "High Card";
@@ -175,19 +183,26 @@ public class Hand {
 	public boolean straight() {
 		int straightCheck = 1;
 		int maxStraightCheck = 1;
-		ArrayList <Integer> straightList= new ArrayList<>();
-		for(Card c1 : totalCards){
-			straightList.add(c1.getNumber());
-		}
-		Collections.sort(straightList);
-		for(int i = 0; i < totalCards.size()-1; i++){
-			if(totalCards.get(i+1).getNumber()-totalCards.get(i).getNumber()<=1){
-				if(totalCards.get(i+1).getNumber()-totalCards.get(i).getNumber()==1){
+		for(int i = 0; i < straightList.size()-1; i++){
+			if(straightList.get(i+1)-straightList.get(i)<=1){
+				if(straightList.get(i+1)-straightList.get(i)==1){
 					straightCheck++;
 					if(straightCheck>maxStraightCheck) maxStraightCheck=straightCheck;
 				}
 			}
 			else straightCheck = 1;
+		}
+		//Check A2345
+		int two = 0;
+		int three = 0;
+		int four = 0;
+		int five = 0;
+		for(int j = 0; j < straightList.size(); j++){
+			if(straightList.get(j)==2) two+=1;
+			if(straightList.get(j)==3) three +=1;
+			if(straightList.get(j)==4) four +=1;
+			if(straightList.get(j)==5) five +=1;
+			if(two >= 1 && three >= 1 && four >= 1 && five >= 1 && straightList.get(straightList.size())==14) maxStraightCheck = 5;
 		}
 		return (maxStraightCheck>=5);
 	}
