@@ -193,16 +193,18 @@ public class Hand {
 			else straightCheck = 1;
 		}
 		//Check A2345
-		int two = 0;
-		int three = 0;
-		int four = 0;
-		int five = 0;
+		boolean two = false;
+		boolean three = false;
+		boolean four = false;
+		boolean five = false;
+		boolean ace = false;
 		for(int j = 0; j < straightList.size(); j++){
-			if(straightList.get(j)==2) two+=1;
-			if(straightList.get(j)==3) three +=1;
-			if(straightList.get(j)==4) four +=1;
-			if(straightList.get(j)==5) five +=1;
-			if(two >= 1 && three >= 1 && four >= 1 && five >= 1 && straightList.get(straightList.size())==14) maxStraightCheck = 5;
+			if(straightList.get(j)==2) two = true;
+			if(straightList.get(j)==3) three = true;
+			if(straightList.get(j)==4) four = true;
+			if(straightList.get(j)==5) five = true;
+			if(straightList.get(j)==14) ace = true;
+			if(ace && two && three && four && five) maxStraightCheck = 5;
 		}
 		return (maxStraightCheck>=5);
 	}
