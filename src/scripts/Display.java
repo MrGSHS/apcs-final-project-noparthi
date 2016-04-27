@@ -23,11 +23,13 @@ public class Display {
 
 	private final int CARD_WIDTH = 55;
 	private final int CARD_HEIGHT = 80;
-	private final int TABLE_WIDTH = 608;
-	private final int TABLE_HEIGHT = 308;
+	private final int TABLE_WIDTH = 660;
+	private final int TABLE_HEIGHT = 286;
 	private final int FRAME_WIDTH = 800;
 	private final int FRAME_HEIGHT = 600;
-
+	private final int DEALER_WIDTH = 140;
+	private final int DEALER_HEIGHT = 130;
+	
 	private JFrame frame;
 	private TableDisplayPanel tablePanel;
 	private ActionsDisplayPanel actionsPanel;
@@ -35,7 +37,8 @@ public class Display {
 	private BufferedImage table;
 	private BufferedImage userLabel;
 	private BufferedImage computer1Label;
-
+	private BufferedImage dealer;
+	
 	private BufferedImage card1;
 	private BufferedImage card2;
 	private ArrayList<BufferedImage> tableCards;
@@ -47,6 +50,7 @@ public class Display {
 		this.game = game;
 		tableCards = new ArrayList<BufferedImage>();
 		try {
+			dealer = ImageIO.read(getClass().getResourceAsStream("/other/dealer-face.png"));
 			table = ImageIO.read(getClass().getResourceAsStream("/other/poker-table.png"));
 			theme = ImageIO.read(getClass().getResourceAsStream("/themes/red-velvet.jpg"));
 			userLabel = ImageIO.read(getClass().getResourceAsStream("/other/player-label.png"));
@@ -61,7 +65,7 @@ public class Display {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
-		// frame.setLayout(null);
+		//frame.setLayout(null);
 		frame.add(actionsPanel);
 		frame.add(tablePanel);
 		frame.setVisible(true);
@@ -83,8 +87,9 @@ public class Display {
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-			// Background & Theme
+			// Dealer & Background & Theme
 			g.drawImage(theme, 0, 0, null);
+			g.drawImage(dealer, FRAME_WIDTH/2-DEALER_WIDTH/2, (FRAME_HEIGHT/2-TABLE_HEIGHT/2-15)-DEALER_HEIGHT, null);
 			g.drawImage(table, FRAME_WIDTH / 2 - TABLE_WIDTH / 2, FRAME_HEIGHT / 2 - TABLE_HEIGHT / 2 - 25, null);
 
 			// Draw Cards
