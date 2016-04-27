@@ -29,7 +29,9 @@ public class Display {
 	private final int FRAME_HEIGHT = 600;
 	private final int DEALER_WIDTH = 140;
 	private final int DEALER_HEIGHT = 130;
-	
+
+	private boolean checkBtn = true;
+
 	private JFrame frame;
 	private TableDisplayPanel tablePanel;
 	private ActionsDisplayPanel actionsPanel;
@@ -38,11 +40,16 @@ public class Display {
 	private BufferedImage userLabel;
 	private BufferedImage computer1Label;
 	private BufferedImage dealer;
-	
+
 	private BufferedImage card1;
 	private BufferedImage card2;
 	private ArrayList<BufferedImage> tableCards;
 	private Game game;
+
+	private JButton fold;
+	private JButton check;
+	private JButton call;
+	private JButton raise;
 
 	private ArrayList<Card> cardsOnTable;
 
@@ -65,7 +72,7 @@ public class Display {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
-		//frame.setLayout(null);
+		// frame.setLayout(null);
 		frame.add(actionsPanel);
 		frame.add(tablePanel);
 		frame.setVisible(true);
@@ -79,6 +86,14 @@ public class Display {
 		return tablePanel;
 	}
 
+	public JPanel getActionsPanel() {
+		return actionsPanel;
+	}
+
+	public boolean getCheckBtn() {
+		return checkBtn;
+	}
+
 	private class TableDisplayPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
@@ -89,7 +104,8 @@ public class Display {
 
 			// Dealer & Background & Theme
 			g.drawImage(theme, 0, 0, null);
-			g.drawImage(dealer, FRAME_WIDTH/2-DEALER_WIDTH/2, (FRAME_HEIGHT/2-TABLE_HEIGHT/2-15)-DEALER_HEIGHT, null);
+			g.drawImage(dealer, FRAME_WIDTH / 2 - DEALER_WIDTH / 2,
+					(FRAME_HEIGHT / 2 - TABLE_HEIGHT / 2 - 15) - DEALER_HEIGHT, null);
 			g.drawImage(table, FRAME_WIDTH / 2 - TABLE_WIDTH / 2, FRAME_HEIGHT / 2 - TABLE_HEIGHT / 2 - 25, null);
 
 			// Draw Cards
@@ -131,9 +147,11 @@ public class Display {
 			final int BORDER = 5;
 			int handStrength = 0;
 			g.setColor(Color.DARK_GRAY);
-			
+
 			if (tableCards.size() == 0)
-				handStrength = game.getUser().getHand().initialHandStrength(); // Get Hand Strength
+				handStrength = game.getUser().getHand().initialHandStrength(); // Get
+																				// Hand
+																				// Strength
 			else
 				handStrength = game.getUser().getHand().updateHandStrength();
 
@@ -166,11 +184,6 @@ public class Display {
 
 		private static final long serialVersionUID = 1L;
 
-		private JButton fold;
-		private JButton check;
-		private JButton call;
-		private JButton raise;
-
 		private final int BUTTON_WIDTH = FRAME_WIDTH / 4;
 		private final int BUTTON_HEIGHT = 50;
 
@@ -188,23 +201,25 @@ public class Display {
 			});
 			check.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if (game.getComputer().getTurn() == true) {
+					if (checkBtn) {
 						game.getUser().check();
 						game.getRound().moveOn();
-					}else{
+					} else {
 						System.out.println("You must call or raise");
 					}
 				}
 			});
 			call.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					game.getDisplay().addCheck();
 					game.getUser().call();
 					game.getRound().moveOn();
 				}
 			});
 			raise.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					// game.getUser().raise(1000);
+					game.getUser().raise(game.getRound().getMinBet()*2);
+					game.getDisplay().addCheck();
 					game.getRound().moveOn();
 				}
 			});
@@ -225,9 +240,6 @@ public class Display {
 			frame.add(check);
 			frame.add(call);
 			frame.add(raise);
-		}
-
-		public void canCheck() {
 		}
 	}
 
@@ -262,5 +274,18 @@ public class Display {
 
 	public void setRoundTitle() {
 		frame.setTitle("Oker-pay: Round " + game.getRound().getRoundNumber());
+	}
+
+	public void removeCheck() {
+		if (checkBtn) {
+			checkBtn = false;
+		}
+	}
+
+	public void addCheck() {
+		if (!checkBtn) {
+			System.out.println("Hi im called!");
+			checkBtn = true;
+		}
 	}
 }

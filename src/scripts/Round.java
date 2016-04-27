@@ -7,7 +7,7 @@ public class Round {
 
 	private int pot;
 	private int minBet;
-
+	private int pastBet;
 	/*
 	 * 0 = pre flop 1 = pre turn 2 = pre river 3 = post river
 	 */
@@ -48,7 +48,6 @@ public class Round {
 		game.takeAnte();
 		// Prints Out Hand Before Flop, Then Deals Flop
 		setMinBet(game.getBigBlind());
-		printTable();
 
 	}
 
@@ -56,7 +55,7 @@ public class Round {
 		game.getDisplay().update();
 		minBet = 500;
 		// Prints Out Hand Before Turn, Then Deals Turn
-		// printTable();
+
 	}
 
 	public void preRiver() {
@@ -72,7 +71,7 @@ public class Round {
 		// Prints Hand Before Show-down, And Asks For Final Raise/Check/Fold
 		// printTable();
 	}
-
+/*
 	private void printTable() {
 		int strength;
 		System.out.println("*********************************");
@@ -117,19 +116,19 @@ public class Round {
 		System.out.println("You have: " + game.getUser().getPoints() + " points");
 		System.out.println("*********************************");
 	}
-
+*/
+	
 	public void moveOn() {
-		int pastBet = minBet;
-		if (game.getComputer().getTurn() == true) {
+		game.getComputer().takeAction();
+		/*if (game.getComputer().getTurn()) {
 			game.getComputer().takeAction();
+		} else {
+			if (game.getComputer().getRaiseBoolean()) {
+				game.getComputer().setTurn(false);
+				return;
+			}
 		}
-		int nowBet = minBet;
-		if (pastBet != nowBet) {
-			game.getComputer().setTurn(false);
-			return;
-		}else{
-			game.getComputer().setTurn(true);
-		}
+		*/
 		if (stageOfRound == 0) {
 			stageOfRound++;
 			System.out.println(stageOfRound);
