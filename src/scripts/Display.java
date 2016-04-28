@@ -16,6 +16,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -178,8 +179,8 @@ public class Display {
 			else
 				g.setColor(Color.GREEN);
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
-			
-			//Places Rectangle Over Check Button
+
+			// Places Rectangle Over Check Button
 		}
 	}
 
@@ -192,38 +193,15 @@ public class Display {
 
 		public ActionsDisplayPanel() {
 
-			/*fold = new JButton("Fold");
-			check = new JButton("Check");
-			call = new JButton("Call");
-			raise = new JButton("Raise");
-			*/
+			/*
+			 * fold = new JButton("Fold"); check = new JButton("Check"); call =
+			 * new JButton("Call"); raise = new JButton("Raise");
+			 */
 
-			fold.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					game.getUser().fold();
-				}
-			});
-			check.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					game.getUser().check();
-					game.getComputer().takeAction();
-					game.getRound().moveOn();		
-				}
-			});
-			call.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					game.getUser().call();
-					game.getComputer().takeAction();
-					game.getRound().moveOn();
-				}
-			});
-			raise.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					game.getUser().raise(game.getRound().getMinBet()*2);
-					game.getComputer().takeAction();
-					game.getRound().moveOn();
-				}
-			});
+			fold.addActionListener(new ButtonListener());
+			check.addActionListener(new ButtonListener());
+			call.addActionListener(new ButtonListener());
+			raise.addActionListener(new ButtonListener());
 
 			fold.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			check.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -244,24 +222,47 @@ public class Display {
 		}
 	}
 
+	public class ButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent evt) {
+			if (evt.getSource() == raise) {
+				game.getUser().raise(game.getRound().getMinBet() * 2);
+				game.getComputer().takeAction();
+				game.getRound().moveOn();
+			}
+			if (evt.getSource() == call) {
+				if(checkBtn){
+					game.getUser().call();
+					game.getComputer().takeAction();
+					game.getRound().moveOn();
+				}
+			}
+			if (evt.getSource() == check){
+				game.getUser().check();
+				game.getComputer().takeAction();
+				game.getRound().moveOn();
+			}
+			if (evt.getSource() == fold){
+				game.getUser().fold();
+			}
+		}
+	}
+
 	public void update() {
 		cardsOnTable = game.getTable().getCardsOnTable();
 		reloadImages();
 		frame.repaint();
-		//Removes Check If Necessary
-		if(game.getComputer().getRaiseBoolean()){
+		// Removes Check If Necessary
+		if (game.getComputer().getRaiseBoolean()) {
 			removeCheck();
-			//game.getComputer().resetActionBoolean();
-		}
-		else{
+			// game.getComputer().resetActionBoolean();
+		} else {
 			addCheck();
 		}
-		//Removes Call If Necessary
-		if(game.getComputer().getCheckBoolean()){
+		// Removes Call If Necessary
+		if (game.getComputer().getCheckBoolean()) {
 			removeCall();
-			//game.getComputer().resetActionBoolean();
-		}
-		else{
+			// game.getComputer().resetActionBoolean();
+		} else {
 			addCall();
 		}
 	}
@@ -297,18 +298,18 @@ public class Display {
 		System.out.println("Check Button Has Been Removed");
 		check.setVisible(false);
 	}
-
+	
 	public void addCheck() {
 		System.out.println("Check Button Has Been Added");
 		check.setVisible(true);
 	}
-	
-	public void removeCall(){
+
+	public void removeCall() {
 		System.out.println("Call Button Has Been Removed");
 		call.setVisible(false);
 	}
-	
-	public void addCall(){
+
+	public void addCall() {
 		System.out.println("Call Button Has Been Added");
 		call.setVisible(true);
 	}
