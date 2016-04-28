@@ -3,37 +3,27 @@ package scripts;
 public class Computer extends Player {
 	private Game game;
 	private int currentHandStrength;
-	private boolean turn;
-	// private Hand hand;
-
-	public void setTurn(boolean b) {
-		turn = b;
-	}
-
-	public boolean getTurn() {
-		return turn;
-	}
-
 	public Computer(Game game) {
 		super(game);
-		turn = true;
 		this.game = game;
 	}
-
-	public void takeAction() {
-		// if (turn) {
-		if (game.getTable().getCardsOnTable().size() == 0)
+	
+	public void takeAction(){
+		if (game.getTable().getCardsOnTable().size()==0){
+			System.out.println("Using Pre-Flop Logic");
 			preFlopLogic();
-		else
+		}
+		else{
+			System.out.println("Using Logic");
 			logic();
-		// }
+		}
 	}
-
 	public void preFlopLogic() {
 		currentHandStrength = getHand().initialHandStrength();
 		if (game.getUser().getCheckBoolean()) {
 			if (currentHandStrength > 6 || (int) (Math.random() * 11) + 1 <= 2) {
 				raise(game.getBigBlind() * 2);
+				System.out.println("The Computer Has Raised");
 				return;
 			} else {
 				check();
@@ -89,32 +79,30 @@ public class Computer extends Player {
 
 	public void logic() {
 		currentHandStrength = getHand().updateHandStrength();
+		System.out.println("Computer Hand Strength: " + currentHandStrength);
 		if (game.getUser().getCheckBoolean()) {
+			System.out.println("User Has Checked");
 			if ((int) (Math.random() * 11) + 1 <= 2) {
-				game.getDisplay().removeCheck();
 				raise(game.getBigBlind() * 32);
+				System.out.println("The Computer Has Raised");
+				return;
 			} else if (currentHandStrength >= 8 || (int) (Math.random() * 11) + 1 <= 2) {
-				game.getDisplay().removeCheck();
 				raise(game.getBigBlind() * 32);
 				System.out.println("The Computer Has Raised");
 				return;
 			} else if (currentHandStrength == 7 || (int) (Math.random() * 11) + 1 <= 2) {
-				game.getDisplay().removeCheck();
 				raise(game.getBigBlind() * 16);
 				System.out.println("The Computer Has Raised");
 				return;
 			} else if (currentHandStrength == 6 || (int) (Math.random() * 11) + 1 <= 2) {
-				game.getDisplay().removeCheck();
 				raise(game.getBigBlind() * 8);
 				System.out.println("The Computer Has Raised");
 				return;
 			} else if (currentHandStrength == 5 || (int) (Math.random() * 11) + 1 <= 2) {
-				game.getDisplay().removeCheck();
 				raise(game.getBigBlind() * 4);
 				System.out.println("The Computer Has Raised");
 				return;
 			} else if (currentHandStrength == 4 || currentHandStrength == 3 || (int) (Math.random() * 11) + 1 <= 3) {
-				game.getDisplay().removeCheck();
 				raise(game.getBigBlind() * 2);
 				System.out.println("The Computer Has Raised");
 				return;
@@ -171,6 +159,5 @@ public class Computer extends Player {
 				}
 			}
 		}
-
 	}
 }

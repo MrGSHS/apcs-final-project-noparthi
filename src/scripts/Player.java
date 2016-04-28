@@ -53,9 +53,8 @@ public class Player {
 	}
 
 	public void check() {
+		resetActionBoolean();
 		checkBoolean = true;
-		callBoolean = false;
-		raiseBoolean = false;
 	}
 
 	public void call() {
@@ -68,9 +67,9 @@ public class Player {
 		maxBet -= betAmount;
 		game.getRound().setPot(game.getRound().getPot() + maxBet);
 		points -= maxBet;
+		
+		resetActionBoolean();
 		callBoolean = true;
-		checkBoolean = false;
-		raiseBoolean = false;
 	}
 
 	public boolean raise(int amt) {
@@ -80,18 +79,18 @@ public class Player {
 				betAmount = points;
 				game.getRound().setPot(game.getRound().getPot()+points);
 				points = 0;
+				
+				resetActionBoolean();
 				raiseBoolean = true;
-				checkBoolean = false;
-				callBoolean = false;
 				return true;
 			}
 			betAmount = amt;
-			game.getRound().setPot(game.getRound().getPot() + amt);
+			game.getRound().setPot(game.getRound().getPot() + betAmount);
 			game.getRound().setMinBet(amt);
 			points -= amt;
+			
+			resetActionBoolean();
 			raiseBoolean = true;
-			checkBoolean = false;
-			callBoolean = false;
 			return true;
 		}
 		System.out.println("Must raise at least something greater than or equal to " + game.getRound().getMinBet());		
@@ -102,16 +101,7 @@ public class Player {
 		betAmount = amt;
 	}
 
-	
 	public int getBetAmount(){
 		return betAmount;
 	}
-	public void setTurn(boolean b) {
-		
-	}
-	public boolean getTurn() {
-		System.out.println("Parent called");
-		return false;
-	}
-
 }

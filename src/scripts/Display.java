@@ -31,6 +31,7 @@ public class Display {
 	private final int DEALER_HEIGHT = 130;
 
 	private boolean checkBtn = true;
+	private boolean callBtn = true;
 
 	private JFrame frame;
 	private TableDisplayPanel tablePanel;
@@ -46,10 +47,10 @@ public class Display {
 	private ArrayList<BufferedImage> tableCards;
 	private Game game;
 
-	private JButton fold;
-	private JButton check;
-	private JButton call;
-	private JButton raise;
+	private JButton fold = new JButton("Fold");
+	private JButton check = new JButton("Check");
+	private JButton call = new JButton("Call");
+	private JButton raise = new JButton("Raise");
 
 	private ArrayList<Card> cardsOnTable;
 
@@ -177,6 +178,8 @@ public class Display {
 			else
 				g.setColor(Color.GREEN);
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
+			
+			//Places Rectangle Over Check Button
 		}
 	}
 
@@ -189,10 +192,11 @@ public class Display {
 
 		public ActionsDisplayPanel() {
 
-			fold = new JButton("Fold");
+			/*fold = new JButton("Fold");
 			check = new JButton("Check");
 			call = new JButton("Call");
 			raise = new JButton("Raise");
+			*/
 
 			fold.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -201,25 +205,22 @@ public class Display {
 			});
 			check.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if (checkBtn) {
-						game.getUser().check();
-						game.getRound().moveOn();
-					} else {
-						System.out.println("You must call or raise");
-					}
+					game.getUser().check();
+					game.getComputer().takeAction();
+					game.getRound().moveOn();		
 				}
 			});
 			call.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					game.getDisplay().addCheck();
 					game.getUser().call();
+					game.getComputer().takeAction();
 					game.getRound().moveOn();
 				}
 			});
 			raise.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					game.getUser().raise(game.getRound().getMinBet()*2);
-					game.getDisplay().addCheck();
+					game.getComputer().takeAction();
 					game.getRound().moveOn();
 				}
 			});
@@ -247,6 +248,23 @@ public class Display {
 		cardsOnTable = game.getTable().getCardsOnTable();
 		reloadImages();
 		frame.repaint();
+		//game.getComputer().takeAction();
+		if(game.getComputer().getRaiseBoolean()){
+			removeCheck();
+			game.getComputer().resetActionBoolean();
+		}
+		else{
+			addCheck();
+		}
+		/*
+		if(game.getComputer().getCheckBoolean()){
+			removeCall();
+			game.getComputer().resetActionBoolean();
+		}
+		else{
+			addCall();
+		}
+		*/
 	}
 
 	private void reloadImages() {
@@ -277,15 +295,22 @@ public class Display {
 	}
 
 	public void removeCheck() {
-		if (checkBtn) {
-			checkBtn = false;
-		}
+		System.out.println("Check Button Has Been Removed");
+		check.setVisible(false);
 	}
 
 	public void addCheck() {
-		if (!checkBtn) {
-			System.out.println("Hi im called!");
-			checkBtn = true;
-		}
+		System.out.println("Check Button Has Been Added");
+		check.setVisible(true);
+	}
+	
+	public void removeCall(){
+		System.out.println("Call Button Has Been Removed");
+		call.setVisible(false);
+	}
+	
+	public void addCall(){
+		System.out.println("Cal Button Has Been Added");
+		call.setVisible(true);
 	}
 }
