@@ -31,9 +31,8 @@ public class Display {
 	private final int DEALER_WIDTH = 140;
 	private final int DEALER_HEIGHT = 130;
 
-	private boolean checkBtn = true;
-	private boolean callBtn = true;
-
+	private Font buttonFont = new Font("SansSerif", Font.PLAIN, 12); 
+	
 	private JFrame frame;
 	private TableDisplayPanel tablePanel;
 	private ActionsDisplayPanel actionsPanel;
@@ -92,10 +91,6 @@ public class Display {
 		return actionsPanel;
 	}
 
-	public boolean getCheckBtn() {
-		return checkBtn;
-	}
-
 	private class TableDisplayPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
@@ -110,6 +105,14 @@ public class Display {
 					(FRAME_HEIGHT / 2 - TABLE_HEIGHT / 2 - 15) - DEALER_HEIGHT, null);
 			g.drawImage(table, FRAME_WIDTH / 2 - TABLE_WIDTH / 2, FRAME_HEIGHT / 2 - TABLE_HEIGHT / 2 - 25, null);
 
+			//Button Background
+			g.setColor(new Color(32,32,32));
+			g.fillRect(0, 525, FRAME_WIDTH, 50);
+			g.setColor(Color.WHITE);
+			g.setFont(buttonFont);
+			g.drawString("Check", FRAME_WIDTH/4 + FRAME_WIDTH/10, 555);
+			g.drawString("Call", FRAME_WIDTH/2 + FRAME_WIDTH/10, 555);
+			
 			// Draw Cards
 			g.drawImage(card1, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 15,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 - CARD_HEIGHT / 2 - 18, CARD_WIDTH + 30, CARD_HEIGHT + 40,
@@ -151,12 +154,11 @@ public class Display {
 			g.setColor(Color.DARK_GRAY);
 
 			if (tableCards.size() == 0)
-				handStrength = game.getUser().getHand().initialHandStrength(); // Get
-																				// Hand
-																				// Strength
+				handStrength = game.getUser().getHand().initialHandStrength(); 
 			else
 				handStrength = game.getUser().getHand().updateHandStrength();
 
+			//Writes In Hand Strength
 			Map<TextAttribute, Object> map = new Hashtable<TextAttribute, Object>();
 			map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 			Font underlineFont = new Font("Calibri", Font.BOLD, 16).deriveFont(map);
@@ -167,20 +169,21 @@ public class Display {
 			g.setColor(Color.WHITE);
 			g.drawString(strengthString, 500 + 5, 474 + 17);
 
+			//Hand Strength Bar Background
 			g.setColor(Color.DARK_GRAY);
 			g.fillRoundRect(500, 494, 296, 31, 10, 10);
 			g.setColor(Color.BLACK);
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 290 - BORDER, 25 - BORDER, 10, 10);
 
+			// Changes Color Of Rectangle
 			if (handStrength <= 3)
-				g.setColor(Color.RED); // Changes Color Of Rectangle
+				g.setColor(Color.RED); 
 			else if (handStrength <= 7)
 				g.setColor(Color.YELLOW);
 			else
 				g.setColor(Color.GREEN);
+			//Hand Strength Meter
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
-
-			// Places Rectangle Over Check Button
 		}
 	}
 
@@ -192,12 +195,6 @@ public class Display {
 		private final int BUTTON_HEIGHT = 50;
 
 		public ActionsDisplayPanel() {
-
-			/*
-			 * fold = new JButton("Fold"); check = new JButton("Check"); call =
-			 * new JButton("Call"); raise = new JButton("Raise");
-			 */
-
 			fold.addActionListener(new ButtonListener());
 			check.addActionListener(new ButtonListener());
 			call.addActionListener(new ButtonListener());
@@ -208,12 +205,15 @@ public class Display {
 			call.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			raise.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 
-			final int btnH = 525;
-
-			raise.setLocation(600, btnH);
-			call.setLocation(400, btnH);
-			check.setLocation(200, btnH);
-			fold.setLocation(0, btnH);
+			raise.setLocation(600, 525);
+			call.setLocation(400, 525);
+			check.setLocation(200, 525);
+			fold.setLocation(0, 525);
+			
+			raise.setFont(buttonFont);
+			check.setFont(buttonFont);
+			call.setFont(buttonFont);
+			fold.setFont(buttonFont);
 
 			frame.add(fold);
 			frame.add(check);
@@ -230,11 +230,9 @@ public class Display {
 				game.getRound().moveOn();
 			}
 			if (evt.getSource() == call) {
-				if(checkBtn){
-					game.getUser().call();
-					game.getComputer().takeAction();
-					game.getRound().moveOn();
-				}
+				game.getUser().call();
+				game.getComputer().takeAction();
+				game.getRound().moveOn();
 			}
 			if (evt.getSource() == check){
 				game.getUser().check();
@@ -254,14 +252,12 @@ public class Display {
 		// Removes Check If Necessary
 		if (game.getComputer().getRaiseBoolean()) {
 			removeCheck();
-			// game.getComputer().resetActionBoolean();
 		} else {
 			addCheck();
 		}
 		// Removes Call If Necessary
 		if (game.getComputer().getCheckBoolean()) {
 			removeCall();
-			// game.getComputer().resetActionBoolean();
 		} else {
 			addCall();
 		}
