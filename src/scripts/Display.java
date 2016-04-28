@@ -248,23 +248,22 @@ public class Display {
 		cardsOnTable = game.getTable().getCardsOnTable();
 		reloadImages();
 		frame.repaint();
-		//game.getComputer().takeAction();
+		//Removes Check If Necessary
 		if(game.getComputer().getRaiseBoolean()){
 			removeCheck();
-			game.getComputer().resetActionBoolean();
+			//game.getComputer().resetActionBoolean();
 		}
 		else{
 			addCheck();
 		}
-		/*
+		//Removes Call If Necessary
 		if(game.getComputer().getCheckBoolean()){
 			removeCall();
-			game.getComputer().resetActionBoolean();
+			//game.getComputer().resetActionBoolean();
 		}
 		else{
 			addCall();
 		}
-		*/
 	}
 
 	private void reloadImages() {
@@ -310,7 +309,7 @@ public class Display {
 	}
 	
 	public void addCall(){
-		System.out.println("Cal Button Has Been Added");
+		System.out.println("Call Button Has Been Added");
 		call.setVisible(true);
 	}
 }

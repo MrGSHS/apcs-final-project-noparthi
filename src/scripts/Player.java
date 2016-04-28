@@ -93,8 +93,10 @@ public class Player {
 			raiseBoolean = true;
 			return true;
 		}
-		System.out.println("Must raise at least something greater than or equal to " + game.getRound().getMinBet());		
-		return false;		
+		else{
+			System.out.println("Must raise at least something greater than or equal to " + game.getRound().getMinBet());		
+			return false;		
+		}
 	}
 	
 	public void setBetAmount(int amt){

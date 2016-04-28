@@ -68,6 +68,13 @@ public class Round {
 
 	public void moveOn() {
 		game.getDisplay().update();
+		//Skips If Someone Had Raised, And Resets All Action Booleans Back To Null
+		if(game.getComputer().getRaiseBoolean()||game.getUser().getRaiseBoolean()){ 
+			game.getComputer().resetActionBoolean();
+			game.getUser().resetActionBoolean();
+			return;}
+
+		//Proceeds To Next Round If None Of The Above Are True
 		if (stageOfRound == 0) {
 			stageOfRound++;
 			System.out.println("Stage: " + stageOfRound);
