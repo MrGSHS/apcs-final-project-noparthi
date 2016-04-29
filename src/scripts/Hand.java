@@ -13,7 +13,7 @@ public class Hand {
 	private int strength;
 	private ArrayList<Card> totalCards = new ArrayList<>();
 	private ArrayList<Card> cardsOnTable;
-	private ArrayList <Integer>  straightList = new ArrayList<>();
+	private ArrayList<Integer>  straightList = new ArrayList<>();
     private String currentHandString = "High Card";
 	public Hand(Game game, Card fcard, Card scard) {
 		this.game = game;
