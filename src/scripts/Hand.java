@@ -34,17 +34,16 @@ public class Hand {
 	public int initialHandStrength() {
 		strength = 0;
 		// Check High Card
-		if ((card1.getNumber() <= 4 || card2.getNumber() <= 4)&&(card1.getNumber() >= 12 || card2.getNumber() <= 12))
+		if ((card1.getNumber() <= 5 || card2.getNumber() <= 4)&&(card1.getNumber() >= 12 || card2.getNumber() <= 12))
 			strength += 2;
+		else if(card1.getNumber() <= 6 && card2.getNumber() <= 6)
+			strength +=1;
 		else if (card1.getNumber() <= 10 || card2.getNumber() <= 10)
 			strength += 4;
 		else
-			strength += 6;
+			strength += 7;
 		// Check Straight Draws
-		if (Math.abs(card1.getNumber() - card2.getNumber()) <= 4) {
-			if (Math.abs(card1.getNumber() - card2.getNumber()) == 1)
-				strength += 2;
-			else
+		if (Math.abs(card1.getNumber() - card2.getNumber()) == 1) {
 				strength += 1;
 		}
 		// Check Flush Draws
