@@ -13,7 +13,7 @@ public class Hand {
 	private int strength;
 	private ArrayList<Card> totalCards = new ArrayList<>();
 	private ArrayList<Card> cardsOnTable;
-	private ArrayList <Integer>  straightList = new ArrayList<>();
+	private ArrayList<Integer>  straightList = new ArrayList<>();
     private String currentHandString = "High Card";
 	ArrayList<Integer> dupes = new ArrayList<Integer>();		
 	Set<Integer> set = new HashSet<>();
