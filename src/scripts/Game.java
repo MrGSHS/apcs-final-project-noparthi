@@ -52,6 +52,15 @@ public class Game{
 		return players;
 	}
 	
+	private ArrayList<Player> getActivePlayers(){
+		ArrayList<Player> active = new ArrayList<>();
+		for(Player p : players){
+			if(!p.isFolded())
+				active.add(p);
+		}
+		return active;
+	}
+	
 	public void allComputersTakeAction(){
 		for(int i = 1; i < players.size(); i++)
 			players.get(i).takeAction();
@@ -106,12 +115,20 @@ public class Game{
 
 	//Pays Out Money In Pot To Winner
 	public void payout() {
-		for(int i = 0; i < players.size(); i++){
-			//if(players.get(0).getHan){
-			//	
-			//}
+		int strongestPlayerIndex = 0;
+		if(getActivePlayers().size()==1)
+			strongestPlayerIndex = 0;
+		else{
+			for(int i = 1; i < getActivePlayers().size(); i++){
+				if(getActivePlayers().get(i).getHand().updateHandStrength() > getActivePlayers().get(strongestPlayerIndex).getHand().updateHandStrength()){
+					strongestPlayerIndex = i;
+				}
+				else if(getActivePlayers().get(i).getHand().updateHandStrength() == getActivePlayers().get(strongestPlayerIndex).getHand().updateHandStrength()){
+					// TODO: Need To Finish
+				}
+			}	
 		}
-		user.setPoints(user.getPoints() + round.getPot());
+		getActivePlayers().get(strongestPlayerIndex).setPoints(user.getPoints() + round.getPot());
 		newRound();
 	}
 
