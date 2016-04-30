@@ -12,12 +12,15 @@ public class Table{
 		cardsOnTable = new ArrayList<>();
 	}
 	
+	//Deals Flop
 	public void dealFlop(){
 		cardsOnTable.add(deck.deal());
 		cardsOnTable.add(deck.deal());
 		cardsOnTable.add(deck.deal());
 	}
+	//Deals Turn
 	public void dealTurn(){ cardsOnTable.add(deck.deal()); }
+	//Deals River
 	public void dealRiver(){ cardsOnTable.add(deck.deal()); }
 	
 	public ArrayList<Card> getCardsOnTable(){

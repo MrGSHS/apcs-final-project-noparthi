@@ -80,7 +80,6 @@ public class Computer extends Player {
 
 	public void logic() {
 		currentHandStrength = getHand().updateHandStrength();
-		System.out.println("Computer Hand Strength: " + currentHandStrength);
 		if (game.getUser().getCheckBoolean()) {
 
 			if ((int) (Math.random() * 11) + 1 <= 1) {

@@ -184,13 +184,7 @@ public class Display {
 			// Hand Strength Meter
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
 
-			if (tableCards.size() == 0)
-				System.out.println("USER HAND STRENGTH: " + game.getUser().getHand().initialHandStrength());
-			else {
-				System.out.println("USER HAND STRENGTH: " + game.getUser().getHand().updateHandStrength());
-				System.out.println("COMP HAND STRENGTH: " + game.getComputer().getHand().updateHandStrength());
-			}
-			System.out.println(game.getComputer().getCurrentHand()[0].getNumber() + "\t" + game.getComputer().getCurrentHand()[1].getNumber());
+			System.out.println("Computer Hand" + "\n" +game.getComputer().getCurrentHand()[0].getNumber() + "\t" + game.getComputer().getCurrentHand()[1].getNumber());
 		}
 	}
 
@@ -298,22 +292,18 @@ public class Display {
 	}
 
 	public void removeCheck() {
-		System.out.println("Check Button Has Been Removed");
 		check.setVisible(false);
 	}
 
 	public void addCheck() {
-		System.out.println("Check Button Has Been Added");
 		check.setVisible(true);
 	}
 
 	public void removeCall() {
-		System.out.println("Call Button Has Been Removed");
 		call.setVisible(false);
 	}
 
 	public void addCall() {
-		System.out.println("Call Button Has Been Added");
 		call.setVisible(true);
 	}
 }

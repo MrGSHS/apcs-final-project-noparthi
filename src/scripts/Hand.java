@@ -11,12 +11,10 @@ public class Hand {
 	private Card card1;
 	private Card card2;
 	private int strength;
-	private ArrayList<Card> totalCards = new ArrayList<>();
 	private ArrayList<Card> cardsOnTable;
+	private ArrayList<Card> totalCards = new ArrayList<>();
 	private ArrayList<Integer>  straightList = new ArrayList<>();
-    private String currentHandString = "High Card";
-	ArrayList<Integer> dupes = new ArrayList<Integer>();		
-	Set<Integer> set = new HashSet<>();
+    private String currentHandString = "Hand Strength";
 	
 	public Hand(Game game, Card fcard, Card scard) {
 		this.game = game;
@@ -34,10 +32,6 @@ public class Hand {
 		return currentHandString;
 	}
 	
-	
-	public void resetStuff(){
-		
-	}
 	public int initialHandStrength() {
 		strength = 0;
 		// Check High Card
@@ -73,14 +67,17 @@ public class Hand {
 	public int updateHandStrength() {
 		//Adds Cards On Table To TotalCardsAvailableToPlayer Pool
 		cardsOnTable = game.getTable().getCardsOnTable();
-		if(cardsOnTable.size()==3){
+		if(cardsOnTable.size()>=3){
+			totalCards = new ArrayList<Card>();
+			totalCards.add(card1);
+			totalCards.add(card2);
 			totalCards.add(cardsOnTable.get(0));
 			totalCards.add(cardsOnTable.get(1));
 			totalCards.add(cardsOnTable.get(2));
+			if(cardsOnTable.size()>=4) totalCards.add(cardsOnTable.get(3));
+			if(cardsOnTable.size()==5) totalCards.add(cardsOnTable.get(4));
 		}
-		else if(cardsOnTable.size()==4) totalCards.add(cardsOnTable.get(3));
-		else totalCards.add(cardsOnTable.get(4));
-		
+
 		//Re-Orders Cards On Table To Straight Check List
 		for(Card c1 : totalCards){
 			straightList.add(c1.getNumber());
@@ -96,7 +93,6 @@ public class Hand {
 			if(fullHouse())currentHandString = "Full House";
 			else if (fourOfAKind()) currentHandString = "Four Of A Kind";
 			else currentHandString = "Straight Flush";
-			System.out.println(currentHandString);
 			return 9;
 		}
 		else if(straight() || flush()){
@@ -135,6 +131,8 @@ public class Hand {
 	}
 
 	private ArrayList<Integer> dupeNumberLogic() {
+		ArrayList<Integer> dupes = new ArrayList<Integer>();		
+		Set<Integer> set = new HashSet<>();
 		for (Card card : totalCards) {
 			if (set.add(card.getNumber()) == false) dupes.add(card.getNumber());
 		}
@@ -222,10 +220,7 @@ public class Hand {
 			if(!fourOfAKind() && temp.get(i)==temp.get(i+1))tripsValue = temp.get(i);
 			else pairValue = temp.get(i);
 		}
-		System.out.println("Trips Value: "+tripsValue+ "Pair Value: " + pairValue);
-		for(int i : temp){
-			System.out.println("TOTAL CARDS: "+i);
-		}
+
 		return (tripsValue!=0 && pairValue!=0);
 	}
 	public boolean trips() {
@@ -246,7 +241,7 @@ public class Hand {
 		if(temp.size()==0) return false;
 		int pairOneValue = temp.get(0);
 		int pairTwoValue = temp.get(temp.size()-1);
-		return (pairOneValue!=pairTwoValue && !trips() && !fullHouse());
+		return (pairOneValue!=pairTwoValue);
 	}
 	public boolean pair() {
 		ArrayList<Integer> temp = dupeNumberLogic();
