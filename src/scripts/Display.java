@@ -121,37 +121,33 @@ public class Display {
 			g.drawImage(card2, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 15 + CARD_WIDTH + 10,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 - CARD_HEIGHT / 2 - 18, CARD_WIDTH + 30, CARD_HEIGHT + 40,
 					null);
-			
+
 			// Draw Computer Cards
-			if(!game.getPlayers().get(1).isFolded()){
-			g.drawImage(cardBack, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + CARD_WIDTH - 185,
-					FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40,
-					null);
-			g.drawImage(cardBack, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 195,
-					FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40,
-					null);
+			if (!game.getPlayers().get(1).isFolded()) {
+				g.drawImage(cardBack, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + CARD_WIDTH - 185,
+						FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
+				g.drawImage(cardBack, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 195, FRAME_HEIGHT / 2 - 250,
+						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
 			}
-			if(!game.getPlayers().get(2).isFolded()){
-			g.drawImage(cardBack, FRAME_WIDTH - userLabel.getWidth() / 2 + CARD_WIDTH - 180,
-					FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40,
-					null);
-			g.drawImage(cardBack, FRAME_WIDTH - userLabel.getWidth() / 2 - 190,
-					FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40,
-					null);
+			if (!game.getPlayers().get(2).isFolded()) {
+				g.drawImage(cardBack, FRAME_WIDTH - userLabel.getWidth() / 2 + CARD_WIDTH - 180, FRAME_HEIGHT / 2 - 250,
+						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
+				g.drawImage(cardBack, FRAME_WIDTH - userLabel.getWidth() / 2 - 190, FRAME_HEIGHT / 2 - 250,
+						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
 			}
 			// Player Labels
 			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20,
 					null);
-			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() /2 - 210, FRAME_HEIGHT/2 - 190, null);
-			g.drawImage(userLabel, FRAME_WIDTH - userLabel.getWidth() /2 - 205, FRAME_HEIGHT/2 - 190, null);
-			
+			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210, FRAME_HEIGHT / 2 - 190, null);
+			g.drawImage(userLabel, FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190, null);
+
 			// Player Name & Pot Size
 			g.setColor(Color.BLACK);
 			g.drawString("Jerry", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 95,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 2);
 			g.setFont(new Font("Calibri", Font.PLAIN, 20));
 			g.setColor(new Color(5, 145, 60));
-			g.drawString(game.getUser().getPoints()+ " Pts", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 70,
+			g.drawString(game.getUser().getPoints() + " Pts", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 70,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 30);
 
 			if (tableCards.size() > 0) {
@@ -188,10 +184,10 @@ public class Display {
 			g.fillRoundRect(500, 474, strWidth + 10, 20 + BORDER, 10, 10);
 			g.setColor(Color.WHITE);
 			g.drawString(strengthString, 500 + 5, 474 + 17);
-			
-			//Computer Bet
+
+			// Computer Bet
 			g.setColor(Color.WHITE);
-			g.drawString("Computer Bet: " + game.getPlayers().get(1).getBetAmount(),50, 275);
+			g.drawString("Computer Bet: " + game.getPlayers().get(1).getBetAmount(), 50, 275);
 
 			// Hand Strength Bar Background
 			g.setColor(Color.DARK_GRAY);
@@ -209,13 +205,14 @@ public class Display {
 			// Hand Strength Meter
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
 
-			for(Player p : game.getPlayers()){
-				System.out.println("Hand: " + p.getCurrentHand()[0].getNumber() + "\t" + p.getCurrentHand()[1].getNumber());
+			for (Player p : game.getPlayers()) {
+				System.out.println(
+						"Hand: " + p.getCurrentHand()[0].getNumber() + "\t" + p.getCurrentHand()[1].getNumber());
 			}
 		}
 	}
 
-	//Adds Buttons To JFrame
+	// Adds Buttons To JFrame
 	private class ActionsDisplayPanel extends JPanel {
 
 		private static final long serialVersionUID = 1L;
@@ -251,22 +248,24 @@ public class Display {
 		}
 	}
 
-	//Button Listeners
+	// Button Listeners
 	public class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == raise) {
-				//Ask For User Input
-				String stringRaiseAmount = (String)JOptionPane.showInputDialog(frame,
-						"      How Much Would You Like To Raise",
-						"                                      Raise", 
+				// Ask For User Input
+				String stringRaiseAmount = (String) JOptionPane.showInputDialog(frame,
+						"      How Much Would You Like To Raise", "                                      Raise",
 						JOptionPane.PLAIN_MESSAGE);
-                stringRaiseAmount = stringRaiseAmount.replaceAll("[^0-9]", "");
-				int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
-				
-				game.getUser().raise(intRaiseAmount);
-				game.allComputersTakeAction();
-				game.getUser().setBetAmount(0);
-				game.getRound().moveOn();
+				try{
+					stringRaiseAmount = stringRaiseAmount.replaceAll("[^0-9]", "");
+					int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
+					game.getUser().raise(intRaiseAmount);
+					game.allComputersTakeAction();
+					game.getUser().setBetAmount(0);
+					game.getRound().moveOn();
+				}catch(NullPointerException e){
+					System.out.println("User has cancelled raise.");
+				}
 			}
 			if (evt.getSource() == call) {
 				game.getUser().call();
@@ -324,27 +323,31 @@ public class Display {
 		}
 
 	}
-	
-    //Set Round Title (1,2,3,4, etc.)
+
+	// Set Round Title (1,2,3,4, etc.)
 	public void setRoundTitle() {
 		frame.setTitle("Oker-pay: Round " + game.getRound().getRoundNumber());
 	}
-	//Remove Check Button
+
+	// Remove Check Button
 	public void removeCheck() {
 		check.setVisible(false);
 	}
-	//Add Check Button
+
+	// Add Check Button
 	public void addCheck() {
 		check.setVisible(true);
 	}
-	//Remove Call Button
+
+	// Remove Call Button
 	public void removeCall() {
 		call.setVisible(false);
 	}
-    //Add Call Button
+
+	// Add Call Button
 	public void addCall() {
 		call.setVisible(true);
-		int setGAmount = game.getPlayers().get(1).getBetAmount()-game.getUser().getBetAmount();
+		int setGAmount = game.getPlayers().get(1).getBetAmount() - game.getUser().getBetAmount();
 		call.setText("Call: " + setGAmount + " Pts");
 	}
 }
