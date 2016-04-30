@@ -226,15 +226,6 @@ public class Display {
 			
 			// Hand Strength Meter
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
-<<<<<<< Updated upstream
-			
-			/*
-			for (Player p : game.getPlayers()) {
-				System.out.println(
-						"Hand: " + p.getCurrentHand()[0].getNumber() + "\t" + p.getCurrentHand()[1].getNumber());
-			}
-			*/
-=======
 
 			// Draw chips
 			int chipsWidth = chips100k.getWidth();
@@ -249,7 +240,6 @@ public class Display {
 			System.out.println("True");
 
 			done = true;
->>>>>>> Stashed changes
 		}
 	}
 
