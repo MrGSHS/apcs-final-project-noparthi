@@ -121,20 +121,24 @@ public class Display {
 			g.drawImage(card2, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 15 + CARD_WIDTH + 10,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 - CARD_HEIGHT / 2 - 18, CARD_WIDTH + 30, CARD_HEIGHT + 40,
 					null);
+			
 			// Draw Computer Cards
+			if(!game.getPlayers().get(1).isFolded()){
 			g.drawImage(cardBack, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + CARD_WIDTH - 185,
 					FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40,
 					null);
 			g.drawImage(cardBack, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 195,
 					FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40,
 					null);
+			}
+			if(!game.getPlayers().get(2).isFolded()){
 			g.drawImage(cardBack, FRAME_WIDTH - userLabel.getWidth() / 2 + CARD_WIDTH - 180,
 					FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40,
 					null);
 			g.drawImage(cardBack, FRAME_WIDTH - userLabel.getWidth() / 2 - 190,
 					FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40,
 					null);
-			
+			}
 			// Player Labels
 			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20,
 					null);
