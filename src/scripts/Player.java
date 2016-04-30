@@ -112,6 +112,9 @@ public class Player {
 		}
 	}
 	
+	public void unFold(){
+		folded = false;
+	}
 	public void setBetAmount(int amt){
 		betAmount = amt;
 	}

@@ -46,7 +46,6 @@ public class Round {
 	//Before Flop Actions
 	public void preFlop() {
 		game.getDisplay().update();
-		game.takeAnte();
 		// Prints Out Hand Before Flop, Then Deals Flop
 		setMinBet(game.getBigBlind());
 
@@ -75,10 +74,13 @@ public class Round {
 	public void moveOn() {
 		game.getDisplay().update();
 		//Skips If Someone Had Raised, And Resets All Action Booleans Back To Null
-		if(game.getPlayers().get(1).getRaiseBoolean()|| (game.getUser().getRaiseBoolean() && !game.getPlayers().get(1).getCallBoolean())){ 
-			for(Player p : game.getPlayers())
-				p.resetActionBoolean();
-			return;}
+		for(Player p : game.getActivePlayers()){
+			if(p.getRaiseBoolean()|| (game.getUser().getRaiseBoolean() && !p.getCallBoolean())){ 
+				for(Player player : game.getPlayers())
+					player.resetActionBoolean();
+				return;
+			}
+		}
 
 		//Proceeds To Next Round If None Of The Above Are True
 		if (stageOfRound == 0) {

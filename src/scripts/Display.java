@@ -135,6 +135,7 @@ public class Display {
 				g.drawImage(cardBack, FRAME_WIDTH - userLabel.getWidth() / 2 - 190, FRAME_HEIGHT / 2 - 250,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
 			}
+
 			// Player Labels
 			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20,
 					null);
@@ -205,10 +206,12 @@ public class Display {
 			// Hand Strength Meter
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
 
+			/*
 			for (Player p : game.getPlayers()) {
 				System.out.println(
 						"Hand: " + p.getCurrentHand()[0].getNumber() + "\t" + p.getCurrentHand()[1].getNumber());
 			}
+			*/
 		}
 	}
 
@@ -253,17 +256,15 @@ public class Display {
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == raise) {
 				// Ask For User Input
-				String stringRaiseAmount = (String) JOptionPane.showInputDialog(frame,
-						"      How Much Would You Like To Raise", "                                      Raise",
-						JOptionPane.PLAIN_MESSAGE);
-				try{
+				String stringRaiseAmount = (String) JOptionPane.showInputDialog(frame, "Enter Raise Amount:", game.getMaxBetAmount()+game.getSmallBlind());
+				try {
 					stringRaiseAmount = stringRaiseAmount.replaceAll("[^0-9]", "");
 					int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
 					game.getUser().raise(intRaiseAmount);
 					game.allComputersTakeAction();
 					game.getUser().setBetAmount(0);
 					game.getRound().moveOn();
-				}catch(NullPointerException e){
+				} catch (NullPointerException e) {
 					System.out.println("User has cancelled raise.");
 				}
 			}
@@ -347,7 +348,8 @@ public class Display {
 	// Add Call Button
 	public void addCall() {
 		call.setVisible(true);
-		int setGAmount = game.getPlayers().get(1).getBetAmount() - game.getUser().getBetAmount();
+		System.out.println("Max bet currently: " + game.getMaxBetAmount() + "\t" + "User bet: " + game.getUser().getBetAmount());
+		int setGAmount = game.getMaxBetAmount() - game.getUser().getBetAmount();
 		call.setText("Call: " + setGAmount + " Pts");
 	}
 }
