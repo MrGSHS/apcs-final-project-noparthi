@@ -51,6 +51,9 @@ public class Display {
 	private JButton check = new JButton("Check");
 	private JButton call = new JButton("Call");
 	private JButton raise = new JButton("Raise");
+	private JButton tip = new JButton("Tip Mr. G");
+	
+	public boolean userTip = false;
 
 	private ArrayList<Card> cardsOnTable;
 
@@ -203,9 +206,10 @@ public class Display {
 				g.setColor(Color.YELLOW);
 			else
 				g.setColor(Color.GREEN);
+			
 			// Hand Strength Meter
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
-
+			
 			/*
 			for (Player p : game.getPlayers()) {
 				System.out.println(
@@ -228,26 +232,37 @@ public class Display {
 			check.addActionListener(new ButtonListener());
 			call.addActionListener(new ButtonListener());
 			raise.addActionListener(new ButtonListener());
+			tip.addActionListener(new ButtonListener());
 
 			fold.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			check.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			call.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			raise.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+			tip.setSize(2*BUTTON_WIDTH/3, BUTTON_HEIGHT/2);
 
 			raise.setLocation(600, 525);
 			call.setLocation(400, 525);
 			check.setLocation(200, 525);
 			fold.setLocation(0, 525);
+			tip.setLocation(332,130);
 
 			raise.setFont(buttonFont);
 			check.setFont(buttonFont);
 			call.setFont(buttonFont);
 			fold.setFont(buttonFont);
-
+			tip.setFont(buttonFont);
+			
+			//Set Tip Button Transparent && Text To White
+			tip.setOpaque(false);
+			tip.setContentAreaFilled(false);
+			tip.setBorderPainted(false);
+			tip.setForeground(Color.WHITE);
+			
 			frame.add(fold);
 			frame.add(check);
 			frame.add(call);
 			frame.add(raise);
+			frame.add(tip);
 		}
 	}
 
@@ -280,6 +295,11 @@ public class Display {
 			}
 			if (evt.getSource() == fold) {
 				game.getUser().fold();
+			}
+			if(evt.getSource() == tip){
+				game.getUser().setPoints(game.getUser().getPoints()-2000);
+				userTip = true;
+				update();
 			}
 		}
 	}
