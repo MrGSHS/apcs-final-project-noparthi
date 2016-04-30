@@ -17,7 +17,7 @@ public class Player {
 	
 	public Player(Game game) {
 		this.game = game;
-		points = 100000;
+		points = 1000000;
 	}
 	public void takeAction(){}
 	
@@ -53,6 +53,10 @@ public class Player {
 		folded = true;
 		betAmount = 0;
 		game.isRoundActive();
+	}
+	
+	public void unFold(){
+		folded = false;
 	}
 
 	//Check Method
@@ -111,10 +115,7 @@ public class Player {
 			return false;		
 		}
 	}
-	
-	public void unFold(){
-		folded = false;
-	}
+
 	public void setBetAmount(int amt){
 		betAmount = amt;
 	}

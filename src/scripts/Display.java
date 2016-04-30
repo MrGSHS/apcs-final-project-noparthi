@@ -1,6 +1,7 @@
 package scripts;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -31,6 +32,7 @@ public class Display {
 	private final int DEALER_WIDTH = 140;
 	private final int DEALER_HEIGHT = 130;
 
+	public boolean done;
 	private Font buttonFont = new Font("SansSerif", Font.PLAIN, 12);
 
 	private JFrame frame;
@@ -45,6 +47,10 @@ public class Display {
 	private BufferedImage card1;
 	private BufferedImage card2;
 	private ArrayList<BufferedImage> tableCards;
+	private BufferedImage chips100k;
+	private BufferedImage chips500k;
+	private BufferedImage chips1mil;
+	private BufferedImage chips5mil;
 	private Game game;
 
 	private JButton fold = new JButton("Fold");
@@ -66,6 +72,10 @@ public class Display {
 			theme = ImageIO.read(getClass().getResourceAsStream("/themes/red-velvet.jpg"));
 			userLabel = ImageIO.read(getClass().getResourceAsStream("/other/player-label.png"));
 			cardBack = ImageIO.read(getClass().getResourceAsStream("/other/card-back.png"));
+			chips100k = ImageIO.read(getClass().getResourceAsStream("/other/100k.png"));
+			chips500k = ImageIO.read(getClass().getResourceAsStream("/other/500k.png"));
+			chips1mil = ImageIO.read(getClass().getResourceAsStream("/other/1mil.png"));
+			chips5mil = ImageIO.read(getClass().getResourceAsStream("/other/5mil.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -145,6 +155,13 @@ public class Display {
 			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210, FRAME_HEIGHT / 2 - 190, null);
 			g.drawImage(userLabel, FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190, null);
 
+			game.playerPositions.add(
+					new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 });
+			game.playerPositions
+					.add(new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210, FRAME_HEIGHT / 2 - 190 });
+			game.playerPositions
+					.add(new int[] { FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190 });
+
 			// Player Name & Pot Size
 			g.setColor(Color.BLACK);
 			g.drawString("Jerry", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 95,
@@ -161,12 +178,12 @@ public class Display {
 				}
 			}
 			g.setColor(new Color(55, 53, 53));
-			g.fillRoundRect(FRAME_WIDTH / 2 - 70, FRAME_HEIGHT / 2 + CARD_WIDTH - 45, 140, 20, 15, 15);
+			g.fillRoundRect(FRAME_WIDTH / 2 - 70, FRAME_HEIGHT / 2 + CARD_WIDTH - 65, 140, 20, 15, 15);
 			g.setColor(new Color(246, 246, 246));
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
 			String potSize = "POT: " + game.getRound().getPot() + " Pts";
 			int potSizeWidth = g2d.getFontMetrics().stringWidth(potSize);
-			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 30);
+			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 50);
 
 			// Hand Strength Meter - 6 Pixel Border
 			final int BORDER = 5;
@@ -209,6 +226,7 @@ public class Display {
 			
 			// Hand Strength Meter
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
+<<<<<<< Updated upstream
 			
 			/*
 			for (Player p : game.getPlayers()) {
@@ -216,7 +234,33 @@ public class Display {
 						"Hand: " + p.getCurrentHand()[0].getNumber() + "\t" + p.getCurrentHand()[1].getNumber());
 			}
 			*/
+=======
+
+			// Draw chips
+			int chipsWidth = chips100k.getWidth();
+			int chipsHeight = chips100k.getHeight();
+
+			g.drawImage(calculateChips(game.getPlayers().get(0)), FRAME_WIDTH / 2 - chipsWidth / 2,
+					game.playerPositions.get(0)[1] - chipsHeight * 2 - 10, null);
+			g.drawImage(calculateChips(game.getPlayers().get(1)), chipsWidth / 2,
+					game.playerPositions.get(0)[1] - chipsHeight * 2 - 10, null);
+			g.drawImage(calculateChips(game.getPlayers().get(2)), FRAME_WIDTH - chipsWidth / 2,
+					game.playerPositions.get(0)[1] - chipsHeight * 2 - 10, null);
+			System.out.println("True");
+
+			done = true;
+>>>>>>> Stashed changes
 		}
+	}
+
+	public BufferedImage calculateChips(Player p) {
+		if (p.getBetAmount() / 1000 >= 1)
+			return chips1mil;
+		else if (p.getBetAmount() / 500000 >= 1)
+			return chips500k;
+		else if (p.getBetAmount() / 100000 >= 1)
+			return chips100k;
+		return null;
 	}
 
 	// Adds Buttons To JFrame
@@ -271,14 +315,19 @@ public class Display {
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == raise) {
 				// Ask For User Input
-				String stringRaiseAmount = (String) JOptionPane.showInputDialog(frame, "Enter Raise Amount:", game.getMaxBetAmount()+game.getSmallBlind());
+				String stringRaiseAmount = (String) JOptionPane.showInputDialog(frame, "Enter Raise Amount:",
+						game.getMaxBetAmount() + game.getSmallBlind());
 				try {
 					stringRaiseAmount = stringRaiseAmount.replaceAll("[^0-9]", "");
 					int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
-					game.getUser().raise(intRaiseAmount);
-					game.allComputersTakeAction();
-					game.getUser().setBetAmount(0);
-					game.getRound().moveOn();
+
+					if (game.getUser().raise(intRaiseAmount)) {
+						game.allComputersTakeAction();
+						game.getRound().moveOn();
+					}else{
+						return;
+					}
+
 				} catch (NullPointerException e) {
 					System.out.println("User has cancelled raise.");
 				}
@@ -305,9 +354,11 @@ public class Display {
 	}
 
 	public void update() {
+		done = false;
 		cardsOnTable = game.getTable().getCardsOnTable();
 		reloadImages();
-		frame.repaint();
+		tablePanel.repaint();
+		actionsPanel.repaint();
 		// Removes Check If Necessary
 		if (game.getPlayers().get(1).getRaiseBoolean()) {
 			removeCheck();
@@ -368,7 +419,8 @@ public class Display {
 	// Add Call Button
 	public void addCall() {
 		call.setVisible(true);
-		System.out.println("Max bet currently: " + game.getMaxBetAmount() + "\t" + "User bet: " + game.getUser().getBetAmount());
+		System.out.println(
+				"Max bet currently: " + game.getMaxBetAmount() + "\t" + "User bet: " + game.getUser().getBetAmount());
 		int setGAmount = game.getMaxBetAmount() - game.getUser().getBetAmount();
 		call.setText("Call: " + setGAmount + " Pts");
 	}

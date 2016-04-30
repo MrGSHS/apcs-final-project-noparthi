@@ -17,6 +17,8 @@ public class Game {
 	private Table table;
 	private int dealerIndex = 0;
 
+	public ArrayList<int[]> playerPositions = new ArrayList<>();
+
 	public Display getDisplay() {
 		return display;
 	}
@@ -76,8 +78,17 @@ public class Game {
 	}
 
 	public void allComputersTakeAction() {
-		for (int i = 1; i < players.size(); i++)
+		for (int i = 1; i < players.size(); i++) {
 			players.get(i).takeAction();
+			display.update();
+		}
+		/*
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 	}
 
 	public Game() {
@@ -88,7 +99,6 @@ public class Game {
 		players.add(computer1);
 		computer2 = new Computer(this);
 		players.add(computer2);
-
 		round = new Round(this);
 		display = new Display(this);
 		takeBlinds();
