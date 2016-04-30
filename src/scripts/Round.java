@@ -42,6 +42,7 @@ public class Round {
 		minBet = amt;
 	}
 
+	//Before Flop Actions
 	public void preFlop() {
 		game.getDisplay().update();
 		game.takeAnte();
@@ -50,22 +51,26 @@ public class Round {
 
 	}
 
+	//Before Turn Actions 
 	public void preTurn() {
 		game.getDisplay().update();
 		minBet = 500;
 
 	}
 
+	//Before River Actions
 	public void preRiver() {
 		game.getDisplay().update();
 		minBet = 500;
 	}
 
+	//After River Actions (Final Actions)
 	public void postRiver() {
 		game.getDisplay().update();
 		minBet = 500;
 	}
 
+	//Check To See If Should Move To Next Round
 	public void moveOn() {
 		game.getDisplay().update();
 		//Skips If Someone Had Raised, And Resets All Action Booleans Back To Null

@@ -32,6 +32,7 @@ public class Hand {
 		return currentHandString;
 	}
 	
+	//Pre-Flop Hand Strength
 	public int initialHandStrength() {
 		strength = 0;
 		// Check High Card
@@ -63,7 +64,7 @@ public class Hand {
 		return strength;
 	}
 
-	// Update Hand strength
+	// Post-Flop Hand Strengths
 	public int updateHandStrength() {
 		//Adds Cards On Table To TotalCardsAvailableToPlayer Pool
 		cardsOnTable = game.getTable().getCardsOnTable();
@@ -84,7 +85,7 @@ public class Hand {
 		}
 		Collections.sort(straightList);
 		
-		//Updates Hand Strength
+		//Updates Hand Strength String & Returns Hand Strength
 		if(royalFlush()){
 			currentHandString = "Royal Flush";
 			return 10;	
@@ -130,33 +131,41 @@ public class Hand {
 		}
 	}
 
+	//Adds Dupe Numbers Into Separate Array (Adds One Less Than The Number Available)
 	private ArrayList<Integer> dupeNumberLogic() {
 		ArrayList<Integer> dupes = new ArrayList<Integer>();		
 		Set<Integer> set = new HashSet<>();
 		for (Card card : totalCards) {
-			if (set.add(card.getNumber()) == false) dupes.add(card.getNumber());
+			if (set.add(card.getNumber()) == false){
+				dupes.add(card.getNumber());
+			}
 		}
 		Collections.sort(dupes);
 		return dupes;
 	}
 
+	//Adds Dupe Suits Into Separate Array (Adds One Less Than The Number Available)
 	private ArrayList<Integer> dupeSuitLogic() {
 		ArrayList<Integer> dupes = new ArrayList<>();
 		Set<Integer> set = new HashSet<>();
 		for (Card card : totalCards) {
-			if (set.add(card.getSuite()) == false) dupes.add(card.getSuite());
+			if (set.add(card.getSuite()) == false){
+				dupes.add(card.getSuite());
+			}
 		}
 		Collections.sort(dupes);
 		return dupes;
 	}
 
-	// Checks For Such Hands
+	// Checks For Royal Flush - Never Will Happen
 	public boolean royalFlush(){
-		return false; //Never Ever Will Happen
+		return false;
 	}
+	// Checks For Straight Flush
 	public boolean straightFlush(){
 		return (flush() && straight());
 	}
+	// Checks For Quads
 	public boolean fourOfAKind() {
 		ArrayList<Integer> temp = dupeNumberLogic();
 		int inARow = 1;
@@ -170,6 +179,7 @@ public class Hand {
 		}
 		return (maxInARow==3);
 	}
+	// Checks For Flush
 	public boolean flush() {
 		ArrayList<Integer> temp = dupeSuitLogic();
 		int inARow = 1;
@@ -183,6 +193,7 @@ public class Hand {
 		}
 		return (maxInARow>=4);
 	}
+	// Checks For Straight
 	public boolean straight() {
 		int straightCheck = 1;
 		int maxStraightCheck = 1;
@@ -211,6 +222,7 @@ public class Hand {
 		}
 		return (maxStraightCheck>=5);
 	}
+	// Checks For Full House
 	public boolean fullHouse() {
 		ArrayList<Integer> temp = dupeNumberLogic();
 		if(temp.size()==0) return false;
@@ -223,6 +235,7 @@ public class Hand {
 
 		return (tripsValue!=0 && pairValue!=0);
 	}
+	// Checks For Trips
 	public boolean trips() {
 		ArrayList<Integer> temp = dupeNumberLogic();
 		int inARow = 1;
@@ -236,17 +249,19 @@ public class Hand {
 		}
 		return (maxInARow==2);
 	}
+	// Checks For Two Pair
 	public boolean twoPair() {
 		ArrayList<Integer> temp = dupeNumberLogic();
 		if(temp.size()==0) return false;
 		int pairOneValue = temp.get(0);
 		int pairTwoValue = temp.get(temp.size()-1);
 		return (pairOneValue!=pairTwoValue);
-	}
+	}// Checks For Pair
 	public boolean pair() {
 		ArrayList<Integer> temp = dupeNumberLogic();
 		return (temp.size()==1);
 	}
+	// Checks For High Card
 	public boolean highCard() {
 		ArrayList<Integer> temp = dupeNumberLogic();
 		return (temp.size()==0);

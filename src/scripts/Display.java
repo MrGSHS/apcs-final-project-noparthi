@@ -188,6 +188,7 @@ public class Display {
 		}
 	}
 
+	//Adds Buttons To JFrame
 	private class ActionsDisplayPanel extends JPanel {
 
 		private static final long serialVersionUID = 1L;
@@ -223,6 +224,7 @@ public class Display {
 		}
 	}
 
+	//Button Listeners
 	public class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == raise) {
@@ -286,23 +288,23 @@ public class Display {
 		}
 
 	}
-
+    //Set Round Title (1,2,3,4, etc.)
 	public void setRoundTitle() {
 		frame.setTitle("Oker-pay: Round " + game.getRound().getRoundNumber());
 	}
-
+	//Remove Check Button
 	public void removeCheck() {
 		check.setVisible(false);
 	}
-
+	//Add Check Button
 	public void addCheck() {
 		check.setVisible(true);
 	}
-
+	//Remove Call Button
 	public void removeCall() {
 		call.setVisible(false);
 	}
-
+    //Add Call Button
 	public void addCall() {
 		call.setVisible(true);
 	}

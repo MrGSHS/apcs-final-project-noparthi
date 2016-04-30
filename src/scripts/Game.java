@@ -67,17 +67,20 @@ public class Game{
 		round.preFlop();
 	}
 
+	//Takes The Blinds
 	public void takeBlinds() {
 		// Set Index Of Big Blind Player
 		int bigBlindIndex = dealerIndex + 1;
 		if (bigBlindIndex >= players.size())
 			bigBlindIndex = 0;
 		players.get(bigBlindIndex).setBigBlind(true);
+		
 		// Set Index Of Small Blind Player
 		int smallBlindIndex = bigBlindIndex + 1;
 		if (smallBlindIndex >= players.size())
 			smallBlindIndex = 0;
 		players.get(smallBlindIndex).setSmallBlind(true);
+		
 		// Takes The Big And Small Blind
 		players.get(bigBlindIndex).raise(BIGBLIND);
 		players.get(smallBlindIndex).setPoints(players.get(smallBlindIndex).getPoints() - SMALLBLIND);
@@ -85,6 +88,7 @@ public class Game{
 		round.setPot(round.getPot() + SMALLBLIND);
 	}
 
+	//Takes Ante
 	public void takeAnte() {
 		for (Player p : players) {
 			if (!p.isBigBlind() && !p.isSmallBlind()) {
@@ -95,16 +99,19 @@ public class Game{
 		}
 	}
 
+	//Pays Out Money In Pot To Winner
 	public void payout() {
 		user.setPoints(user.getPoints() + round.getPot());
 		newRound();
 	}
 
+	//Reset Each Players Bet Amount At End Of Each Turn
 	public void resetPlayerBetAmount() {
 		for (Player p : players)
 			p.setBetAmount(0);
 	}
 
+	//Checks To See If 2 Or More Players Are Still Active
 	public boolean isRoundActive() {
 		int count = 0;
 		for (Player p : players)
@@ -121,6 +128,7 @@ public class Game{
 		return false;
 	}
 
+	//Creates New Round
 	public void newRound() {
 		resetPlayerBetAmount();
 		setDealerIndex(dealerIndex+=1);

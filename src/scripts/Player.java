@@ -41,22 +41,26 @@ public class Player {
 		hand = new Hand(game, game.getTable().getDeck().deal(), game.getTable().getDeck().deal());
 	}
 	
+	//Reset The Action Booleans
 	public void resetActionBoolean(){
 		checkBoolean = false;
 		raiseBoolean = false;
 		callBoolean = false;
 	}
 	
+	//Fold Method
 	public void fold() {
 		folded = true;
 		game.isRoundActive();
 	}
 
+	//Check Method
 	public void check() {
 		resetActionBoolean();
 		checkBoolean = true;
 	}
 
+	//Call Method
 	public void call() {
 		int maxBet = 0;
 		int bet = 0;
@@ -72,9 +76,13 @@ public class Player {
 		callBoolean = true;
 	}
 
+	//Raise Method
 	public boolean raise(int amt) {
+		//Subtracts Bet Amount If Made Earlier From This Time's Bet
 		amt -= betAmount;
+		//Guarantees That Raise Is Legal
 		if (amt >= game.getRound().getMinBet()) {
+			//All-In
 			if (amt > points) {
 				betAmount = points;
 				game.getRound().setPot(game.getRound().getPot()+points);
@@ -84,6 +92,7 @@ public class Player {
 				raiseBoolean = true;
 				return true;
 			}
+			//Not All-In
 			betAmount = amt;
 			game.getRound().setPot(game.getRound().getPot() + betAmount);
 			game.getRound().setMinBet(amt);
@@ -93,6 +102,7 @@ public class Player {
 			raiseBoolean = true;
 			return true;
 		}
+		//Not Legal Message
 		else{
 			System.out.println("Must raise at least something greater than or equal to " + game.getRound().getMinBet());		
 			return false;		
