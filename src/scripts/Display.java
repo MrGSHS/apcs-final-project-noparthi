@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Display {
@@ -130,7 +131,7 @@ public class Display {
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 2);
 			g.setFont(new Font("Calibri", Font.PLAIN, 20));
 			g.setColor(new Color(5, 145, 60));
-			g.drawString("" + game.getUser().getPoints(), FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 90,
+			g.drawString(game.getUser().getPoints()+ " Pts", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 70,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 30);
 
 			if (tableCards.size() > 0) {
@@ -143,7 +144,7 @@ public class Display {
 			g.fillRoundRect(FRAME_WIDTH / 2 - 70, FRAME_HEIGHT / 2 + CARD_WIDTH - 45, 140, 20, 15, 15);
 			g.setColor(new Color(246, 246, 246));
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
-			String potSize = "POT: " + game.getRound().getPot();
+			String potSize = "POT: " + game.getRound().getPot() + " Pts";
 			int potSizeWidth = g2d.getFontMetrics().stringWidth(potSize);
 			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 30);
 
@@ -167,6 +168,10 @@ public class Display {
 			g.fillRoundRect(500, 474, strWidth + 10, 20 + BORDER, 10, 10);
 			g.setColor(Color.WHITE);
 			g.drawString(strengthString, 500 + 5, 474 + 17);
+			
+			//Computer Bet
+			g.setColor(Color.WHITE);
+			g.drawString("Computer Bet: " + game.getComputer().getBetAmount(),50, 275);
 
 			// Hand Strength Bar Background
 			g.setColor(Color.DARK_GRAY);
@@ -228,8 +233,17 @@ public class Display {
 	public class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == raise) {
-				game.getUser().raise(game.getRound().getMinBet() * 2);
+				//Ask For User Input
+				String stringRaiseAmount = (String)JOptionPane.showInputDialog(frame,
+						"      How Much Would You Like To Raise",
+						"                                      Raise", 
+						JOptionPane.PLAIN_MESSAGE);
+                stringRaiseAmount = stringRaiseAmount.replaceAll("[^0-9]", "");
+				int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
+				
+				game.getUser().raise(intRaiseAmount);
 				game.getComputer().takeAction();
+				game.getUser().setBetAmount(0);
 				game.getRound().moveOn();
 			}
 			if (evt.getSource() == call) {
@@ -259,7 +273,7 @@ public class Display {
 			addCheck();
 		}
 		// Removes Call If Necessary
-		if (game.getComputer().getCheckBoolean()) {
+		if (game.getComputer().getCheckBoolean() || game.getUser().getRaiseBoolean()) {
 			removeCall();
 		} else {
 			addCall();
@@ -307,5 +321,7 @@ public class Display {
     //Add Call Button
 	public void addCall() {
 		call.setVisible(true);
+		int setGAmount = game.getComputer().getBetAmount()-game.getUser().getBetAmount();
+		call.setText("Call: " + setGAmount + " Pts");
 	}
 }

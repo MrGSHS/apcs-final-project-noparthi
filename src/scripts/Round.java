@@ -74,7 +74,7 @@ public class Round {
 	public void moveOn() {
 		game.getDisplay().update();
 		//Skips If Someone Had Raised, And Resets All Action Booleans Back To Null
-		if(game.getComputer().getRaiseBoolean()||game.getUser().getRaiseBoolean()){ 
+		if(game.getComputer().getRaiseBoolean()|| (game.getUser().getRaiseBoolean() && !game.getComputer().getCallBoolean())){ 
 			game.getComputer().resetActionBoolean();
 			game.getUser().resetActionBoolean();
 			return;}

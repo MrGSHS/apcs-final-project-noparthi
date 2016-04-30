@@ -51,12 +51,14 @@ public class Player {
 	//Fold Method
 	public void fold() {
 		folded = true;
+		betAmount = 0;
 		game.isRoundActive();
 	}
 
 	//Check Method
 	public void check() {
 		resetActionBoolean();
+		betAmount = 0;
 		checkBoolean = true;
 	}
 
@@ -73,6 +75,7 @@ public class Player {
 		points -= maxBet;
 		
 		resetActionBoolean();
+		betAmount = 0;
 		callBoolean = true;
 	}
 
