@@ -39,7 +39,6 @@ public class Display {
 	private BufferedImage theme;
 	private BufferedImage table;
 	private BufferedImage userLabel;
-	private BufferedImage computer1Label;
 	private BufferedImage dealer;
 
 	private BufferedImage cardBack;
@@ -63,7 +62,6 @@ public class Display {
 			table = ImageIO.read(getClass().getResourceAsStream("/other/poker-table.png"));
 			theme = ImageIO.read(getClass().getResourceAsStream("/themes/red-velvet.jpg"));
 			userLabel = ImageIO.read(getClass().getResourceAsStream("/other/player-label.png"));
-			computer1Label = ImageIO.read(getClass().getResourceAsStream("/other/player-label.png"));
 			cardBack = ImageIO.read(getClass().getResourceAsStream("/other/card-back.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -123,18 +121,25 @@ public class Display {
 			g.drawImage(card2, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 15 + CARD_WIDTH + 10,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 - CARD_HEIGHT / 2 - 18, CARD_WIDTH + 30, CARD_HEIGHT + 40,
 					null);
-			// Draw Computer 1 Cards
-			g.drawImage(cardBack, FRAME_WIDTH / 2 - computer1Label.getWidth() / 2 + CARD_WIDTH - 185,
+			// Draw Computer Cards
+			g.drawImage(cardBack, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + CARD_WIDTH - 185,
 					FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40,
 					null);
-			g.drawImage(cardBack, FRAME_WIDTH / 2 - computer1Label.getWidth() / 2 - 195,
+			g.drawImage(cardBack, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 195,
+					FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40,
+					null);
+			g.drawImage(cardBack, FRAME_WIDTH - userLabel.getWidth() / 2 + CARD_WIDTH - 180,
+					FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40,
+					null);
+			g.drawImage(cardBack, FRAME_WIDTH - userLabel.getWidth() / 2 - 190,
 					FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40,
 					null);
 			
 			// Player Labels
 			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20,
 					null);
-			g.drawImage(computer1Label, FRAME_WIDTH / 2 - userLabel.getWidth() /2 - 210, FRAME_HEIGHT/2 - 190, null);
+			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() /2 - 210, FRAME_HEIGHT/2 - 190, null);
+			g.drawImage(userLabel, FRAME_WIDTH - userLabel.getWidth() /2 - 205, FRAME_HEIGHT/2 - 190, null);
 			
 			// Player Name & Pot Size
 			g.setColor(Color.BLACK);
@@ -200,7 +205,9 @@ public class Display {
 			// Hand Strength Meter
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
 
-			System.out.println("Computer Hand" + "\n" +game.getPlayers().get(1).getCurrentHand()[0].getNumber() + "\t" + game.getPlayers().get(1).getCurrentHand()[1].getNumber());
+			for(Player p : game.getPlayers()){
+				System.out.println("Hand: " + p.getCurrentHand()[0].getNumber() + "\t" + p.getCurrentHand()[1].getNumber());
+			}
 		}
 	}
 
@@ -253,18 +260,18 @@ public class Display {
 				int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
 				
 				game.getUser().raise(intRaiseAmount);
-				game.getPlayers().get(1).takeAction();
+				game.allComputersTakeAction();
 				game.getUser().setBetAmount(0);
 				game.getRound().moveOn();
 			}
 			if (evt.getSource() == call) {
 				game.getUser().call();
-				game.getPlayers().get(1).takeAction();
+				game.allComputersTakeAction();
 				game.getRound().moveOn();
 			}
 			if (evt.getSource() == check) {
 				game.getUser().check();
-				game.getPlayers().get(1).takeAction();
+				game.allComputersTakeAction();
 				game.getRound().moveOn();
 			}
 			if (evt.getSource() == fold) {
@@ -313,6 +320,7 @@ public class Display {
 		}
 
 	}
+	
     //Set Round Title (1,2,3,4, etc.)
 	public void setRoundTitle() {
 		frame.setTitle("Oker-pay: Round " + game.getRound().getRoundNumber());

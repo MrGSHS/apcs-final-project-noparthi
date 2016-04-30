@@ -18,8 +18,9 @@ public class Round {
 		stageOfRound = 0;
 		this.game = game;
 		roundNumber++;
-		game.getUser().newHand();
-		game.getPlayers().get(1).newHand();
+		for(Player p : game.getPlayers()){
+			p.newHand();
+		}
 	}
 
 	public int getRoundNumber() {
@@ -75,8 +76,8 @@ public class Round {
 		game.getDisplay().update();
 		//Skips If Someone Had Raised, And Resets All Action Booleans Back To Null
 		if(game.getPlayers().get(1).getRaiseBoolean()|| (game.getUser().getRaiseBoolean() && !game.getPlayers().get(1).getCallBoolean())){ 
-			game.getPlayers().get(1).resetActionBoolean();
-			game.getUser().resetActionBoolean();
+			for(Player p : game.getPlayers())
+				p.resetActionBoolean();
 			return;}
 
 		//Proceeds To Next Round If None Of The Above Are True
