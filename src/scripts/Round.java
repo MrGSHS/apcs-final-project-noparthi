@@ -19,7 +19,7 @@ public class Round {
 		this.game = game;
 		roundNumber++;
 		game.getUser().newHand();
-		game.getComputer().newHand();
+		game.getPlayers().get(1).newHand();
 	}
 
 	public int getRoundNumber() {
@@ -74,8 +74,8 @@ public class Round {
 	public void moveOn() {
 		game.getDisplay().update();
 		//Skips If Someone Had Raised, And Resets All Action Booleans Back To Null
-		if(game.getComputer().getRaiseBoolean()|| (game.getUser().getRaiseBoolean() && !game.getComputer().getCallBoolean())){ 
-			game.getComputer().resetActionBoolean();
+		if(game.getPlayers().get(1).getRaiseBoolean()|| (game.getUser().getRaiseBoolean() && !game.getPlayers().get(1).getCallBoolean())){ 
+			game.getPlayers().get(1).resetActionBoolean();
 			game.getUser().resetActionBoolean();
 			return;}
 

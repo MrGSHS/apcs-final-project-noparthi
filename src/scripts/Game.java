@@ -12,6 +12,7 @@ public class Game{
 
 	private Player user;
 	private Player computer1;
+	private Player computer2;
 	private Round round;
 	private Table table;
 	private int dealerIndex = 0;
@@ -27,10 +28,6 @@ public class Game{
 
 	public Player getUser() {
 		return user;
-	}
-
-	public Player getComputer() {
-		return computer1;
 	}
 
 	public int getBigBlind() {
@@ -50,6 +47,7 @@ public class Game{
 		else dealerIndex = index;
 	}
 
+	//Index 0 Is A Player, The Rest Are Computers
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
@@ -60,6 +58,9 @@ public class Game{
 		players.add(user);
 		computer1 = new Computer(this);
 		players.add(computer1);
+		computer2 = new Computer(this);
+		players.add(computer2);
+		
 		round = new Round(this);
 		display = new Display(this);
 		takeBlinds();

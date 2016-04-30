@@ -182,7 +182,7 @@ public class Display {
 			
 			//Computer Bet
 			g.setColor(Color.WHITE);
-			g.drawString("Computer Bet: " + game.getComputer().getBetAmount(),50, 275);
+			g.drawString("Computer Bet: " + game.getPlayers().get(1).getBetAmount(),50, 275);
 
 			// Hand Strength Bar Background
 			g.setColor(Color.DARK_GRAY);
@@ -200,7 +200,7 @@ public class Display {
 			// Hand Strength Meter
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
 
-			System.out.println("Computer Hand" + "\n" +game.getComputer().getCurrentHand()[0].getNumber() + "\t" + game.getComputer().getCurrentHand()[1].getNumber());
+			System.out.println("Computer Hand" + "\n" +game.getPlayers().get(1).getCurrentHand()[0].getNumber() + "\t" + game.getPlayers().get(1).getCurrentHand()[1].getNumber());
 		}
 	}
 
@@ -253,18 +253,18 @@ public class Display {
 				int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
 				
 				game.getUser().raise(intRaiseAmount);
-				game.getComputer().takeAction();
+				game.getPlayers().get(1).takeAction();
 				game.getUser().setBetAmount(0);
 				game.getRound().moveOn();
 			}
 			if (evt.getSource() == call) {
 				game.getUser().call();
-				game.getComputer().takeAction();
+				game.getPlayers().get(1).takeAction();
 				game.getRound().moveOn();
 			}
 			if (evt.getSource() == check) {
 				game.getUser().check();
-				game.getComputer().takeAction();
+				game.getPlayers().get(1).takeAction();
 				game.getRound().moveOn();
 			}
 			if (evt.getSource() == fold) {
@@ -278,13 +278,13 @@ public class Display {
 		reloadImages();
 		frame.repaint();
 		// Removes Check If Necessary
-		if (game.getComputer().getRaiseBoolean()) {
+		if (game.getPlayers().get(1).getRaiseBoolean()) {
 			removeCheck();
 		} else {
 			addCheck();
 		}
 		// Removes Call If Necessary
-		if (game.getComputer().getCheckBoolean() || game.getUser().getRaiseBoolean()) {
+		if (game.getPlayers().get(1).getCheckBoolean() || game.getUser().getRaiseBoolean()) {
 			removeCall();
 		} else {
 			addCall();
@@ -332,7 +332,7 @@ public class Display {
     //Add Call Button
 	public void addCall() {
 		call.setVisible(true);
-		int setGAmount = game.getComputer().getBetAmount()-game.getUser().getBetAmount();
+		int setGAmount = game.getPlayers().get(1).getBetAmount()-game.getUser().getBetAmount();
 		call.setText("Call: " + setGAmount + " Pts");
 	}
 }
