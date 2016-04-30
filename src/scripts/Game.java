@@ -52,6 +52,13 @@ public class Game{
 		return players;
 	}
 	
+	public ArrayList<Player> getComputers(){
+		ArrayList<Player> temp = new ArrayList<>();
+		for(Player p : players)
+			temp.add(p);
+		temp.remove(0);
+		return temp;
+	}
 	public Game() {
 		table = new Table();
 		user = new Player(this);
@@ -102,6 +109,9 @@ public class Game{
 
 	//Pays Out Money In Pot To Winner
 	public void payout() {
+		for(int i = 0; i < players.size(); i++){
+			
+		}
 		user.setPoints(user.getPoints() + round.getPot());
 		newRound();
 	}
