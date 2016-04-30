@@ -347,8 +347,7 @@ public class Display {
 		done = false;
 		cardsOnTable = game.getTable().getCardsOnTable();
 		reloadImages();
-		tablePanel.repaint();
-		actionsPanel.repaint();
+		frame.repaint();
 		// Removes Check If Necessary
 		if (game.getPlayers().get(1).getRaiseBoolean()) {
 			removeCheck();
