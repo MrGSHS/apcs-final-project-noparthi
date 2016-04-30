@@ -42,6 +42,7 @@ public class Display {
 	private BufferedImage computer1Label;
 	private BufferedImage dealer;
 
+	private BufferedImage cardBack;
 	private BufferedImage card1;
 	private BufferedImage card2;
 	private ArrayList<BufferedImage> tableCards;
@@ -62,6 +63,8 @@ public class Display {
 			table = ImageIO.read(getClass().getResourceAsStream("/other/poker-table.png"));
 			theme = ImageIO.read(getClass().getResourceAsStream("/themes/red-velvet.jpg"));
 			userLabel = ImageIO.read(getClass().getResourceAsStream("/other/player-label.png"));
+			computer1Label = ImageIO.read(getClass().getResourceAsStream("/other/player-label.png"));
+			cardBack = ImageIO.read(getClass().getResourceAsStream("/other/card-back.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -113,18 +116,26 @@ public class Display {
 			g.drawString("Check", FRAME_WIDTH / 4 + FRAME_WIDTH / 10, 555);
 			g.drawString("Call", FRAME_WIDTH / 2 + FRAME_WIDTH / 10, 555);
 
-			// Draw Cards
+			// Draw User Cards
 			g.drawImage(card1, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 15,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 - CARD_HEIGHT / 2 - 18, CARD_WIDTH + 30, CARD_HEIGHT + 40,
 					null);
 			g.drawImage(card2, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 15 + CARD_WIDTH + 10,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 - CARD_HEIGHT / 2 - 18, CARD_WIDTH + 30, CARD_HEIGHT + 40,
 					null);
-
+			// Draw Computer 1 Cards
+			g.drawImage(cardBack, FRAME_WIDTH / 2 - computer1Label.getWidth() / 2 + CARD_WIDTH - 185,
+					FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40,
+					null);
+			g.drawImage(cardBack, FRAME_WIDTH / 2 - computer1Label.getWidth() / 2 - 195,
+					FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40,
+					null);
+			
 			// Player Labels
 			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20,
 					null);
-
+			g.drawImage(computer1Label, FRAME_WIDTH / 2 - userLabel.getWidth() /2 - 210, FRAME_HEIGHT/2 - 190, null);
+			
 			// Player Name & Pot Size
 			g.setColor(Color.BLACK);
 			g.drawString("Jerry", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 95,
