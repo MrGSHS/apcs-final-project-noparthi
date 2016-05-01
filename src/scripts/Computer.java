@@ -33,7 +33,7 @@ public class Computer extends Player {
 				System.out.println("Comp. Calls");
 				return;
 			}
-			if (game.getUser().getBetAmount() > 0.50 * getPoints()) {
+			if (game.getMaxBetAmount() > 0.50 * getPoints()) {
 				if (currentHandStrength >= 8) {
 					call();
 					System.out.println("Comp. Calls");
@@ -44,7 +44,7 @@ public class Computer extends Player {
 					return;
 				}
 			}
-			if (game.getUser().getBetAmount() > 0.25 * getPoints()) {
+			if (game.getMaxBetAmount() > 0.25 * getPoints()) {
 				if (currentHandStrength >= 7 || (int) (Math.random() * 11) + 1 == 1) {
 					call();
 					System.out.println("Comp. Calls");
@@ -55,7 +55,7 @@ public class Computer extends Player {
 					return;
 				}
 			}
-			if (game.getUser().getBetAmount() > 0.10 * getPoints()) {
+			if (game.getMaxBetAmount() > 0.10 * getPoints()) {
 				if (currentHandStrength >= 6 || (int) (Math.random() * 11) + 1 <= 2) {
 					call();
 					System.out.println("Comp. Calls");
@@ -109,7 +109,7 @@ public class Computer extends Player {
 				System.out.println("Comp. Calls");
 				return;
 			}
-			if (game.getUser().getBetAmount() > 0.75 * getPoints()) {
+			if (game.getMaxBetAmount() > 0.75 * getPoints()) {
 				if (currentHandStrength >= 8) {
 					call();
 					System.out.println("Comp. Calls");
@@ -120,7 +120,7 @@ public class Computer extends Player {
 					return;
 				}
 			}
-			if (game.getUser().getBetAmount() > 0.5 * getPoints()) {
+			if (game.getMaxBetAmount() > 0.5 * getPoints()) {
 				if (currentHandStrength >= 7 || (int) (Math.random() * 11) + 1 <= 1) {
 					call();
 					System.out.println("Comp. Calls");
@@ -131,7 +131,7 @@ public class Computer extends Player {
 					return;
 				}
 			}
-			if (game.getUser().getBetAmount() > 0.25 * getPoints()) {
+			if (game.getMaxBetAmount() > 0.25 * getPoints()) {
 				if (currentHandStrength >= 6 || (int) (Math.random() * 11) + 1 <= 1) {
 					call();
 					System.out.println("Comp. Calls");
