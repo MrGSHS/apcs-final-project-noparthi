@@ -34,7 +34,7 @@ public class Display {
 
 	public boolean done;
 	private Font buttonFont = new Font("SansSerif", Font.PLAIN, 12);
-
+	private Color modifiedGrey = new Color(55, 53, 53);
 	private JFrame frame;
 	private TableDisplayPanel tablePanel;
 	private ActionsDisplayPanel actionsPanel;
@@ -109,6 +109,9 @@ public class Display {
 		private static final long serialVersionUID = 1L;
 
 		public void paintComponent(Graphics g) {
+			int chipsWidth = chips100k.getWidth();
+			int chipsHeight = chips100k.getHeight();
+
 			g.setFont(new Font("Calibri", Font.BOLD, 20));
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -177,7 +180,7 @@ public class Display {
 							CARD_WIDTH, CARD_HEIGHT, null);
 				}
 			}
-			g.setColor(new Color(55, 53, 53));
+			g.setColor(modifiedGrey);
 			g.fillRoundRect(FRAME_WIDTH / 2 - 70, FRAME_HEIGHT / 2 + CARD_WIDTH - 65, 140, 20, 15, 15);
 			g.setColor(new Color(246, 246, 246));
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
@@ -206,10 +209,15 @@ public class Display {
 			g.setColor(Color.WHITE);
 			g.drawString(strengthString, 500 + 5, 474 + 17);
 
-			// Computer Bet
+			// Computers' Bet
+			g.setColor(modifiedGrey);
+			g.fillRoundRect(game.playerPositions.get(1)[0] + 120, game.playerPositions.get(1)[1] + userLabel.getHeight() + 10, 40, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(2)[0] + 20, game.playerPositions.get(2)[1] + userLabel.getHeight() + 10, 40, 20, 15, 15);
 			g.setColor(Color.WHITE);
-			g.drawString("Computer Bet: " + game.getPlayers().get(1).getBetAmount(), 50, 275);
-
+			g.setFont(new Font("Calibri", Font.BOLD, 16));
+			g.drawString("" + game.getPlayers().get(1).getBetAmount()/1000 + "K", game.playerPositions.get(1)[0] + 125, game.playerPositions.get(1)[1] + userLabel.getHeight() + 25);
+			g.drawString("" + game.getPlayers().get(2).getBetAmount()/1000 + "K", game.playerPositions.get(2)[0] + 25, game.playerPositions.get(2)[1] + userLabel.getHeight() + 25);
+			
 			// Hand Strength Bar Background
 			g.setColor(Color.DARK_GRAY);
 			g.fillRoundRect(500, 494, 296, 31, 10, 10);
@@ -228,9 +236,6 @@ public class Display {
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
 
 			// Draw chips
-			int chipsWidth = chips100k.getWidth();
-			int chipsHeight = chips100k.getHeight();
-
 			g.drawImage(calculateChips(game.getPlayers().get(0)), FRAME_WIDTH / 2 - chipsWidth / 2,
 					game.playerPositions.get(0)[1] - chipsHeight * 2 - 10, null);
 			g.drawImage(calculateChips(game.getPlayers().get(1)), game.playerPositions.get(1)[0] + 70,
