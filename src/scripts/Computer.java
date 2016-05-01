@@ -4,8 +4,8 @@ public class Computer extends Player {
 	private Game game;
 	private int currentHandStrength;
 
-	public Computer(Game game) {
-		super(game);
+	public Computer(Game game, int pos) {
+		super(game, pos);
 		this.game = game;
 	}
 
@@ -18,7 +18,18 @@ public class Computer extends Player {
 
 	public void preFlopLogic() {
 		currentHandStrength = getHand().initialHandStrength();
-		if (game.getUser().getCheckBoolean()) {
+		int index = getPosition()-1;
+		for(Player p : game.getActivePlayers()){
+			if(p.getPosition() != getPosition()){
+				index = p.getPosition();
+				break;
+			}
+		}
+		///System.out.println("Index: " + index);
+		//System.out.println("Check Boolean: "+game.getPlayers().get(index).getCheckBoolean());
+		//System.out.println("Call Boolean: "+game.getPlayers().get(index).getCallBoolean());
+		//System.out.println("Raise Boolean: "+game.getPlayers().get(index).getRaiseBoolean());
+		if (game.getPlayers().get(index).getCheckBoolean()) {
 			if (currentHandStrength > 6 || (int) (Math.random() * 11) + 1 <= 2) {
 				raise(game.getBigBlind() * 2);
 				return;
@@ -27,7 +38,7 @@ public class Computer extends Player {
 				System.out.println("Comp. Checks");
 				return;
 			}
-		} else if (game.getUser().getRaiseBoolean()) {
+		} else if (game.getPlayers().get(index).getRaiseBoolean() || game.getPlayers().get(index).getCallBoolean()) {
 			if (currentHandStrength == 10) {
 				call();
 				System.out.println("Comp. Calls");
@@ -70,16 +81,23 @@ public class Computer extends Player {
 					System.out.println("Comp. Calls");
 					return;
 			}
-		} else {
-			check();
-			System.out.println("Comp. Checks");
-			return;
+		} 
+		else{
+			System.out.println("BROKENNN. OH NOOOO");
+			System.exit(1);
 		}
 	}
 
 	public void logic() {
 		currentHandStrength = getHand().updateHandStrength();
-		if (game.getUser().getCheckBoolean()) {
+		int index = getPosition()-1;
+		for(Player p : game.getActivePlayers()){
+			if(p.getPosition() != getPosition()){
+				index = p.getPosition();
+				break;
+			}
+		}
+		if (game.getPlayers().get(index).getCheckBoolean()) {
 			if ((int) (Math.random() * 11) + 1 <= 1) {
 				raise(game.getBigBlind() * ((int) (Math.random() * 12) + 20));
 				return;
@@ -103,7 +121,7 @@ public class Computer extends Player {
 				System.out.println("Comp. Checks");
 				return;
 			}
-		} else if (game.getUser().getRaiseBoolean()) {
+		} else if (game.getPlayers().get(index).getRaiseBoolean()||game.getPlayers().get(index).getCallBoolean()) {
 			if (currentHandStrength == 10) {
 				call();
 				System.out.println("Comp. Calls");
@@ -156,9 +174,7 @@ public class Computer extends Player {
 				}
 			}
 		} else{
-			check();
-			System.out.println("Comp. Checks");
-			return;
+			System.out.println("BROKENNN. OH NOOOO");
 		}
 	}
 }

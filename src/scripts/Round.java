@@ -76,8 +76,9 @@ public class Round {
 		//Skips If Someone Had Raised, And Resets All Action Booleans Back To Null
 		for(Player p : game.getActivePlayers()){
 			if(p.getRaiseBoolean()|| (game.getUser().getRaiseBoolean() && !p.getCallBoolean())){ 
-				for(Player player : game.getPlayers())
+				for(Player player : game.getPlayers()){
 					player.resetActionBoolean();
+				}
 				return;
 			}
 		}

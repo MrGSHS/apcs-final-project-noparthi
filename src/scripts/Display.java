@@ -47,10 +47,10 @@ public class Display {
 	private BufferedImage card1;
 	private BufferedImage card2;
 	private ArrayList<BufferedImage> tableCards;
-	private BufferedImage chips100k;
-	private BufferedImage chips500k;
-	private BufferedImage chips1mil;
-	private BufferedImage chips5mil;
+	private BufferedImage chips5k;
+	private BufferedImage chips10k;
+	private BufferedImage chips25k;
+	private BufferedImage chips50k;
 	private Game game;
 
 	private JButton fold = new JButton("Fold");
@@ -72,10 +72,10 @@ public class Display {
 			theme = ImageIO.read(getClass().getResourceAsStream("/themes/red-velvet.jpg"));
 			userLabel = ImageIO.read(getClass().getResourceAsStream("/other/player-label.png"));
 			cardBack = ImageIO.read(getClass().getResourceAsStream("/other/card-back.png"));
-			chips100k = ImageIO.read(getClass().getResourceAsStream("/other/100k.png"));
-			chips500k = ImageIO.read(getClass().getResourceAsStream("/other/500k.png"));
-			chips1mil = ImageIO.read(getClass().getResourceAsStream("/other/1mil.png"));
-			chips5mil = ImageIO.read(getClass().getResourceAsStream("/other/5mil.png"));
+			chips5k = ImageIO.read(getClass().getResourceAsStream("/other/5k.png"));
+			chips10k = ImageIO.read(getClass().getResourceAsStream("/other/10k.png"));
+			chips25k = ImageIO.read(getClass().getResourceAsStream("/other/25k.png"));
+			chips50k = ImageIO.read(getClass().getResourceAsStream("/other/50k.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -109,8 +109,8 @@ public class Display {
 		private static final long serialVersionUID = 1L;
 
 		public void paintComponent(Graphics g) {
-			int chipsWidth = chips100k.getWidth();
-			int chipsHeight = chips100k.getHeight();
+			int chipsWidth = chips5k.getWidth();
+			int chipsHeight = chips5k.getHeight();
 
 			g.setFont(new Font("Calibri", Font.BOLD, 20));
 			Graphics2D g2d = (Graphics2D) g;
@@ -246,12 +246,14 @@ public class Display {
 	}
 
 	public BufferedImage calculateChips(Player p) {
-		if (p.getPointsInvested() / 10000 >= 1)
-			return chips1mil;
-		else if (p.getPointsInvested() / 5000 >= 1)
-			return chips500k;
-		else if (p.getPointsInvested() / 1000 >= 1)
-			return chips100k;
+		if (p.getPointsInvested() / 50000 >= 1)
+			return chips50k;
+		else if (p.getPointsInvested() / 25000 >= 1)
+			return chips25k;
+		else if (p.getPointsInvested() / 10000 >= 1)
+			return chips10k;
+		else if(p.getPointsInvested() / 5000 >= 1)
+			return chips5k;
 		return null;
 	}
 
@@ -348,7 +350,6 @@ public class Display {
 	}
 
 	public void update() {
-		done = false;
 		cardsOnTable = game.getTable().getCardsOnTable();
 		reloadImages();
 		frame.repaint();

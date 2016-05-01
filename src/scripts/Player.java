@@ -3,6 +3,7 @@ package scripts;
 public class Player {
 
 	private Game game;
+	private int position;
 	private Hand hand;
 
 	private int points;
@@ -16,8 +17,9 @@ public class Player {
 	public boolean raiseBoolean = false;
 	public boolean callBoolean = false;
 	
-	public Player(Game game) {
+	public Player(Game game, int position) {
 		this.game = game;
+		this.position = position;
 		points = 100000;
 	}
 	public void takeAction(){}
@@ -26,6 +28,7 @@ public class Player {
 	public boolean getRaiseBoolean(){return raiseBoolean;}
 	public boolean getCallBoolean(){return callBoolean;}
 	
+	public int getPosition(){return position;}	
 	public int getPoints() { return points; }
 	public int getPointsInvested(){ return pointsInvested; }
 	public Hand getHand(){ return hand; }
@@ -56,6 +59,7 @@ public class Player {
 	public void fold() {
 		folded = true;
 		betAmount = 0;
+        resetActionBoolean();
 		game.isRoundActive();
 	}
 	
@@ -80,6 +84,7 @@ public class Player {
 			if(bet > maxBet)maxBet = bet;
 		}
 		maxBet -= betAmount;
+		//System.out.println(maxBet);
 		game.getRound().setPot(game.getRound().getPot() + maxBet);
 		
 		//Sets Points Invested And Removes Points
@@ -95,6 +100,7 @@ public class Player {
 	//Raise Method
 	public boolean raise(int amt) {
 		//Subtracts Bet Amount If Made Earlier From This Time's Bet
+		int swapAmt = amt;
 		amt -= betAmount;
 		//Guarantees That Raise Is Legal
 		if (amt >= game.getRound().getMinBet()) {
@@ -109,9 +115,9 @@ public class Player {
 				raiseBoolean = true;
 				return true;
 			}
-			//Not All-In
-			betAmount = amt;
-			game.getRound().setPot(game.getRound().getPot() + betAmount);
+			//Not All-In			
+			betAmount = swapAmt;
+			game.getRound().setPot(game.getRound().getPot() + amt);
 			game.getRound().setMinBet(amt);
 			pointsInvested += amt;
 			points -= amt;

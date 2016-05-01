@@ -9,7 +9,8 @@ public class Game {
 	private final int SMALLBLIND = 250;
 	private final int ANTE = 100;
 	private ArrayList<Player> players = new ArrayList<>();
-
+	
+	
 	private Player user;
 	private Player computer1;
 	private Player computer2;
@@ -83,19 +84,17 @@ public class Game {
 			players.get(i).takeAction();
 			display.update();
 		}
-		/*
-		 * try { Thread.sleep(3000); } catch (InterruptedException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 */
+
 	}
 
 	public Game() {
+		int pos = 0;
 		table = new Table();
-		user = new Player(this);
+		user = new Player(this, pos++);
 		players.add(user);
-		computer1 = new Computer(this);
+		computer1 = new Computer(this, pos++);
 		players.add(computer1);
-		computer2 = new Computer(this);
+		computer2 = new Computer(this, pos++);
 		players.add(computer2);
 		round = new Round(this);
 		display = new Display(this);
@@ -122,6 +121,7 @@ public class Game {
 		// Takes The Big And Small Blind
 		players.get(bigBlindIndex).raise(BIGBLIND);
 		players.get(smallBlindIndex).setPoints(players.get(smallBlindIndex).getPoints() - SMALLBLIND);
+		players.get(smallBlindIndex).setPointsInvested(SMALLBLIND);
 		players.get(smallBlindIndex).setBetAmount(SMALLBLIND);
 		round.setPot(round.getPot() + SMALLBLIND);
 	}
@@ -131,6 +131,7 @@ public class Game {
 		for (Player p : players) {
 			if (!p.isBigBlind() && !p.isSmallBlind()) {
 				p.setPoints(p.getPoints() - ANTE);
+				p.setPointsInvested(ANTE);
 				p.setBetAmount(ANTE);
 				round.setPot(round.getPot() + ANTE);
 			}
@@ -165,16 +166,12 @@ public class Game {
 
 	// Checks To See If 2 Or More Players Are Still Active
 	public boolean isRoundActive() {
-		int count = 0;
-		for (Player p : players)
-			if (p.isFolded())
-				count++;
+		if(getActivePlayers().size() > 1) return true;
 
-		if (count != 1) {
-			return true;
-		}
 		for (Player p : players) {
-			p.resetActionBoolean();
+			if(p.isFolded()){
+				p.resetActionBoolean();
+			}
 		}
 		payout();
 		return false;
