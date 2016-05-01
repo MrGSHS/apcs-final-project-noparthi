@@ -233,10 +233,10 @@ public class Display {
 
 			g.drawImage(calculateChips(game.getPlayers().get(0)), FRAME_WIDTH / 2 - chipsWidth / 2,
 					game.playerPositions.get(0)[1] - chipsHeight * 2 - 10, null);
-			g.drawImage(calculateChips(game.getPlayers().get(1)), chipsWidth / 2,
-					game.playerPositions.get(0)[1] - chipsHeight * 2 - 10, null);
-			g.drawImage(calculateChips(game.getPlayers().get(2)), FRAME_WIDTH - chipsWidth / 2,
-					game.playerPositions.get(0)[1] - chipsHeight * 2 - 10, null);
+			g.drawImage(calculateChips(game.getPlayers().get(1)), game.playerPositions.get(1)[0] + 70,
+					game.playerPositions.get(1)[1] + userLabel.getHeight() - 10, null);
+			g.drawImage(calculateChips(game.getPlayers().get(2)), game.playerPositions.get(2)[0] + 70,
+					game.playerPositions.get(2)[1] + userLabel.getHeight() - 10, null);
 			System.out.println("True");
 
 			done = true;
