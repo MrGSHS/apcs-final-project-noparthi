@@ -25,8 +25,8 @@ import javax.swing.JTextField;
 
 public class Display {
 
-	private final String[] NAMES = { "Jerry", "Jonathan", "James", "Mary", "John", "Patricia", "Robert", "Michael", "Linda", "William",
-			"Barbara", "David", "Elizabeth" };
+	private final String[] NAMES = {"Andrew", "David", "Ethan",  "Jerry", "Jonathan", "Michael", "Robert", "Tim", "William", "Zac", 
+			"Annie", "Bianca", "Emma", "Hannah", "Isabella", "Jasmine", "Lily", "Mary", "Sophia", "Zoe" };
 	private String USERNAME;
 	private final String COMP1NAME = NAMES[(int) (Math.random() * NAMES.length)];
 	private final String COMP2NAME = NAMES[(int) (Math.random() * NAMES.length)];
@@ -177,9 +177,11 @@ public class Display {
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
 			}
 
-			// Player Labels
+			// Player Label
 			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20,
 					null);
+			
+			//Computer Labels
 			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210, FRAME_HEIGHT / 2 - 190, null);
 			g.drawImage(userLabel, FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190, null);
 
@@ -190,21 +192,22 @@ public class Display {
 			game.playerPositions
 					.add(new int[] { FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190 });
 
-			// Player Name & Player Points & Pot Size
+			// Player Name 
 			g.setColor(Color.BLACK);
-			g.drawString(USERNAME, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 95,
-					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 2);
-			g.drawString(COMP1NAME, game.playerPositions.get(1)[0] + 95, game.playerPositions.get(1)[1] + 20);
-			g.drawString(COMP2NAME, game.playerPositions.get(2)[0] + 95, game.playerPositions.get(2)[1] + 20);
+			g.drawString(USERNAME, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 
+					(userLabel.getWidth() - g.getFontMetrics().stringWidth(USERNAME))/2 + 15, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 2);
+			
+			//Computer Names
+			g.drawString(COMP1NAME, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210 + 
+					(userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP1NAME))/2 + 15, game.playerPositions.get(1)[1] + 20);
+			g.drawString(COMP2NAME, FRAME_WIDTH - userLabel.getWidth() / 2 - 205 +
+					(userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP2NAME))/2 + 15, game.playerPositions.get(2)[1] + 20);
 
+			//Player Points
 			g.setFont(new Font("Calibri", Font.PLAIN, 20));
 			g.setColor(new Color(5, 145, 60));
 			g.drawString(game.getUser().getPoints() + " Pts", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 70,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 30);
-			
-			//Computer Points			
-			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(1)[0] + 70, game.playerPositions.get(1)[1]+userLabel.getHeight()-14);
-			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 70, game.playerPositions.get(2)[1]+userLabel.getHeight()-14);
 			
 			// Computer Points
 			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(1)[0] + 70,
@@ -212,12 +215,15 @@ public class Display {
 			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 70,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() - 14);
 			
+			//Computer Cards
 			if (tableCards.size() > 0) {
 				for (int i = 0; i < tableCards.size(); i++) {
 					g.drawImage(tableCards.get(i), 227 + (CARD_WIDTH + 15) * i, FRAME_HEIGHT / 2 - CARD_HEIGHT / 2 - 55,
 							CARD_WIDTH, CARD_HEIGHT, null);
 				}
 			}
+			
+			//Pot
 			g.setColor(modifiedGrey);
 			g.fillRoundRect(FRAME_WIDTH / 2 - 70, FRAME_HEIGHT / 2 + CARD_WIDTH - 65, 140, 20, 15, 15);
 			g.setColor(new Color(246, 246, 246));
@@ -396,20 +402,11 @@ public class Display {
 		reloadImages();
 		frame.repaint();
 		// Removes Check If Necessary
-		for (int i = 1; i < game.getPlayers().size(); i++) {
-			if (game.getPlayers().get(i).getRaiseBoolean()) {
-				removeCheck();
-			} else {
-				addCheck();
-			}
+		if(game.getMaxBetAmount() - game.getUser().getBetAmount()==0){
+			addCheck();
 		}
-		// Removes Call If Necessary
-		for (int i = 1; i < game.getPlayers().size(); i++) {
-			if (game.getPlayers().get(i).getCheckBoolean() || game.getUser().getRaiseBoolean()) {
-				removeCall();
-			} else {
-				addCall();
-			}
+		else{
+			removeCheck();
 		}
 	}
 
@@ -444,11 +441,13 @@ public class Display {
 	// Remove Check Button
 	public void removeCheck() {
 		check.setVisible(false);
+		addCall();
 	}
 
 	// Add Check Button
 	public void addCheck() {
 		check.setVisible(true);
+		removeCall();
 	}
 
 	// Remove Call Button

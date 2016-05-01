@@ -120,7 +120,7 @@ public class Computer extends Player {
 				System.out.println("Comp. Checks");
 				return;
 			}
-		} else if (game.getPlayers().get(index).getRaiseBoolean()||game.getPlayers().get(index).getCallBoolean()) {
+		} else if (game.getPlayers().get(index).getRaiseBoolean()) {
 			if (currentHandStrength == 10) {
 				call();
 				System.out.println("Comp. Calls");
@@ -172,7 +172,11 @@ public class Computer extends Player {
 					return;
 				}
 			}
-		} else{
+		} 
+		else if(game.getPlayers().get(index).getCallBoolean()){
+			call();
+		}
+		else{
 			System.out.println("BROKEN.");
 		}
 	}

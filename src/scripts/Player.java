@@ -126,7 +126,8 @@ public class Player {
 		}
 		//Not Legal Message
 		else{
-			System.out.println("Must raise at least something greater than or equal to " + game.getRound().getMinBet());		
+			System.out.println("Must raise at least something greater than or equal to " + game.getRound().getMinBet());
+			call();
 			return false;		
 		}
 	}
