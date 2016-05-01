@@ -18,10 +18,20 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Display {
+
+	private final String[] NAMES = { "Jerry", "Jonathan", "James", "Mary", "John", "Patricia", "Robert", "Michael", "Linda", "William",
+			"Barbara", "David", "Elizabeth" };
+	private String USERNAME;
+	private final String COMP1NAME = NAMES[(int) (Math.random() * NAMES.length)];
+	private final String COMP2NAME = NAMES[(int) (Math.random() * NAMES.length)];
+	private final String COMP3NAME = NAMES[(int) (Math.random() * NAMES.length)];
+	private final String COMP4NAME = NAMES[(int) (Math.random() * NAMES.length)];
 
 	private final int CARD_WIDTH = 55;
 	private final int CARD_HEIGHT = 80;
@@ -66,16 +76,31 @@ public class Display {
 	public Display(Game game) {
 		this.game = game;
 		tableCards = new ArrayList<BufferedImage>();
+		
+		String[] options = {"OK"};
+		JPanel panel = new JPanel();
+		JLabel lbl = new JLabel("Enter Your Name: ");
+		JTextField txt = new JTextField(10);
+		panel.add(lbl);
+		panel.add(txt);
+		int selectedOption = JOptionPane.showOptionDialog(null, panel, "Welcome to Oker-pay", JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options , options[0]);
+		if(selectedOption == 0) 
+			if(!txt.getText().equals(""))
+				USERNAME = txt.getText();
+			else
+				USERNAME = NAMES[(int) (Math.random() * NAMES.length)];
+		else USERNAME = NAMES[(int) (Math.random() * NAMES.length)];
+		
 		try {
 			dealer = ImageIO.read(getClass().getResourceAsStream("/other/dealer-face.png"));
 			table = ImageIO.read(getClass().getResourceAsStream("/other/poker-table.png"));
 			theme = ImageIO.read(getClass().getResourceAsStream("/themes/red-velvet.jpg"));
 			userLabel = ImageIO.read(getClass().getResourceAsStream("/other/player-label.png"));
 			cardBack = ImageIO.read(getClass().getResourceAsStream("/other/card-back.png"));
-			chips5k = ImageIO.read(getClass().getResourceAsStream("/other/5k.png"));
-			chips10k = ImageIO.read(getClass().getResourceAsStream("/other/10k.png"));
-			chips25k = ImageIO.read(getClass().getResourceAsStream("/other/25k.png"));
-			chips50k = ImageIO.read(getClass().getResourceAsStream("/other/50k.png"));
+			chips5k = ImageIO.read(getClass().getResourceAsStream("/chips/5k.png"));
+			chips10k = ImageIO.read(getClass().getResourceAsStream("/chips/10k.png"));
+			chips25k = ImageIO.read(getClass().getResourceAsStream("/chips/25k.png"));
+			chips50k = ImageIO.read(getClass().getResourceAsStream("/chips/50k.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -165,19 +190,31 @@ public class Display {
 			game.playerPositions
 					.add(new int[] { FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190 });
 
-			// Player Name & Player Points & Pot Size 
+			// Player Name & Player Points & Pot Size
 			g.setColor(Color.BLACK);
-			g.drawString("Jerry", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 95,
+			g.drawString(USERNAME, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 95,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 2);
+			g.drawString(COMP1NAME, game.playerPositions.get(1)[0] + 95, game.playerPositions.get(1)[1] + 20);
+			g.drawString(COMP2NAME, game.playerPositions.get(2)[0] + 95, game.playerPositions.get(2)[1] + 20);
+
 			g.setFont(new Font("Calibri", Font.PLAIN, 20));
 			g.setColor(new Color(5, 145, 60));
 			g.drawString(game.getUser().getPoints() + " Pts", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 70,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 30);
+<<<<<<< Updated upstream
 			
 			//Computer Points			
 			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(1)[0] + 70, game.playerPositions.get(1)[1]+userLabel.getHeight()-14);
 			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 70, game.playerPositions.get(2)[1]+userLabel.getHeight()-14);
 			
+=======
+
+			// Computer Points
+			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(1)[0] + 70,
+					game.playerPositions.get(1)[1] + userLabel.getHeight() - 14);
+			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 70,
+					game.playerPositions.get(2)[1] + userLabel.getHeight() - 14);
+>>>>>>> Stashed changes
 			if (tableCards.size() > 0) {
 				for (int i = 0; i < tableCards.size(); i++) {
 					g.drawImage(tableCards.get(i), 227 + (CARD_WIDTH + 15) * i, FRAME_HEIGHT / 2 - CARD_HEIGHT / 2 - 55,
@@ -192,7 +229,6 @@ public class Display {
 			int potSizeWidth = g2d.getFontMetrics().stringWidth(potSize);
 			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 50);
 
-			
 			// Hand Strength Meter - 6 Pixel Border
 			final int BORDER = 5;
 			int handStrength = 0;
@@ -216,13 +252,17 @@ public class Display {
 
 			// Computers' Bet
 			g.setColor(modifiedGrey);
-			g.fillRoundRect(game.playerPositions.get(1)[0] + 120, game.playerPositions.get(1)[1] + userLabel.getHeight() + 10, 40, 20, 15, 15);
-			g.fillRoundRect(game.playerPositions.get(2)[0] + 20, game.playerPositions.get(2)[1] + userLabel.getHeight() + 10, 40, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(1)[0] + 120,
+					game.playerPositions.get(1)[1] + userLabel.getHeight() + 10, 40, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(2)[0] + 20,
+					game.playerPositions.get(2)[1] + userLabel.getHeight() + 10, 40, 20, 15, 15);
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
-			g.drawString("" + game.getPlayers().get(1).getBetAmount()/1000 + "K", game.playerPositions.get(1)[0] + 125, game.playerPositions.get(1)[1] + userLabel.getHeight() + 25);
-			g.drawString("" + game.getPlayers().get(2).getBetAmount()/1000 + "K", game.playerPositions.get(2)[0] + 25, game.playerPositions.get(2)[1] + userLabel.getHeight() + 25);
-			
+			g.drawString("" + game.getPlayers().get(1).getBetAmount() / 1000 + "K",
+					game.playerPositions.get(1)[0] + 125, game.playerPositions.get(1)[1] + userLabel.getHeight() + 25);
+			g.drawString("" + game.getPlayers().get(2).getBetAmount() / 1000 + "K", game.playerPositions.get(2)[0] + 25,
+					game.playerPositions.get(2)[1] + userLabel.getHeight() + 25);
+
 			// Hand Strength Bar Background
 			g.setColor(Color.DARK_GRAY);
 			g.fillRoundRect(500, 494, 296, 31, 10, 10);
@@ -257,7 +297,7 @@ public class Display {
 			return chips25k;
 		else if (p.getPointsInvested() / 10000 >= 1)
 			return chips10k;
-		else if(p.getPointsInvested() / 5000 >= 1)
+		else if (p.getPointsInvested() / 5000 >= 1)
 			return chips5k;
 		return null;
 	}
