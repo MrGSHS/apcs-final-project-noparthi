@@ -165,7 +165,7 @@ public class Display {
 			game.playerPositions
 					.add(new int[] { FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190 });
 
-			// Player Name & Pot Size
+			// Player Name & Player Points & Pot Size 
 			g.setColor(Color.BLACK);
 			g.drawString("Jerry", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 95,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 2);
@@ -173,7 +173,11 @@ public class Display {
 			g.setColor(new Color(5, 145, 60));
 			g.drawString(game.getUser().getPoints() + " Pts", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 70,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 30);
-
+			
+			//Computer Points
+			
+			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(1)[0] + 70, game.playerPositions.get(1)[1]+userLabel.getHeight()-14);
+			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 70, game.playerPositions.get(2)[1]+userLabel.getHeight()-14);
 			if (tableCards.size() > 0) {
 				for (int i = 0; i < tableCards.size(); i++) {
 					g.drawImage(tableCards.get(i), 227 + (CARD_WIDTH + 15) * i, FRAME_HEIGHT / 2 - CARD_HEIGHT / 2 - 55,
@@ -188,6 +192,7 @@ public class Display {
 			int potSizeWidth = g2d.getFontMetrics().stringWidth(potSize);
 			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 50);
 
+			
 			// Hand Strength Meter - 6 Pixel Border
 			final int BORDER = 5;
 			int handStrength = 0;
