@@ -201,20 +201,17 @@ public class Display {
 			g.setColor(new Color(5, 145, 60));
 			g.drawString(game.getUser().getPoints() + " Pts", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 70,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 30);
-<<<<<<< Updated upstream
 			
 			//Computer Points			
 			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(1)[0] + 70, game.playerPositions.get(1)[1]+userLabel.getHeight()-14);
 			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 70, game.playerPositions.get(2)[1]+userLabel.getHeight()-14);
 			
-=======
-
 			// Computer Points
 			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(1)[0] + 70,
 					game.playerPositions.get(1)[1] + userLabel.getHeight() - 14);
 			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 70,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() - 14);
->>>>>>> Stashed changes
+			
 			if (tableCards.size() > 0) {
 				for (int i = 0; i < tableCards.size(); i++) {
 					g.drawImage(tableCards.get(i), 227 + (CARD_WIDTH + 15) * i, FRAME_HEIGHT / 2 - CARD_HEIGHT / 2 - 55,
@@ -402,7 +399,6 @@ public class Display {
 		for (int i = 1; i < game.getPlayers().size(); i++) {
 			if (game.getPlayers().get(i).getRaiseBoolean()) {
 				removeCheck();
-				break;
 			} else {
 				addCheck();
 			}
@@ -411,7 +407,6 @@ public class Display {
 		for (int i = 1; i < game.getPlayers().size(); i++) {
 			if (game.getPlayers().get(i).getCheckBoolean() || game.getUser().getRaiseBoolean()) {
 				removeCall();
-				break;
 			} else {
 				addCall();
 			}
