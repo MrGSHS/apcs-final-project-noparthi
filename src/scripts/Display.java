@@ -58,7 +58,7 @@ public class Display {
 	private JButton call = new JButton("Call");
 	private JButton raise = new JButton("Raise");
 	private JButton tip = new JButton("Tip Mr. G");
-	
+
 	public boolean userTip = false;
 
 	private ArrayList<Card> cardsOnTable;
@@ -223,7 +223,7 @@ public class Display {
 				g.setColor(Color.YELLOW);
 			else
 				g.setColor(Color.GREEN);
-			
+
 			// Hand Strength Meter
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
 
@@ -237,9 +237,6 @@ public class Display {
 					game.playerPositions.get(1)[1] + userLabel.getHeight() - 10, null);
 			g.drawImage(calculateChips(game.getPlayers().get(2)), game.playerPositions.get(2)[0] + 70,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() - 10, null);
-			System.out.println("True");
-
-			done = true;
 		}
 	}
 
@@ -272,26 +269,26 @@ public class Display {
 			check.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			call.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			raise.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-			tip.setSize(2*BUTTON_WIDTH/3, BUTTON_HEIGHT/2);
+			tip.setSize(2 * BUTTON_WIDTH / 3, BUTTON_HEIGHT / 2);
 
 			raise.setLocation(600, 525);
 			call.setLocation(400, 525);
 			check.setLocation(200, 525);
 			fold.setLocation(0, 525);
-			tip.setLocation(332,130);
+			tip.setLocation(332, 130);
 
 			raise.setFont(buttonFont);
 			check.setFont(buttonFont);
 			call.setFont(buttonFont);
 			fold.setFont(buttonFont);
 			tip.setFont(buttonFont);
-			
-			//Set Tip Button Transparent && Text To White
+
+			// Set Tip Button Transparent && Text To White
 			tip.setOpaque(false);
 			tip.setContentAreaFilled(false);
 			tip.setBorderPainted(false);
 			tip.setForeground(Color.WHITE);
-			
+
 			frame.add(fold);
 			frame.add(check);
 			frame.add(call);
@@ -314,7 +311,7 @@ public class Display {
 					if (game.getUser().raise(intRaiseAmount)) {
 						game.allComputersTakeAction();
 						game.getRound().moveOn();
-					}else{
+					} else {
 						return;
 					}
 
@@ -335,9 +332,9 @@ public class Display {
 			if (evt.getSource() == fold) {
 				game.getUser().fold();
 			}
-			if(evt.getSource() == tip){
-				if(game.getUser().getPoints()>=2000){
-					game.getUser().setPoints(game.getUser().getPoints()-2000);
+			if (evt.getSource() == tip) {
+				if (game.getUser().getPoints() >= 2000) {
+					game.getUser().setPoints(game.getUser().getPoints() - 2000);
 					update();
 					userTip = true;
 				}
@@ -351,16 +348,22 @@ public class Display {
 		reloadImages();
 		frame.repaint();
 		// Removes Check If Necessary
-		if (game.getPlayers().get(1).getRaiseBoolean()) {
-			removeCheck();
-		} else {
-			addCheck();
+		for (int i = 1; i < game.getPlayers().size(); i++) {
+			if (game.getPlayers().get(i).getRaiseBoolean()) {
+				removeCheck();
+				break;
+			} else {
+				addCheck();
+			}
 		}
 		// Removes Call If Necessary
-		if (game.getPlayers().get(1).getCheckBoolean() || game.getUser().getRaiseBoolean()) {
-			removeCall();
-		} else {
-			addCall();
+		for (int i = 1; i < game.getPlayers().size(); i++) {
+			if (game.getPlayers().get(i).getCheckBoolean() || game.getUser().getRaiseBoolean()) {
+				removeCall();
+				break;
+			} else {
+				addCall();
+			}
 		}
 	}
 
@@ -410,8 +413,6 @@ public class Display {
 	// Add Call Button
 	public void addCall() {
 		call.setVisible(true);
-		System.out.println(
-				"Max bet currently: " + game.getMaxBetAmount() + "\t" + "User bet: " + game.getUser().getBetAmount());
 		int setGAmount = game.getMaxBetAmount() - game.getUser().getBetAmount();
 		call.setText("Call: " + setGAmount + " Pts");
 	}

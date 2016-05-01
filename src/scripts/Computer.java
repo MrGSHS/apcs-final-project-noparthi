@@ -24,45 +24,57 @@ public class Computer extends Player {
 				return;
 			} else {
 				check();
+				System.out.println("Comp. Checks");
 				return;
 			}
 		} else if (game.getUser().getRaiseBoolean()) {
 			if (currentHandStrength == 10) {
 				call();
+				System.out.println("Comp. Calls");
 				return;
 			}
 			if (game.getUser().getBetAmount() > 0.50 * getPoints()) {
 				if (currentHandStrength >= 8) {
 					call();
+					System.out.println("Comp. Calls");
 					return;
 				} else {
 					fold();
+					System.out.println("Comp. Folded");
 					return;
 				}
 			}
 			if (game.getUser().getBetAmount() > 0.25 * getPoints()) {
 				if (currentHandStrength >= 7 || (int) (Math.random() * 11) + 1 == 1) {
 					call();
+					System.out.println("Comp. Calls");
 					return;
 				} else {
 					fold();
+					System.out.println("Comp. Folded");
 					return;
 				}
 			}
 			if (game.getUser().getBetAmount() > 0.10 * getPoints()) {
 				if (currentHandStrength >= 6 || (int) (Math.random() * 11) + 1 <= 2) {
 					call();
+					System.out.println("Comp. Calls");
 					return;
 				} else {
 					fold();
+					System.out.println("Comp. Folded");
 					return;
 				}
 			} else {
 					call();
+					System.out.println("Comp. Calls");
 					return;
 			}
-		} else 
+		} else {
 			check();
+			System.out.println("Comp. Checks");
+			return;
+		}
 	}
 
 	public void logic() {
@@ -88,37 +100,45 @@ public class Computer extends Player {
 				return;
 			} else {
 				check();
+				System.out.println("Comp. Checks");
 				return;
 			}
 		} else if (game.getUser().getRaiseBoolean()) {
 			if (currentHandStrength == 10) {
 				call();
+				System.out.println("Comp. Calls");
 				return;
 			}
 			if (game.getUser().getBetAmount() > 0.75 * getPoints()) {
 				if (currentHandStrength >= 8) {
 					call();
+					System.out.println("Comp. Calls");
 					return;
 				} else {
 					fold();
+					System.out.println("Comp. Folded");
 					return;
 				}
 			}
 			if (game.getUser().getBetAmount() > 0.5 * getPoints()) {
 				if (currentHandStrength >= 7 || (int) (Math.random() * 11) + 1 <= 1) {
 					call();
+					System.out.println("Comp. Calls");
 					return;
 				} else {
 					fold();
+					System.out.println("Comp. Folded");
 					return;
 				}
 			}
 			if (game.getUser().getBetAmount() > 0.25 * getPoints()) {
 				if (currentHandStrength >= 6 || (int) (Math.random() * 11) + 1 <= 1) {
 					call();
+					System.out.println("Comp. Calls");
 					return;
 				} else {
 					fold();
+					System.out.println("Comp. Folded");
 					return;
 				}
 			} else {
@@ -127,13 +147,18 @@ public class Computer extends Player {
 					return;
 				} else if (currentHandStrength >= 5 || (int) (Math.random() * 11) + 1 <= 1) {
 					call();
+					System.out.println("Comp. Calls");
 					return;
 				} else {
 					fold();
+					System.out.println("Comp. Folded");
 					return;
 				}
 			}
-		} else 
+		} else{
 			check();
+			System.out.println("Comp. Checks");
+			return;
+		}
 	}
 }
