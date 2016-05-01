@@ -81,7 +81,7 @@ public class Display {
 		this.game = game;
 		tableCards = new ArrayList<BufferedImage>();
 
-		//Promp For User Name
+		//Prompt For User Name
 		String[] options = { "OK" };
 		JPanel panel = new JPanel();
 		JLabel lbl = new JLabel("Enter Your Name: ");
@@ -91,7 +91,7 @@ public class Display {
 		int selectedOption = JOptionPane.showOptionDialog(null, panel, "Welcome to Oker-pay", JOptionPane.NO_OPTION,
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 		if (selectedOption == 0)
-			if (!txt.getText().equals(""))
+			if (!txt.getText().trim().equals(""))
 				USERNAME = txt.getText();
 			else
 				USERNAME = NAMES[(int) (Math.random() * NAMES.length)];
