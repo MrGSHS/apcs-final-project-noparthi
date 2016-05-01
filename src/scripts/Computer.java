@@ -87,12 +87,14 @@ public class Computer extends Player {
 	public void logic() {
 		currentHandStrength = getHand().updateHandStrength();
 		int index = getPosition()-1;
-		for(Player p : game.getActivePlayers()){
-			if(p.getPosition() != getPosition()){
-				index = p.getPosition();
-				break;
-			}
-		}
+		//for(Player p : game.getActivePlayers()){
+			//if(p.getPosition() != getPosition()){
+				//index = p.getPosition();
+				//break;
+			//}
+		//}
+		System.out.println("Index: " + index);
+		
 		if (game.getPlayers().get(index).getCheckBoolean()) {
 			if ((int) (Math.random() * 11) + 1 <= 1) {
 				raise(game.getBigBlind() * ((int) (Math.random() * 20) + 1));
@@ -163,7 +165,7 @@ public class Computer extends Player {
 				}
 			} else {
 				if (currentHandStrength >= 4 || (int) (Math.random() * 11) + 1 <= 1) {
-					raise((int)(game.getMaxBetAmount() * (Math.random() * 3) + 1.25));
+					raise((int)(game.getMaxBetAmount() * (Math.random() * 3) + 1.25 ));
 					System.out.println("Comp. Raises");
 					return;
 				} else if (currentHandStrength >= 2 || (int) (Math.random() * 11) + 1 <= 1) {

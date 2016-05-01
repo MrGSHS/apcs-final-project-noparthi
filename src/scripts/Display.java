@@ -58,11 +58,12 @@ public class Display {
 	private BufferedImage cardBack;
 	private BufferedImage card1;
 	private BufferedImage card2;
-	private ArrayList<BufferedImage> tableCards;
 	private BufferedImage chips5k;
 	private BufferedImage chips10k;
 	private BufferedImage chips25k;
 	private BufferedImage chips50k;
+	private ArrayList<BufferedImage> tableCards;
+
 	private Game game;
 
 	private JButton fold = new JButton("Fold");
@@ -80,6 +81,7 @@ public class Display {
 		this.game = game;
 		tableCards = new ArrayList<BufferedImage>();
 
+		//Promp For User Name
 		String[] options = { "OK" };
 		JPanel panel = new JPanel();
 		JLabel lbl = new JLabel("Enter Your Name: ");
@@ -109,6 +111,8 @@ public class Display {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//Main Frame
 		frame = new JFrame();
 		frame.setTitle("Oker-pay: Round ");
 		tablePanel = new TableDisplayPanel();
@@ -138,37 +142,47 @@ public class Display {
 	private class TableDisplayPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
-		public void paintComponent(Graphics g) {
-			int chipsWidth = chips5k.getWidth();
-			int chipsHeight = chips5k.getHeight();
-
-			g.setFont(new Font("Calibri", Font.BOLD, 20));
-			Graphics2D g2d = (Graphics2D) g;
-			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-			// Dealer & Background & Theme
+		// Dealer & Background & Theme
+		public void drawBackground(Graphics g) {
 			g.drawImage(theme, 0, 0, null);
 			g.drawImage(dealer, FRAME_WIDTH / 2 - DEALER_WIDTH / 2,
 					(FRAME_HEIGHT / 2 - TABLE_HEIGHT / 2 - 15) - DEALER_HEIGHT, null);
 			g.drawImage(table, FRAME_WIDTH / 2 - TABLE_WIDTH / 2, FRAME_HEIGHT / 2 - TABLE_HEIGHT / 2 - 25, null);
+		}
 
-			// Button Background
+		// Button Background
+		public void drawButtonBackground(Graphics g) {
 			g.setColor(new Color(32, 32, 32));
 			g.fillRect(0, 525, FRAME_WIDTH, 50);
 			g.setColor(Color.WHITE);
 			g.setFont(buttonFont);
 			g.drawString("Check", FRAME_WIDTH / 4 + FRAME_WIDTH / 10, 555);
 			g.drawString("Call", FRAME_WIDTH / 2 + FRAME_WIDTH / 10, 555);
+		}
 
-			// Draw User Cards
+		// Add Player Positions
+		public void addPlayerPositions() {
+			game.playerPositions.add(
+					new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 });
+			game.playerPositions
+					.add(new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210, FRAME_HEIGHT / 2 - 190 });
+			game.playerPositions
+					.add(new int[] { FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190 });
+
+		}
+
+		// Draw User Cards
+		public void drawUserCards(Graphics g) {
 			g.drawImage(card1, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 15,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 - CARD_HEIGHT / 2 - 18, CARD_WIDTH + 30, CARD_HEIGHT + 40,
 					null);
 			g.drawImage(card2, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 15 + CARD_WIDTH + 10,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 - CARD_HEIGHT / 2 - 18, CARD_WIDTH + 30, CARD_HEIGHT + 40,
 					null);
+		}
 
-			// Draw Computer Cards
+		// Draw Computer Cards
+		public void drawComputerCards(Graphics g) {
 			if (!game.getPlayers().get(1).isFolded()) {
 				g.drawImage(cardBack, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + CARD_WIDTH - 185,
 						FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
@@ -181,30 +195,31 @@ public class Display {
 				g.drawImage(cardBack, FRAME_WIDTH - userLabel.getWidth() / 2 - 190, FRAME_HEIGHT / 2 - 250,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
 			}
+		}
 
-			// Player Label
+		// Draw User Label
+		public void drawUserLabel(Graphics g) {
 			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20,
 					null);
+		}
 
-			// Computer Labels
+		// Draw Computer Labels
+		public void drawComputerLabels(Graphics g) {
 			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210, FRAME_HEIGHT / 2 - 190, null);
 			g.drawImage(userLabel, FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190, null);
+		}
 
-			game.playerPositions.add(
-					new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 });
-			game.playerPositions
-					.add(new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210, FRAME_HEIGHT / 2 - 190 });
-			game.playerPositions
-					.add(new int[] { FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190 });
-
-			// Player Name
+		// Add Player Names
+		public void addPlayerName(Graphics g) {
 			g.setColor(Color.BLACK);
 			g.drawString(USERNAME,
 					FRAME_WIDTH / 2 - userLabel.getWidth() / 2
 							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(USERNAME)) / 2 + 15,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 2);
+		}
 
-			// Computer Names
+		// Add Computer Names
+		public void addComputerNames(Graphics g) {
 			g.drawString(COMP1NAME,
 					FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210
 							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP1NAME)) / 2 + 15,
@@ -214,44 +229,60 @@ public class Display {
 							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP2NAME)) / 2 + 15,
 					game.playerPositions.get(2)[1] + 20);
 
-			// Player Points
+		}
+
+		// Add Player Points
+		public void addPlayerPoints(Graphics g) {
 			g.setFont(new Font("Calibri", Font.PLAIN, 20));
 			g.setColor(new Color(5, 145, 60));
 			g.drawString(game.getUser().getPoints() + " Pts", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 70,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 30);
+		}
 
-			// Computer Points
+		// Add Computer Points
+		public void addComputerPoints(Graphics g) {
 			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(1)[0] + 70,
 					game.playerPositions.get(1)[1] + userLabel.getHeight() - 14);
 			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 70,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() - 14);
+		}
 
-			// Computer Cards
+		// Add Pot
+		public void addPot(Graphics g) {
+			g.setColor(modifiedGrey);
+			g.fillRoundRect(FRAME_WIDTH / 2 - 70, FRAME_HEIGHT / 2 + CARD_WIDTH - 65, 140, 20, 15, 15);
+			g.setColor(new Color(246, 246, 246));
+			g.setFont(new Font("Calibri", Font.BOLD, 16));
+			String potSize = "POT: " + game.getRound().getPot() + " Pts";
+			int potSizeWidth = g.getFontMetrics().stringWidth(potSize);
+			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 50);
+		}
+
+		// Add Dealt Cards
+		public void addDealtCards(Graphics g) {
 			if (tableCards.size() > 0) {
 				for (int i = 0; i < tableCards.size(); i++) {
 					g.drawImage(tableCards.get(i), 227 + (CARD_WIDTH + 15) * i, FRAME_HEIGHT / 2 - CARD_HEIGHT / 2 - 55,
 							CARD_WIDTH, CARD_HEIGHT, null);
 				}
 			}
+		}
 
-			// Pot
-			g.setColor(modifiedGrey);
-			g.fillRoundRect(FRAME_WIDTH / 2 - 70, FRAME_HEIGHT / 2 + CARD_WIDTH - 65, 140, 20, 15, 15);
-			g.setColor(new Color(246, 246, 246));
-			g.setFont(new Font("Calibri", Font.BOLD, 16));
-			String potSize = "POT: " + game.getRound().getPot() + " Pts";
-			int potSizeWidth = g2d.getFontMetrics().stringWidth(potSize);
-			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 50);
-
-			// Hand Strength Meter - 6 Pixel Border
+		// Add Hand Strength Meter
+		public void addHandStrengthMeter(Graphics g) {
 			final int BORDER = 5;
 			int handStrength = 0;
 			g.setColor(Color.DARK_GRAY);
 
+			// Sets Hand Strength
 			if (tableCards.size() == 0)
 				handStrength = game.getUser().getHand().initialHandStrength();
 			else
 				handStrength = game.getUser().getHand().updateHandStrength();
+
+			// Hand Strength Bar Background
+			g.setColor(Color.DARK_GRAY);
+			g.fillRoundRect(500, 494, 296, 31, 10, 10);
 
 			// Writes In Hand Strength
 			Map<TextAttribute, Object> map = new Hashtable<TextAttribute, Object>();
@@ -259,27 +290,12 @@ public class Display {
 			Font underlineFont = new Font("Calibri", Font.BOLD, 16).deriveFont(map);
 			g.setFont(underlineFont);
 			String strengthString = game.getUser().getHand().getCurrentHandStrengthString();
-			int strWidth = g2d.getFontMetrics().stringWidth(strengthString);
+			int strWidth = g.getFontMetrics().stringWidth(strengthString);
 			g.fillRoundRect(500, 474, strWidth + 10, 20 + BORDER, 10, 10);
 			g.setColor(Color.WHITE);
 			g.drawString(strengthString, 500 + 5, 474 + 17);
 
-			// Computers' Bet
-			g.setColor(modifiedGrey);
-			g.fillRoundRect(game.playerPositions.get(1)[0] + 120,
-					game.playerPositions.get(1)[1] + userLabel.getHeight() + 10, 40, 20, 15, 15);
-			g.fillRoundRect(game.playerPositions.get(2)[0] + 20,
-					game.playerPositions.get(2)[1] + userLabel.getHeight() + 10, 40, 20, 15, 15);
-			g.setColor(Color.WHITE);
-			g.setFont(new Font("Calibri", Font.BOLD, 16));
-			g.drawString("" + game.getPlayers().get(1).getBetAmount() / 1000 + "K",
-					game.playerPositions.get(1)[0] + 125, game.playerPositions.get(1)[1] + userLabel.getHeight() + 25);
-			g.drawString("" + game.getPlayers().get(2).getBetAmount() / 1000 + "K", game.playerPositions.get(2)[0] + 25,
-					game.playerPositions.get(2)[1] + userLabel.getHeight() + 25);
-
-			// Hand Strength Bar Background
-			g.setColor(Color.DARK_GRAY);
-			g.fillRoundRect(500, 494, 296, 31, 10, 10);
+			// Hand Strength Bar
 			g.setColor(Color.BLACK);
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 290 - BORDER, 25 - BORDER, 10, 10);
 
@@ -291,35 +307,107 @@ public class Display {
 			else
 				g.setColor(Color.GREEN);
 
-			// Hand Strength Meter
+			// How Much TO Fill
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
 
-			// Draw chips
+		}
+
+		// Add Computers Bet
+		public void addComputerBet(Graphics g) {
+			g.setColor(modifiedGrey);
+			g.fillRoundRect(game.playerPositions.get(1)[0] + 120,
+					game.playerPositions.get(1)[1] + userLabel.getHeight() + 10, 40, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(2)[0] + 20,
+					game.playerPositions.get(2)[1] + userLabel.getHeight() + 10, 40, 20, 15, 15);
+			g.setColor(Color.WHITE);
+			g.setFont(new Font("Calibri", Font.BOLD, 16));
+			g.drawString("" + game.getPlayers().get(1).getBetAmount() / 1000 + "K",
+					game.playerPositions.get(1)[0] + 125, game.playerPositions.get(1)[1] + userLabel.getHeight() + 25);
+			g.drawString("" + game.getPlayers().get(2).getBetAmount() / 1000 + "K", game.playerPositions.get(2)[0] + 25,
+					game.playerPositions.get(2)[1] + userLabel.getHeight() + 25);
+		}
+
+		// Add Chips
+		public void addChips(Graphics g) {
+			int chipsWidth = chips5k.getWidth();
+			int chipsHeight = chips5k.getHeight();
 			g.drawImage(calculateChips(game.getPlayers().get(0)), FRAME_WIDTH / 2 - chipsWidth / 2,
 					game.playerPositions.get(0)[1] - chipsHeight * 2 - 10, null);
 			g.drawImage(calculateChips(game.getPlayers().get(1)), game.playerPositions.get(1)[0] + 70,
 					game.playerPositions.get(1)[1] + userLabel.getHeight() - 10, null);
 			g.drawImage(calculateChips(game.getPlayers().get(2)), game.playerPositions.get(2)[0] + 70,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() - 10, null);
-						
-			// Congratulations You Wasted Money - Tip			
+		}
+
+		// Add Tips
+		public void addTipEffects(Graphics g) {
 			if (userTip) {
-				String tipString = "Thanks " + USERNAME + "! You get " + (extraCreditPoints++) + " extra credit points!";
+				String tipString = "Thanks " + USERNAME + "! You get " + (extraCreditPoints++)
+						+ " extra credit points!";
 				g.setColor(Color.WHITE);
 				g.fillOval(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString) - 15, -15,
 						g.getFontMetrics().stringWidth(tipString) + 30, 60);
-				
+
 				Polygon speechBubbleTail = new Polygon();
 				speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString) / 2 + 30, 40);
 				speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString) / 2 + 50, 40);
 				speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString) / 2 + 95, 70);
 				g.fillPolygon(speechBubbleTail);
-				
+
 				g.setColor(Color.BLACK);
 				g.drawString(tipString, FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString), 20);
-				
+
 				userTip = false;
 			}
+		}
+
+		public void paintComponent(Graphics g) {
+			// Initialize Stuff
+			g.setFont(new Font("Calibri", Font.BOLD, 20));
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+			// Draw Background
+			drawBackground(g);
+			drawButtonBackground(g);
+
+			// Add Player Positions Into An Array
+			addPlayerPositions();
+
+			// Draw Cards
+			drawUserCards(g);
+			drawComputerCards(g);
+
+			// Draw Labels
+			drawUserLabel(g);
+			drawComputerLabels(g);
+
+			// Add Names To Labels
+			addPlayerName(g);
+			addComputerNames(g);
+
+			// Add Points To Labels
+			addPlayerPoints(g);
+			addComputerPoints(g);
+
+			// Add Pot
+			addPot(g);
+
+			// Add Dealt Cards
+			addDealtCards(g);
+
+			// Add Hand Strength Meter
+			addHandStrengthMeter(g);
+
+			// Add Computers' Bet
+			addComputerBet(g);
+
+			// Add chips
+			addChips(g);
+
+			// Congratulations You Wasted Money - Tip
+			addTipEffects(g);
+
 		}
 	}
 
