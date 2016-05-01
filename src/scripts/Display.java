@@ -26,8 +26,9 @@ import javax.swing.JTextField;
 
 public class Display {
 
-	private final String[] NAMES = {"Andrew", "David", "Ethan",  "Jerry", "Jonathan", "Michael", "Robert", "Tim", "William", "Zac", 
-			"Annie", "Bianca", "Emma", "Hannah", "Isabella", "Jasmine", "Lily", "Mary", "Sophia", "Zoe" };
+	private final String[] NAMES = { "Andrew", "David", "Ethan", "Jerry", "Jonathan", "Michael", "Robert", "Tim",
+			"William", "Zac", "Annie", "Bianca", "Emma", "Hannah", "Isabella", "Jasmine", "Lily", "Mary", "Sophia",
+			"Zoe" };
 	private String USERNAME;
 	private final String COMP1NAME = NAMES[(int) (Math.random() * NAMES.length)];
 	private final String COMP2NAME = NAMES[(int) (Math.random() * NAMES.length)];
@@ -43,12 +44,12 @@ public class Display {
 	private final int DEALER_WIDTH = 140;
 	private final int DEALER_HEIGHT = 130;
 
-	public boolean done;
 	private Font buttonFont = new Font("SansSerif", Font.PLAIN, 12);
 	private Color modifiedGrey = new Color(55, 53, 53);
 	private JFrame frame;
 	private TableDisplayPanel tablePanel;
 	private ActionsDisplayPanel actionsPanel;
+
 	private BufferedImage theme;
 	private BufferedImage table;
 	private BufferedImage userLabel;
@@ -71,27 +72,30 @@ public class Display {
 	private JButton tip = new JButton("Tip Mr. G");
 
 	public boolean userTip = false;
+	private int extraCreditPoints = 1;
 
 	private ArrayList<Card> cardsOnTable;
 
 	public Display(Game game) {
 		this.game = game;
 		tableCards = new ArrayList<BufferedImage>();
-		
-		String[] options = {"OK"};
+
+		String[] options = { "OK" };
 		JPanel panel = new JPanel();
 		JLabel lbl = new JLabel("Enter Your Name: ");
 		JTextField txt = new JTextField(10);
 		panel.add(lbl);
 		panel.add(txt);
-		int selectedOption = JOptionPane.showOptionDialog(null, panel, "Welcome to Oker-pay", JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options , options[0]);
-		if(selectedOption == 0) 
-			if(!txt.getText().equals(""))
+		int selectedOption = JOptionPane.showOptionDialog(null, panel, "Welcome to Oker-pay", JOptionPane.NO_OPTION,
+				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+		if (selectedOption == 0)
+			if (!txt.getText().equals(""))
 				USERNAME = txt.getText();
 			else
 				USERNAME = NAMES[(int) (Math.random() * NAMES.length)];
-		else USERNAME = NAMES[(int) (Math.random() * NAMES.length)];
-		
+		else
+			USERNAME = NAMES[(int) (Math.random() * NAMES.length)];
+
 		try {
 			dealer = ImageIO.read(getClass().getResourceAsStream("/other/dealer-face.png"));
 			table = ImageIO.read(getClass().getResourceAsStream("/other/poker-table.png"));
@@ -181,8 +185,8 @@ public class Display {
 			// Player Label
 			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20,
 					null);
-			
-			//Computer Labels
+
+			// Computer Labels
 			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210, FRAME_HEIGHT / 2 - 190, null);
 			g.drawImage(userLabel, FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190, null);
 
@@ -193,38 +197,44 @@ public class Display {
 			game.playerPositions
 					.add(new int[] { FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190 });
 
-			// Player Name 
+			// Player Name
 			g.setColor(Color.BLACK);
-			g.drawString(USERNAME, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 
-					(userLabel.getWidth() - g.getFontMetrics().stringWidth(USERNAME))/2 + 15, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 2);
-			
-			//Computer Names
-			g.drawString(COMP1NAME, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210 + 
-					(userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP1NAME))/2 + 15, game.playerPositions.get(1)[1] + 20);
-			g.drawString(COMP2NAME, FRAME_WIDTH - userLabel.getWidth() / 2 - 205 +
-					(userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP2NAME))/2 + 15, game.playerPositions.get(2)[1] + 20);
+			g.drawString(USERNAME,
+					FRAME_WIDTH / 2 - userLabel.getWidth() / 2
+							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(USERNAME)) / 2 + 15,
+					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 2);
 
-			//Player Points
+			// Computer Names
+			g.drawString(COMP1NAME,
+					FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210
+							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP1NAME)) / 2 + 15,
+					game.playerPositions.get(1)[1] + 20);
+			g.drawString(COMP2NAME,
+					FRAME_WIDTH - userLabel.getWidth() / 2 - 205
+							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP2NAME)) / 2 + 15,
+					game.playerPositions.get(2)[1] + 20);
+
+			// Player Points
 			g.setFont(new Font("Calibri", Font.PLAIN, 20));
 			g.setColor(new Color(5, 145, 60));
 			g.drawString(game.getUser().getPoints() + " Pts", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 70,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 30);
-			
+
 			// Computer Points
 			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(1)[0] + 70,
 					game.playerPositions.get(1)[1] + userLabel.getHeight() - 14);
 			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 70,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() - 14);
-			
-			//Computer Cards
+
+			// Computer Cards
 			if (tableCards.size() > 0) {
 				for (int i = 0; i < tableCards.size(); i++) {
 					g.drawImage(tableCards.get(i), 227 + (CARD_WIDTH + 15) * i, FRAME_HEIGHT / 2 - CARD_HEIGHT / 2 - 55,
 							CARD_WIDTH, CARD_HEIGHT, null);
 				}
 			}
-			
-			//Pot
+
+			// Pot
 			g.setColor(modifiedGrey);
 			g.fillRoundRect(FRAME_WIDTH / 2 - 70, FRAME_HEIGHT / 2 + CARD_WIDTH - 65, 140, 20, 15, 15);
 			g.setColor(new Color(246, 246, 246));
@@ -291,20 +301,25 @@ public class Display {
 					game.playerPositions.get(1)[1] + userLabel.getHeight() - 10, null);
 			g.drawImage(calculateChips(game.getPlayers().get(2)), game.playerPositions.get(2)[0] + 70,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() - 10, null);
-			
-			// Congrats you wasted money
-			String tipString = "Thanks " + USERNAME + "! You get 3 extra credit points!";
-			g.setColor(Color.WHITE);
-			g.fillOval(FRAME_WIDTH/2-g.getFontMetrics().stringWidth(tipString)-15, -15, g.getFontMetrics().stringWidth(tipString) + 30, 60);
-			
-			Polygon speechBubbleTail = new Polygon();
-			speechBubbleTail.addPoint(FRAME_WIDTH/2-g.getFontMetrics().stringWidth(tipString)/2+30, 40);
-			speechBubbleTail.addPoint(FRAME_WIDTH/2-g.getFontMetrics().stringWidth(tipString)/2+50, 40);
-			speechBubbleTail.addPoint(FRAME_WIDTH/2-g.getFontMetrics().stringWidth(tipString)/2+95, 70);
-			g.fillPolygon(speechBubbleTail);
-			
-			g.setColor(Color.BLACK);			
-			g.drawString(tipString, FRAME_WIDTH/2-g.getFontMetrics().stringWidth(tipString), 20);
+						
+			// Congratulations You Wasted Money - Tip			
+			if (userTip) {
+				String tipString = "Thanks " + USERNAME + "! You get " + (extraCreditPoints++) + " extra credit points!";
+				g.setColor(Color.WHITE);
+				g.fillOval(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString) - 15, -15,
+						g.getFontMetrics().stringWidth(tipString) + 30, 60);
+				
+				Polygon speechBubbleTail = new Polygon();
+				speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString) / 2 + 30, 40);
+				speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString) / 2 + 50, 40);
+				speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString) / 2 + 95, 70);
+				g.fillPolygon(speechBubbleTail);
+				
+				g.setColor(Color.BLACK);
+				g.drawString(tipString, FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString), 20);
+				
+				userTip = false;
+			}
 		}
 	}
 
@@ -327,9 +342,10 @@ public class Display {
 
 		private final int BUTTON_WIDTH = FRAME_WIDTH / 4;
 		private final int BUTTON_HEIGHT = 50;
-		
+
 		private int timer = 3;
 		private long start;
+
 		public ActionsDisplayPanel() {
 			fold.addActionListener(new ButtonListener());
 			check.addActionListener(new ButtonListener());
@@ -420,10 +436,9 @@ public class Display {
 		reloadImages();
 		frame.repaint();
 		// Removes Check If Necessary
-		if(game.getMaxBetAmount() - game.getUser().getBetAmount()==0){
+		if (game.getMaxBetAmount() - game.getUser().getBetAmount() == 0) {
 			addCheck();
-		}
-		else{
+		} else {
 			removeCheck();
 		}
 	}
