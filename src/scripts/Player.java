@@ -7,6 +7,7 @@ public class Player {
 
 	private int points;
 	private int betAmount;
+	private int pointsInvested;
 	
 	private boolean folded;
 	private boolean bigBlind;
@@ -17,7 +18,7 @@ public class Player {
 	
 	public Player(Game game) {
 		this.game = game;
-		points = 1000000;
+		points = 100000;
 	}
 	public void takeAction(){}
 	
@@ -26,6 +27,7 @@ public class Player {
 	public boolean getCallBoolean(){return callBoolean;}
 	
 	public int getPoints() { return points; }
+	public int getPointsInvested(){ return pointsInvested; }
 	public Hand getHand(){ return hand; }
 	public Card[] getCurrentHand() { return hand.getHand(); }
 	
@@ -36,6 +38,8 @@ public class Player {
 	public void setPoints(int num) { points = num; }
 	public void setBigBlind(boolean bb){ bigBlind = bb; }
     public void setSmallBlind(boolean sb) {smallBlind = sb;}
+    public void setPointsInvested(int num) { pointsInvested = num;}
+    public void resetPointsInvested(){ pointsInvested = 0; }
     
 	public void newHand() {
 		hand = new Hand(game, game.getTable().getDeck().deal(), game.getTable().getDeck().deal());
@@ -70,14 +74,19 @@ public class Player {
 	public void call() {
 		int maxBet = 0;
 		int bet = 0;
+		//Gathers Largest Bet Amount To Call
 		for(Player p : game.getPlayers()){
 			bet = p.getBetAmount();
 			if(bet > maxBet)maxBet = bet;
 		}
 		maxBet -= betAmount;
 		game.getRound().setPot(game.getRound().getPot() + maxBet);
+		
+		//Sets Points Invested And Removes Points
+		pointsInvested += maxBet;
 		points -= maxBet;
 		
+		//Reset Stuff
 		resetActionBoolean();
 		betAmount = 0;
 		callBoolean = true;
@@ -90,9 +99,10 @@ public class Player {
 		//Guarantees That Raise Is Legal
 		if (amt >= game.getRound().getMinBet()) {
 			//All-In
-			if (amt > points) {
+			if (amt >= points) {
 				betAmount = points;
 				game.getRound().setPot(game.getRound().getPot()+points);
+				pointsInvested += points;
 				points = 0;
 				
 				resetActionBoolean();
@@ -103,6 +113,7 @@ public class Player {
 			betAmount = amt;
 			game.getRound().setPot(game.getRound().getPot() + betAmount);
 			game.getRound().setMinBet(amt);
+			pointsInvested += amt;
 			points -= amt;
 			
 			resetActionBoolean();

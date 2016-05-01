@@ -244,11 +244,11 @@ public class Display {
 	}
 
 	public BufferedImage calculateChips(Player p) {
-		if (p.getBetAmount() / 1000 >= 1)
+		if (p.getPointsInvested() / 10000 >= 1)
 			return chips1mil;
-		else if (p.getBetAmount() / 500000 >= 1)
+		else if (p.getPointsInvested() / 5000 >= 1)
 			return chips500k;
-		else if (p.getBetAmount() / 100000 >= 1)
+		else if (p.getPointsInvested() / 1000 >= 1)
 			return chips100k;
 		return null;
 	}
@@ -336,9 +336,11 @@ public class Display {
 				game.getUser().fold();
 			}
 			if(evt.getSource() == tip){
-				game.getUser().setPoints(game.getUser().getPoints()-2000);
-				userTip = true;
-				update();
+				if(game.getUser().getPoints()>=2000){
+					game.getUser().setPoints(game.getUser().getPoints()-2000);
+					update();
+					userTip = true;
+				}
 			}
 		}
 	}

@@ -184,8 +184,10 @@ public class Game {
 
 	// Creates New Round
 	public void newRound() {
-		for (Player p : players)
+		for (Player p : players){
 			p.unFold();
+			p.resetPointsInvested();
+		}
 		resetPlayerBetAmount();
 		setDealerIndex(dealerIndex += 1);
 		table = new Table();
