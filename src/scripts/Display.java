@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -290,6 +291,20 @@ public class Display {
 					game.playerPositions.get(1)[1] + userLabel.getHeight() - 10, null);
 			g.drawImage(calculateChips(game.getPlayers().get(2)), game.playerPositions.get(2)[0] + 70,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() - 10, null);
+			
+			// Congrats you wasted money
+			String tipString = "Thanks " + USERNAME + "! You get 3 extra credit points!";
+			g.setColor(Color.WHITE);
+			g.fillOval(FRAME_WIDTH/2-g.getFontMetrics().stringWidth(tipString)-15, -15, g.getFontMetrics().stringWidth(tipString) + 30, 60);
+			
+			Polygon speechBubbleTail = new Polygon();
+			speechBubbleTail.addPoint(FRAME_WIDTH/2-g.getFontMetrics().stringWidth(tipString)/2+30, 40);
+			speechBubbleTail.addPoint(FRAME_WIDTH/2-g.getFontMetrics().stringWidth(tipString)/2+50, 40);
+			speechBubbleTail.addPoint(FRAME_WIDTH/2-g.getFontMetrics().stringWidth(tipString)/2+95, 70);
+			g.fillPolygon(speechBubbleTail);
+			
+			g.setColor(Color.BLACK);			
+			g.drawString(tipString, FRAME_WIDTH/2-g.getFontMetrics().stringWidth(tipString), 20);
 		}
 	}
 
@@ -312,7 +327,9 @@ public class Display {
 
 		private final int BUTTON_WIDTH = FRAME_WIDTH / 4;
 		private final int BUTTON_HEIGHT = 50;
-
+		
+		private int timer = 3;
+		private long start;
 		public ActionsDisplayPanel() {
 			fold.addActionListener(new ButtonListener());
 			check.addActionListener(new ButtonListener());
@@ -350,6 +367,7 @@ public class Display {
 			frame.add(raise);
 			frame.add(tip);
 		}
+
 	}
 
 	// Button Listeners
