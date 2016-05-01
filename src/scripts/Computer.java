@@ -25,7 +25,6 @@ public class Computer extends Player {
 				break;
 			}
 		}
-		///System.out.println("Index: " + index);
 		//System.out.println("Check Boolean: "+game.getPlayers().get(index).getCheckBoolean());
 		//System.out.println("Call Boolean: "+game.getPlayers().get(index).getCallBoolean());
 		//System.out.println("Raise Boolean: "+game.getPlayers().get(index).getRaiseBoolean());
@@ -83,7 +82,7 @@ public class Computer extends Player {
 			}
 		} 
 		else{
-			System.out.println("BROKENNN. OH NOOOO");
+			System.out.println("BROKEN.");
 			System.exit(1);
 		}
 	}
@@ -174,7 +173,7 @@ public class Computer extends Player {
 				}
 			}
 		} else{
-			System.out.println("BROKENNN. OH NOOOO");
+			System.out.println("BROKEN.");
 		}
 	}
 }

@@ -82,8 +82,12 @@ public class Round {
 				return;
 			}
 		}
-
-		//Proceeds To Next Round If None Of The Above Are True
+		
+		//Else Reset Bet Amount
+		game.resetPlayerBetAmount();
+		game.getDisplay().update();
+		
+		//And Proceeds To Next Round If None Of The Above Are True
 		if (stageOfRound == 0) {
 			stageOfRound++;
 			System.out.println("Stage: " + stageOfRound);

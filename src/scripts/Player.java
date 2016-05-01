@@ -81,10 +81,9 @@ public class Player {
 		//Gathers Largest Bet Amount To Call
 		for(Player p : game.getPlayers()){
 			bet = p.getBetAmount();
-			if(bet > maxBet)maxBet = bet;
+			if(bet > maxBet) maxBet = bet;
 		}
 		maxBet -= betAmount;
-		//System.out.println(maxBet);
 		game.getRound().setPot(game.getRound().getPot() + maxBet);
 		
 		//Sets Points Invested And Removes Points
@@ -93,7 +92,6 @@ public class Player {
 		
 		//Reset Stuff
 		resetActionBoolean();
-		betAmount = 0;
 		callBoolean = true;
 	}
 
