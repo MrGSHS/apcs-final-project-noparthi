@@ -78,15 +78,22 @@ public class Game {
 		}
 		return active;
 	}
-
-	public void allComputersTakeAction() {
-		for (int i = 1; i < players.size(); i++) {
-			players.get(i).takeAction();
-			display.update();
+	
+	public ArrayList<Player> getActiveComputers(){
+		ArrayList<Player> active = new ArrayList<>();
+		for (Player p: players) {
+			if(p.getPosition() != 0 && !p.isFolded())
+				active.add(p);
 		}
-
+		return active;
 	}
 
+	public void allComputersTakeAction() {
+		ArrayList<Player> computers = getActiveComputers();
+		for(Player computer :computers)
+			computer.takeAction();
+	}
+ 
 	public Game() {
 		int pos = 0;
 		table = new Table();
