@@ -16,6 +16,14 @@ public class Hand {
 	private ArrayList<Integer>  straightList = new ArrayList<>();
     private String currentHandString = "Hand Strength";
 	
+    private int pair = 0;
+    private ArrayList<Integer> twoPair = new ArrayList<>();
+    private int trips = 0;
+    private ArrayList<Integer> fullHouse = new ArrayList<>();
+    private int straight = 0;
+    private int flush = 0;
+    private int quads = 0;
+    
 	public Hand(Game game, Card fcard, Card scard) {
 		this.game = game;
 		card1 = fcard;
@@ -31,6 +39,30 @@ public class Hand {
 	public String getCurrentHandStrengthString(){
 		return currentHandString;
 	}
+	
+	public int getPair(){
+		return pair;
+	}
+	public ArrayList<Integer> getTwoPair(){
+		return twoPair;
+	}
+	public int getTrips(){
+		return trips;
+	}
+	public ArrayList<Integer> getFullHouse(){
+		return fullHouse;
+	}
+	public int getStraight(){
+		return straight;
+	}
+	//Returns Suit Number
+	public int getFlush(){
+		return flush;
+	}
+	public int getQuads(){
+		return quads;
+	}
+	
 	
 	//Pre-Flop Hand Strength
 	public int initialHandStrength() {
@@ -168,12 +200,17 @@ public class Hand {
 	// Checks For Quads
 	public boolean fourOfAKind() {
 		ArrayList<Integer> temp = dupeNumberLogic();
+		quads = 0;
 		int inARow = 1;
 		int maxInARow = 1;
+		
 		for(int i = 0; i < temp.size()-1; i++){
 			if(temp.get(i+1)==temp.get(i)){
 				inARow++;
-				if(inARow > maxInARow) maxInARow=inARow;
+				if(inARow > maxInARow){
+					maxInARow=inARow;
+					quads = temp.get(i);
+				}
 			}
 			else inARow=1;
 		}
@@ -182,12 +219,17 @@ public class Hand {
 	// Checks For Flush
 	public boolean flush() {
 		ArrayList<Integer> temp = dupeSuitLogic();
+		flush = 0;
 		int inARow = 1;
 		int maxInARow = 1;
+		
 		for(int i = 0; i < temp.size()-1; i++){
 			if(temp.get(i+1)==temp.get(i)){
 				inARow++;
-				if(inARow > maxInARow) maxInARow=inARow;
+				if(inARow > maxInARow){
+					maxInARow=inARow;
+					flush = temp.get(i);
+				}
 			}
 			else inARow=1;
 		}
@@ -195,13 +237,18 @@ public class Hand {
 	}
 	// Checks For Straight
 	public boolean straight() {
+		straight = 0;
 		int straightCheck = 1;
 		int maxStraightCheck = 1;
+		
 		for(int i = 0; i < straightList.size()-1; i++){
 			if(straightList.get(i+1)-straightList.get(i)<=1){
 				if(straightList.get(i+1)-straightList.get(i)==1){
 					straightCheck++;
-					if(straightCheck>maxStraightCheck) maxStraightCheck=straightCheck;
+					if(straightCheck>maxStraightCheck){
+						maxStraightCheck=straightCheck;
+						straight = straightList.get(i+1);
+					}
 				}
 			}
 			else straightCheck = 1;
@@ -218,32 +265,45 @@ public class Hand {
 			if(straightList.get(j)==4) four = true;
 			if(straightList.get(j)==5) five = true;
 			if(straightList.get(j)==14) ace = true;
-			if(ace && two && three && four && five) maxStraightCheck = 5;
+			if(ace && two && three && four && five){
+				maxStraightCheck = 5;
+				straight = 5;
+			}
 		}
 		return (maxStraightCheck>=5);
 	}
 	// Checks For Full House
 	public boolean fullHouse() {
 		ArrayList<Integer> temp = dupeNumberLogic();
-		if(temp.size()==0) return false;
+		fullHouse = new ArrayList<Integer>();
 		int tripsValue = 0;
 		int pairValue = 0;
+		
 		for(int i = 0; i < temp.size()-1; i++){
 			if(!fourOfAKind() && temp.get(i)==temp.get(i+1))tripsValue = temp.get(i);
 			else pairValue = temp.get(i);
 		}
-
-		return (tripsValue!=0 && pairValue!=0);
+		if(tripsValue!=0 && pairValue!=0){
+			fullHouse.add(tripsValue);
+			fullHouse.add(pairValue);
+			return true;
+		}
+		return false;
 	}
 	// Checks For Trips
 	public boolean trips() {
 		ArrayList<Integer> temp = dupeNumberLogic();
+		trips = 0;
 		int inARow = 1;
 		int maxInARow = 1;
+		
 		for(int i = 0; i < temp.size()-1; i++){
 			if(temp.get(i+1)==temp.get(i)){
 				inARow++;
-				if(inARow > maxInARow) maxInARow=inARow;
+				if(inARow > maxInARow){
+					maxInARow=inARow;
+					trips = temp.get(i);
+				}
 			}
 			else inARow=1;
 		}
@@ -252,14 +312,27 @@ public class Hand {
 	// Checks For Two Pair
 	public boolean twoPair() {
 		ArrayList<Integer> temp = dupeNumberLogic();
+		twoPair = new ArrayList<Integer>();
+		
 		if(temp.size()==0) return false;
 		int pairOneValue = temp.get(0);
 		int pairTwoValue = temp.get(temp.size()-1);
-		return (pairOneValue!=pairTwoValue);
+		if(pairOneValue!=pairTwoValue){
+			twoPair.add(pairTwoValue);
+			twoPair.add(pairOneValue);
+			return true;
+		}
+		return false;
 	}// Checks For Pair
 	public boolean pair() {
 		ArrayList<Integer> temp = dupeNumberLogic();
-		return (temp.size()==1);
+		pair = 0;
+		
+		if(temp.size()==1){
+			pair = temp.get(0);
+			return true;
+		}
+		return false;
 	}
 	// Checks For High Card
 	public boolean highCard() {
