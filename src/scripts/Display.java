@@ -321,8 +321,8 @@ public class Display {
 			else
 				g.setColor(Color.GREEN);
 
-			// How Much TO Fill
-			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
+			// How Much To Fill
+			g.fillRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER);
 
 		}
 

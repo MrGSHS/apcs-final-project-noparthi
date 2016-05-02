@@ -18,19 +18,28 @@ public class Computer extends Player {
 
 	public void preFlopLogic() {
 		currentHandStrength = getHand().initialHandStrength();
-		
-		// Index  Equals Index Of Active Player Before This Player
-		int index = getPosition()-1;
-		for (Player p : game.getActivePlayers()) {
-			// Checks To See If They Point To The Same Thing
-			if (p == game.getPlayers().get(getPosition())) {
-				index = p.getPosition() - 1;
+
+		// Index Equals Index Of Active Player Before This Player In
+		// ActivePlayers
+		int index = getPosition() - 1;
+		for (int i = 1; i < game.getActivePlayers().size(); i++) {
+			if (game.getActivePlayers().get(i) == game.getPlayers().get(getPosition())) {
+				index = i;
 				break;
 			}
 		}
-		
-		//Actions Based Off Of The Player Before This
-		//If Player Before Checked
+		index--;
+
+		// Index Equals Index Of Active Player Before This Player In Players
+		for (int j = 1; j < game.getPlayers().size(); j++) {
+			if (game.getPlayers().get(j) == game.getActivePlayers().get(index)) {
+				index = j;
+				break;
+			}
+		}
+
+		// Actions Based Off Of The Player Before This
+		// If Player Before Checked
 		if (game.getPlayers().get(index).getCheckBoolean()) {
 			if (currentHandStrength > 6 || (int) (Math.random() * 11) + 1 <= 2) {
 				raise(game.getBigBlind() * 2);
@@ -40,8 +49,8 @@ public class Computer extends Player {
 				System.out.println("Comp. Checks");
 				return;
 			}
-		} 
-		//If Player Before Raised Or Called
+		}
+		// If Player Before Raised Or Called
 		else if (game.getPlayers().get(index).getRaiseBoolean() || game.getPlayers().get(index).getCallBoolean()) {
 			if (currentHandStrength == 10) {
 				call();
@@ -85,8 +94,8 @@ public class Computer extends Player {
 				System.out.println("Comp. Calls");
 				return;
 			}
-		} 
-		//If Reaches Here, The Game Broke
+		}
+		// If Reaches Here, The Game Broke
 		else {
 			System.out.println("BROKEN.");
 			System.exit(1);
@@ -95,18 +104,29 @@ public class Computer extends Player {
 
 	public void logic() {
 		currentHandStrength = getHand().updateHandStrength();
-		
-		// Index Equals Index Of Active Player Before This Player
-		int index = getPosition()-1;
-		for (Player p : game.getActivePlayers()) {
-			// Checks To See If They Point To The Same Thing
-			if (p == game.getPlayers().get(getPosition())) {
-				index = p.getPosition() - 1;
+
+		// Index Equals Index Of Active Player Before This Player In
+		// ActivePlayers
+		int index = getPosition() - 1;
+		for (int i = 1; i < game.getActivePlayers().size(); i++) {
+			if (game.getActivePlayers().get(i) == game.getPlayers().get(getPosition())) {
+				index = i;
+				break;
+			}
+		}
+		index--;
+
+		// Index Equals Index Of Active Player Before This Player In Players
+		for (int j = 1; j < game.getPlayers().size(); j++) {
+			if (game.getPlayers().get(j) == game.getActivePlayers().get(index)) {
+				index = j;
 				break;
 			}
 		}
 
-		// Actions Based Off Of Player Before This 
+		System.out.println("Index: " + index);
+
+		// Actions Based Off Of Player Before This
 		// If Player Before Checked
 		if (game.getPlayers().get(index).getCheckBoolean()) {
 			if ((int) (Math.random() * 11) + 1 <= 1) {
@@ -138,8 +158,8 @@ public class Computer extends Player {
 				System.out.println("Comp. Checks");
 				return;
 			}
-		} 
-		//If Player Before Raised
+		}
+		// If Player Before Raised
 		else if (game.getPlayers().get(index).getRaiseBoolean()) {
 			if (currentHandStrength == 10) {
 				call();
@@ -180,7 +200,7 @@ public class Computer extends Player {
 				}
 			} else {
 				if (currentHandStrength >= 4 || (int) (Math.random() * 11) + 1 <= 1) {
-					raise(game.getMaxBetAmount() * ((int)(Math.random() * 3) + 2));
+					raise(game.getMaxBetAmount() * ((int) (Math.random() * 3) + 2));
 					System.out.println("Comp. Raises");
 					return;
 				} else if (currentHandStrength >= 2 || (int) (Math.random() * 11) + 1 <= 1) {
@@ -193,13 +213,13 @@ public class Computer extends Player {
 					return;
 				}
 			}
-		} 
-		//If Player Before Called
+		}
+		// If Player Before Called
 		else if (game.getPlayers().get(index).getCallBoolean()) {
 			call();
 			System.out.println("Comp. Calls");
-		} 
-		//If Reaches Here, The Game Broke
+		}
+		// If Reaches Here, The Game Broke
 		else {
 			System.out.println("BROKEN.");
 		}
