@@ -91,7 +91,7 @@ public class Player {
 		points -= maxBet;
 		
 		//Reset Stuff
-		resetActionBoolean();
+		resetActionBoolean();	
 		callBoolean = true;
 	}
 
@@ -110,7 +110,7 @@ public class Player {
 				points = 0;
 				
 				resetActionBoolean();
-				raiseBoolean = true;
+				raiseBoolean = true;				
 				return true;
 			}
 			//Not All-In			

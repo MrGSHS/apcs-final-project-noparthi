@@ -90,8 +90,10 @@ public class Game {
 
 	public void allComputersTakeAction() {
 		ArrayList<Player> computers = getActiveComputers();
-		for(Player computer :computers)
+		for(Player computer :computers){
 			computer.takeAction();
+			getRound().moveOn();
+		}
 	}
  
 	public Game() {

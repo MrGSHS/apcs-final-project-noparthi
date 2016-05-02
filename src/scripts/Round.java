@@ -74,34 +74,49 @@ public class Round {
 	public void moveOn() {
 		game.getDisplay().update();
 		//Skips If Someone Had Raised, And Resets All Action Booleans Back To Null
+		int check = 0;
+		int call = 0;
+		int raise = 0;
 		for(Player p : game.getActivePlayers()){
-			if(p.getRaiseBoolean()|| (game.getUser().getRaiseBoolean() && !p.getCallBoolean())){ 
-				for(Player player : game.getPlayers()){
-					player.resetActionBoolean();
-				}
-				return;
-			}
+			if(p.getCheckBoolean())
+				check++;
+			if(p.getCallBoolean())
+				call++;
+			if(p.getRaiseBoolean())
+				raise++;
+		}	
+	    System.out.println("Check: " + check + " Call: " + call + " Raise: " + raise);
+		if(check != game.getActivePlayers().size() && call+raise != game.getActivePlayers().size() || raise > 1){
+			return;
 		}
 		
-		//Else Reset Bet Amount
+		//Else Reset Stuff
 		game.resetPlayerBetAmount();
+		for(Player p : game.getPlayers()){
+			p.resetActionBoolean();
+		}
 		game.getDisplay().update();
-		
 		//And Proceeds To Next Round If None Of The Above Are True
 		if (stageOfRound == 0) {
 			stageOfRound++;
 			System.out.println("Stage: " + stageOfRound);
 			game.getTable().dealFlop();
+			for(Player player : game.getPlayers())
+				player.resetActionBoolean();
 			preTurn();
 		} else if (stageOfRound == 1) {
 			stageOfRound++;
 			System.out.println("Stage: " + stageOfRound);
 			game.getTable().dealTurn();
+			for(Player player : game.getPlayers())
+				player.resetActionBoolean();
 			preRiver();
 		} else if (stageOfRound == 2) {
 			stageOfRound++;
 			System.out.println("Stage: " + stageOfRound);
 			game.getTable().dealRiver();
+			for(Player player : game.getPlayers())
+				player.resetActionBoolean();
 			postRiver();
 		} else {
 			game.payout();

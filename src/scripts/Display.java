@@ -56,8 +56,12 @@ public class Display {
 	private BufferedImage dealer;
 
 	private BufferedImage cardBack;
-	private BufferedImage card1;
-	private BufferedImage card2;
+	private BufferedImage card1;//User Card
+	private BufferedImage card2;//User Card
+	private BufferedImage card3;//Comp1 Card
+	private BufferedImage card4;//COmp1 Card
+	private BufferedImage card5;//Comp2 Card
+	private BufferedImage card6;//Comp2 Card
 	private BufferedImage chips5k;
 	private BufferedImage chips10k;
 	private BufferedImage chips25k;
@@ -188,12 +192,22 @@ public class Display {
 						FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
 				g.drawImage(cardBack, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 195, FRAME_HEIGHT / 2 - 250,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
+				//Draw Cards Face Up
+				g.drawImage(card4, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 195, FRAME_HEIGHT / 2 - 250,
+						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
+				g.drawImage(card3, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + CARD_WIDTH - 185,
+						FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40, null);				
 			}
 			if (!game.getPlayers().get(2).isFolded()) {
 				g.drawImage(cardBack, FRAME_WIDTH - userLabel.getWidth() / 2 + CARD_WIDTH - 180, FRAME_HEIGHT / 2 - 250,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
 				g.drawImage(cardBack, FRAME_WIDTH - userLabel.getWidth() / 2 - 190, FRAME_HEIGHT / 2 - 250,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
+				//Draw Cards Face Up
+				g.drawImage(card6, FRAME_WIDTH - userLabel.getWidth() / 2 - 190, FRAME_HEIGHT / 2 - 250,
+						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
+				g.drawImage(card5, FRAME_WIDTH - userLabel.getWidth() / 2 + CARD_WIDTH - 180, FRAME_HEIGHT / 2 - 250,
+						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);				
 			}
 		}
 
@@ -480,7 +494,7 @@ public class Display {
 			if (evt.getSource() == raise) {
 				// Ask For User Input
 				String stringRaiseAmount = (String) JOptionPane.showInputDialog(frame, "Enter Raise Amount:",
-						game.getMaxBetAmount() + game.getSmallBlind());
+						game.getMaxBetAmount() + game.getBigBlind());
 				try {
 					stringRaiseAmount = stringRaiseAmount.replaceAll("[^0-9]", "");
 					int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
@@ -504,7 +518,10 @@ public class Display {
 			if (evt.getSource() == check) {
 				game.getUser().check();
 				game.allComputersTakeAction();
-				game.getRound().moveOn();
+				//game.getRound().moveOn();
+				for(Player player : game.getPlayers()){
+					player.resetActionBoolean();
+				}
 			}
 			if (evt.getSource() == fold) {
 				game.getUser().fold();
@@ -542,12 +559,29 @@ public class Display {
 			}
 		}
 		try {
+			//User Cards
 			String card1Path = "/cards/" + game.getUser().getCurrentHand()[0].getNumber().toString() + "_of_"
 					+ game.getUser().getCurrentHand()[0].getSuiteValue() + ".jpg";
 			String card2Path = "/cards/" + game.getUser().getCurrentHand()[1].getNumber().toString() + "_of_"
 					+ game.getUser().getCurrentHand()[1].getSuiteValue() + ".jpg";
 			card1 = ImageIO.read(getClass().getResourceAsStream(card1Path));
 			card2 = ImageIO.read(getClass().getResourceAsStream(card2Path));
+			
+			//Comp1 Cards
+			String card3Path = "/cards/" + game.getPlayers().get(1).getCurrentHand()[0].getNumber().toString() + "_of_"
+					+ game.getUser().getCurrentHand()[0].getSuiteValue() + ".jpg";
+			String card4Path = "/cards/" + game.getPlayers().get(1).getCurrentHand()[1].getNumber().toString() + "_of_"
+					+ game.getUser().getCurrentHand()[1].getSuiteValue() + ".jpg";
+			card3 = ImageIO.read(getClass().getResourceAsStream(card3Path));
+			card4 = ImageIO.read(getClass().getResourceAsStream(card4Path));
+			
+			//Comp2 Cards
+			String card5Path = "/cards/" + game.getPlayers().get(2).getCurrentHand()[0].getNumber().toString() + "_of_"
+					+ game.getUser().getCurrentHand()[0].getSuiteValue() + ".jpg";
+			String card6Path = "/cards/" + game.getPlayers().get(2).getCurrentHand()[1].getNumber().toString() + "_of_"
+					+ game.getUser().getCurrentHand()[1].getSuiteValue() + ".jpg";
+			card5 = ImageIO.read(getClass().getResourceAsStream(card5Path));
+			card6 = ImageIO.read(getClass().getResourceAsStream(card6Path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
