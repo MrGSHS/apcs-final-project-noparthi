@@ -11,8 +11,6 @@ public class Game {
 	private ArrayList<Player> players = new ArrayList<>();
 
 	private Player user;
-	private Player computer1;
-	private Player computer2;
 	private Round round;
 	private Table table;
 	private int dealerIndex = 0;
@@ -100,10 +98,14 @@ public class Game {
 		table = new Table();
 		user = new Player(this, pos++);
 		players.add(user);
-		computer1 = new Computer(this, pos++);
+		Player computer1 = new Computer(this, pos++);
 		players.add(computer1);
-		computer2 = new Computer(this, pos++);
+		Player computer2 = new Computer(this, pos++);
 		players.add(computer2);
+		Player computer3 = new Computer(this, pos++);
+		players.add(computer3);
+		Player computer4 = new Computer(this, pos++);
+		players.add(computer4);
 		round = new Round(this);
 		display = new Display(this);
 		takeBlinds();

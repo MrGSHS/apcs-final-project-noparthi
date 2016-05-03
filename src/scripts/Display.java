@@ -56,12 +56,8 @@ public class Display {
 	private BufferedImage dealer;
 
 	private BufferedImage cardBack;
-	private BufferedImage card1;//User Card
-	private BufferedImage card2;//User Card
-	private BufferedImage card3;//Comp1 Card
-	private BufferedImage card4;//COmp1 Card
-	private BufferedImage card5;//Comp2 Card
-	private BufferedImage card6;//Comp2 Card
+	private BufferedImage card1;
+	private BufferedImage card2;
 	private BufferedImage chips5k;
 	private BufferedImage chips10k;
 	private BufferedImage chips25k;
@@ -85,7 +81,7 @@ public class Display {
 		this.game = game;
 		tableCards = new ArrayList<BufferedImage>();
 
-		//Prompt For User Name
+		// Prompt For User Name
 		String[] options = { "OK" };
 		JPanel panel = new JPanel();
 		JLabel lbl = new JLabel("Enter Your Name: ");
@@ -100,7 +96,7 @@ public class Display {
 			else
 				USERNAME = NAMES[(int) (Math.random() * NAMES.length)];
 		else
-			USERNAME = NAMES[(int) (Math.random() * NAMES.length)];
+			System.exit(0);
 
 		try {
 			dealer = ImageIO.read(getClass().getResourceAsStream("/other/dealer-face.png"));
@@ -115,8 +111,8 @@ public class Display {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		//Main Frame
+
+		// Main Frame
 		frame = new JFrame();
 		frame.setTitle("Oker-pay: Round ");
 		tablePanel = new TableDisplayPanel();
@@ -169,10 +165,15 @@ public class Display {
 			game.playerPositions.add(
 					new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 });
 			game.playerPositions
+				.add(new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 290, FRAME_HEIGHT / 2 + 55 });
+			game.playerPositions
 					.add(new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210, FRAME_HEIGHT / 2 - 190 });
 			game.playerPositions
 					.add(new int[] { FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190 });
-
+			game.playerPositions
+					.add(new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 290, FRAME_HEIGHT / 2 + 55 });
+			
+			
 		}
 
 		// Draw User Cards
@@ -188,26 +189,26 @@ public class Display {
 		// Draw Computer Cards
 		public void drawComputerCards(Graphics g) {
 			if (!game.getPlayers().get(1).isFolded()) {
-				g.drawImage(cardBack, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + CARD_WIDTH - 185,
-						FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
-				g.drawImage(cardBack, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 195, FRAME_HEIGHT / 2 - 250,
+				g.drawImage(cardBack, game.playerPositions.get(1)[0] + CARD_WIDTH + 25, game.playerPositions.get(1)[1] - 60,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
-				//Draw Cards Face Up
-				g.drawImage(card4, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 195, FRAME_HEIGHT / 2 - 250,
+				g.drawImage(cardBack, game.playerPositions.get(1)[0] + 15, game.playerPositions.get(1)[1] - 60,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
-				g.drawImage(card3, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + CARD_WIDTH - 185,
-						FRAME_HEIGHT / 2 - 250, CARD_WIDTH + 30, CARD_HEIGHT + 40, null);				
 			}
 			if (!game.getPlayers().get(2).isFolded()) {
-				g.drawImage(cardBack, FRAME_WIDTH - userLabel.getWidth() / 2 + CARD_WIDTH - 180, FRAME_HEIGHT / 2 - 250,
+				g.drawImage(cardBack, game.playerPositions.get(2)[0] + CARD_WIDTH + 25, game.playerPositions.get(2)[1] - 60,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
-				g.drawImage(cardBack, FRAME_WIDTH - userLabel.getWidth() / 2 - 190, FRAME_HEIGHT / 2 - 250,
+				g.drawImage(cardBack, game.playerPositions.get(2)[0] + 15, game.playerPositions.get(2)[1] - 60,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
-				//Draw Cards Face Up
-				g.drawImage(card6, FRAME_WIDTH - userLabel.getWidth() / 2 - 190, FRAME_HEIGHT / 2 - 250,
+			}
+			if (!game.getPlayers().get(3).isFolded()) {
+				g.drawImage(cardBack, game.playerPositions.get(3)[0] + CARD_WIDTH + 25, game.playerPositions.get(3)[1] - 60,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
-				g.drawImage(card5, FRAME_WIDTH - userLabel.getWidth() / 2 + CARD_WIDTH - 180, FRAME_HEIGHT / 2 - 250,
-						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);				
+				g.drawImage(cardBack, game.playerPositions.get(3)[0] + 15, game.playerPositions.get(3)[1] - 60,
+						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
+			}
+			if (!game.getPlayers().get(4).isFolded()) {
+				g.drawImage(cardBack, game.playerPositions.get(4)[0] + CARD_WIDTH + 25, game.playerPositions.get(4)[1] - 60, CARD_WIDTH + 30, CARD_HEIGHT + 40, null); 
+				g.drawImage(cardBack, game.playerPositions.get(4)[0] + 15, game.playerPositions.get(4)[1] - 60, CARD_WIDTH + 30, CARD_HEIGHT + 40, null); 
 			}
 		}
 
@@ -219,8 +220,10 @@ public class Display {
 
 		// Draw Computer Labels
 		public void drawComputerLabels(Graphics g) {
-			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210, FRAME_HEIGHT / 2 - 190, null);
-			g.drawImage(userLabel, FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190, null);
+			g.drawImage(userLabel, game.playerPositions.get(1)[0], game.playerPositions.get(1)[1], null);
+			g.drawImage(userLabel, game.playerPositions.get(2)[0], game.playerPositions.get(2)[1], null);
+			g.drawImage(userLabel, game.playerPositions.get(3)[0], game.playerPositions.get(3)[1], null);
+			g.drawImage(userLabel, game.playerPositions.get(4)[0], game.playerPositions.get(4)[1], null);
 		}
 
 		// Add Player Names
@@ -235,14 +238,21 @@ public class Display {
 		// Add Computer Names
 		public void addComputerNames(Graphics g) {
 			g.drawString(COMP1NAME,
-					FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210
+					game.playerPositions.get(4)[0] + 5
 							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP1NAME)) / 2 + 15,
-					game.playerPositions.get(1)[1] + 20);
+					game.playerPositions.get(4)[1] + 20);
 			g.drawString(COMP2NAME,
-					FRAME_WIDTH - userLabel.getWidth() / 2 - 205
+					game.playerPositions.get(2)[0] + 5
 							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP2NAME)) / 2 + 15,
 					game.playerPositions.get(2)[1] + 20);
-
+			g.drawString(COMP3NAME,
+					game.playerPositions.get(3)[0] + 5
+							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP2NAME)) / 2 + 15,
+					game.playerPositions.get(3)[1] + 20);
+			g.drawString(COMP4NAME,
+					game.playerPositions.get(1)[0] + 5
+							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP2NAME)) / 2 + 15,
+					game.playerPositions.get(1)[1] + 20);
 		}
 
 		// Add Player Points
@@ -255,10 +265,14 @@ public class Display {
 
 		// Add Computer Points
 		public void addComputerPoints(Graphics g) {
-			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(1)[0] + 70,
-					game.playerPositions.get(1)[1] + userLabel.getHeight() - 14);
+			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(4)[0] + 70,
+					game.playerPositions.get(4)[1] + userLabel.getHeight() - 14);
 			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 70,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() - 14);
+			g.drawString(game.getPlayers().get(3).getPoints() + " Pts", game.playerPositions.get(3)[0] + 70,
+					game.playerPositions.get(3)[1] + userLabel.getHeight() - 14);
+			g.drawString(game.getPlayers().get(4).getPoints() + " Pts", game.playerPositions.get(1)[0] + 70,
+					game.playerPositions.get(1)[1] + userLabel.getHeight() - 14);
 		}
 
 		// Add Pot
@@ -321,24 +335,32 @@ public class Display {
 			else
 				g.setColor(Color.GREEN);
 
-			// How Much To Fill
-			g.fillRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER);
+			// How Much TO Fill
+			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
 
 		}
 
 		// Add Computers Bet
 		public void addComputerBet(Graphics g) {
 			g.setColor(modifiedGrey);
-			g.fillRoundRect(game.playerPositions.get(1)[0] + 120,
-					game.playerPositions.get(1)[1] + userLabel.getHeight() + 10, 40, 20, 15, 15);
-			g.fillRoundRect(game.playerPositions.get(2)[0] + 20,
-					game.playerPositions.get(2)[1] + userLabel.getHeight() + 10, 40, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(1)[0] + 190,
+					game.playerPositions.get(1)[1], 40, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(2)[0] + 120,
+					game.playerPositions.get(2)[1] + userLabel.getHeight() + 5, 40, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(3)[0] + 20,
+					game.playerPositions.get(3)[1] + userLabel.getHeight() + 5, 40, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(4)[0] - 45,
+					game.playerPositions.get(4)[1], 40, 20, 15, 15);
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
 			g.drawString("" + game.getPlayers().get(1).getBetAmount() / 1000 + "K",
-					game.playerPositions.get(1)[0] + 125, game.playerPositions.get(1)[1] + userLabel.getHeight() + 25);
-			g.drawString("" + game.getPlayers().get(2).getBetAmount() / 1000 + "K", game.playerPositions.get(2)[0] + 25,
-					game.playerPositions.get(2)[1] + userLabel.getHeight() + 25);
+					game.playerPositions.get(1)[0] + 200, game.playerPositions.get(1)[1] + 15);
+			g.drawString("" + game.getPlayers().get(2).getBetAmount() / 1000 + "K", game.playerPositions.get(2)[0] + 125,
+					game.playerPositions.get(2)[1] + userLabel.getHeight() + 20);
+			g.drawString("" + game.getPlayers().get(3).getBetAmount() / 1000 + "K", game.playerPositions.get(3)[0] + 25,
+					game.playerPositions.get(3)[1] + userLabel.getHeight() + 20);
+			g.drawString("" + game.getPlayers().get(4).getBetAmount() / 1000 + "K", game.playerPositions.get(4)[0] - 35,
+					game.playerPositions.get(4)[1] + 15);
 		}
 
 		// Add Chips
@@ -347,10 +369,14 @@ public class Display {
 			int chipsHeight = chips5k.getHeight();
 			g.drawImage(calculateChips(game.getPlayers().get(0)), FRAME_WIDTH / 2 - chipsWidth / 2,
 					game.playerPositions.get(0)[1] - chipsHeight * 2 - 10, null);
-			g.drawImage(calculateChips(game.getPlayers().get(1)), game.playerPositions.get(1)[0] + 70,
-					game.playerPositions.get(1)[1] + userLabel.getHeight() - 10, null);
+			g.drawImage(calculateChips(game.getPlayers().get(1)), game.playerPositions.get(1)[0] + 185,
+					game.playerPositions.get(1)[1] + userLabel.getHeight() - 120, null);
 			g.drawImage(calculateChips(game.getPlayers().get(2)), game.playerPositions.get(2)[0] + 70,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() - 10, null);
+			g.drawImage(calculateChips(game.getPlayers().get(3)), game.playerPositions.get(3)[0] + 70,
+					game.playerPositions.get(3)[1] + userLabel.getHeight() - 10, null);
+			g.drawImage(calculateChips(game.getPlayers().get(4)), game.playerPositions.get(4)[0] - 40,
+					game.playerPositions.get(4)[1] + userLabel.getHeight() - 120, null);
 		}
 
 		// Add Tips
@@ -432,8 +458,9 @@ public class Display {
 			return chips25k;
 		else if (p.getPointsInvested() / 10000 >= 1)
 			return chips10k;
-		else if (p.getPointsInvested() / 5000 >= 1)
+		else if (p.getPointsInvested() / 5000 >= 1) {
 			return chips5k;
+		}
 		return null;
 	}
 
@@ -494,13 +521,16 @@ public class Display {
 			if (evt.getSource() == raise) {
 				// Ask For User Input
 				String stringRaiseAmount = (String) JOptionPane.showInputDialog(frame, "Enter Raise Amount:",
-						game.getMaxBetAmount() + game.getBigBlind());
+						game.getMaxBetAmount() + game.getSmallBlind());
 				try {
 					stringRaiseAmount = stringRaiseAmount.replaceAll("[^0-9]", "");
 					int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
 
 					if (game.getUser().raise(intRaiseAmount)) {
 						game.allComputersTakeAction();
+						update();
+						game.allComputersTakeAction();
+						update();
 						game.getRound().moveOn();
 					} else {
 						return;
@@ -518,10 +548,7 @@ public class Display {
 			if (evt.getSource() == check) {
 				game.getUser().check();
 				game.allComputersTakeAction();
-				//game.getRound().moveOn();
-				for(Player player : game.getPlayers()){
-					player.resetActionBoolean();
-				}
+				game.getRound().moveOn();
 			}
 			if (evt.getSource() == fold) {
 				game.getUser().fold();
@@ -559,29 +586,12 @@ public class Display {
 			}
 		}
 		try {
-			//User Cards
 			String card1Path = "/cards/" + game.getUser().getCurrentHand()[0].getNumber().toString() + "_of_"
 					+ game.getUser().getCurrentHand()[0].getSuiteValue() + ".jpg";
 			String card2Path = "/cards/" + game.getUser().getCurrentHand()[1].getNumber().toString() + "_of_"
 					+ game.getUser().getCurrentHand()[1].getSuiteValue() + ".jpg";
 			card1 = ImageIO.read(getClass().getResourceAsStream(card1Path));
 			card2 = ImageIO.read(getClass().getResourceAsStream(card2Path));
-			
-			//Comp1 Cards
-			String card3Path = "/cards/" + game.getPlayers().get(1).getCurrentHand()[0].getNumber().toString() + "_of_"
-					+ game.getUser().getCurrentHand()[0].getSuiteValue() + ".jpg";
-			String card4Path = "/cards/" + game.getPlayers().get(1).getCurrentHand()[1].getNumber().toString() + "_of_"
-					+ game.getUser().getCurrentHand()[1].getSuiteValue() + ".jpg";
-			card3 = ImageIO.read(getClass().getResourceAsStream(card3Path));
-			card4 = ImageIO.read(getClass().getResourceAsStream(card4Path));
-			
-			//Comp2 Cards
-			String card5Path = "/cards/" + game.getPlayers().get(2).getCurrentHand()[0].getNumber().toString() + "_of_"
-					+ game.getUser().getCurrentHand()[0].getSuiteValue() + ".jpg";
-			String card6Path = "/cards/" + game.getPlayers().get(2).getCurrentHand()[1].getNumber().toString() + "_of_"
-					+ game.getUser().getCurrentHand()[1].getSuiteValue() + ".jpg";
-			card5 = ImageIO.read(getClass().getResourceAsStream(card5Path));
-			card6 = ImageIO.read(getClass().getResourceAsStream(card6Path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
