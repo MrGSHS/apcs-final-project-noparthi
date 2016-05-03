@@ -9,8 +9,7 @@ public class Game {
 	private final int SMALLBLIND = 250;
 	private final int ANTE = 100;
 	private ArrayList<Player> players = new ArrayList<>();
-	
-	
+
 	private Player user;
 	private Player computer1;
 	private Player computer2;
@@ -78,11 +77,11 @@ public class Game {
 		}
 		return active;
 	}
-	
-	public ArrayList<Player> getActiveComputers(){
+
+	public ArrayList<Player> getActiveComputers() {
 		ArrayList<Player> active = new ArrayList<>();
-		for (Player p: players) {
-			if(p.getPosition() != 0 && !p.isFolded())
+		for (Player p : players) {
+			if (p.getPosition() != 0 && !p.isFolded())
 				active.add(p);
 		}
 		return active;
@@ -90,12 +89,12 @@ public class Game {
 
 	public void allComputersTakeAction() {
 		ArrayList<Player> computers = getActiveComputers();
-		for(Player computer :computers){
+		for (Player computer : computers) {
 			computer.takeAction();
 			getRound().moveOn();
 		}
 	}
- 
+
 	public Game() {
 		int pos = 0;
 		table = new Table();
@@ -149,21 +148,101 @@ public class Game {
 
 	// Pays Out Money In Pot To Winner
 	public void payout() {
-		int strongestPlayerIndex = 0;
-		if (getActivePlayers().size() == 1)
-			strongestPlayerIndex = 0;
-		else {
-			for (int i = 1; i < getActivePlayers().size(); i++) {
-				if (getActivePlayers().get(i).getHand().updateHandStrength() > getActivePlayers()
-						.get(strongestPlayerIndex).getHand().updateHandStrength()) {
-					strongestPlayerIndex = i;
-				} else if (getActivePlayers().get(i).getHand().updateHandStrength() == getActivePlayers()
-						.get(strongestPlayerIndex).getHand().updateHandStrength()) {
-					// TODO: Need To Finish
+		ArrayList<Integer> strongestPlayersIndex = new ArrayList<>();
+		strongestPlayersIndex.add(0);
+		//TODO: Add In Kickers And High Card 
+		for (int i = 1; i < getActivePlayers().size(); i++) {
+			//If One User's Hand Strength Is Better Than The Best Currently
+			if (getActivePlayers().get(i).getHand().updateHandStrength() > getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().updateHandStrength()) {
+				strongestPlayersIndex = new ArrayList<Integer>();
+				strongestPlayersIndex.add(i);
+			} 
+			//If Final Hand Strengths Are Equal
+			else if (getActivePlayers().get(i).getHand().updateHandStrength() == getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().updateHandStrength()) {
+				//Four Of A Kind
+				if(getActivePlayers().get(i).getHand().getCurrentHandStrengthString().equals("Four Of A Kind")){
+					if(getActivePlayers().get(i).getHand().getQuads()==getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getQuads())
+						strongestPlayersIndex.add(i);
+					else if(getActivePlayers().get(i).getHand().getQuads() > getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getQuads()){
+						strongestPlayersIndex = new ArrayList<Integer>();
+						strongestPlayersIndex.add(i);
+					}
 				}
+				
+				//Full House
+				if(getActivePlayers().get(i).getHand().getCurrentHandStrengthString().equals("Full House")){
+					if(getActivePlayers().get(i).getHand().getFullHouse().get(0)==getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getFullHouse().get(0))
+						//If The Triples Are Equivalent
+						if(getActivePlayers().get(i).getHand().getFullHouse().get(1)==getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getFullHouse().get(1))
+							strongestPlayersIndex.add(i);
+						else if(getActivePlayers().get(i).getHand().getFullHouse().get(1) > getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getFullHouse().get(1)){
+							strongestPlayersIndex = new ArrayList<Integer>();
+							strongestPlayersIndex.add(i);
+						}
+					else if(getActivePlayers().get(i).getHand().getFullHouse().get(0) > getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getFullHouse().get(0)){
+						strongestPlayersIndex = new ArrayList<Integer>();
+						strongestPlayersIndex.add(i);
+					}
+				}
+				
+				//Flush
+				if(getActivePlayers().get(i).getHand().getCurrentHandStrengthString().equals("Flush")){
+					strongestPlayersIndex.add(i);
+				}
+				
+				//Straight
+				if(getActivePlayers().get(i).getHand().getCurrentHandStrengthString().equals("Straight")){
+					if(getActivePlayers().get(i).getHand().getStraight()==getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getStraight())
+						strongestPlayersIndex.add(i);
+					else if(getActivePlayers().get(i).getHand().getStraight() > getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getStraight()){
+						strongestPlayersIndex = new ArrayList<Integer>();
+						strongestPlayersIndex.add(i);
+					}
+				}
+				
+				//Three Of A Kind
+				if(getActivePlayers().get(i).getHand().getCurrentHandStrengthString().equals("Three Of A Kind")){
+					if(getActivePlayers().get(i).getHand().getTrips()==getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getTrips())
+						strongestPlayersIndex.add(i);
+					else if(getActivePlayers().get(i).getHand().getTrips() > getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getTrips()){
+						strongestPlayersIndex = new ArrayList<Integer>();
+						strongestPlayersIndex.add(i);
+					}
+				}
+				
+				//Two Pair
+				if(getActivePlayers().get(i).getHand().getCurrentHandStrengthString().equals("Two-Pair")){
+					if(getActivePlayers().get(i).getHand().getTwoPair().get(0)==getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getTwoPair().get(0))
+						//If The High Pair Are Equivalent
+						if(getActivePlayers().get(i).getHand().getTwoPair().get(1)==getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getTwoPair().get(1))
+							strongestPlayersIndex.add(i);
+						else if(getActivePlayers().get(i).getHand().getTwoPair().get(1) > getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getTwoPair().get(1)){
+							strongestPlayersIndex = new ArrayList<Integer>();
+							strongestPlayersIndex.add(i);
+						}
+					else if(getActivePlayers().get(i).getHand().getTwoPair().get(0) > getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getTwoPair().get(0)){
+						strongestPlayersIndex = new ArrayList<Integer>();
+						strongestPlayersIndex.add(i);
+					}
+				}
+				
+				//Pair
+				if(getActivePlayers().get(i).getHand().getCurrentHandStrengthString().equals("Pair")){
+					if(getActivePlayers().get(i).getHand().getPair()==getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getPair())
+						strongestPlayersIndex.add(i);
+					else if(getActivePlayers().get(i).getHand().getPair() > getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getPair()){
+						strongestPlayersIndex = new ArrayList<Integer>();
+						strongestPlayersIndex.add(i);
+					}
+				}
+				
 			}
 		}
-		getActivePlayers().get(strongestPlayerIndex).setPoints(user.getPoints() + round.getPot());
+		int numberShared = strongestPlayersIndex.size();
+		for(int i : strongestPlayersIndex){
+			System.out.println(i);
+			getActivePlayers().get(i).setPoints((int)(getActivePlayers().get(i).getPoints() + round.getPot()/numberShared));
+		}
 		newRound();
 	}
 
@@ -175,10 +254,11 @@ public class Game {
 
 	// Checks To See If 2 Or More Players Are Still Active
 	public boolean isRoundActive() {
-		if(getActivePlayers().size() > 1) return true;
+		if (getActivePlayers().size() > 1)
+			return true;
 
 		for (Player p : players) {
-			if(p.isFolded()){
+			if (p.isFolded()) {
 				p.resetActionBoolean();
 			}
 		}
