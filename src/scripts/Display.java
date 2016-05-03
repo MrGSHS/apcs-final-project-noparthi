@@ -1,7 +1,6 @@
 package scripts;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -26,14 +25,17 @@ import javax.swing.JTextField;
 
 public class Display {
 
-	private final String[] NAMES = { "Andrew", "David", "Ethan", "Jerry", "Jonathan", "Michael", "Robert", "Tim",
-			"William", "Zac", "Annie", "Bianca", "Emma", "Hannah", "Isabella", "Jasmine", "Lily", "Mary", "Sophia",
-			"Zoe" };
+	private ArrayList<String> NAMES = new ArrayList<String>(){
+		private static final long serialVersionUID = 1L;
+
+	{add("Andrew"); add("David"); add("Ethan"); add("Jerry"); add("Jonathan");
+		add("Lily"); add("Sophia");
+	}};
 	private String USERNAME;
-	private final String COMP1NAME = NAMES[(int) (Math.random() * NAMES.length)];
-	private final String COMP2NAME = NAMES[(int) (Math.random() * NAMES.length)];
-	private final String COMP3NAME = NAMES[(int) (Math.random() * NAMES.length)];
-	private final String COMP4NAME = NAMES[(int) (Math.random() * NAMES.length)];
+	private String COMP1NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+	private String COMP2NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+	private final String COMP3NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+	private final String COMP4NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
 
 	private final int CARD_WIDTH = 55;
 	private final int CARD_HEIGHT = 80;
@@ -90,14 +92,14 @@ public class Display {
 		panel.add(txt);
 		int selectedOption = JOptionPane.showOptionDialog(null, panel, "Welcome to Oker-pay", JOptionPane.NO_OPTION,
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-		if (selectedOption == 0)
+		if (selectedOption == 0){
 			if (!txt.getText().trim().equals(""))
 				USERNAME = txt.getText();
 			else
-				USERNAME = NAMES[(int) (Math.random() * NAMES.length)];
-		else
+				USERNAME = NAMES.remove((int) (Math.random() * NAMES.size()));;
+		}else{
 			System.exit(0);
-
+		}
 		try {
 			dealer = ImageIO.read(getClass().getResourceAsStream("/other/dealer-face.png"));
 			table = ImageIO.read(getClass().getResourceAsStream("/other/poker-table.png"));
@@ -471,9 +473,6 @@ public class Display {
 
 		private final int BUTTON_WIDTH = FRAME_WIDTH / 4;
 		private final int BUTTON_HEIGHT = 50;
-
-		private int timer = 3;
-		private long start;
 
 		public ActionsDisplayPanel() {
 			fold.addActionListener(new ButtonListener());
