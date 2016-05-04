@@ -397,7 +397,7 @@ public class Display {
 			else
 				g.setColor(Color.GREEN);
 
-			// How Much TO Fill
+			// How Much To Fill
 			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
 
 		}
@@ -407,20 +407,20 @@ public class Display {
 			g.setColor(modifiedGrey);
 			g.fillRoundRect(game.playerPositions.get(1)[0] + 190,
 					game.playerPositions.get(1)[1], 40, 20, 15, 15);
-			g.fillRoundRect(game.playerPositions.get(2)[0] + 120,
-					game.playerPositions.get(2)[1] + userLabel.getHeight() + 5, 40, 20, 15, 15);
-			g.fillRoundRect(game.playerPositions.get(3)[0] + 20,
-					game.playerPositions.get(3)[1] + userLabel.getHeight() + 5, 40, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(2)[0] + 180,
+					game.playerPositions.get(2)[1] + userLabel.getHeight() - 10, 40, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(3)[0] - 40,
+					game.playerPositions.get(3)[1] + userLabel.getHeight() - 10, 40, 20, 15, 15);
 			g.fillRoundRect(game.playerPositions.get(4)[0] - 45,
 					game.playerPositions.get(4)[1], 40, 20, 15, 15);
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
 			g.drawString("" + game.getPlayers().get(1).getBetAmount() / 1000 + "K",
 					game.playerPositions.get(1)[0] + 200, game.playerPositions.get(1)[1] + 15);
-			g.drawString("" + game.getPlayers().get(2).getBetAmount() / 1000 + "K", game.playerPositions.get(2)[0] + 125,
-					game.playerPositions.get(2)[1] + userLabel.getHeight() + 20);
-			g.drawString("" + game.getPlayers().get(3).getBetAmount() / 1000 + "K", game.playerPositions.get(3)[0] + 25,
-					game.playerPositions.get(3)[1] + userLabel.getHeight() + 20);
+			g.drawString("" + game.getPlayers().get(2).getBetAmount() / 1000 + "K", game.playerPositions.get(2)[0] + 190,
+					game.playerPositions.get(2)[1] + userLabel.getHeight() + 5);
+			g.drawString("" + game.getPlayers().get(3).getBetAmount() / 1000 + "K", game.playerPositions.get(3)[0] - 30,
+					game.playerPositions.get(3)[1] + userLabel.getHeight() + 5);
 			g.drawString("" + game.getPlayers().get(4).getBetAmount() / 1000 + "K", game.playerPositions.get(4)[0] - 35,
 					game.playerPositions.get(4)[1] + 15);
 		}
