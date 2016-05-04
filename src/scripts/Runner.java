@@ -1,5 +1,7 @@
 package scripts;
 
+import poker.Game;
+
 public class Runner {
 	
 	

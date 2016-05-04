@@ -1,6 +1,9 @@
-package scripts;
+package poker;
 
 import java.util.ArrayList;
+
+import scripts.Card;
+import scripts.Deck;
 
 public class Table{
 	

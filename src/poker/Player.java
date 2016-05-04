@@ -1,4 +1,7 @@
-package scripts;
+package poker;
+
+import scripts.Card;
+import scripts.Hand;
 
 public class Player {
 

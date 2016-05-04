@@ -1,4 +1,4 @@
-package scripts;
+package poker;
 
 public class Computer extends Player {
 	private Game game;

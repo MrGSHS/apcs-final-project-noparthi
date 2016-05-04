@@ -1,4 +1,4 @@
-package scripts;
+package poker;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -22,6 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import scripts.Card;
 
 public class Display {
 

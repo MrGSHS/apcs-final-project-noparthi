@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import poker.Game;
+
 public class Hand {
 	
 	private Game game;
