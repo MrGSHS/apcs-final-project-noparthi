@@ -37,7 +37,9 @@ public class Computer extends Player {
 				break;
 			}
 		}
-
+		
+		System.out.println("Index: " + index);
+		
 		// Actions Based Off Of The Player Before This
 		// If Player Before Checked
 		if (game.getPlayers().get(index).getCheckBoolean()) {

@@ -71,7 +71,7 @@ public class Round {
 	}
 
 	//Check To See If Should Move To Next Round
-	public void moveOn() {
+	public boolean moveOn() {
 		game.getDisplay().update();
 		//Skips If Someone Had Raised, And Resets All Action Booleans Back To Null
 		int check = 0;
@@ -85,9 +85,9 @@ public class Round {
 			if(p.getRaiseBoolean())
 				raise++;
 		}	
-	    System.out.println("Check: " + check + " Call: " + call + " Raise: " + raise);
+
 		if(check != game.getActivePlayers().size() && call+raise != game.getActivePlayers().size() || raise > 1){
-			return;
+			return false;
 		}
 		
 		//Else Reset Stuff
@@ -118,8 +118,8 @@ public class Round {
 			for(Player player : game.getPlayers())
 				player.resetActionBoolean();
 			postRiver();
-		} else {
+		} else 
 			game.payout();
-		}
+		return true;
 	}
 }

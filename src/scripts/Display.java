@@ -29,7 +29,7 @@ public class Display {
 		private static final long serialVersionUID = 1L;
 
 	{add("Andrew"); add("David"); add("Ethan"); add("Jerry"); add("Jonathan");
-		add("Lily"); add("Sophia");
+		add("Jessica"); add("Lily"); add("Sophia"); add("Zoe"); add("Julia"); 
 	}};
 	private String USERNAME;
 	private String COMP1NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
@@ -37,6 +37,27 @@ public class Display {
 	private final String COMP3NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
 	private final String COMP4NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
 
+	private ArrayList<BufferedImage> LABELS = new ArrayList<BufferedImage>()
+	{
+		private static final long serialVersionUID =1L;
+
+	{
+		try{
+			add(ImageIO.read(getClass().getResourceAsStream("/labels/penguin-label.png"))); 
+			add(ImageIO.read(getClass().getResourceAsStream("/labels/bird-label.png")));
+			add(ImageIO.read(getClass().getResourceAsStream("/labels/monkey-label.png"))); 
+			add(ImageIO.read(getClass().getResourceAsStream("/labels/frog-label.png"))); 
+			add(ImageIO.read(getClass().getResourceAsStream("/labels/goat-label.png"))); 
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}};
+	private BufferedImage userLabel = LABELS.remove((int) (Math.random() * LABELS.size()));
+	private BufferedImage computer1Label = LABELS.remove((int) (Math.random() * LABELS.size()));
+	private BufferedImage computer2Label = LABELS.remove((int) (Math.random() * LABELS.size()));
+	private BufferedImage computer3Label = LABELS.remove((int) (Math.random() * LABELS.size()));
+	private BufferedImage computer4Label = LABELS.remove((int) (Math.random() * LABELS.size()));
+	
 	private final int CARD_WIDTH = 55;
 	private final int CARD_HEIGHT = 80;
 	private final int TABLE_WIDTH = 660;
@@ -54,7 +75,6 @@ public class Display {
 
 	private BufferedImage theme;
 	private BufferedImage table;
-	private BufferedImage userLabel;
 	private BufferedImage dealer;
 
 	private BufferedImage cardBack;
@@ -104,7 +124,6 @@ public class Display {
 			dealer = ImageIO.read(getClass().getResourceAsStream("/other/dealer-face.png"));
 			table = ImageIO.read(getClass().getResourceAsStream("/other/poker-table.png"));
 			theme = ImageIO.read(getClass().getResourceAsStream("/themes/red-velvet.jpg"));
-			userLabel = ImageIO.read(getClass().getResourceAsStream("/other/player-label.png"));
 			cardBack = ImageIO.read(getClass().getResourceAsStream("/other/card-back.png"));
 			chips5k = ImageIO.read(getClass().getResourceAsStream("/chips/5k.png"));
 			chips10k = ImageIO.read(getClass().getResourceAsStream("/chips/10k.png"));
@@ -167,13 +186,13 @@ public class Display {
 			game.playerPositions.add(
 					new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 });
 			game.playerPositions
-				.add(new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 290, FRAME_HEIGHT / 2 + 55 });
+				.add(new int[] { FRAME_WIDTH / 2 - computer1Label.getWidth() / 2 - 290, FRAME_HEIGHT / 2 + 55 });
 			game.playerPositions
-					.add(new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2 - 210, FRAME_HEIGHT / 2 - 190 });
+					.add(new int[] { FRAME_WIDTH / 2 - computer2Label.getWidth() / 2 - 210, FRAME_HEIGHT / 2 - 190 });
 			game.playerPositions
-					.add(new int[] { FRAME_WIDTH - userLabel.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190 });
+					.add(new int[] { FRAME_WIDTH - computer3Label.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190 });
 			game.playerPositions
-					.add(new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 290, FRAME_HEIGHT / 2 + 55 });
+					.add(new int[] { FRAME_WIDTH / 2 - computer4Label.getWidth() / 2 + 290, FRAME_HEIGHT / 2 + 55 });
 			
 			
 		}
@@ -222,10 +241,10 @@ public class Display {
 
 		// Draw Computer Labels
 		public void drawComputerLabels(Graphics g) {
-			g.drawImage(userLabel, game.playerPositions.get(1)[0], game.playerPositions.get(1)[1], null);
-			g.drawImage(userLabel, game.playerPositions.get(2)[0], game.playerPositions.get(2)[1], null);
-			g.drawImage(userLabel, game.playerPositions.get(3)[0], game.playerPositions.get(3)[1], null);
-			g.drawImage(userLabel, game.playerPositions.get(4)[0], game.playerPositions.get(4)[1], null);
+			g.drawImage(computer1Label, game.playerPositions.get(1)[0], game.playerPositions.get(1)[1], null);
+			g.drawImage(computer2Label, game.playerPositions.get(2)[0], game.playerPositions.get(2)[1], null);
+			g.drawImage(computer3Label, game.playerPositions.get(3)[0], game.playerPositions.get(3)[1], null);
+			g.drawImage(computer4Label, game.playerPositions.get(4)[0], game.playerPositions.get(4)[1], null);
 		}
 
 		// Add Player Names
@@ -240,20 +259,20 @@ public class Display {
 		// Add Computer Names
 		public void addComputerNames(Graphics g) {
 			g.drawString(COMP1NAME,
-					game.playerPositions.get(4)[0] + 5
-							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP1NAME)) / 2 + 15,
+					game.playerPositions.get(4)[0] + 58
+							+ (128 - g.getFontMetrics().stringWidth(COMP1NAME)) / 3,
 					game.playerPositions.get(4)[1] + 20);
 			g.drawString(COMP2NAME,
-					game.playerPositions.get(2)[0] + 5
-							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP2NAME)) / 2 + 15,
-					game.playerPositions.get(2)[1] + 20);
-			g.drawString(COMP3NAME,
-					game.playerPositions.get(3)[0] + 5
-							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP2NAME)) / 2 + 15,
+					game.playerPositions.get(3)[0] + 58
+							+ (128 - g.getFontMetrics().stringWidth(COMP2NAME)) / 3,
 					game.playerPositions.get(3)[1] + 20);
+			g.drawString(COMP3NAME,
+					game.playerPositions.get(2)[0] + 58
+							+ (128 - g.getFontMetrics().stringWidth(COMP2NAME)) / 3,
+					game.playerPositions.get(2)[1] + 20);
 			g.drawString(COMP4NAME,
-					game.playerPositions.get(1)[0] + 5
-							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(COMP2NAME)) / 2 + 15,
+					game.playerPositions.get(1)[0] + 58
+							+ (128 - g.getFontMetrics().stringWidth(COMP2NAME)) / 3,
 					game.playerPositions.get(1)[1] + 20);
 		}
 
@@ -267,14 +286,14 @@ public class Display {
 
 		// Add Computer Points
 		public void addComputerPoints(Graphics g) {
-			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(4)[0] + 70,
-					game.playerPositions.get(4)[1] + userLabel.getHeight() - 14);
-			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 70,
-					game.playerPositions.get(2)[1] + userLabel.getHeight() - 14);
-			g.drawString(game.getPlayers().get(3).getPoints() + " Pts", game.playerPositions.get(3)[0] + 70,
-					game.playerPositions.get(3)[1] + userLabel.getHeight() - 14);
-			g.drawString(game.getPlayers().get(4).getPoints() + " Pts", game.playerPositions.get(1)[0] + 70,
-					game.playerPositions.get(1)[1] + userLabel.getHeight() - 14);
+			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(4)[0] + 73,
+					game.playerPositions.get(4)[1] + computer1Label.getHeight() - 14);
+			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 73,
+					game.playerPositions.get(2)[1] + computer2Label.getHeight() - 14);
+			g.drawString(game.getPlayers().get(3).getPoints() + " Pts", game.playerPositions.get(3)[0] + 73,
+					game.playerPositions.get(3)[1] + computer3Label.getHeight() - 14);
+			g.drawString(game.getPlayers().get(4).getPoints() + " Pts", game.playerPositions.get(1)[0] + 73,
+					game.playerPositions.get(1)[1] + computer4Label.getHeight() - 14);
 		}
 
 		// Add Pot

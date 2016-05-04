@@ -89,7 +89,8 @@ public class Game {
 		ArrayList<Player> computers = getActiveComputers();
 		for (Player computer : computers) {
 			computer.takeAction();
-			getRound().moveOn();
+			if(getRound().moveOn())
+				break;
 		}
 	}
 
@@ -241,10 +242,12 @@ public class Game {
 			}
 		}
 		int numberShared = strongestPlayersIndex.size();
+		System.out.print("Pays Out To Index(es):\t");
 		for(int i : strongestPlayersIndex){
-			System.out.println(i);
+			System.out.print(i + "\t");
 			getActivePlayers().get(i).setPoints((int)(getActivePlayers().get(i).getPoints() + round.getPot()/numberShared));
 		}
+		System.out.println("With A " + getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getCurrentHandStrengthString());
 		newRound();
 	}
 
