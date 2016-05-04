@@ -1,4 +1,4 @@
-package poker;
+package holdem;
 
 public class Computer extends Player {
 	private Game game;

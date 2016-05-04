@@ -1,4 +1,4 @@
-package poker;
+package holdem;
 
 import java.awt.Color;
 import java.awt.Font;

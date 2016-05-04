@@ -1,4 +1,4 @@
-package poker;
+package holdem;
 
 import scripts.Card;
 import scripts.Hand;
