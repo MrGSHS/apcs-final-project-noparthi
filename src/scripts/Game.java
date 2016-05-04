@@ -8,6 +8,8 @@ public class Game {
 	private final int BIGBLIND = 500;
 	private final int SMALLBLIND = 250;
 	private final int ANTE = 100;
+	private int bigBlindIndex;
+	private int smallBlindIndex;
 	private ArrayList<Player> players = new ArrayList<>();
 
 	private Player user;
@@ -17,6 +19,14 @@ public class Game {
 
 	public ArrayList<int[]> playerPositions = new ArrayList<>();
 
+	public int getBigBlindIndex(){
+		return bigBlindIndex;
+	}
+	
+	public int getSmallBlindIndex(){
+		return smallBlindIndex;
+	}
+	
 	public Display getDisplay() {
 		return display;
 	}
@@ -118,13 +128,13 @@ public class Game {
 	// Takes The Blinds
 	public void takeBlinds() {
 		// Set Index Of Big Blind Player
-		int bigBlindIndex = dealerIndex + 1;
+		bigBlindIndex = dealerIndex + 1;
 		if (bigBlindIndex >= players.size())
 			bigBlindIndex = 0;
 		players.get(bigBlindIndex).setBigBlind(true);
 
 		// Set Index Of Small Blind Player
-		int smallBlindIndex = bigBlindIndex + 1;
+		smallBlindIndex = bigBlindIndex + 1;
 		if (smallBlindIndex >= players.size())
 			smallBlindIndex = 0;
 		players.get(smallBlindIndex).setSmallBlind(true);

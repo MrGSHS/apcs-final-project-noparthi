@@ -200,36 +200,38 @@ public class Display {
 		// Draw User Cards
 		public void drawUserCards(Graphics g) {
 			g.drawImage(card1, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 15,
-					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 - CARD_HEIGHT / 2 - 18, CARD_WIDTH + 30, CARD_HEIGHT + 40,
+					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - CARD_HEIGHT / 2 - 43, CARD_WIDTH + 30, CARD_HEIGHT + 35,
 					null);
 			g.drawImage(card2, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 15 + CARD_WIDTH + 10,
-					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 - CARD_HEIGHT / 2 - 18, CARD_WIDTH + 30, CARD_HEIGHT + 40,
+					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2  - CARD_HEIGHT / 2 - 43, CARD_WIDTH + 30, CARD_HEIGHT + 35,
 					null);
 		}
 
 		// Draw Computer Cards
 		public void drawComputerCards(Graphics g) {
 			if (!game.getPlayers().get(1).isFolded()) {
-				g.drawImage(cardBack, game.playerPositions.get(1)[0] + CARD_WIDTH + 25, game.playerPositions.get(1)[1] - 60,
+				g.drawImage(cardBack, game.playerPositions.get(1)[0] + CARD_WIDTH + 25, game.playerPositions.get(1)[1] - 70,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
-				g.drawImage(cardBack, game.playerPositions.get(1)[0] + 15, game.playerPositions.get(1)[1] - 60,
+				g.drawImage(cardBack, game.playerPositions.get(1)[0] + 15, game.playerPositions.get(1)[1] - 70,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
 			}
 			if (!game.getPlayers().get(2).isFolded()) {
-				g.drawImage(cardBack, game.playerPositions.get(2)[0] + CARD_WIDTH + 25, game.playerPositions.get(2)[1] - 60,
+				g.drawImage(cardBack, game.playerPositions.get(2)[0] + CARD_WIDTH + 25, game.playerPositions.get(2)[1] - 70,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
-				g.drawImage(cardBack, game.playerPositions.get(2)[0] + 15, game.playerPositions.get(2)[1] - 60,
+				g.drawImage(cardBack, game.playerPositions.get(2)[0] + 15, game.playerPositions.get(2)[1] - 70,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
 			}
 			if (!game.getPlayers().get(3).isFolded()) {
-				g.drawImage(cardBack, game.playerPositions.get(3)[0] + CARD_WIDTH + 25, game.playerPositions.get(3)[1] - 60,
+				g.drawImage(cardBack, game.playerPositions.get(3)[0] + CARD_WIDTH + 25, game.playerPositions.get(3)[1] - 70,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
-				g.drawImage(cardBack, game.playerPositions.get(3)[0] + 15, game.playerPositions.get(3)[1] - 60,
+				g.drawImage(cardBack, game.playerPositions.get(3)[0] + 15, game.playerPositions.get(3)[1] - 70,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
 			}
 			if (!game.getPlayers().get(4).isFolded()) {
-				g.drawImage(cardBack, game.playerPositions.get(4)[0] + CARD_WIDTH + 25, game.playerPositions.get(4)[1] - 60, CARD_WIDTH + 30, CARD_HEIGHT + 40, null); 
-				g.drawImage(cardBack, game.playerPositions.get(4)[0] + 15, game.playerPositions.get(4)[1] - 60, CARD_WIDTH + 30, CARD_HEIGHT + 40, null); 
+				g.drawImage(cardBack, game.playerPositions.get(4)[0] + CARD_WIDTH + 25, game.playerPositions.get(4)[1] - 70, 
+						CARD_WIDTH + 30, CARD_HEIGHT + 40, null); 
+				g.drawImage(cardBack, game.playerPositions.get(4)[0] + 15, game.playerPositions.get(4)[1] - 70, 
+						CARD_WIDTH + 30, CARD_HEIGHT + 40, null); 
 			}
 		}
 
@@ -247,6 +249,43 @@ public class Display {
 			g.drawImage(computer4Label, game.playerPositions.get(4)[0], game.playerPositions.get(4)[1], null);
 		}
 
+		//Draw Blinds
+		public void drawBlinds(Graphics g){
+			g.setFont(new Font("Calibri", Font.BOLD, 16));
+			g.setColor(modifiedGrey);
+			g.fillRoundRect(game.playerPositions.get(game.getBigBlindIndex())[0], game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight(), 100, 20, 15, 15); 
+			g.fillRoundRect(game.playerPositions.get(game.getSmallBlindIndex())[0], game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight(), 100, 20, 15, 15);
+			g.setColor(Color.WHITE);
+			g.drawString("Big Blind", game.playerPositions.get(game.getBigBlindIndex())[0] + 20, game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight() + 15);
+			g.drawString("SM. Blind", game.playerPositions.get(game.getSmallBlindIndex())[0] + 16, game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight() + 15);
+		}
+		
+		//Draw Check/Call/Raise
+		public void drawAction(Graphics g){
+			g.setFont(new Font("Calibri", Font.BOLD, 16));
+			g.setColor(modifiedGrey);
+			for(int i = 1; i < game.getPlayers().size(); i++){
+				if(i == game.getBigBlindIndex() && game.getTable().getCardsOnTable().size()==0 && game.getPlayers().get(i).getRaiseBoolean());
+				else if(!game.getPlayers().get(i).getCheckBoolean() && !game.getPlayers().get(i).getCallBoolean() && !game.getPlayers().get(i).getRaiseBoolean()){}
+				else if(game.getPlayers().get(i).isFolded()){}
+				else if (game.getPlayers().get(i).getCheckBoolean() || game.getPlayers().get(i).getCallBoolean()){
+					g.setColor(new Color(53,192,18));
+					g.fillRoundRect(game.playerPositions.get(i)[0] + 100, game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 20, 10, 10);
+				    g.setColor(Color.BLACK);
+					if(game.getPlayers().get(i).getCheckBoolean())
+				    	g.drawString("Check", game.playerPositions.get(i)[0] + 120, game.playerPositions.get(i)[1] + userLabel.getHeight() + 105);
+				    else
+				    	g.drawString("Call", game.playerPositions.get(i)[0] + 130, game.playerPositions.get(i)[1] + userLabel.getHeight() + 15);
+				}
+				else if (game.getPlayers().get(i).getRaiseBoolean()){
+					g.setColor(Color.YELLOW);
+					g.fillRoundRect(game.playerPositions.get(i)[0] + 100, game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 20, 10, 10);
+					g.setColor(Color.BLACK);
+					g.drawString("Raise", game.playerPositions.get(i)[0] + 120, game.playerPositions.get(i)[1] + userLabel.getHeight() + 15);
+				}
+			}
+		}
+		
 		// Add Player Names
 		public void addPlayerName(Graphics g) {
 			g.setColor(Color.BLACK);
@@ -299,19 +338,19 @@ public class Display {
 		// Add Pot
 		public void addPot(Graphics g) {
 			g.setColor(modifiedGrey);
-			g.fillRoundRect(FRAME_WIDTH / 2 - 70, FRAME_HEIGHT / 2 + CARD_WIDTH - 65, 140, 20, 15, 15);
+			g.fillRoundRect(FRAME_WIDTH / 2 - 70, FRAME_HEIGHT / 2 + CARD_WIDTH - 45, 140, 20, 15, 15);
 			g.setColor(new Color(246, 246, 246));
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
 			String potSize = "POT: " + game.getRound().getPot() + " Pts";
 			int potSizeWidth = g.getFontMetrics().stringWidth(potSize);
-			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 50);
+			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 30);
 		}
 
 		// Add Dealt Cards
 		public void addDealtCards(Graphics g) {
 			if (tableCards.size() > 0) {
 				for (int i = 0; i < tableCards.size(); i++) {
-					g.drawImage(tableCards.get(i), 227 + (CARD_WIDTH + 15) * i, FRAME_HEIGHT / 2 - CARD_HEIGHT / 2 - 55,
+					g.drawImage(tableCards.get(i), 227 + (CARD_WIDTH + 15) * i, FRAME_HEIGHT / 2 - CARD_HEIGHT / 2 - 35,
 							CARD_WIDTH, CARD_HEIGHT, null);
 				}
 			}
@@ -443,6 +482,12 @@ public class Display {
 			drawUserLabel(g);
 			drawComputerLabels(g);
 
+			//DrawBlinds
+			drawBlinds(g);
+			
+			//Draw Action
+			drawAction(g);
+			
 			// Add Names To Labels
 			addPlayerName(g);
 			addComputerNames(g);
@@ -461,7 +506,7 @@ public class Display {
 			addHandStrengthMeter(g);
 
 			// Add Computers' Bet
-			addComputerBet(g);
+			//addComputerBet(g);
 
 			// Add chips
 			addChips(g);
