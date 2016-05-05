@@ -99,6 +99,11 @@ public class Game {
 		ArrayList<Player> computers = getActiveComputers();
 		for (Player computer : computers) {
 			computer.takeAction();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			if(getRound().moveOn())
 				break;
 		}

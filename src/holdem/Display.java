@@ -267,9 +267,15 @@ public class Display {
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
 			g.setColor(modifiedGrey);
 			for(int i = 1; i < game.getPlayers().size(); i++){
-				if(i == game.getBigBlindIndex() && game.getTable().getCardsOnTable().size()==0 && game.getPlayers().get(i).getRaiseBoolean());
-				else if(!game.getPlayers().get(i).getCheckBoolean() && !game.getPlayers().get(i).getCallBoolean() && !game.getPlayers().get(i).getRaiseBoolean()){}
-				else if(game.getPlayers().get(i).isFolded()){}
+				if(i == game.getBigBlindIndex() && game.getTable().getCardsOnTable().size()==0 && game.getPlayers().get(game.getBigBlindIndex()).getRaiseBoolean()){
+					System.out.println("DrawActionFailed: BigBlind");
+				}
+				else if(!game.getPlayers().get(i).getCheckBoolean() && !game.getPlayers().get(i).getCallBoolean() && !game.getPlayers().get(i).getRaiseBoolean()){
+					System.out.println("DrawActionFailed: NoAction");
+				}
+				else if(game.getPlayers().get(i).isFolded()){
+					System.out.println("DrawActionFailed: IsFolded");
+				}
 				else if (game.getPlayers().get(i).getCheckBoolean() || game.getPlayers().get(i).getCallBoolean()){
 					g.setColor(new Color(53,192,18));
 					g.fillRoundRect(game.playerPositions.get(i)[0] + 100, game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 20, 10, 10);
@@ -340,19 +346,19 @@ public class Display {
 		// Add Pot
 		public void addPot(Graphics g) {
 			g.setColor(modifiedGrey);
-			g.fillRoundRect(FRAME_WIDTH / 2 - 70, FRAME_HEIGHT / 2 + CARD_WIDTH - 45, 140, 20, 15, 15);
+			g.fillRoundRect(FRAME_WIDTH / 2 - 70, FRAME_HEIGHT / 2 + CARD_WIDTH - 55, 140, 20, 15, 15);
 			g.setColor(new Color(246, 246, 246));
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
 			String potSize = "POT: " + game.getRound().getPot() + " Pts";
 			int potSizeWidth = g.getFontMetrics().stringWidth(potSize);
-			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 30);
+			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 40);
 		}
 
 		// Add Dealt Cards
 		public void addDealtCards(Graphics g) {
 			if (tableCards.size() > 0) {
 				for (int i = 0; i < tableCards.size(); i++) {
-					g.drawImage(tableCards.get(i), 227 + (CARD_WIDTH + 15) * i, FRAME_HEIGHT / 2 - CARD_HEIGHT / 2 - 35,
+					g.drawImage(tableCards.get(i), 227 + (CARD_WIDTH + 15) * i, FRAME_HEIGHT / 2 - CARD_HEIGHT / 2 - 45,
 							CARD_WIDTH, CARD_HEIGHT, null);
 				}
 			}
@@ -405,23 +411,23 @@ public class Display {
 		// Add Computers Bet
 		public void addComputerBet(Graphics g) {
 			g.setColor(modifiedGrey);
-			g.fillRoundRect(game.playerPositions.get(1)[0] + 190,
-					game.playerPositions.get(1)[1], 40, 20, 15, 15);
-			g.fillRoundRect(game.playerPositions.get(2)[0] + 180,
-					game.playerPositions.get(2)[1] + userLabel.getHeight() - 10, 40, 20, 15, 15);
-			g.fillRoundRect(game.playerPositions.get(3)[0] - 40,
-					game.playerPositions.get(3)[1] + userLabel.getHeight() - 10, 40, 20, 15, 15);
-			g.fillRoundRect(game.playerPositions.get(4)[0] - 45,
-					game.playerPositions.get(4)[1], 40, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(1)[0] + 185,
+					game.playerPositions.get(1)[1], 50, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(2)[0] + 185,
+					game.playerPositions.get(2)[1] + userLabel.getHeight() - 10, 50, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(3)[0] - 55,
+					game.playerPositions.get(3)[1] + userLabel.getHeight() - 10, 50, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(4)[0] - 55,
+					game.playerPositions.get(4)[1], 50, 20, 15, 15);
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
-			g.drawString("" + game.getPlayers().get(1).getBetAmount() / 1000 + "K",
-					game.playerPositions.get(1)[0] + 200, game.playerPositions.get(1)[1] + 15);
-			g.drawString("" + game.getPlayers().get(2).getBetAmount() / 1000 + "K", game.playerPositions.get(2)[0] + 190,
+			g.drawString("" + (double)game.getPlayers().get(1).getBetAmount() / 1000 + "K",
+					game.playerPositions.get(1)[0] + 195, game.playerPositions.get(1)[1] + 15);
+			g.drawString("" + (double)game.getPlayers().get(2).getBetAmount() / 1000 + "K", game.playerPositions.get(2)[0] + 190,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() + 5);
-			g.drawString("" + game.getPlayers().get(3).getBetAmount() / 1000 + "K", game.playerPositions.get(3)[0] - 30,
+			g.drawString("" + (double)game.getPlayers().get(3).getBetAmount() / 1000 + "K", game.playerPositions.get(3)[0] - 45,
 					game.playerPositions.get(3)[1] + userLabel.getHeight() + 5);
-			g.drawString("" + game.getPlayers().get(4).getBetAmount() / 1000 + "K", game.playerPositions.get(4)[0] - 35,
+			g.drawString("" + (double)game.getPlayers().get(4).getBetAmount() / 1000 + "K", game.playerPositions.get(4)[0] - 45,
 					game.playerPositions.get(4)[1] + 15);
 		}
 
@@ -488,6 +494,7 @@ public class Display {
 			drawBlinds(g);
 			
 			//Draw Action
+			System.out.println("Being Updated");
 			drawAction(g);
 			
 			// Add Names To Labels
@@ -631,6 +638,7 @@ public class Display {
 	public void update() {
 		cardsOnTable = game.getTable().getCardsOnTable();
 		reloadImages();
+		System.out.println("Update");
 		frame.repaint();
 		// Removes Check If Necessary
 		if (game.getMaxBetAmount() - game.getUser().getBetAmount() == 0) {

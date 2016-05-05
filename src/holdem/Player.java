@@ -103,7 +103,7 @@ public class Player {
 		//Subtracts Bet Amount If Made Earlier From This Time's Bet
 		int swapAmt = amt;
 		amt -= betAmount;
-		System.out.println("Amount : " + amt + "Bet Amount : " + betAmount);
+
 		//Guarantees That Raise Is Legal
 		if (amt >= game.getRound().getMinBet()) {
 			//All-In
