@@ -29,8 +29,8 @@ public class Display {
 
 	private ArrayList<String> NAMES = new ArrayList<String>(){
 		private static final long serialVersionUID = 1L;
-
-	{add("Andrew"); add("David"); add("Ethan"); add("Jerry"); add("Jonathan");
+	{
+		add("Andrew"); add("David"); add("Ethan"); add("Jerry"); add("Jonathan");
 		add("Jessica"); add("Lily"); add("Sophia"); add("Zoe"); add("Julia"); 
 	}};
 	private String USERNAME;
@@ -599,8 +599,6 @@ public class Display {
 					int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
 
 					if (game.getUser().raise(intRaiseAmount)) {
-						game.allComputersTakeAction();
-						update();
 						game.allComputersTakeAction();
 						update();
 						game.getRound().moveOn();
