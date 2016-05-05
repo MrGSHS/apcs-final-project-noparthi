@@ -275,7 +275,7 @@ public class Display {
 					g.fillRoundRect(game.playerPositions.get(i)[0] + 100, game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 20, 10, 10);
 				    g.setColor(Color.BLACK);
 					if(game.getPlayers().get(i).getCheckBoolean())
-				    	g.drawString("Check", game.playerPositions.get(i)[0] + 120, game.playerPositions.get(i)[1] + userLabel.getHeight() + 105);
+				    	g.drawString("Check", game.playerPositions.get(i)[0] + 120, game.playerPositions.get(i)[1] + userLabel.getHeight() + 15);
 				    else
 				    	g.drawString("Call", game.playerPositions.get(i)[0] + 130, game.playerPositions.get(i)[1] + userLabel.getHeight() + 15);
 				}

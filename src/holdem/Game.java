@@ -89,7 +89,7 @@ public class Game {
 	public ArrayList<Player> getActiveComputers() {
 		ArrayList<Player> active = new ArrayList<>();
 		for (Player p : players) {
-			if (p.getPosition() != 0 && !p.isFolded())
+			if (!p.isFolded()) //p.getPosition() != 0 && 
 				active.add(p);
 		}
 		return active;
@@ -252,12 +252,9 @@ public class Game {
 			}
 		}
 		int numberShared = strongestPlayersIndex.size();
-		System.out.print("Pays Out To Index(es):\t");
 		for(int i : strongestPlayersIndex){
-			System.out.print(i + "\t");
 			getActivePlayers().get(i).setPoints((int)(getActivePlayers().get(i).getPoints() + round.getPot()/numberShared));
 		}
-		System.out.println("With A " + getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getCurrentHandStrengthString());
 		newRound();
 	}
 

@@ -25,10 +25,10 @@ public class Computer extends Player {
 		for (int i = 1; i < game.getActivePlayers().size(); i++) {
 			if (game.getActivePlayers().get(i) == game.getPlayers().get(getPosition())) {
 				index = i;
+				index--;
 				break;
 			}
 		}
-		index--;
 
 		// Index Equals Index Of Active Player Before This Player In Players
 		for (int j = 1; j < game.getPlayers().size(); j++) {
@@ -42,7 +42,7 @@ public class Computer extends Player {
 		
 		// Actions Based Off Of The Player Before This
 		// If Player Before Checked
-		if (game.getPlayers().get(index).getCheckBoolean()) {
+		if (game.getPlayers().get(index).getCheckBoolean() || game.getUser().isFolded()) {
 			if (currentHandStrength > 6 || (int) (Math.random() * 11) + 1 <= 2) {
 				raise(game.getBigBlind() * 2);
 				return;
@@ -113,10 +113,10 @@ public class Computer extends Player {
 		for (int i = 1; i < game.getActivePlayers().size(); i++) {
 			if (game.getActivePlayers().get(i) == game.getPlayers().get(getPosition())) {
 				index = i;
+				index--;
 				break;
 			}
 		}
-		index--;
 
 		// Index Equals Index Of Active Player Before This Player In Players
 		for (int j = 1; j < game.getPlayers().size(); j++) {
@@ -130,7 +130,7 @@ public class Computer extends Player {
 
 		// Actions Based Off Of Player Before This
 		// If Player Before Checked
-		if (game.getPlayers().get(index).getCheckBoolean()) {
+		if (game.getPlayers().get(index).getCheckBoolean() || game.getUser().isFolded()) {
 			if ((int) (Math.random() * 11) + 1 <= 1) {
 				raise(game.getBigBlind() * ((int) (Math.random() * 20) + 1));
 				System.out.println("Comp. Raises");
