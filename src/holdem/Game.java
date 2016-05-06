@@ -137,6 +137,7 @@ public class Game {
 		if (bigBlindIndex >= players.size())
 			bigBlindIndex = 0;
 		players.get(bigBlindIndex).setBigBlind(true);
+		players.get(bigBlindIndex).raise(BIGBLIND);
 
 		// Set Index Of Small Blind Player
 		smallBlindIndex = bigBlindIndex + 1;
@@ -145,7 +146,8 @@ public class Game {
 		players.get(smallBlindIndex).setSmallBlind(true);
 
 		// Takes The Big And Small Blind
-		players.get(bigBlindIndex).raise(BIGBLIND);
+		//players.get(bigBlindIndex).raise(BIGBLIND);
+		System.out.println(bigBlindIndex);
 		players.get(smallBlindIndex).setPoints(players.get(smallBlindIndex).getPoints() - SMALLBLIND);
 		players.get(smallBlindIndex).setPointsInvested(SMALLBLIND);
 		players.get(smallBlindIndex).setBetAmount(SMALLBLIND);

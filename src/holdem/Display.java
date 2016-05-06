@@ -333,13 +333,13 @@ public class Display {
 
 		// Add Computer Points
 		public void addComputerPoints(Graphics g) {
-			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(4)[0] + 73,
+			g.drawString(game.getPlayers().get(4).getPoints() + " Pts", game.playerPositions.get(4)[0] + 73,
 					game.playerPositions.get(4)[1] + computer1Label.getHeight() - 14);
 			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 73,
 					game.playerPositions.get(2)[1] + computer2Label.getHeight() - 14);
 			g.drawString(game.getPlayers().get(3).getPoints() + " Pts", game.playerPositions.get(3)[0] + 73,
 					game.playerPositions.get(3)[1] + computer3Label.getHeight() - 14);
-			g.drawString(game.getPlayers().get(4).getPoints() + " Pts", game.playerPositions.get(1)[0] + 73,
+			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(1)[0] + 73,
 					game.playerPositions.get(1)[1] + computer4Label.getHeight() - 14);
 		}
 
@@ -621,7 +621,7 @@ public class Display {
 				game.getRound().moveOn();
 			}
 			if (evt.getSource() == fold) {
-				game.getUser().fold();
+				System.out.println("Stop being a fucking pussy");
 			}
 			if (evt.getSource() == tip) {
 				if (game.getUser().getPoints() >= 2000) {
