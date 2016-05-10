@@ -1,11 +1,11 @@
-package scripts;
+package holdem;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import holdem.Game;
+import scripts.Card;
 
 public class Hand {
 	

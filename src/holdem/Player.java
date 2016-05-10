@@ -1,7 +1,6 @@
 package holdem;
 
 import scripts.Card;
-import scripts.Hand;
 
 public class Player {
 
