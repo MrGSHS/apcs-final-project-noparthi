@@ -45,7 +45,6 @@ public class Round {
 
 	//Before Flop Actions
 	public void preFlop() {
-		game.getDisplay().update();
 		// Prints Out Hand Before Flop, Then Deals Flop
 		setMinBet(game.getBigBlind());
 
@@ -53,26 +52,22 @@ public class Round {
 
 	//Before Turn Actions 
 	public void preTurn() {
-		game.getDisplay().update();
 		minBet = 500;
 
 	}
 
 	//Before River Actions
 	public void preRiver() {
-		game.getDisplay().update();
 		minBet = 500;
 	}
 
 	//After River Actions (Final Actions)
 	public void postRiver() {
-		game.getDisplay().update();
 		minBet = 500;
 	}
 
 	//Check To See If Should Move To Next Round
 	public boolean moveOn() {
-		game.getDisplay().update();
 		//Skips If Someone Had Raised, And Resets All Action Booleans Back To Null
 		int check = 0;
 		int call = 0;
@@ -87,36 +82,32 @@ public class Round {
 		}	
 
 		if(check != game.getActivePlayers().size() && call+raise != game.getActivePlayers().size() || raise > 1){
+			System.out.println("failed test");
 			return false;
 		}
-		
 		//Else Reset Stuff
 		game.resetPlayerBetAmount();
 		for(Player p : game.getPlayers()){
 			p.resetActionBoolean();
+			System.out.println("Called moveon");
 		}
-		game.getDisplay().update();
+		System.out.println("Called moveon");
+
 		//And Proceeds To Next Round If None Of The Above Are True
 		if (stageOfRound == 0) {
 			stageOfRound++;
 			System.out.println("Stage: " + stageOfRound);
 			game.getTable().dealFlop();
-			for(Player player : game.getPlayers())
-				player.resetActionBoolean();
 			preTurn();
 		} else if (stageOfRound == 1) {
 			stageOfRound++;
 			System.out.println("Stage: " + stageOfRound);
 			game.getTable().dealTurn();
-			for(Player player : game.getPlayers())
-				player.resetActionBoolean();
 			preRiver();
 		} else if (stageOfRound == 2) {
 			stageOfRound++;
 			System.out.println("Stage: " + stageOfRound);
 			game.getTable().dealRiver();
-			for(Player player : game.getPlayers())
-				player.resetActionBoolean();
 			postRiver();
 		} else 
 			game.payout();

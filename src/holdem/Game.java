@@ -1,6 +1,7 @@
 package holdem;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class Game {
 
@@ -99,11 +100,6 @@ public class Game {
 		ArrayList<Player> computers = getActiveComputers();
 		for (Player computer : computers) {
 			computer.takeAction();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			if(getRound().moveOn())
 				break;
 		}
@@ -123,7 +119,7 @@ public class Game {
 		Player computer4 = new Computer(this, pos++);
 		players.add(computer4);
 		round = new Round(this);
-		display = new Display(this);
+		new Timer().schedule(display = new Display(this), 0, 500);
 		takeBlinds();
 		takeAnte();
 		display.setRoundTitle();
@@ -275,12 +271,6 @@ public class Game {
 	public boolean isRoundActive() {
 		if (getActivePlayers().size() > 1)
 			return true;
-
-		for (Player p : players) {
-			if (p.isFolded()) {
-				p.resetActionBoolean();
-			}
-		}
 		payout();
 		return false;
 	}
@@ -290,6 +280,7 @@ public class Game {
 		for (Player p : players) {
 			p.unFold();
 			p.resetPointsInvested();
+			p.resetActionBoolean();
 		}
 		resetPlayerBetAmount();
 		setDealerIndex(dealerIndex += 1);

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -25,7 +26,7 @@ import javax.swing.JTextField;
 
 import scripts.Card;
 
-public class Display {
+public class Display extends TimerTask{
 
 	private ArrayList<String> NAMES = new ArrayList<String>(){
 		private static final long serialVersionUID = 1L;
@@ -277,6 +278,7 @@ public class Display {
 					System.out.println("DrawActionFailed: IsFolded");
 				}
 				else if (game.getPlayers().get(i).getCheckBoolean() || game.getPlayers().get(i).getCallBoolean()){
+					System.out.println("SOMETHIGN HAPPEDNEFADFSDFAS");
 					g.setColor(new Color(53,192,18));
 					g.fillRoundRect(game.playerPositions.get(i)[0] + 100, game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 20, 10, 10);
 				    g.setColor(Color.BLACK);
@@ -494,7 +496,6 @@ public class Display {
 			drawBlinds(g);
 			
 			//Draw Action
-			System.out.println("Being Updated");
 			drawAction(g);
 			
 			// Add Names To Labels
@@ -600,7 +601,7 @@ public class Display {
 
 					if (game.getUser().raise(intRaiseAmount)) {
 						game.allComputersTakeAction();
-						update();
+						run();
 						game.getRound().moveOn();
 					} else {
 						return;
@@ -611,6 +612,7 @@ public class Display {
 				}
 			}
 			if (evt.getSource() == call) {
+				System.out.println("called");
 				game.getUser().call();
 				game.allComputersTakeAction();
 				game.getRound().moveOn();
@@ -626,17 +628,16 @@ public class Display {
 			if (evt.getSource() == tip) {
 				if (game.getUser().getPoints() >= 2000) {
 					game.getUser().setPoints(game.getUser().getPoints() - 2000);
-					update();
+					run();
 					userTip = true;
 				}
 			}
 		}
 	}
 
-	public void update() {
+	public void run() {
 		cardsOnTable = game.getTable().getCardsOnTable();
 		reloadImages();
-		System.out.println("Update");
 		frame.repaint();
 		// Removes Check If Necessary
 		if (game.getMaxBetAmount() - game.getUser().getBetAmount() == 0) {
