@@ -269,16 +269,13 @@ public class Display extends TimerTask{
 			g.setColor(modifiedGrey);
 			for(int i = 1; i < game.getPlayers().size(); i++){
 				if(i == game.getBigBlindIndex() && game.getTable().getCardsOnTable().size()==0 && game.getPlayers().get(game.getBigBlindIndex()).getRaiseBoolean()){
-					System.out.println("DrawActionFailed: BigBlind");
 				}
 				else if(!game.getPlayers().get(i).getCheckBoolean() && !game.getPlayers().get(i).getCallBoolean() && !game.getPlayers().get(i).getRaiseBoolean()){
-					System.out.println("DrawActionFailed: NoAction");
+					System.out.println("DrawActionFailed: NoAction" + "\t" + i);
 				}
 				else if(game.getPlayers().get(i).isFolded()){
-					System.out.println("DrawActionFailed: IsFolded");
 				}
 				else if (game.getPlayers().get(i).getCheckBoolean() || game.getPlayers().get(i).getCallBoolean()){
-					System.out.println("SOMETHIGN HAPPEDNEFADFSDFAS");
 					g.setColor(new Color(53,192,18));
 					g.fillRoundRect(game.playerPositions.get(i)[0] + 100, game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 20, 10, 10);
 				    g.setColor(Color.BLACK);
@@ -601,7 +598,6 @@ public class Display extends TimerTask{
 
 					if (game.getUser().raise(intRaiseAmount)) {
 						game.allComputersTakeAction();
-						run();
 						game.getRound().moveOn();
 					} else {
 						return;
@@ -611,18 +607,18 @@ public class Display extends TimerTask{
 					System.out.println("User has cancelled raise.");
 				}
 			}
-			if (evt.getSource() == call) {
+			else if (evt.getSource() == call) {
 				System.out.println("called");
 				game.getUser().call();
 				game.allComputersTakeAction();
 				game.getRound().moveOn();
 			}
-			if (evt.getSource() == check) {
+			else if (evt.getSource() == check) {
 				game.getUser().check();
 				game.allComputersTakeAction();
 				game.getRound().moveOn();
 			}
-			if (evt.getSource() == fold) {
+			else if (evt.getSource() == fold) {
 				System.out.println("Stop being a fucking pussy");
 			}
 			if (evt.getSource() == tip) {

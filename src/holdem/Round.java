@@ -80,8 +80,9 @@ public class Round {
 			if(p.getRaiseBoolean())
 				raise++;
 		}	
-
-		if(check != game.getActivePlayers().size() && call+raise != game.getActivePlayers().size() || raise > 1){
+		
+		//TODO: Fix conditions for if
+		if(check != game.getActivePlayers().size() || raise > 1){
 			System.out.println("failed test");
 			return false;
 		}
