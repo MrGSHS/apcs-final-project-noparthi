@@ -82,8 +82,7 @@ public class Round {
 		}	
 		
 		//TODO: Fix conditions for if
-		if(check != game.getActivePlayers().size() || raise > 1){
-			System.out.println("failed test");
+		if(check != game.getActivePlayers().size() && ((call+raise)!= game.getActivePlayers().size() || raise > 1)){  
 			return false;
 		}
 		//Else Reset Stuff
