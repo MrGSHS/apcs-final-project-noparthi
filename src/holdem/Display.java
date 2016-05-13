@@ -213,11 +213,12 @@ public class Display extends TimerTask{
 		// Draw Computer Cards
 		public void drawComputerCards(Graphics g) {
 			if (!game.getPlayers().get(1).isFolded()) {
-				g.drawImage(cardBack, game.playerPositions.get(1)[0] + CARD_WIDTH + 25, game.playerPositions.get(1)[1] - 70,
-						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
-				g.drawImage(cardBack, game.playerPositions.get(1)[0] + 15, game.playerPositions.get(1)[1] - 70,
-						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
+				g.drawImage(cardBack, game.playerPositions.get(1)[0] + CARD_WIDTH + 25, game.playerPositions.get(1)[1] - 50,
+						CARD_WIDTH + 10, CARD_HEIGHT + 20 , null);
+				g.drawImage(cardBack, game.playerPositions.get(1)[0] + 15, game.playerPositions.get(1)[1] - 50,
+						CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
 			}
+			//TODO: Decrease Card Size By 20, The Ones Under This
 			if (!game.getPlayers().get(2).isFolded()) {
 				g.drawImage(cardBack, game.playerPositions.get(2)[0] + CARD_WIDTH + 25, game.playerPositions.get(2)[1] - 70,
 						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
@@ -420,13 +421,13 @@ public class Display extends TimerTask{
 					game.playerPositions.get(4)[1], 50, 20, 15, 15);
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
-			g.drawString("" + (double)game.getPlayers().get(1).getBetAmount() / 1000 + "K",
+			g.drawString("" + (double)game.getPlayers().get(1).getPointsInvested() / 1000 + "K",
 					game.playerPositions.get(1)[0] + 195, game.playerPositions.get(1)[1] + 15);
-			g.drawString("" + (double)game.getPlayers().get(2).getBetAmount() / 1000 + "K", game.playerPositions.get(2)[0] + 190,
+			g.drawString("" + (double)game.getPlayers().get(2).getPointsInvested() / 1000 + "K", game.playerPositions.get(2)[0] + 190,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() + 5);
-			g.drawString("" + (double)game.getPlayers().get(3).getBetAmount() / 1000 + "K", game.playerPositions.get(3)[0] - 45,
+			g.drawString("" + (double)game.getPlayers().get(3).getPointsInvested() / 1000 + "K", game.playerPositions.get(3)[0] - 45,
 					game.playerPositions.get(3)[1] + userLabel.getHeight() + 5);
-			g.drawString("" + (double)game.getPlayers().get(4).getBetAmount() / 1000 + "K", game.playerPositions.get(4)[0] - 45,
+			g.drawString("" + (double)game.getPlayers().get(4).getPointsInvested() / 1000 + "K", game.playerPositions.get(4)[0] - 45,
 					game.playerPositions.get(4)[1] + 15);
 		}
 

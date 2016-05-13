@@ -81,17 +81,16 @@ public class Round {
 				raise++;
 		}	
 		
-		//TODO: Fix conditions for if
 		if(check != game.getActivePlayers().size() && ((call+raise)!= game.getActivePlayers().size() || raise > 1)){  
+			System.out.println("Failed Move-On");
 			return false;
 		}
+		
 		//Else Reset Stuff
 		game.resetPlayerBetAmount();
 		for(Player p : game.getPlayers()){
 			p.resetActionBoolean();
-			System.out.println("Called moveon");
 		}
-		System.out.println("Called moveon");
 
 		//And Proceeds To Next Round If None Of The Above Are True
 		if (stageOfRound == 0) {
