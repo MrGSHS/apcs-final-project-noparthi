@@ -25,29 +25,7 @@ public class BlackComp extends BlackPlayer {
 		}
 		points=this.calc();
 	
-	}
-	public int calc(){
-		int points=0;
-		for (Card a:hand){
-			
-			if (a.getNumber()==14 && (11+points<=21))){
-				points+=11;
-			}
-			else if ((a.getNumber()==14) && (11+points>21)) {
-				points+=1;
-			}
-			else if (a.getNumber()<14 && a.getNumber()>10){
-				points+=10;
-				
-			}
-			else {
-				points+=a.getNumber();
-			}
-			
-		}
-		return points;
-	}
-		
+	}	
 		
 	}
 

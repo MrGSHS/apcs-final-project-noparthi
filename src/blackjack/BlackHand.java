@@ -17,7 +17,7 @@ public class BlackHand {
 		
 	}
 	public ArrayList<Card> addCard(Card card1){
-		hand1.add(card1);
+		hand1.add(deck1.deal());
 		return hand1;
 	
 	}
