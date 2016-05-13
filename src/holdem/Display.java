@@ -65,7 +65,7 @@ public class Display extends TimerTask{
 	private final int CARD_HEIGHT = 80;
 	private final int TABLE_WIDTH = 660;
 	private final int TABLE_HEIGHT = 286;
-	private final int FRAME_WIDTH = 800;
+	private final int FRAME_WIDTH = 900	;
 	private final int FRAME_HEIGHT = 600;
 	private final int DEALER_WIDTH = 140;
 	private final int DEALER_HEIGHT = 130;
@@ -99,7 +99,7 @@ public class Display extends TimerTask{
 
 	public boolean userTip = false;
 	private int extraCreditPoints = 1;
-
+	private int counter = 0;
 	private ArrayList<Card> cardsOnTable;
 
 	public Display(Game game) {
@@ -187,15 +187,15 @@ public class Display extends TimerTask{
 		// Add Player Positions
 		public void addPlayerPositions() {
 			game.playerPositions.add(
-					new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20 });
+					new int[] { FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 5});
 			game.playerPositions
-				.add(new int[] { FRAME_WIDTH / 2 - computer1Label.getWidth() / 2 - 290, FRAME_HEIGHT / 2 + 55 });
+				.add(new int[] { FRAME_WIDTH / 2 - computer1Label.getWidth() / 2 - 340, FRAME_HEIGHT / 2 + 55 });
 			game.playerPositions
-					.add(new int[] { FRAME_WIDTH / 2 - computer2Label.getWidth() / 2 - 210, FRAME_HEIGHT / 2 - 190 });
+					.add(new int[] { FRAME_WIDTH / 2 - computer2Label.getWidth() / 2 - 310, FRAME_HEIGHT / 2 - 190 });
 			game.playerPositions
-					.add(new int[] { FRAME_WIDTH - computer3Label.getWidth() / 2 - 205, FRAME_HEIGHT / 2 - 190 });
+					.add(new int[] { FRAME_WIDTH - computer3Label.getWidth() / 2 - 135, FRAME_HEIGHT / 2 - 190 });
 			game.playerPositions
-					.add(new int[] { FRAME_WIDTH / 2 - computer4Label.getWidth() / 2 + 290, FRAME_HEIGHT / 2 + 55 });
+					.add(new int[] { FRAME_WIDTH / 2 - computer4Label.getWidth() / 2 + 340, FRAME_HEIGHT / 2 + 55 });
 			
 			
 		}
@@ -220,28 +220,28 @@ public class Display extends TimerTask{
 			}
 			//TODO: Decrease Card Size By 20, The Ones Under This
 			if (!game.getPlayers().get(2).isFolded()) {
-				g.drawImage(cardBack, game.playerPositions.get(2)[0] + CARD_WIDTH + 25, game.playerPositions.get(2)[1] - 70,
-						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
-				g.drawImage(cardBack, game.playerPositions.get(2)[0] + 15, game.playerPositions.get(2)[1] - 70,
-						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
+				g.drawImage(cardBack, game.playerPositions.get(2)[0] + CARD_WIDTH + 25, game.playerPositions.get(2)[1] - 50,
+						CARD_WIDTH + 10, CARD_HEIGHT + 20 , null);
+				g.drawImage(cardBack, game.playerPositions.get(2)[0] + 15, game.playerPositions.get(2)[1] - 50,
+						CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
 			}
 			if (!game.getPlayers().get(3).isFolded()) {
-				g.drawImage(cardBack, game.playerPositions.get(3)[0] + CARD_WIDTH + 25, game.playerPositions.get(3)[1] - 70,
-						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
-				g.drawImage(cardBack, game.playerPositions.get(3)[0] + 15, game.playerPositions.get(3)[1] - 70,
-						CARD_WIDTH + 30, CARD_HEIGHT + 40, null);
+				g.drawImage(cardBack, game.playerPositions.get(3)[0] + CARD_WIDTH + 25, game.playerPositions.get(3)[1] - 50,
+						CARD_WIDTH + 10, CARD_HEIGHT + 20 , null);
+				g.drawImage(cardBack, game.playerPositions.get(3)[0] + 15, game.playerPositions.get(3)[1] - 50,
+						CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
 			}
 			if (!game.getPlayers().get(4).isFolded()) {
-				g.drawImage(cardBack, game.playerPositions.get(4)[0] + CARD_WIDTH + 25, game.playerPositions.get(4)[1] - 70, 
-						CARD_WIDTH + 30, CARD_HEIGHT + 40, null); 
-				g.drawImage(cardBack, game.playerPositions.get(4)[0] + 15, game.playerPositions.get(4)[1] - 70, 
-						CARD_WIDTH + 30, CARD_HEIGHT + 40, null); 
+				g.drawImage(cardBack, game.playerPositions.get(4)[0] + CARD_WIDTH + 25, game.playerPositions.get(4)[1] - 50,
+						CARD_WIDTH + 10, CARD_HEIGHT + 20 , null);
+				g.drawImage(cardBack, game.playerPositions.get(4)[0] + 15, game.playerPositions.get(4)[1] - 50,
+						CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
 			}
 		}
 
 		// Draw User Label
 		public void drawUserLabel(Graphics g) {
-			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - 20,
+			g.drawImage(userLabel, FRAME_WIDTH / 2 - userLabel.getWidth() / 2, FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 5,
 					null);
 		}
 
@@ -298,9 +298,9 @@ public class Display extends TimerTask{
 		public void addPlayerName(Graphics g) {
 			g.setColor(Color.BLACK);
 			g.drawString(USERNAME,
-					FRAME_WIDTH / 2 - userLabel.getWidth() / 2
+					game.playerPositions.get(0)[0]
 							+ (userLabel.getWidth() - g.getFontMetrics().stringWidth(USERNAME)) / 2 + 15,
-					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 2);
+					game.playerPositions.get(0)[1] + 20);
 		}
 
 		// Add Computer Names
@@ -327,8 +327,8 @@ public class Display extends TimerTask{
 		public void addPlayerPoints(Graphics g) {
 			g.setFont(new Font("Calibri", Font.PLAIN, 20));
 			g.setColor(new Color(5, 145, 60));
-			g.drawString(game.getUser().getPoints() + " Pts", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 70,
-					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 30);
+			g.drawString(game.getUser().getPoints() + " Pts", game.playerPositions.get(0)[0] + 70,
+					game.playerPositions.get(0)[1] + 50);
 		}
 
 		// Add Computer Points
@@ -358,13 +358,13 @@ public class Display extends TimerTask{
 		public void addDealtCards(Graphics g) {
 			if (tableCards.size() > 0) {
 				for (int i = 0; i < tableCards.size(); i++) {
-					g.drawImage(tableCards.get(i), 227 + (CARD_WIDTH + 15) * i, FRAME_HEIGHT / 2 - CARD_HEIGHT / 2 - 45,
+					g.drawImage(tableCards.get(i), 277 + (CARD_WIDTH + 15) * i, FRAME_HEIGHT / 2 - CARD_HEIGHT / 2 - 45,
 							CARD_WIDTH, CARD_HEIGHT, null);
 				}
 			}
 		}
 
-		// Add Hand Strength Meter
+		//Draw Hand Strength Meter
 		public void addHandStrengthMeter(Graphics g) {
 			final int BORDER = 5;
 			int handStrength = 0;
@@ -378,22 +378,22 @@ public class Display extends TimerTask{
 
 			// Hand Strength Bar Background
 			g.setColor(Color.DARK_GRAY);
-			g.fillRoundRect(500, 494, 296, 31, 10, 10);
+			g.fillRoundRect(600, 506, 296, 20, 30, 30);
 
 			// Writes In Hand Strength
 			Map<TextAttribute, Object> map = new Hashtable<TextAttribute, Object>();
 			map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-			Font underlineFont = new Font("Calibri", Font.BOLD, 16).deriveFont(map);
+			Font underlineFont = new Font("Calibri", Font.BOLD, 10).deriveFont(map);
 			g.setFont(underlineFont);
 			String strengthString = game.getUser().getHand().getCurrentHandStrengthString();
 			int strWidth = g.getFontMetrics().stringWidth(strengthString);
-			g.fillRoundRect(500, 474, strWidth + 10, 20 + BORDER, 10, 10);
+			g.fillRoundRect(605, 495, strWidth + 10, 10 + BORDER, 10, 10);
 			g.setColor(Color.WHITE);
-			g.drawString(strengthString, 500 + 5, 474 + 17);
+			g.drawString(strengthString, 609, 503);
 
 			// Hand Strength Bar
-			g.setColor(Color.BLACK);
-			g.fillRoundRect(500 + BORDER, 494 + BORDER, 290 - BORDER, 25 - BORDER, 10, 10);
+			//g.setColor(Color.BLACK);
+			//g.fillRoundRect(500 + BORDER, 494 + BORDER, 290 - BORDER, 25 - BORDER, 10, 10);
 
 			// Changes Color Of Rectangle
 			if (handStrength <= 3)
@@ -404,7 +404,7 @@ public class Display extends TimerTask{
 				g.setColor(Color.GREEN);
 
 			// How Much To Fill
-			g.fillRoundRect(500 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
+			g.fillRoundRect(600 + BORDER, 504 + BORDER, 29 * handStrength - BORDER, 17 - BORDER, 15, 15);
 
 		}
 
@@ -450,7 +450,8 @@ public class Display extends TimerTask{
 		// Add Tips
 		public void addTipEffects(Graphics g) {
 			if (userTip) {
-				String tipString = "Thanks " + USERNAME + "! You get " + (extraCreditPoints++)
+				if(counter != 6){
+				String tipString = "Thanks " + USERNAME + "! You get " + extraCreditPoints
 						+ " extra credit points!";
 				g.setColor(Color.WHITE);
 				g.fillOval(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString) - 15, -15,
@@ -464,8 +465,13 @@ public class Display extends TimerTask{
 
 				g.setColor(Color.BLACK);
 				g.drawString(tipString, FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString), 20);
-
-				userTip = false;
+					counter++;
+				}
+				else{
+					extraCreditPoints++;
+					counter = 0;
+					userTip = false;
+				}
 			}
 		}
 
@@ -559,11 +565,12 @@ public class Display extends TimerTask{
 			raise.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			tip.setSize(2 * BUTTON_WIDTH / 3, BUTTON_HEIGHT / 2);
 
-			raise.setLocation(600, 525);
-			call.setLocation(400, 525);
-			check.setLocation(200, 525);
+			raise.setLocation((FRAME_WIDTH-BUTTON_WIDTH), 525);
+			call.setLocation((FRAME_WIDTH-2*BUTTON_WIDTH), 525);
+			check.setLocation((FRAME_WIDTH-3*BUTTON_WIDTH)
+					, 525);
 			fold.setLocation(0, 525);
-			tip.setLocation(332, 130);
+			tip.setLocation(373, 130);
 
 			raise.setFont(buttonFont);
 			check.setFont(buttonFont);
