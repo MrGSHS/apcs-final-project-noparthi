@@ -5,10 +5,11 @@ import java.util.*;
 
 import scripts.Card;
 public class BlackComp extends BlackPlayer {
-	Card initShown;
-	Card initHid;
-	ArrayList<Card> hand;
-	int points=0;
+	private Card initShown;
+	private Card initHid;
+	private ArrayList<Card> hand;
+	private int points=0;
+	private boolean in=true;
 	
 	public BlackComp(){
 		initShown=new Card();
@@ -20,12 +21,19 @@ public class BlackComp extends BlackPlayer {
 	}
 	
 	public void hit(){
-		if (player.in() && player.getPoints()==points && points<=14){
+		if (player.getIn() && player.getPoints()==points && points<=14){
 			hand.add(new Card());
 		}
 		points=this.calc();
+		if (points>21) in=false;
 	
+<<<<<<< Updated upstream
 	}	
+=======
+	}
+	
+		
+>>>>>>> Stashed changes
 		
 	}
 

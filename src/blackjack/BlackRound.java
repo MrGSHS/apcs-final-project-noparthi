@@ -5,10 +5,10 @@ import holdem.Player;
 
 public class BlackRound {
 	private static int roundNumber = 0;
-
+	Player 
 
 	public Round(Game game) {
-	
+		
 		}
 	
 
@@ -22,6 +22,7 @@ public class BlackRound {
 	public boolean moveOn() {
 		
 	}
+	
 }
 
 
