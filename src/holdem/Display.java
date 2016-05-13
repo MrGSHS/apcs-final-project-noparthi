@@ -202,12 +202,10 @@ public class Display extends TimerTask{
 
 		// Draw User Cards
 		public void drawUserCards(Graphics g) {
-			g.drawImage(card1, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 15,
-					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 - CARD_HEIGHT / 2 - 43, CARD_WIDTH + 30, CARD_HEIGHT + 35,
-					null);
-			g.drawImage(card2, FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 15 + CARD_WIDTH + 10,
-					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2  - CARD_HEIGHT / 2 - 43, CARD_WIDTH + 30, CARD_HEIGHT + 35,
-					null);
+			g.drawImage(card1, game.playerPositions.get(0)[0] + CARD_WIDTH + 25, game.playerPositions.get(0)[1] - 50,
+					CARD_WIDTH + 10, CARD_HEIGHT + 20 , null);
+			g.drawImage(card2, game.playerPositions.get(0)[0] + 15, game.playerPositions.get(0)[1] - 50,
+					CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
 		}
 
 		// Draw Computer Cards
@@ -255,13 +253,13 @@ public class Display extends TimerTask{
 
 		//Draw Blinds
 		public void drawBlinds(Graphics g){
-			g.setFont(new Font("Calibri", Font.BOLD, 16));
-			g.setColor(modifiedGrey);
-			g.fillRoundRect(game.playerPositions.get(game.getBigBlindIndex())[0], game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight(), 100, 20, 15, 15); 
-			g.fillRoundRect(game.playerPositions.get(game.getSmallBlindIndex())[0], game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight(), 100, 20, 15, 15);
+			g.setFont(new Font("Calibri", Font.BOLD, 14));
+			g.setColor(Color.BLUE);
+			g.fillOval(game.playerPositions.get(game.getBigBlindIndex())[0], game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight(), 20, 20); 
+			g.fillOval(game.playerPositions.get(game.getSmallBlindIndex())[0], game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight(), 20, 20);
 			g.setColor(Color.WHITE);
-			g.drawString("Big Blind", game.playerPositions.get(game.getBigBlindIndex())[0] + 20, game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight() + 15);
-			g.drawString("SM. Blind", game.playerPositions.get(game.getSmallBlindIndex())[0] + 16, game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight() + 15);
+			g.drawString("BB", game.playerPositions.get(game.getBigBlindIndex())[0] + 2, game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight() + 15);
+			g.drawString("SB", game.playerPositions.get(game.getSmallBlindIndex())[0] + 2, game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight() + 15);
 		}
 		
 		//Draw Check/Call/Raise
@@ -387,9 +385,11 @@ public class Display extends TimerTask{
 			g.setFont(underlineFont);
 			String strengthString = game.getUser().getHand().getCurrentHandStrengthString();
 			int strWidth = g.getFontMetrics().stringWidth(strengthString);
-			g.fillRoundRect(605, 495, strWidth + 10, 10 + BORDER, 10, 10);
+			
+			g.setColor(Color.BLACK);
+			g.fillRect(610, 495, strWidth + 10, BORDER+6);
 			g.setColor(Color.WHITE);
-			g.drawString(strengthString, 609, 503);
+			g.drawString(strengthString, 614, 503);
 
 			// Hand Strength Bar
 			//g.setColor(Color.BLACK);
@@ -404,7 +404,7 @@ public class Display extends TimerTask{
 				g.setColor(Color.GREEN);
 
 			// How Much To Fill
-			g.fillRoundRect(600 + BORDER, 504 + BORDER, 29 * handStrength - BORDER, 17 - BORDER, 15, 15);
+			g.fillRoundRect(600 + BORDER, 505 + BORDER, 29 * handStrength - BORDER, 17 - BORDER, 15, 15);
 
 		}
 
@@ -413,20 +413,21 @@ public class Display extends TimerTask{
 			g.setColor(modifiedGrey);
 			g.fillRoundRect(game.playerPositions.get(1)[0] + 185,
 					game.playerPositions.get(1)[1], 50, 20, 15, 15);
-			g.fillRoundRect(game.playerPositions.get(2)[0] + 185,
-					game.playerPositions.get(2)[1] + userLabel.getHeight() - 10, 50, 20, 15, 15);
-			g.fillRoundRect(game.playerPositions.get(3)[0] - 55,
-					game.playerPositions.get(3)[1] + userLabel.getHeight() - 10, 50, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(2)[0] + userLabel.getWidth() + 50,
+					game.playerPositions.get(2)[1] + userLabel.getHeight(), 50, 20, 15, 15);
+			g.fillRoundRect(game.playerPositions.get(3)[0] - 100,
+					game.playerPositions.get(3)[1] + userLabel.getHeight(), 50, 20, 15, 15);
 			g.fillRoundRect(game.playerPositions.get(4)[0] - 55,
 					game.playerPositions.get(4)[1], 50, 20, 15, 15);
+			
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
 			g.drawString("" + (double)game.getPlayers().get(1).getPointsInvested() / 1000 + "K",
 					game.playerPositions.get(1)[0] + 195, game.playerPositions.get(1)[1] + 15);
-			g.drawString("" + (double)game.getPlayers().get(2).getPointsInvested() / 1000 + "K", game.playerPositions.get(2)[0] + 190,
-					game.playerPositions.get(2)[1] + userLabel.getHeight() + 5);
-			g.drawString("" + (double)game.getPlayers().get(3).getPointsInvested() / 1000 + "K", game.playerPositions.get(3)[0] - 45,
-					game.playerPositions.get(3)[1] + userLabel.getHeight() + 5);
+			g.drawString("" + (double)game.getPlayers().get(2).getPointsInvested() / 1000 + "K", game.playerPositions.get(2)[0] + userLabel.getWidth() + 60,
+					game.playerPositions.get(2)[1] + userLabel.getHeight() + 15);
+			g.drawString("" + (double)game.getPlayers().get(3).getPointsInvested() / 1000 + "K", game.playerPositions.get(3)[0] - 90,
+					game.playerPositions.get(3)[1] + userLabel.getHeight() + 15);
 			g.drawString("" + (double)game.getPlayers().get(4).getPointsInvested() / 1000 + "K", game.playerPositions.get(4)[0] - 45,
 					game.playerPositions.get(4)[1] + 15);
 		}
@@ -436,12 +437,12 @@ public class Display extends TimerTask{
 			int chipsWidth = chips5k.getWidth();
 			int chipsHeight = chips5k.getHeight();
 			g.drawImage(calculateChips(game.getPlayers().get(0)), FRAME_WIDTH / 2 - chipsWidth / 2,
-					game.playerPositions.get(0)[1] - chipsHeight * 2 - 10, null);
+					game.playerPositions.get(0)[1] - chipsHeight * 2 - 20, null);
 			g.drawImage(calculateChips(game.getPlayers().get(1)), game.playerPositions.get(1)[0] + 185,
 					game.playerPositions.get(1)[1] + userLabel.getHeight() - 120, null);
-			g.drawImage(calculateChips(game.getPlayers().get(2)), game.playerPositions.get(2)[0] + 70,
+			g.drawImage(calculateChips(game.getPlayers().get(2)), game.playerPositions.get(2)[0] + 160,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() - 10, null);
-			g.drawImage(calculateChips(game.getPlayers().get(3)), game.playerPositions.get(3)[0] + 70,
+			g.drawImage(calculateChips(game.getPlayers().get(3)), game.playerPositions.get(3)[0] - 40,
 					game.playerPositions.get(3)[1] + userLabel.getHeight() - 10, null);
 			g.drawImage(calculateChips(game.getPlayers().get(4)), game.playerPositions.get(4)[0] - 40,
 					game.playerPositions.get(4)[1] + userLabel.getHeight() - 120, null);
