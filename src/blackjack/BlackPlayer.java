@@ -3,32 +3,31 @@ import java.util.*;
 import scripts.Card; 
 
 public class BlackPlayer {
-	private Card initShown1;
-	private Card initShown2;
-	private ArrayList<Card> hand;
-	private int bet;
-	private bet
-	
+	private BlackHand hand;
+	private static int bet;
+
 	
 	public BlackPlayer(){
-		
+		hand= new BlackHand();
+		bet=0;
 	}
 	public int calc(){
 		int points=0;
 		for (Card a:hand){
-			
-			if (a.getNumber()==14 && (11+points<=21))){
+			int compare=a.getNumber();
+			if (compare==14){
 				points+=11;
 			}
-			else if ((a.getNumber()==14) && (11+points>21)) {
-				points+=1;
-			}
-			else if (a.getNumber()<14 && a.getNumber()>10){
+			
+			else if (compare<14 && compare>10){
 				points+=10;
 				
 			}
 			else {
-				points+=a.getNumber();
+				points+=compare;
+			}
+			if ((compare==14) && (points>21)) {
+				points-=10;
 			}
 			
 		}
