@@ -5,16 +5,18 @@ import scripts.Card;
 public class BlackPlayer {
 	private BlackHand hand;
 	private static int bet;
-
+	private static int record=0;
+	private int balance;
 	
 	public BlackPlayer(){
 		hand= new BlackHand();
 		bet=0;
+		balance=2000;
 	}
 	public int calc(){
 		int points=0;
-		for (Card a:hand){
-			int compare=a.getNumber();
+		for (int ind=0;ind<hand.length();ind++){
+			int compare=hand.getCards().get(ind).getNumber();
 			if (compare==14){
 				points+=11;
 			}
@@ -33,8 +35,24 @@ public class BlackPlayer {
 		}
 		return points;
 	}
-
-
+	public int makeBet(int money){
+		boolean can = money<=balance;
+		if(can){
+			balance-=money;
+			return money;
+		}
+		else{
+			int temp = balance;
+			balance=0;
+			return temp;
+		}
+		
+		
+	}
+	public demGains(int money){
+		balance+=money;
+		
+	}
 
 
 }
