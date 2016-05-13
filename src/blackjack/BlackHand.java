@@ -16,6 +16,11 @@ public class BlackHand {
 		return hand1;
 		
 	}
+	public ArrayList<Card> addCard(Card card1){
+		hand1.add(card1);
+		return hand1;
+	
+	}
 	public void restart(){
 		deck1=new Deck();
 	}
