@@ -159,7 +159,7 @@ public class Display extends TimerTask{
 
 		// Main Frame
 		frame = new JFrame();
-		frame.setTitle("Oker-pay: Round ");
+		frame.setTitle("Texas Holdem: Round ");
 		tablePanel = new TableDisplayPanel();
 		actionsPanel = new ActionsDisplayPanel();
 		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -741,7 +741,7 @@ public class Display extends TimerTask{
 
 	// Set Round Title (1,2,3,4, etc.)
 	public void setRoundTitle() {
-		frame.setTitle("Oker-pay: Round " + game.getRound().getRoundNumber());
+		frame.setTitle("Texas Holdem: Round " + game.getRound().getRoundNumber());
 	}
 
 	// Remove Check Button
