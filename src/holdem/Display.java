@@ -8,6 +8,8 @@ import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -134,6 +136,14 @@ public class Display extends TimerTask{
 		} else {
 			System.exit(0);
 		}
+		
+		//Remind User that ESC opens hand chart
+		JOptionPane.showConfirmDialog(null,
+                "Press ESC anytime to bring up the hand chart!",
+                "Reminder",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.PLAIN_MESSAGE);
+		
 		try {
 			dealer = ImageIO.read(getClass().getResourceAsStream("/other/dealer-face.png"));
 			table = ImageIO.read(getClass().getResourceAsStream("/other/poker-table.png"));
@@ -157,6 +167,23 @@ public class Display extends TimerTask{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		// frame.setLayout(null);
+		tablePanel.addKeyListener(new KeyListener(){
+
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				new HelpDisplay();
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+			}
+			
+		});
+		tablePanel.setFocusable(true);
 		frame.add(actionsPanel);
 		frame.add(tablePanel);
 		frame.setVisible(true);
