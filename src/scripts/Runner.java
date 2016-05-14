@@ -1,15 +1,11 @@
 package scripts;
 
-import holdem.Game;
+import holdem.HoldemGame;
 
 public class Runner {
 	
-	public Runner(){
-		new ChooserDisplay();
-	}
-	
 	public static void main(String[] args) {
-		new Runner();
+		new HoldemGame();
 	}
 
 }

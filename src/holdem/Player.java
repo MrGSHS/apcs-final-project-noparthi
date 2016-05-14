@@ -4,7 +4,7 @@ import scripts.Card;
 
 public class Player {
 
-	private Game game;
+	private HoldemGame game;
 	private int position;
 	private Hand hand;
 
@@ -19,7 +19,7 @@ public class Player {
 	public boolean raiseBoolean = false;
 	public boolean callBoolean = false;
 	
-	public Player(Game game, int position) {
+	public Player(HoldemGame game, int position){
 		this.game = game;
 		this.position = position;
 		points = 100000;

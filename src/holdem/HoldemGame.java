@@ -3,7 +3,7 @@ package holdem;
 import java.util.ArrayList;
 import java.util.Timer;
 
-public class Game {
+public class HoldemGame {
 
 	private Display display;
 	private final int BIGBLIND = 500;
@@ -105,7 +105,7 @@ public class Game {
 		}
 	}
 
-	public Game() {
+	public HoldemGame() {
 		int pos = 0;
 		table = new Table();
 		user = new Player(this, pos++);

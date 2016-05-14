@@ -1,10 +1,10 @@
 package holdem;
 
 public class Computer extends Player {
-	private Game game;
+	private HoldemGame game;
 	private int currentHandStrength;
 
-	public Computer(Game game, int pos) {
+	public Computer(HoldemGame game, int pos) {
 		super(game, pos);
 		this.game = game;
 	}

@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import blackjack.BlackGame;
-import holdem.Game;
+import holdem.HoldemGame;
 
 public class ChooserDisplay {
 
@@ -36,7 +36,7 @@ public class ChooserDisplay {
 		private static final long serialVersionUID = 1L;
 
 		private JButton blackJackBtn;
-		private JButton pokerBtn;
+		private JButton holdemBtn;
 
 		public ChooserPanel() {
 			URL imgURL = getClass().getResource("/menu/blackjack.jpg");
@@ -64,18 +64,18 @@ public class ChooserDisplay {
 				}
 			});
 
-			pokerBtn = new JButton(pokerIcon);
-			pokerBtn.setSize(pokerIcon.getIconWidth(), pokerIcon.getIconHeight());
-			pokerBtn.setLocation(475, 100);
-			pokerBtn.setToolTipText("Texas Hold'em (Poker)");
-			pokerBtn.addActionListener(new ActionListener() {
+			holdemBtn = new JButton(pokerIcon);
+			holdemBtn.setSize(pokerIcon.getIconWidth(), pokerIcon.getIconHeight());
+			holdemBtn.setLocation(475, 100);
+			holdemBtn.setToolTipText("Texas Hold'em");
+			holdemBtn.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					int reply = JOptionPane.showConfirmDialog(null, "Would you like to view a quick tutorial on the rules of Poker?", "Poker Tutorial", JOptionPane.YES_NO_OPTION);
+					int reply = JOptionPane.showConfirmDialog(null, "Would you like to view a quick tutorial on the rules of Hold'em?", "Hold'em Tutorial", JOptionPane.YES_NO_OPTION);
 					if (reply == JOptionPane.YES_OPTION) {
 						JOptionPane.showMessageDialog(null, "HELLO");
 					} else if(reply == JOptionPane.NO_OPTION){
-						new Game();
+						new HoldemGame();
 						frame.dispose();
 					} else {
 						System.exit(0);
@@ -84,7 +84,7 @@ public class ChooserDisplay {
 			});
 			
 			frame.add(blackJackBtn);
-			frame.add(pokerBtn);
+			frame.add(holdemBtn);
 
 		}
 

@@ -98,7 +98,7 @@ public class Display extends TimerTask {
 	private BufferedImage chips50k;
 	private ArrayList<BufferedImage> tableCards;
 
-	private Game game;
+	private HoldemGame game;
 
 	private JButton fold = new JButton("Fold");
 	private JButton check = new JButton("Check");
@@ -111,7 +111,7 @@ public class Display extends TimerTask {
 	private int counter = 0;
 	private ArrayList<Card> cardsOnTable;
 
-	public Display(Game game) {
+	public Display(HoldemGame game) {
 		this.game = game;
 		tableCards = new ArrayList<BufferedImage>();
 
@@ -122,8 +122,8 @@ public class Display extends TimerTask {
 		JTextField txt = new JTextField(10);
 		panel.add(lbl);
 		panel.add(txt);
-		int selectedOption = JOptionPane.showOptionDialog(null, panel, "Welcome to Oker-pay", JOptionPane.NO_OPTION,
-				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+		int selectedOption = JOptionPane.showOptionDialog(null, panel, "Welcome to Texas Hold'em",
+				JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 		if (selectedOption == 0) {
 			if (!txt.getText().trim().equals(""))
 				USERNAME = txt.getText();
@@ -263,21 +263,21 @@ public class Display extends TimerTask {
 		// Draw Blinds
 		public void drawBlinds(Graphics g) {
 			g.setFont(new Font("Calibri", Font.BOLD, 14));
-			g.setColor(Color.BLUE);
-			g.fillOval(game.playerPositions.get(game.getBigBlindIndex())[0],
-					game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight(), 20, 20);
-			g.fillOval(game.playerPositions.get(game.getSmallBlindIndex())[0],
-					game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight(), 20, 20);
+			g.setColor(modifiedGrey);
+			g.fillRoundRect(game.playerPositions.get(game.getBigBlindIndex())[0], 
+					game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight(), 80, 18, 10, 10); 
+			g.fillRoundRect(game.playerPositions.get(game.getSmallBlindIndex())[0], 
+					game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight(), 80, 18, 10, 10);
 			g.setColor(Color.WHITE);
-			g.drawString("BB", game.playerPositions.get(game.getBigBlindIndex())[0] + 2,
-					game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight() + 15);
-			g.drawString("SB", game.playerPositions.get(game.getSmallBlindIndex())[0] + 2,
-					game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight() + 15);
+			g.drawString("Big Blind", game.playerPositions.get(game.getBigBlindIndex())[0] + 13, 
+					game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight() + 13);
+			g.drawString("SM. Blind", game.playerPositions.get(game.getSmallBlindIndex())[0] + 13, 
+					game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight() + 13);
 		}
 
 		// Draw Check/Call/Raise
 		public void drawAction(Graphics g) {
-			g.setFont(new Font("Calibri", Font.BOLD, 16));
+			g.setFont(new Font("Calibri", Font.BOLD, 14));
 			g.setColor(modifiedGrey);
 			for (int i = 1; i < game.getPlayers().size(); i++) {
 				if (i == game.getBigBlindIndex() && game.getTable().getCardsOnTable().size() == 0
@@ -286,28 +286,28 @@ public class Display extends TimerTask {
 						&& !game.getPlayers().get(i).getRaiseBoolean()) {
 				} else if (game.getPlayers().get(i).isFolded()) {
 					g.setColor(modifiedGrey);
-					g.fillRoundRect(game.playerPositions.get(i)[0] + 100,
-							game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 20, 10, 10);
+					g.fillRoundRect(game.playerPositions.get(i)[0] + 80,
+							game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 18, 10, 10);
 					g.setColor(Color.BLACK);
-					g.drawString("Call", game.playerPositions.get(i)[0] + 130,
-							game.playerPositions.get(i)[1] + userLabel.getHeight() + 15);
+					g.drawString("Folded", game.playerPositions.get(i)[0] + 110,
+							game.playerPositions.get(i)[1] + userLabel.getHeight() + 13);
 				} else if (game.getPlayers().get(i).getCheckBoolean() || game.getPlayers().get(i).getCallBoolean()) {
 					g.setColor(new Color(53, 192, 18));
-					g.fillRoundRect(game.playerPositions.get(i)[0] + 100,
-							game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 20, 10, 10);
+					g.fillRoundRect(game.playerPositions.get(i)[0] + 80,
+							game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 18, 10, 10);
 					g.setColor(Color.BLACK);
 					if (game.getPlayers().get(i).getCheckBoolean())
-						g.drawString("Check", game.playerPositions.get(i)[0] + 120,
+						g.drawString("Check", game.playerPositions.get(i)[0] + 110,
 								game.playerPositions.get(i)[1] + userLabel.getHeight() + 15);
 					else
-						g.drawString("Call", game.playerPositions.get(i)[0] + 130,
+						g.drawString("Call", game.playerPositions.get(i)[0] + 110,
 								game.playerPositions.get(i)[1] + userLabel.getHeight() + 15);
 				} else if (game.getPlayers().get(i).getRaiseBoolean()) {
 					g.setColor(Color.YELLOW);
-					g.fillRoundRect(game.playerPositions.get(i)[0] + 100,
-							game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 20, 10, 10);
+					g.fillRoundRect(game.playerPositions.get(i)[0] + 80,
+							game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 18, 10, 10);
 					g.setColor(Color.BLACK);
-					g.drawString("Raise", game.playerPositions.get(i)[0] + 120,
+					g.drawString("Raise", game.playerPositions.get(i)[0] + 105,
 							game.playerPositions.get(i)[1] + userLabel.getHeight() + 15);
 				}
 			}
@@ -315,6 +315,7 @@ public class Display extends TimerTask {
 
 		// Add Player Names
 		public void addPlayerName(Graphics g) {
+			g.setFont(new Font("Calibri", Font.BOLD, 16));
 			g.setColor(Color.BLACK);
 			g.drawString(USERNAME,
 					game.playerPositions.get(0)[0]
@@ -325,16 +326,16 @@ public class Display extends TimerTask {
 		// Add Computer Names
 		public void addComputerNames(Graphics g) {
 			g.drawString(COMP1NAME,
-					game.playerPositions.get(4)[0] + 58 + (128 - g.getFontMetrics().stringWidth(COMP1NAME)) / 3,
+					game.playerPositions.get(4)[0] + 48 + (128 - g.getFontMetrics().stringWidth(COMP1NAME)) / 3,
 					game.playerPositions.get(4)[1] + 20);
 			g.drawString(COMP2NAME,
-					game.playerPositions.get(3)[0] + 58 + (128 - g.getFontMetrics().stringWidth(COMP2NAME)) / 3,
+					game.playerPositions.get(3)[0] + 48 + (128 - g.getFontMetrics().stringWidth(COMP2NAME)) / 3,
 					game.playerPositions.get(3)[1] + 20);
 			g.drawString(COMP3NAME,
-					game.playerPositions.get(2)[0] + 58 + (128 - g.getFontMetrics().stringWidth(COMP2NAME)) / 3,
+					game.playerPositions.get(2)[0] + 48 + (128 - g.getFontMetrics().stringWidth(COMP2NAME)) / 3,
 					game.playerPositions.get(2)[1] + 20);
 			g.drawString(COMP4NAME,
-					game.playerPositions.get(1)[0] + 58 + (128 - g.getFontMetrics().stringWidth(COMP2NAME)) / 3,
+					game.playerPositions.get(1)[0] + 48 + (128 - g.getFontMetrics().stringWidth(COMP2NAME)) / 3,
 					game.playerPositions.get(1)[1] + 20);
 		}
 
@@ -342,20 +343,20 @@ public class Display extends TimerTask {
 		public void addPlayerPoints(Graphics g) {
 			g.setFont(new Font("Calibri", Font.PLAIN, 20));
 			g.setColor(new Color(5, 145, 60));
-			g.drawString(game.getUser().getPoints() + " Pts", game.playerPositions.get(0)[0] + 70,
-					game.playerPositions.get(0)[1] + 50);
+			g.drawString(game.getUser().getPoints() + " Pts", game.playerPositions.get(0)[0] + 60,
+					game.playerPositions.get(0)[1] + 45);
 		}
 
 		// Add Computer Points
 		public void addComputerPoints(Graphics g) {
-			g.drawString(game.getPlayers().get(4).getPoints() + " Pts", game.playerPositions.get(4)[0] + 73,
-					game.playerPositions.get(4)[1] + computer1Label.getHeight() - 14);
-			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 73,
-					game.playerPositions.get(2)[1] + computer2Label.getHeight() - 14);
-			g.drawString(game.getPlayers().get(3).getPoints() + " Pts", game.playerPositions.get(3)[0] + 73,
-					game.playerPositions.get(3)[1] + computer3Label.getHeight() - 14);
-			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(1)[0] + 73,
-					game.playerPositions.get(1)[1] + computer4Label.getHeight() - 14);
+			g.drawString(game.getPlayers().get(4).getPoints() + " Pts", game.playerPositions.get(4)[0] + 63,
+					game.playerPositions.get(4)[1] + computer1Label.getHeight() - 11);
+			g.drawString(game.getPlayers().get(2).getPoints() + " Pts", game.playerPositions.get(2)[0] + 63,
+					game.playerPositions.get(2)[1] + computer2Label.getHeight() - 11);
+			g.drawString(game.getPlayers().get(3).getPoints() + " Pts", game.playerPositions.get(3)[0] + 63,
+					game.playerPositions.get(3)[1] + computer3Label.getHeight() - 11);
+			g.drawString(game.getPlayers().get(1).getPoints() + " Pts", game.playerPositions.get(1)[0] + 63,
+					game.playerPositions.get(1)[1] + computer4Label.getHeight() - 11);
 		}
 
 		// Add Pot
@@ -379,7 +380,7 @@ public class Display extends TimerTask {
 			}
 		}
 
-		// Draw Hand Strength Meter
+		// Add Hand Strength Meter
 		public void addHandStrengthMeter(Graphics g) {
 			final int BORDER = 5;
 			int handStrength = 0;
@@ -393,25 +394,22 @@ public class Display extends TimerTask {
 
 			// Hand Strength Bar Background
 			g.setColor(Color.DARK_GRAY);
-			g.fillRoundRect(600, 506, 296, 20, 30, 30);
+			g.fillRoundRect(600, 494, 296, 31, 10, 10);
 
 			// Writes In Hand Strength
 			Map<TextAttribute, Object> map = new Hashtable<TextAttribute, Object>();
 			map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-			Font underlineFont = new Font("Calibri", Font.BOLD, 10).deriveFont(map);
+			Font underlineFont = new Font("Calibri", Font.BOLD, 16).deriveFont(map);
 			g.setFont(underlineFont);
 			String strengthString = game.getUser().getHand().getCurrentHandStrengthString();
 			int strWidth = g.getFontMetrics().stringWidth(strengthString);
-
-			g.setColor(Color.BLACK);
-			g.fillRect(610, 495, strWidth + 10, BORDER + 6);
+			g.fillRoundRect(600, 474, strWidth + 10, 20 + BORDER, 10, 10);
 			g.setColor(Color.WHITE);
-			g.drawString(strengthString, 614, 503);
+			g.drawString(strengthString, 600 + 5, 474 + 17);
 
 			// Hand Strength Bar
-			// g.setColor(Color.BLACK);
-			// g.fillRoundRect(500 + BORDER, 494 + BORDER, 290 - BORDER, 25 -
-			// BORDER, 10, 10);
+			g.setColor(Color.BLACK);
+			g.fillRoundRect(600 + BORDER, 494 + BORDER, 290 - BORDER, 25 - BORDER, 10, 10);
 
 			// Changes Color Of Rectangle
 			if (handStrength <= 3)
@@ -422,7 +420,7 @@ public class Display extends TimerTask {
 				g.setColor(Color.GREEN);
 
 			// How Much To Fill
-			g.fillRoundRect(600 + BORDER, 505 + BORDER, 29 * handStrength - BORDER, 17 - BORDER, 15, 15);
+			g.fillRoundRect(600 + BORDER, 494 + BORDER, 29 * handStrength - BORDER, 25 - BORDER, 10, 10);
 
 		}
 

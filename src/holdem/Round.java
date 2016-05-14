@@ -3,7 +3,7 @@ package holdem;
 public class Round {
 
 	private static int roundNumber = 0;
-	private Game game;
+	private HoldemGame game;
 
 	private int pot;
 	private int minBet;
@@ -12,7 +12,7 @@ public class Round {
 	 */
 	public int stageOfRound;
 
-	public Round(Game game) {
+	public Round(HoldemGame game) {
 		pot = 0;
 		minBet = 0;
 		stageOfRound = 0;
@@ -88,10 +88,14 @@ public class Round {
 		
 		//Else Reset Stuff
 		game.resetPlayerBetAmount();
-		for(Player p : game.getPlayers()){
+		for(Player p : game.getPlayers())
 			p.resetActionBoolean();
+		
+		for(Player p : game.getPlayers()){
+			p.setBigBlind(false);
+			p.setSmallBlind(false);
 		}
-
+		
 		//And Proceeds To Next Round If None Of The Above Are True
 		if (stageOfRound == 0) {
 			stageOfRound++;

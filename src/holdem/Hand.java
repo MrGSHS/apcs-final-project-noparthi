@@ -9,7 +9,7 @@ import scripts.Card;
 
 public class Hand {
 	
-	private Game game;
+	private HoldemGame game;
 	private Card card1;
 	private Card card2;
 	private int strength;
@@ -26,7 +26,7 @@ public class Hand {
     private int flush = 0;
     private int quads = 0;
     
-	public Hand(Game game, Card fcard, Card scard) {
+	public Hand(HoldemGame game, Card fcard, Card scard) {
 		this.game = game;
 		card1 = fcard;
 		card2 = scard;
