@@ -276,7 +276,7 @@ public class Display extends TimerTask{
 					game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight() + 13);
 		}
 
-		// Draw Check/Call/Raise
+		// Draw Check/Call/Raise/Fold
 		public void drawAction(Graphics g) {
 			g.setFont(new Font("Calibri", Font.BOLD, 14));
 			g.setColor(modifiedGrey);
@@ -290,17 +290,18 @@ public class Display extends TimerTask{
 					rectWidth = userLabel.getWidth();
 					stringOffset = 40;
 				}
-				if (i == game.getBigBlindIndex() && game.getTable().getCardsOnTable().size() == 0
-						&& game.getPlayers().get(game.getBigBlindIndex()).getRaiseBoolean()) {
-				} else if (!game.getPlayers().get(i).getCheckBoolean() && !game.getPlayers().get(i).getCallBoolean()
-						&& !game.getPlayers().get(i).getRaiseBoolean()) {
-				} else if (game.getPlayers().get(i).isFolded()) {
+				if (game.getPlayers().get(i).isFolded()) {
 					g.setColor(Color.RED);
 					g.fillRoundRect(srcX,
 							game.playerPositions.get(i)[1] + userLabel.getHeight(), rectWidth, 18, 10, 10);
 					g.setColor(Color.BLACK);
-					g.drawString("Folded", game.playerPositions.get(i)[0] + 10 - stringOffset,
+					g.drawString("Fold", game.playerPositions.get(i)[0] + 110 - stringOffset,
 							game.playerPositions.get(i)[1] + userLabel.getHeight() + 13);
+				}
+				if (i == game.getBigBlindIndex() && game.getTable().getCardsOnTable().size() == 0
+						&& game.getPlayers().get(game.getBigBlindIndex()).getRaiseBoolean()) {
+				} else if (!game.getPlayers().get(i).getCheckBoolean() && !game.getPlayers().get(i).getCallBoolean()
+						&& !game.getPlayers().get(i).getRaiseBoolean()) {
 				} else if (game.getPlayers().get(i).getCheckBoolean() || game.getPlayers().get(i).getCallBoolean()) {
 					g.setColor(new Color(53, 192, 18));
 					g.fillRoundRect(srcX,
@@ -336,6 +337,7 @@ public class Display extends TimerTask{
 
 		// Add Computer Names
 		public void addComputerNames(Graphics g) {
+			g.setFont(new Font("Calibri", Font.PLAIN, 16));
 			g.drawString(COMP1NAME,
 					game.playerPositions.get(4)[0] + 48 + (128 - g.getFontMetrics().stringWidth(COMP1NAME)) / 3,
 					game.playerPositions.get(4)[1] + 20);
@@ -436,7 +438,17 @@ public class Display extends TimerTask{
 		}
 
 		// Add Computers Bet
-		public void addComputerBet(Graphics g) {
+		public void addBets(Graphics g) {
+			g.setFont(new Font("Calibri", Font.BOLD, 16));
+			
+			// User			
+			g.setColor(modifiedGrey);
+			g.fillRoundRect(game.playerPositions.get(0)[0] + 95, game.playerPositions.get(0)[1] - 90, 50, 20, 15, 15);
+			g.setColor(Color.WHITE);
+			g.drawString("" + (double) game.getPlayers().get(0).getPointsInvested() / 1000 + "K",
+					game.playerPositions.get(0)[0] + 105,
+					game.playerPositions.get(0)[1] - 75);
+			// Computer
 			g.setColor(modifiedGrey);
 			g.fillRoundRect(game.playerPositions.get(1)[0] + 185, game.playerPositions.get(1)[1], 50, 20, 15, 15);
 			g.fillRoundRect(game.playerPositions.get(2)[0] + userLabel.getWidth() + 50,
@@ -444,9 +456,8 @@ public class Display extends TimerTask{
 			g.fillRoundRect(game.playerPositions.get(3)[0] - 100,
 					game.playerPositions.get(3)[1] + userLabel.getHeight(), 50, 20, 15, 15);
 			g.fillRoundRect(game.playerPositions.get(4)[0] - 55, game.playerPositions.get(4)[1], 50, 20, 15, 15);
-
+			
 			g.setColor(Color.WHITE);
-			g.setFont(new Font("Calibri", Font.BOLD, 16));
 			g.drawString("" + (double) game.getPlayers().get(1).getPointsInvested() / 1000 + "K",
 					game.playerPositions.get(1)[0] + 195, game.playerPositions.get(1)[1] + 15);
 			g.drawString("" + (double) game.getPlayers().get(2).getPointsInvested() / 1000 + "K",
@@ -462,7 +473,7 @@ public class Display extends TimerTask{
 		public void addChips(Graphics g) {
 			int chipsWidth = chips5k.getWidth();
 			int chipsHeight = chips5k.getHeight();
-			g.drawImage(calculateChips(game.getPlayers().get(0)), FRAME_WIDTH / 2 - chipsWidth / 2,
+			g.drawImage(calculateChips(game.getPlayers().get(0)), FRAME_WIDTH / 2 - chipsWidth / 2 - 10,
 					game.playerPositions.get(0)[1] - chipsHeight * 2 - 20, null);
 			g.drawImage(calculateChips(game.getPlayers().get(1)), game.playerPositions.get(1)[0] + 165,
 					game.playerPositions.get(1)[1] + userLabel.getHeight() - 120, null);
@@ -545,8 +556,8 @@ public class Display extends TimerTask{
 			// Add Hand Strength Meter
 			addHandStrengthMeter(g);
 
-			// Add Computers' Bet
-			addComputerBet(g);
+			// Add User + Computer's Bet
+			addBets(g);
 
 			// Add chips
 			addChips(g);
