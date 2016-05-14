@@ -1,14 +1,17 @@
 package scripts;
 
-import java.awt.Image;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URL;
 
-import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import blackjack.BlackGame;
+import holdem.Game;
 
 public class ChooserDisplay {
 	
@@ -18,25 +21,53 @@ public class ChooserDisplay {
 		frame = new JFrame();
 		choosePanel = new ChooserPanel();
 		frame.setTitle("Welcome to Casino Simulator 2K16!");
-		frame.setLocationRelativeTo(null);
+		frame.setSize(900, 600);
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(choosePanel);
-		frame.setSize(900, 600);
 		frame.setVisible(true);
 	}
 
 	private class ChooserPanel extends JPanel {
 
 		private static final long serialVersionUID = 1L;
+		
 		private JButton blackJackBtn;
-
+		private JButton pokerBtn;
+		
 		public ChooserPanel() {
-			java.net.URL imgURL = getClass().getResource("/menu/blackjack.jpg");
-			Icon blackJackPic;
-			blackJackBtn = new JButton(blackJackPic);
-			blackJackBtn.setLocation(300, 200);
+			URL imgURL = getClass().getResource("/menu/blackjack.jpg");
+			Icon blackJackIcon = new ImageIcon(imgURL);
+			
+			imgURL = getClass().getResource("/menu/holdem.jpg");
+			Icon pokerIcon = new ImageIcon(imgURL);
+			
+			blackJackBtn = new JButton(blackJackIcon);
+			blackJackBtn.setSize(blackJackIcon.getIconWidth(), blackJackIcon.getIconHeight());
+			blackJackBtn.setLocation(25, 150);
+			
+			blackJackBtn.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					new BlackGame();
+					frame.dispose();
+				}				
+			});
+			
+			pokerBtn = new JButton(pokerIcon);
+			pokerBtn.setSize(pokerIcon.getIconWidth(), pokerIcon.getIconHeight());
+			pokerBtn.setLocation(475, 150);	
+			
+			pokerBtn.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					new Game();
+					frame.dispose();
+				}	
+			});
 			frame.add(blackJackBtn);
+			frame.add(pokerBtn);
 		}
 
 	}
