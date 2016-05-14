@@ -8,15 +8,17 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import blackjack.BlackGame;
 import holdem.Game;
 
 public class ChooserDisplay {
-	
-	private JFrame frame; 
+
+	private JFrame frame;
 	private ChooserPanel choosePanel;
+
 	public ChooserDisplay() {
 		frame = new JFrame();
 		choosePanel = new ChooserPanel();
@@ -32,43 +34,56 @@ public class ChooserDisplay {
 	private class ChooserPanel extends JPanel {
 
 		private static final long serialVersionUID = 1L;
-		
+
 		private JButton blackJackBtn;
 		private JButton pokerBtn;
-		
+
 		public ChooserPanel() {
 			URL imgURL = getClass().getResource("/menu/blackjack.jpg");
 			Icon blackJackIcon = new ImageIcon(imgURL);
-			
+
 			imgURL = getClass().getResource("/menu/holdem.jpg");
 			Icon pokerIcon = new ImageIcon(imgURL);
-			
+
 			blackJackBtn = new JButton(blackJackIcon);
 			blackJackBtn.setSize(blackJackIcon.getIconWidth(), blackJackIcon.getIconHeight());
-			blackJackBtn.setLocation(25, 150);
-			
-			blackJackBtn.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					new BlackGame();
-					frame.dispose();
-				}				
-			});
-			
-			pokerBtn = new JButton(pokerIcon);
-			pokerBtn.setSize(pokerIcon.getIconWidth(), pokerIcon.getIconHeight());
-			pokerBtn.setLocation(475, 150);	
-			
-			pokerBtn.addActionListener(new ActionListener(){
+			blackJackBtn.setLocation(25, 100);
+			blackJackBtn.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					new Game();
+					int reply = JOptionPane.showConfirmDialog(null, "Would you like to view a quick tutorial on the rules of Black Jack?", "Black Jack Tutorial", JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION) {
+						JOptionPane.showMessageDialog(null, "HELLO");
+					} else if(reply == JOptionPane.NO_OPTION){
+						new BlackGame();
+					} else {
+						System.exit(0);
+					}
 					frame.dispose();
-				}	
+				}
 			});
+
+			pokerBtn = new JButton(pokerIcon);
+			pokerBtn.setSize(pokerIcon.getIconWidth(), pokerIcon.getIconHeight());
+			pokerBtn.setLocation(475, 100);
+			pokerBtn.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					int reply = JOptionPane.showConfirmDialog(null, "Would you like to view a quick tutorial on the rules of Poker?", "Poker Tutorial", JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION) {
+						JOptionPane.showMessageDialog(null, "HELLO");
+					} else if(reply == JOptionPane.NO_OPTION){
+						new Game();
+						frame.dispose();
+					} else {
+						System.exit(0);
+					}
+				}
+			});
+			
 			frame.add(blackJackBtn);
 			frame.add(pokerBtn);
+
 		}
 
-	}
-}
+}}
