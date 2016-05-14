@@ -1,6 +1,8 @@
 package holdem;
 
 import java.awt.Graphics;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -23,14 +25,23 @@ public class HelpDisplay extends JFrame{
 			e.printStackTrace();
 		}
 		setTitle("Hand Chart");
-		setSize(chart.getWidth(), chart.getHeight());
+		setSize(chart.getWidth(), chart.getHeight()+25);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		addFocusListener(new FocusListener(){
+			@Override
+			public void focusGained(FocusEvent arg0) {}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				dispose();
+			}			
+		});
 		setVisible(true);
 	}
 	
 	public void paint(Graphics g){
-		g.drawImage(chart, 0, 0, null);
+		g.drawImage(chart, 0, 25, null);
 	}
 }
