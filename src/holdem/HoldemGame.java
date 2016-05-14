@@ -13,7 +13,6 @@ public class HoldemGame {
 	private final int ANTE = 100;
 	private int bigBlindIndex;
 	private int smallBlindIndex;
-	private boolean userTurn;
 	private ArrayList<Player> players = new ArrayList<>();
 
 	private Player user;
@@ -101,6 +100,7 @@ public class HoldemGame {
 
 	public void allComputersTakeAction() {
 		new Thread(new Runnable() {
+			@SuppressWarnings("static-access")
 			public void run() {
 				ArrayList<Player> computers = getActiveComputers();
 				for (Player computer : computers) {

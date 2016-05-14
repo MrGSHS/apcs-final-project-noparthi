@@ -1,8 +1,8 @@
 package blackjack;
 
-package blackjack;
 import java.util.*;
 
+import holdem.Player;
 import scripts.Card;
 public class BlackComp extends BlackPlayer {
 	private Card initShown;
@@ -26,15 +26,6 @@ public class BlackComp extends BlackPlayer {
 		}
 		points=this.calc();
 		if (points>21) in=false;
-	
-<<<<<<< Updated upstream
-	}	
-=======
-	}
-	
-		
->>>>>>> Stashed changes
-		
 	}
 
 }

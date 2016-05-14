@@ -10,6 +10,10 @@ import javax.swing.JFrame;
 
 public class HelpDisplay extends JFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private BufferedImage chart;
 	public HelpDisplay(){
 		try {
