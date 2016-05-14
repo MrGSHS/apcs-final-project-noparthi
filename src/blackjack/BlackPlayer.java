@@ -49,9 +49,8 @@ public class BlackPlayer {
 		
 		
 	}
-	public demGains(int money){
-		balance+=money;
-		
+	public void demGains(int money){
+		balance+=money;		
 	}
 
 

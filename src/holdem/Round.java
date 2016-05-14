@@ -53,7 +53,6 @@ public class Round {
 	//Before Turn Actions 
 	public void preTurn() {
 		minBet = 500;
-
 	}
 
 	//Before River Actions

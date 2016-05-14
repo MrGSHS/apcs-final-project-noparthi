@@ -23,10 +23,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import scripts.Card;
 
-public class Display extends TimerTask {
+public class Display extends TimerTask{
 
 	private ArrayList<String> NAMES = new ArrayList<String>() {
 		private static final long serialVersionUID = 1L;
@@ -663,7 +664,12 @@ public class Display extends TimerTask {
 	public void run() {
 		cardsOnTable = game.getTable().getCardsOnTable();
 		reloadImages();
-		frame.repaint();
+		SwingUtilities.invokeLater(new Runnable(){
+			public void run(){
+				//System.out.println(SwingUtilities.isEventDispatchThread());
+				frame.repaint();
+			}
+		});
 		// Removes Check If Necessary
 		if (game.getMaxBetAmount() - game.getUser().getBetAmount() == 0) {
 			addCheck();
