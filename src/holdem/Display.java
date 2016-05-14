@@ -279,36 +279,45 @@ public class Display extends TimerTask {
 		public void drawAction(Graphics g) {
 			g.setFont(new Font("Calibri", Font.BOLD, 14));
 			g.setColor(modifiedGrey);
+	
 			for (int i = 1; i < game.getPlayers().size(); i++) {
+				int srcX = game.playerPositions.get(i)[0] + 80;
+				int rectWidth = 80;
+				int stringOffset = 0;
+				if(i != game.getBigBlindIndex() && i != game.getSmallBlindIndex()){
+					srcX = game.playerPositions.get(i)[0];
+					rectWidth = userLabel.getWidth();
+					stringOffset = 40;
+				}
 				if (i == game.getBigBlindIndex() && game.getTable().getCardsOnTable().size() == 0
 						&& game.getPlayers().get(game.getBigBlindIndex()).getRaiseBoolean()) {
 				} else if (!game.getPlayers().get(i).getCheckBoolean() && !game.getPlayers().get(i).getCallBoolean()
 						&& !game.getPlayers().get(i).getRaiseBoolean()) {
 				} else if (game.getPlayers().get(i).isFolded()) {
 					g.setColor(Color.RED);
-					g.fillRoundRect(game.playerPositions.get(i)[0] + 80,
-							game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 18, 10, 10);
+					g.fillRoundRect(srcX,
+							game.playerPositions.get(i)[1] + userLabel.getHeight(), rectWidth, 18, 10, 10);
 					g.setColor(Color.BLACK);
-					g.drawString("Folded", game.playerPositions.get(i)[0] + 10,
+					g.drawString("Folded", game.playerPositions.get(i)[0] + 10 - stringOffset,
 							game.playerPositions.get(i)[1] + userLabel.getHeight() + 13);
 				} else if (game.getPlayers().get(i).getCheckBoolean() || game.getPlayers().get(i).getCallBoolean()) {
 					g.setColor(new Color(53, 192, 18));
-					g.fillRoundRect(game.playerPositions.get(i)[0] + 80,
-							game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 18, 10, 10);
+					g.fillRoundRect(srcX,
+							game.playerPositions.get(i)[1] + userLabel.getHeight(), rectWidth, 18, 10, 10);
 					g.setColor(Color.BLACK);
 					
 					if (game.getPlayers().get(i).getCheckBoolean())
-						g.drawString("Check", game.playerPositions.get(i)[0] + 100,
+						g.drawString("Check", game.playerPositions.get(i)[0] + 100 - stringOffset,
 								game.playerPositions.get(i)[1] + userLabel.getHeight() + 13);
 					else
-						g.drawString("Call", game.playerPositions.get(i)[0] + 110,
+						g.drawString("Call", game.playerPositions.get(i)[0] + 110 - stringOffset,
 								game.playerPositions.get(i)[1] + userLabel.getHeight() + 13);
 				} else if (game.getPlayers().get(i).getRaiseBoolean()) {
 					g.setColor(Color.YELLOW);
-					g.fillRoundRect(game.playerPositions.get(i)[0] + 80,
-							game.playerPositions.get(i)[1] + userLabel.getHeight(), 80, 18, 10, 10);
+					g.fillRoundRect(srcX,
+							game.playerPositions.get(i)[1] + userLabel.getHeight(), rectWidth, 18, 10, 10);
 					g.setColor(Color.BLACK);
-					g.drawString("Raise", game.playerPositions.get(i)[0] + 105,
+					g.drawString("Raise", game.playerPositions.get(i)[0] + 105 - stringOffset,
 							game.playerPositions.get(i)[1] + userLabel.getHeight() + 13);
 				}
 			}
