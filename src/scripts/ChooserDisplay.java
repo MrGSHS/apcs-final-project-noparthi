@@ -48,6 +48,7 @@ public class ChooserDisplay {
 			blackJackBtn = new JButton(blackJackIcon);
 			blackJackBtn.setSize(blackJackIcon.getIconWidth(), blackJackIcon.getIconHeight());
 			blackJackBtn.setLocation(25, 100);
+			blackJackBtn.setToolTipText("Black Jack");
 			blackJackBtn.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
@@ -66,6 +67,7 @@ public class ChooserDisplay {
 			pokerBtn = new JButton(pokerIcon);
 			pokerBtn.setSize(pokerIcon.getIconWidth(), pokerIcon.getIconHeight());
 			pokerBtn.setLocation(475, 100);
+			pokerBtn.setToolTipText("Texas Hold'em (Poker)");
 			pokerBtn.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
