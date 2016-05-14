@@ -106,7 +106,7 @@ public class HoldemGame {
 				for (Player computer : computers) {
 					computer.takeAction();
 					try {
-						Thread.currentThread().sleep(1000);
+						Thread.currentThread().sleep(((int)(Math.random()*3) + 1) * 1000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
