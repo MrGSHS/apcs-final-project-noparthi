@@ -105,16 +105,14 @@ public class HoldemGame {
 				ArrayList<Player> computers = getActiveComputers();
 				for (Player computer : computers) {
 					computer.takeAction();
+					try {
+						Thread.currentThread().sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					if (getRound().moveOn())
 						break;
-					else {
-						try {
-							Thread.currentThread().sleep(1000);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
 				}
 			}
 		}).start();
@@ -134,7 +132,7 @@ public class HoldemGame {
 		Player computer4 = new Computer(this, pos++);
 		players.add(computer4);
 		round = new Round(this);
-		new Timer().schedule(display = new Display(this), 0, 500);
+		new Timer().schedule(display = new Display(this), 0, 250);
 		takeBlinds();
 		takeAnte();
 		display.setRoundTitle();
