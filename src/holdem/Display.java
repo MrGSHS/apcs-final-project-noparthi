@@ -29,7 +29,7 @@ import javax.swing.SwingUtilities;
 
 import scripts.Card;
 
-public class Display extends TimerTask{
+public class Display extends TimerTask {
 
 	private ArrayList<String> NAMES = new ArrayList<String>() {
 		private static final long serialVersionUID = 1L;
@@ -95,6 +95,7 @@ public class Display extends TimerTask{
 	private BufferedImage cardBack;
 	private BufferedImage card1;
 	private BufferedImage card2;
+	private BufferedImage chips1k;
 	private BufferedImage chips5k;
 	private BufferedImage chips10k;
 	private BufferedImage chips25k;
@@ -136,19 +137,18 @@ public class Display extends TimerTask{
 		} else {
 			System.exit(0);
 		}
-		
-		//Remind User that ESC opens hand chart
-		JOptionPane.showConfirmDialog(null,
-                "Press ESC anytime to bring up the hand chart!",
-                "Reminder",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.PLAIN_MESSAGE);
-		
+
+		// Remind User that ESC opens hand chart
+		JOptionPane.showConfirmDialog(null, "Press ESC anytime to bring up the hand chart!", "Reminder",
+				JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+
 		try {
 			dealer = ImageIO.read(getClass().getResourceAsStream("/other/dealer-face.png"));
 			table = ImageIO.read(getClass().getResourceAsStream("/other/poker-table.png"));
 			theme = ImageIO.read(getClass().getResourceAsStream("/themes/red-velvet.jpg"));
 			cardBack = ImageIO.read(getClass().getResourceAsStream("/other/card-back.png"));
+
+			chips1k = ImageIO.read(getClass().getResourceAsStream("/chips/1k.png"));
 			chips5k = ImageIO.read(getClass().getResourceAsStream("/chips/5k.png"));
 			chips10k = ImageIO.read(getClass().getResourceAsStream("/chips/10k.png"));
 			chips25k = ImageIO.read(getClass().getResourceAsStream("/chips/25k.png"));
@@ -167,7 +167,7 @@ public class Display extends TimerTask{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		// frame.setLayout(null);
-		tablePanel.addKeyListener(new KeyListener(){
+		tablePanel.addKeyListener(new KeyListener() {
 
 			@Override
 			public void keyPressed(KeyEvent arg0) {
@@ -181,7 +181,7 @@ public class Display extends TimerTask{
 			@Override
 			public void keyTyped(KeyEvent arg0) {
 			}
-			
+
 		});
 		tablePanel.setFocusable(true);
 		frame.add(actionsPanel);
@@ -218,8 +218,10 @@ public class Display extends TimerTask{
 			g.fillRect(0, 525, FRAME_WIDTH, 50);
 			g.setColor(Color.WHITE);
 			g.setFont(buttonFont);
+			g.drawString("Fold", FRAME_WIDTH / 10, 555);
 			g.drawString("Check", FRAME_WIDTH / 4 + FRAME_WIDTH / 10, 555);
 			g.drawString("Call", FRAME_WIDTH / 2 + FRAME_WIDTH / 10, 555);
+			g.drawString("Raise", 3 * FRAME_WIDTH / 4 + FRAME_WIDTH / 10, 555);
 		}
 
 		// Add Player Positions
@@ -239,10 +241,12 @@ public class Display extends TimerTask{
 
 		// Draw User Cards
 		public void drawUserCards(Graphics g) {
-			g.drawImage(card1, game.playerPositions.get(0)[0] + CARD_WIDTH + 25, game.playerPositions.get(0)[1] - 50,
-					CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
-			g.drawImage(card2, game.playerPositions.get(0)[0] + 15, game.playerPositions.get(0)[1] - 50,
-					CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
+			if (!game.getPlayers().get(0).isFolded()) {
+				g.drawImage(card1, game.playerPositions.get(0)[0] + CARD_WIDTH + 25,
+						game.playerPositions.get(0)[1] - 50, CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
+				g.drawImage(card2, game.playerPositions.get(0)[0] + 15, game.playerPositions.get(0)[1] - 50,
+						CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
+			}
 		}
 
 		// Draw Computer Cards
@@ -292,14 +296,14 @@ public class Display extends TimerTask{
 		public void drawBlinds(Graphics g) {
 			g.setFont(new Font("Calibri", Font.BOLD, 14));
 			g.setColor(modifiedGrey);
-			g.fillRoundRect(game.playerPositions.get(game.getBigBlindIndex())[0], 
-					game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight(), 80, 18, 10, 10); 
-			g.fillRoundRect(game.playerPositions.get(game.getSmallBlindIndex())[0], 
+			g.fillRoundRect(game.playerPositions.get(game.getBigBlindIndex())[0],
+					game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight(), 80, 18, 10, 10);
+			g.fillRoundRect(game.playerPositions.get(game.getSmallBlindIndex())[0],
 					game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight(), 80, 18, 10, 10);
 			g.setColor(Color.WHITE);
-			g.drawString("Big Blind", game.playerPositions.get(game.getBigBlindIndex())[0] + 13, 
+			g.drawString("Big Blind", game.playerPositions.get(game.getBigBlindIndex())[0] + 13,
 					game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight() + 13);
-			g.drawString("SM. Blind", game.playerPositions.get(game.getSmallBlindIndex())[0] + 13, 
+			g.drawString("SM. Blind", game.playerPositions.get(game.getSmallBlindIndex())[0] + 13,
 					game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight() + 13);
 		}
 
@@ -307,20 +311,20 @@ public class Display extends TimerTask{
 		public void drawAction(Graphics g) {
 			g.setFont(new Font("Calibri", Font.BOLD, 14));
 			g.setColor(modifiedGrey);
-	
+
 			for (int i = 1; i < game.getPlayers().size(); i++) {
 				int srcX = game.playerPositions.get(i)[0] + 80;
 				int rectWidth = 80;
 				int stringOffset = 0;
-				if(i != game.getBigBlindIndex() && i != game.getSmallBlindIndex()){
+				if (i != game.getBigBlindIndex() && i != game.getSmallBlindIndex()) {
 					srcX = game.playerPositions.get(i)[0];
 					rectWidth = userLabel.getWidth();
 					stringOffset = 40;
 				}
 				if (game.getPlayers().get(i).isFolded()) {
 					g.setColor(Color.RED);
-					g.fillRoundRect(srcX,
-							game.playerPositions.get(i)[1] + userLabel.getHeight(), rectWidth, 18, 10, 10);
+					g.fillRoundRect(srcX, game.playerPositions.get(i)[1] + userLabel.getHeight(), rectWidth, 18, 10,
+							10);
 					g.setColor(Color.BLACK);
 					g.drawString("Fold", game.playerPositions.get(i)[0] + 110 - stringOffset,
 							game.playerPositions.get(i)[1] + userLabel.getHeight() + 13);
@@ -331,10 +335,10 @@ public class Display extends TimerTask{
 						&& !game.getPlayers().get(i).getRaiseBoolean()) {
 				} else if (game.getPlayers().get(i).getCheckBoolean() || game.getPlayers().get(i).getCallBoolean()) {
 					g.setColor(new Color(53, 192, 18));
-					g.fillRoundRect(srcX,
-							game.playerPositions.get(i)[1] + userLabel.getHeight(), rectWidth, 18, 10, 10);
+					g.fillRoundRect(srcX, game.playerPositions.get(i)[1] + userLabel.getHeight(), rectWidth, 18, 10,
+							10);
 					g.setColor(Color.BLACK);
-					
+
 					if (game.getPlayers().get(i).getCheckBoolean())
 						g.drawString("Check", game.playerPositions.get(i)[0] + 100 - stringOffset,
 								game.playerPositions.get(i)[1] + userLabel.getHeight() + 13);
@@ -343,8 +347,8 @@ public class Display extends TimerTask{
 								game.playerPositions.get(i)[1] + userLabel.getHeight() + 13);
 				} else if (game.getPlayers().get(i).getRaiseBoolean()) {
 					g.setColor(Color.YELLOW);
-					g.fillRoundRect(srcX,
-							game.playerPositions.get(i)[1] + userLabel.getHeight(), rectWidth, 18, 10, 10);
+					g.fillRoundRect(srcX, game.playerPositions.get(i)[1] + userLabel.getHeight(), rectWidth, 18, 10,
+							10);
 					g.setColor(Color.BLACK);
 					g.drawString("Raise", game.playerPositions.get(i)[0] + 105 - stringOffset,
 							game.playerPositions.get(i)[1] + userLabel.getHeight() + 13);
@@ -467,14 +471,13 @@ public class Display extends TimerTask{
 		// Add Computers Bet
 		public void addBets(Graphics g) {
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
-			
-			// User			
+
+			// User
 			g.setColor(modifiedGrey);
 			g.fillRoundRect(game.playerPositions.get(0)[0] + 95, game.playerPositions.get(0)[1] - 90, 50, 20, 15, 15);
 			g.setColor(Color.WHITE);
 			g.drawString("" + (double) game.getPlayers().get(0).getPointsInvested() / 1000 + "K",
-					game.playerPositions.get(0)[0] + 105,
-					game.playerPositions.get(0)[1] - 75);
+					game.playerPositions.get(0)[0] + 105, game.playerPositions.get(0)[1] - 75);
 			// Computer
 			g.setColor(modifiedGrey);
 			g.fillRoundRect(game.playerPositions.get(1)[0] + 185, game.playerPositions.get(1)[1], 50, 20, 15, 15);
@@ -483,7 +486,7 @@ public class Display extends TimerTask{
 			g.fillRoundRect(game.playerPositions.get(3)[0] - 100,
 					game.playerPositions.get(3)[1] + userLabel.getHeight(), 50, 20, 15, 15);
 			g.fillRoundRect(game.playerPositions.get(4)[0] - 55, game.playerPositions.get(4)[1], 50, 20, 15, 15);
-			
+
 			g.setColor(Color.WHITE);
 			g.drawString("" + (double) game.getPlayers().get(1).getPointsInvested() / 1000 + "K",
 					game.playerPositions.get(1)[0] + 195, game.playerPositions.get(1)[1] + 15);
@@ -591,7 +594,6 @@ public class Display extends TimerTask{
 
 			// Congratulations You Wasted Money - Tip
 			addTipEffects(g);
-
 		}
 	}
 
@@ -604,6 +606,8 @@ public class Display extends TimerTask{
 			return chips10k;
 		else if (p.getPointsInvested() / 5000 >= 1) {
 			return chips5k;
+		} else if (p.getPointsInvested() / 1000 >= 1) {
+			return chips1k;
 		}
 		return null;
 	}
@@ -660,9 +664,16 @@ public class Display extends TimerTask{
 	public class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == raise) {
+				//Gathers Largest Bet Amount To Raise
+				int maxBet = 0;
+				int bet = 0;
+				for(Player p : game.getPlayers()){
+					bet = p.getBetAmount();
+					if(bet > maxBet) maxBet = bet;
+				}
 				// Ask For User Input
 				String stringRaiseAmount = (String) JOptionPane.showInputDialog(frame, "Enter Raise Amount:",
-						game.getMaxBetAmount() + game.getSmallBlind());
+						maxBet);
 				try {
 					stringRaiseAmount = stringRaiseAmount.replaceAll("[^0-9]", "");
 					int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
@@ -687,7 +698,9 @@ public class Display extends TimerTask{
 				game.allComputersTakeAction();
 				game.getRound().moveOn();
 			} else if (evt.getSource() == fold) {
-				game.payout();
+				game.getPlayers().get(0).setFoldBoolean(true);
+				game.allComputersTakeAction();
+				//game.payout();
 			}
 			if (evt.getSource() == tip) {
 				if (game.getUser().getPoints() >= 2000) {
@@ -702,18 +715,26 @@ public class Display extends TimerTask{
 	public void run() {
 		cardsOnTable = game.getTable().getCardsOnTable();
 		reloadImages();
-		SwingUtilities.invokeLater(new Runnable(){
-			public void run(){
-				//System.out.println(SwingUtilities.isEventDispatchThread());
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				// System.out.println(SwingUtilities.isEventDispatchThread());
 				frame.repaint();
 			}
 		});
-		// Removes Check If Necessary
-		if (game.getMaxBetAmount() - game.getUser().getBetAmount() == 0) {
-			addCheck();
-		} else {
-			removeCheck();
+		
+		//Removes All Buttons If Necessary
+		if(game.getPlayers().get(0).isFolded()){
+			removeAllButtons();
 		}
+		else{
+			addAllButtons();
+			// Removes Check If Necessary
+			if (game.getMaxBetAmount() - game.getUser().getBetAmount() == 0) {
+				addCheck();
+			} else {
+				removeCheck();
+			}
+		}		
 	}
 
 	private void reloadImages() {
@@ -766,5 +787,21 @@ public class Display extends TimerTask{
 		call.setVisible(true);
 		int setGAmount = game.getMaxBetAmount() - game.getUser().getBetAmount();
 		call.setText("Call: " + setGAmount + " Pts");
+	}
+	
+	//Remove All Buttons
+	public void removeAllButtons(){
+		fold.setVisible(false);
+		check.setVisible(false);
+		call.setVisible(false);
+		raise.setVisible(false);
+	}
+	
+	//Add All Buttons
+	public void addAllButtons(){
+		fold.setVisible(true);
+		check.setVisible(true);
+		call.setVisible(true);
+		raise.setVisible(true);
 	}
 }

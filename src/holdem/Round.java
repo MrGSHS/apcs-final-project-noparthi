@@ -18,7 +18,7 @@ public class Round {
 		stageOfRound = 0;
 		this.game = game;
 		roundNumber++;
-		for(Player p : game.getPlayers()){
+		for (Player p : game.getPlayers()) {
 			p.newHand();
 		}
 	}
@@ -43,59 +43,62 @@ public class Round {
 		minBet = amt;
 	}
 
-	//Before Flop Actions
+	// Before Flop Actions
 	public void preFlop() {
 		// Prints Out Hand Before Flop, Then Deals Flop
 		setMinBet(game.getBigBlind());
 
 	}
 
-	//Before Turn Actions 
+	// Before Turn Actions
 	public void preTurn() {
 		minBet = 500;
 	}
 
-	//Before River Actions
+	// Before River Actions
 	public void preRiver() {
 		minBet = 500;
 	}
 
-	//After River Actions (Final Actions)
+	// After River Actions (Final Actions)
 	public void postRiver() {
 		minBet = 500;
 	}
 
-	//Check To See If Should Move To Next Round
+	// Check To See If Should Move To Next Round
 	public boolean moveOn() {
-		//Skips If Someone Had Raised, And Resets All Action Booleans Back To Null
+		// Skips If Someone Had Raised, And Resets All Action Booleans Back To
+		// Null
 		int check = 0;
 		int call = 0;
 		int raise = 0;
-		for(Player p : game.getActivePlayers()){
-			if(p.getCheckBoolean())
+		for (Player p : game.getActivePlayers()) {
+			if (p.getCheckBoolean())
 				check++;
-			if(p.getCallBoolean())
+			if (p.getCallBoolean())
 				call++;
-			if(p.getRaiseBoolean())
+			if (p.getRaiseBoolean())
 				raise++;
-		}	
-		
-		if(check != game.getActivePlayers().size() && ((call+raise)!= game.getActivePlayers().size() || raise > 1)){  
-			System.out.println("Failed Move-On");
+		}
+
+		if (check != game.getActivePlayers().size() && ((call + raise) != game.getActivePlayers().size() || raise > 1)) {
+			System.out.println("Failed Move-On");	
 			return false;
 		}
-		
-		//Else Reset Stuff
+
+		System.out.println("Move-On Successful");
+
+		// Else Reset Stuff
 		game.resetPlayerBetAmount();
-		for(Player p : game.getPlayers())
+		for (Player p : game.getPlayers())
 			p.resetActionBoolean();
-		
-		for(Player p : game.getPlayers()){
+
+		for (Player p : game.getPlayers()) {
 			p.setBigBlind(false);
 			p.setSmallBlind(false);
 		}
-		
-		//And Proceeds To Next Round If None Of The Above Are True
+
+		// And Proceeds To Next Round If None Of The Above Are True
 		if (stageOfRound == 0) {
 			stageOfRound++;
 			System.out.println("Stage: " + stageOfRound);
@@ -111,7 +114,7 @@ public class Round {
 			System.out.println("Stage: " + stageOfRound);
 			game.getTable().dealRiver();
 			postRiver();
-		} else 
+		} else
 			game.payout();
 		return true;
 	}

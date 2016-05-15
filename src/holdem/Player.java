@@ -44,6 +44,7 @@ public class Player {
 	public void setBigBlind(boolean bb){ bigBlind = bb; }
     public void setSmallBlind(boolean sb) {smallBlind = sb;}
     public void setPointsInvested(int num) { pointsInvested = num;}
+    public void setFoldBoolean(boolean fb){folded = fb;}
     public void resetPointsInvested(){ pointsInvested = 0; }
     
 	public void newHand() {

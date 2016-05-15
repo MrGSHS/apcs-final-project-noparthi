@@ -18,6 +18,14 @@ public class Computer extends Player {
 
 	public void preFlopLogic() {
 		currentHandStrength = getHand().initialHandStrength();
+		int maxBet = 0;
+		int bet = 0;
+		// Gathers Largest Bet Amount To Call
+		for (Player p : game.getPlayers()) {
+			bet = p.getBetAmount();
+			if (bet > maxBet)
+				maxBet = bet;
+		}
 
 		// Index Equals Index Of Active Player Before This Player In
 		// ActivePlayers
@@ -37,63 +45,65 @@ public class Computer extends Player {
 				break;
 			}
 		}
-		
 		System.out.println("Index: " + index);
-		
 		// Actions Based Off Of The Player Before This
+		
 		// If Player Before Checked
 		if (game.getPlayers().get(index).getCheckBoolean() || game.getUser().isFolded()) {
-			if (currentHandStrength > 6 || (int) (Math.random() * 11) + 1 <= 2) {
+			// Otherwise Continue
+			if (currentHandStrength > 7 || (int) (Math.random() * 11) + 1 <= 2) {
 				raise(game.getBigBlind() * 2);
 				return;
 			} else {
-				check();
-				System.out.println("Comp. Checks");
-				return;
+				// For Pre-Flop, Making People Call Big Blind
+				if (game.getTable().getCardsOnTable().size() == 0) {
+					if (game.getPlayers().get(getPosition()).getBetAmount() < maxBet) {
+						call();
+						return;
+					}
+				}
+				// Otherwise Call
+				else {
+					check();
+					return;
+				}
 			}
 		}
 		// If Player Before Raised Or Called
 		else if (game.getPlayers().get(index).getRaiseBoolean() || game.getPlayers().get(index).getCallBoolean()) {
 			if (currentHandStrength == 10) {
 				call();
-				System.out.println("Comp. Calls");
 				return;
 			}
 			if (game.getMaxBetAmount() > 0.50 * getPoints()) {
 				if (currentHandStrength >= 9) {
 					call();
-					System.out.println("Comp. Calls");
 					return;
 				} else {
 					fold();
-					System.out.println("Comp. Folded");
+					;
 					return;
 				}
 			}
 			if (game.getMaxBetAmount() > 0.25 * getPoints()) {
 				if (currentHandStrength >= 8 || (int) (Math.random() * 11) + 1 == 1) {
 					call();
-					System.out.println("Comp. Calls");
 					return;
 				} else {
 					fold();
-					System.out.println("Comp. Folded");
 					return;
 				}
 			}
 			if (game.getMaxBetAmount() > 0.10 * getPoints()) {
 				if (currentHandStrength >= 7 || (int) (Math.random() * 11) + 1 <= 2) {
 					call();
-					System.out.println("Comp. Calls");
 					return;
 				} else {
 					fold();
-					System.out.println("Comp. Folded");
 					return;
 				}
 			} else {
 				call();
-				System.out.println("Comp. Calls");
 				return;
 			}
 		}
@@ -106,7 +116,6 @@ public class Computer extends Player {
 
 	public void logic() {
 		currentHandStrength = getHand().updateHandStrength();
-
 		// Index Equals Index Of Active Player Before This Player In
 		// ActivePlayers
 		int index = getPosition() - 1;
@@ -133,31 +142,24 @@ public class Computer extends Player {
 		if (game.getPlayers().get(index).getCheckBoolean() || game.getUser().isFolded()) {
 			if ((int) (Math.random() * 11) + 1 <= 1) {
 				raise(game.getBigBlind() * ((int) (Math.random() * 20) + 1));
-				System.out.println("Comp. Raises");
 				return;
 			} else if (currentHandStrength >= 7 || (int) (Math.random() * 11) + 1 <= 1) {
 				raise(game.getBigBlind() * ((int) (Math.random() * 15) + 1));
-				System.out.println("Comp. Raises");
 				return;
 			} else if (currentHandStrength == 6 || (int) (Math.random() * 11) + 1 <= 1) {
 				raise(game.getBigBlind() * ((int) (Math.random() * 14) + 1));
-				System.out.println("Comp. Raises");
 				return;
 			} else if (currentHandStrength == 5 || (int) (Math.random() * 11) + 1 <= 1) {
 				raise(game.getBigBlind() * ((int) (Math.random() * 13) + 1));
-				System.out.println("Comp. Raises");
 				return;
 			} else if (currentHandStrength == 4 || (int) (Math.random() * 11) + 1 <= 1) {
 				raise(game.getBigBlind() * ((int) (Math.random() * 12) + 1));
-				System.out.println("Comp. Raises");
 				return;
 			} else if (currentHandStrength == 3 || (int) (Math.random() * 11) + 1 <= 2) {
 				raise(game.getBigBlind() * ((int) (Math.random() * 11) + 1));
-				System.out.println("Comp. Raises");
 				return;
 			} else {
 				check();
-				System.out.println("Comp. Checks");
 				return;
 			}
 		}
@@ -165,53 +167,43 @@ public class Computer extends Player {
 		else if (game.getPlayers().get(index).getRaiseBoolean()) {
 			if (currentHandStrength == 10) {
 				call();
-				System.out.println("Comp. Calls");
 				return;
 			}
 			if (game.getMaxBetAmount() > 0.5 * getPoints()) {
 				if (currentHandStrength >= 7) {
 					call();
-					System.out.println("Comp. Calls");
 					return;
 				} else {
 					fold();
-					System.out.println("Comp. Folded");
 					return;
 				}
 			}
 			if (game.getMaxBetAmount() > 0.25 * getPoints()) {
 				if (currentHandStrength >= 6 || (int) (Math.random() * 11) + 1 <= 1) {
 					call();
-					System.out.println("Comp. Calls");
 					return;
 				} else {
 					fold();
-					System.out.println("Comp. Folded");
 					return;
 				}
 			}
 			if (game.getMaxBetAmount() > 0.1 * getPoints()) {
 				if (currentHandStrength >= 5 || (int) (Math.random() * 11) + 1 <= 1) {
 					call();
-					System.out.println("Comp. Calls");
 					return;
 				} else {
 					fold();
-					System.out.println("Comp. Folded");
 					return;
 				}
 			} else {
 				if (currentHandStrength >= 4 || (int) (Math.random() * 11) + 1 <= 1) {
 					raise(game.getMaxBetAmount() * ((int) (Math.random() * 3) + 2));
-					System.out.println("Comp. Raises");
 					return;
 				} else if (currentHandStrength >= 2 || (int) (Math.random() * 11) + 1 <= 1) {
 					call();
-					System.out.println("Comp. Calls");
 					return;
 				} else {
 					fold();
-					System.out.println("Comp. Folded");
 					return;
 				}
 			}
@@ -219,7 +211,7 @@ public class Computer extends Player {
 		// If Player Before Called
 		else if (game.getPlayers().get(index).getCallBoolean()) {
 			call();
-			System.out.println("Comp. Calls");
+			return;
 		}
 		// If Reaches Here, The Game Broke
 		else {

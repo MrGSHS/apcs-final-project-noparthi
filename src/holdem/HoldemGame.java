@@ -92,7 +92,7 @@ public class HoldemGame {
 	public ArrayList<Player> getActiveComputers() {
 		ArrayList<Player> active = new ArrayList<>();
 		for (Player p : players) {
-			if (!p.isFolded()) // p.getPosition() != 0 &&
+			if (!p.isFolded() && p.getPosition()!=0) // p.getPosition() != 0 &&
 				active.add(p);
 		}
 		return active;
@@ -141,24 +141,25 @@ public class HoldemGame {
 	// Takes The Blinds
 	public void takeBlinds() {
 		// Set Index Of Big Blind Player
-		bigBlindIndex = dealerIndex + 1;
-		if (bigBlindIndex >= players.size())
-			bigBlindIndex = 0;
+		bigBlindIndex = dealerIndex - 1;
+		if (bigBlindIndex < 0){
+			bigBlindIndex = players.size()-1;
+		}
 		players.get(bigBlindIndex).setBigBlind(true);
 		players.get(bigBlindIndex).raise(BIGBLIND);
 
 		// Set Index Of Small Blind Player
-		smallBlindIndex = bigBlindIndex + 1;
-		if (smallBlindIndex >= players.size())
-			smallBlindIndex = 0;
+		smallBlindIndex = bigBlindIndex - 1;
+		if (smallBlindIndex < 0){
+			smallBlindIndex = players.size()-1;
+		}
 		players.get(smallBlindIndex).setSmallBlind(true);
+		players.get(smallBlindIndex).setBetAmount(SMALLBLIND);
 
 		// Takes The Big And Small Blind
-		// players.get(bigBlindIndex).raise(BIGBLIND);
 		System.out.println(bigBlindIndex);
 		players.get(smallBlindIndex).setPoints(players.get(smallBlindIndex).getPoints() - SMALLBLIND);
 		players.get(smallBlindIndex).setPointsInvested(SMALLBLIND);
-		players.get(smallBlindIndex).setBetAmount(SMALLBLIND);
 		round.setPot(round.getPot() + SMALLBLIND);
 	}
 
