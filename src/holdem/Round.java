@@ -46,23 +46,26 @@ public class Round {
 	// Before Flop Actions
 	public void preFlop() {
 		// Prints Out Hand Before Flop, Then Deals Flop
-		setMinBet(game.getBigBlind());
+		minBet = game.getBigBlind();
 
 	}
 
 	// Before Turn Actions
 	public void preTurn() {
-		minBet = 500;
+		minBet = game.getBigBlind();
+		if(game.getUser().isFolded()) game.allComputersTakeAction(); 
 	}
 
 	// Before River Actions
 	public void preRiver() {
-		minBet = 500;
+		minBet = game.getBigBlind();
+		if(game.getUser().isFolded()) game.allComputersTakeAction(); 
 	}
 
 	// After River Actions (Final Actions)
 	public void postRiver() {
-		minBet = 500;
+		minBet = game.getBigBlind();
+		if(game.getUser().isFolded()) game.allComputersTakeAction(); 
 	}
 
 	// Check To See If Should Move To Next Round
@@ -81,7 +84,7 @@ public class Round {
 				raise++;
 		}
 
-		if (check != game.getActivePlayers().size() && ((call + raise) != game.getActivePlayers().size() || raise > 1)) {
+		if (check != game.getActivePlayers().size() && ((call + raise) != game.getActivePlayers().size() && raise >= 1)) {
 			System.out.println("Failed Move-On");	
 			return false;
 		}

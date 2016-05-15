@@ -29,27 +29,27 @@ public class Computer extends Player {
 
 		// Index Equals Index Of Active Player Before This Player In
 		// ActivePlayers
-		int index = getPosition() - 1;
-		for (int i = 1; i < game.getActivePlayers().size(); i++) {
-			if (game.getActivePlayers().get(i) == game.getPlayers().get(getPosition())) {
+		int index = getPosition();
+		for (int i = index - 1; i >= 0; i--) {
+			if (!game.getPlayers().get(i).isFolded()) {
 				index = i;
-				index--;
 				break;
 			}
 		}
-
-		// Index Equals Index Of Active Player Before This Player In Players
-		for (int j = 1; j < game.getPlayers().size(); j++) {
-			if (game.getPlayers().get(j) == game.getActivePlayers().get(index)) {
-				index = j;
-				break;
+		if (index == getPosition()) {
+			// Index Equals Index Of Active Player Before This Player In Players
+			for (int j = game.getPlayers().size()-1; j >= 0; j--) {
+				if (!game.getPlayers().get(j).isFolded()) {
+					index = j;
+					break;
+				}
 			}
 		}
 		System.out.println("Index: " + index);
 		// Actions Based Off Of The Player Before This
-		
+
 		// If Player Before Checked
-		if (game.getPlayers().get(index).getCheckBoolean() || game.getUser().isFolded()) {
+		if (game.getPlayers().get(index).getCheckBoolean() || game.getPlayers().get(index).getPointsInvested() == getPointsInvested()) {
 			// Otherwise Continue
 			if (currentHandStrength > 7 || (int) (Math.random() * 11) + 1 <= 2) {
 				raise(game.getBigBlind() * 2);
@@ -118,28 +118,27 @@ public class Computer extends Player {
 		currentHandStrength = getHand().updateHandStrength();
 		// Index Equals Index Of Active Player Before This Player In
 		// ActivePlayers
-		int index = getPosition() - 1;
-		for (int i = 1; i < game.getActivePlayers().size(); i++) {
-			if (game.getActivePlayers().get(i) == game.getPlayers().get(getPosition())) {
+		int index = getPosition();
+		for (int i = index - 1; i >= 0; i--) {
+			if (!game.getPlayers().get(i).isFolded()) {
 				index = i;
-				index--;
 				break;
 			}
 		}
-
-		// Index Equals Index Of Active Player Before This Player In Players
-		for (int j = 1; j < game.getPlayers().size(); j++) {
-			if (game.getPlayers().get(j) == game.getActivePlayers().get(index)) {
-				index = j;
-				break;
+		if (index == getPosition()) {
+			// Index Equals Index Of Active Player Before This Player In Players
+			for (int j = game.getPlayers().size()-1; j >= 0; j--) {
+				if (!game.getPlayers().get(j).isFolded()) {
+					index = j;
+					break;
+				}
 			}
 		}
-
 		System.out.println("Index: " + index);
 
 		// Actions Based Off Of Player Before This
 		// If Player Before Checked
-		if (game.getPlayers().get(index).getCheckBoolean() || game.getUser().isFolded()) {
+		if (game.getPlayers().get(index).getCheckBoolean() || game.getPlayers().get(index).getPointsInvested() == getPointsInvested()) {
 			if ((int) (Math.random() * 11) + 1 <= 1) {
 				raise(game.getBigBlind() * ((int) (Math.random() * 20) + 1));
 				return;
@@ -164,7 +163,7 @@ public class Computer extends Player {
 			}
 		}
 		// If Player Before Raised
-		else if (game.getPlayers().get(index).getRaiseBoolean()) {
+		else if (game.getPlayers().get(index).getRaiseBoolean() || game.getPlayers().get(index).getPointsInvested() > getPointsInvested()) {
 			if (currentHandStrength == 10) {
 				call();
 				return;
