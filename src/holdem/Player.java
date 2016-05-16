@@ -14,7 +14,7 @@ public class Player {
 	
 	private boolean folded;
 	private boolean bigBlind;
-	private boolean smallBlind; 
+	private boolean smallBlind;
 	public boolean checkBoolean = false;
 	public boolean raiseBoolean = false;
 	public boolean callBoolean = false;
@@ -35,7 +35,7 @@ public class Player {
 	public int getPointsInvested(){ return pointsInvested; }
 	public Hand getHand(){ return hand; }
 	public Card[] getCurrentHand() { return hand.getHand(); }
-	public int getBetAmount(){return betAmount;}
+	
 	public boolean isBigBlind(){ return bigBlind; }
 	public boolean isSmallBlind() {return smallBlind; }
 	public boolean isFolded(){ return folded; }	
@@ -43,9 +43,7 @@ public class Player {
 	public void setPoints(int num) { points = num; }
 	public void setBigBlind(boolean bb){ bigBlind = bb; }
     public void setSmallBlind(boolean sb) {smallBlind = sb;}
-	public void setBetAmount(int amt){betAmount = amt;}
-
-    public void setPointsInvested(int num) { pointsInvested = num;}
+    public void setPointsInvested(int num) {pointsInvested = num;}
     public void setFoldBoolean(boolean fb){folded = fb;}
     public void resetPointsInvested(){ pointsInvested = 0; }
     
@@ -63,7 +61,7 @@ public class Player {
 	//Fold Method
 	public void fold() {
 		folded = true;
-		//betAmount = 0;
+		betAmount = 0;
         resetActionBoolean();
 		game.isRoundActive();
 	}
@@ -138,5 +136,11 @@ public class Player {
 		}
 	}
 
+	public void setBetAmount(int amt){
+		betAmount = amt;
+	}
 
+	public int getBetAmount(){
+		return betAmount;
+	}
 }

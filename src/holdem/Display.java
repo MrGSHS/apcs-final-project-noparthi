@@ -35,15 +35,20 @@ public class Display extends TimerTask {
 		private static final long serialVersionUID = 1L;
 		{
 			add("Andrew");
+			add("Amy");
+			add("Caitlyn");
 			add("David");
 			add("Ethan");
 			add("Jerry");
-			add("Jonathan");
 			add("Jessica");
-			add("Lily");
-			add("Sophia");
-			add("Zoe");
+			add("Jonathan");
 			add("Julia");
+			add("Lily");
+			add("Michael");
+			add("Sophia");
+			add("Srikar");
+			add("Taylor");
+			add("Zoe");
 		}
 	};
 	private String USERNAME;
@@ -294,64 +299,74 @@ public class Display extends TimerTask {
 
 		// Draw Blinds
 		public void drawBlinds(Graphics g) {
-			g.setFont(new Font("Calibri", Font.BOLD, 14));
-			g.setColor(modifiedGrey);
-			g.fillRoundRect(game.playerPositions.get(game.getBigBlindIndex())[0],
-					game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight(), 80, 18, 10, 10);
-			g.fillRoundRect(game.playerPositions.get(game.getSmallBlindIndex())[0],
-					game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight(), 80, 18, 10, 10);
-			g.setColor(Color.WHITE);
-			g.drawString("Big Blind", game.playerPositions.get(game.getBigBlindIndex())[0] + 13,
-					game.playerPositions.get(game.getBigBlindIndex())[1] + userLabel.getHeight() + 13);
-			g.drawString("SM. Blind", game.playerPositions.get(game.getSmallBlindIndex())[0] + 13,
-					game.playerPositions.get(game.getSmallBlindIndex())[1] + userLabel.getHeight() + 13);
+			for (Player p : game.getPlayers()) {
+				if (p.isSmallBlind()) {
+					g.setFont(new Font("Calibri", Font.BOLD, 14));
+					g.setColor(modifiedGrey);
+					g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(), 80, 18, 10, 10);
+					g.setColor(Color.WHITE);
+					g.drawString("SM. Blind", game.playerPositions.get(p.getPosition())[0] + 13,
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
+					System.out.println(p.getPosition());
+				} else if (p.isBigBlind()) {
+					g.setFont(new Font("Calibri", Font.BOLD, 14));
+					g.setColor(modifiedGrey);
+					g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(), 80, 18, 10, 10);
+					g.setColor(Color.WHITE);
+					g.drawString("Big Blind", game.playerPositions.get(p.getPosition())[0] + 13,
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
+					System.out.println(p.getPosition());
+				}
+			}
 		}
 
 		// Draw Check/Call/Raise/Fold
 		public void drawAction(Graphics g) {
 			g.setFont(new Font("Calibri", Font.BOLD, 14));
 			g.setColor(modifiedGrey);
-
-			for (int i = 1; i < game.getPlayers().size(); i++) {
-				int srcX = game.playerPositions.get(i)[0] + 80;
+			
+			for (Player p : game.getPlayers()) {
+				int srcX = game.playerPositions.get(p.getPosition())[0] + 80;
 				int rectWidth = 80;
 				int stringOffset = 0;
-				if (i != game.getBigBlindIndex() && i != game.getSmallBlindIndex()) {
-					srcX = game.playerPositions.get(i)[0];
+				if (!p.isBigBlind() && !p.isSmallBlind()) {
+					srcX = game.playerPositions.get(p.getPosition())[0];
 					rectWidth = userLabel.getWidth();
 					stringOffset = 40;
 				}
-				if (game.getPlayers().get(i).isFolded()) {
+				if (p.isFolded()) {
 					g.setColor(Color.RED);
-					g.fillRoundRect(srcX, game.playerPositions.get(i)[1] + userLabel.getHeight(), rectWidth, 18, 10,
+					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(), rectWidth, 18, 10,
 							10);
 					g.setColor(Color.BLACK);
-					g.drawString("Fold", game.playerPositions.get(i)[0] + 110 - stringOffset,
-							game.playerPositions.get(i)[1] + userLabel.getHeight() + 13);
+					g.drawString("Fold", game.playerPositions.get(p.getPosition())[0] + 110 - stringOffset,
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
 				}
-				if (i == game.getBigBlindIndex() && game.getTable().getCardsOnTable().size() == 0
-						&& game.getPlayers().get(game.getBigBlindIndex()).getRaiseBoolean()) {
-				} else if (!game.getPlayers().get(i).getCheckBoolean() && !game.getPlayers().get(i).getCallBoolean()
-						&& !game.getPlayers().get(i).getRaiseBoolean()) {
-				} else if (game.getPlayers().get(i).getCheckBoolean() || game.getPlayers().get(i).getCallBoolean()) {
+				if (p.isBigBlind() && game.getTable().getCardsOnTable().size() == 0
+						&& p.getRaiseBoolean() && p.getPointsInvested() == game.getBigBlind()) {
+				} else if (!p.getCheckBoolean() && !p.getCallBoolean()
+						&& !p.getRaiseBoolean()) {
+				} else if (p.getCheckBoolean() || p.getCallBoolean()) {
 					g.setColor(new Color(53, 192, 18));
-					g.fillRoundRect(srcX, game.playerPositions.get(i)[1] + userLabel.getHeight(), rectWidth, 18, 10,
+					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(), rectWidth, 18, 10,
 							10);
 					g.setColor(Color.BLACK);
 
-					if (game.getPlayers().get(i).getCheckBoolean())
-						g.drawString("Check", game.playerPositions.get(i)[0] + 100 - stringOffset,
-								game.playerPositions.get(i)[1] + userLabel.getHeight() + 13);
+					if (p.getCheckBoolean())
+						g.drawString("Check", game.playerPositions.get(p.getPosition())[0] + 100 - stringOffset,
+								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
 					else
-						g.drawString("Call", game.playerPositions.get(i)[0] + 110 - stringOffset,
-								game.playerPositions.get(i)[1] + userLabel.getHeight() + 13);
-				} else if (game.getPlayers().get(i).getRaiseBoolean()) {
+						g.drawString("Call", game.playerPositions.get(p.getPosition())[0] + 110 - stringOffset,
+								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
+				} else if (p.getRaiseBoolean()) {
 					g.setColor(Color.YELLOW);
-					g.fillRoundRect(srcX, game.playerPositions.get(i)[1] + userLabel.getHeight(), rectWidth, 18, 10,
+					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(), rectWidth, 18, 10,
 							10);
 					g.setColor(Color.BLACK);
-					g.drawString("Raise", game.playerPositions.get(i)[0] + 105 - stringOffset,
-							game.playerPositions.get(i)[1] + userLabel.getHeight() + 13);
+					g.drawString("Raise", game.playerPositions.get(p.getPosition())[0] + 105 - stringOffset,
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
 				}
 			}
 		}
@@ -664,16 +679,16 @@ public class Display extends TimerTask {
 	public class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == raise) {
-				//Gathers Largest Bet Amount To Raise
+				// Gathers Largest Bet Amount To Raise
 				int maxBet = 0;
 				int bet = 0;
-				for(Player p : game.getPlayers()){
+				for (Player p : game.getPlayers()) {
 					bet = p.getBetAmount();
-					if(bet > maxBet) maxBet = bet;
+					if (bet > maxBet)
+						maxBet = bet;
 				}
 				// Ask For User Input
-				String stringRaiseAmount = (String) JOptionPane.showInputDialog(frame, "Enter Raise Amount:",
-						maxBet);
+				String stringRaiseAmount = (String) JOptionPane.showInputDialog(frame, "Enter Raise Amount:", maxBet);
 				try {
 					stringRaiseAmount = stringRaiseAmount.replaceAll("[^0-9]", "");
 					int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
@@ -700,7 +715,7 @@ public class Display extends TimerTask {
 			} else if (evt.getSource() == fold) {
 				game.getPlayers().get(0).setFoldBoolean(true);
 				game.allComputersTakeAction();
-				//game.payout();
+				// game.payout();
 			}
 			if (evt.getSource() == tip) {
 				if (game.getUser().getPoints() >= 2000) {
@@ -721,12 +736,11 @@ public class Display extends TimerTask {
 				frame.repaint();
 			}
 		});
-		
-		//Removes All Buttons If Necessary
-		if(game.getPlayers().get(0).isFolded()){
+
+		// Removes All Buttons If Necessary
+		if (game.getPlayers().get(0).isFolded()) {
 			removeAllButtons();
-		}
-		else{
+		} else {
 			addAllButtons();
 			// Removes Check If Necessary
 			if (game.getMaxBetAmount() - game.getUser().getBetAmount() == 0) {
@@ -734,7 +748,7 @@ public class Display extends TimerTask {
 			} else {
 				removeCheck();
 			}
-		}		
+		}
 	}
 
 	private void reloadImages() {
@@ -788,17 +802,17 @@ public class Display extends TimerTask {
 		int setGAmount = game.getMaxBetAmount() - game.getUser().getBetAmount();
 		call.setText("Call: " + setGAmount + " Pts");
 	}
-	
-	//Remove All Buttons
-	public void removeAllButtons(){
+
+	// Remove All Buttons
+	public void removeAllButtons() {
 		fold.setVisible(false);
 		check.setVisible(false);
 		call.setVisible(false);
 		raise.setVisible(false);
 	}
-	
-	//Add All Buttons
-	public void addAllButtons(){
+
+	// Add All Buttons
+	public void addAllButtons() {
 		fold.setVisible(true);
 		check.setVisible(true);
 		call.setVisible(true);

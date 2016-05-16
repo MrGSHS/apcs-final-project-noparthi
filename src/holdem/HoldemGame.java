@@ -1,6 +1,7 @@
 package holdem;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Timer;
 
 import javax.swing.SwingUtilities;
@@ -10,10 +11,7 @@ public class HoldemGame {
 	private Display display;
 	private final int BIGBLIND = 500;
 	private final int SMALLBLIND = 250;
-	private final int ANTE = 100;
-	private int bigBlindIndex;
-	private int smallBlindIndex;
-	private ArrayList<Player> players = new ArrayList<>();
+	private final int ANTE = 125;
 
 	private Player user;
 	private Round round;
@@ -21,63 +19,57 @@ public class HoldemGame {
 	private int dealerIndex = 0;
 
 	public ArrayList<int[]> playerPositions = new ArrayList<>();
+	private ArrayList<Player> actionsOrder = new ArrayList<>();
+	private ArrayList<Player> players = new ArrayList<>();
 
-	public int getBigBlindIndex() {
-		return bigBlindIndex;
+	public Display getDisplay() {return display;}
+	public Table getTable() {return table;}
+	public Round getRound() {return round;}
+	public Player getUser() {return user;}
+	public int getBigBlind() {return BIGBLIND;}
+	public int getSmallBlind() {return SMALLBLIND;}
+	public int getDealerIndex() {return dealerIndex;}
+	public ArrayList<Player> getActionsOrder() {return actionsOrder;}
+	public ArrayList<Player> getPlayers() {return players;}
+	
+	public HoldemGame() {
+		int pos = 0;
+		table = new Table();
+		user = new Player(this, pos++);
+		players.add(user);
+		actionsOrder.add(user);
+		Player computer1 = new Computer(this, pos++);
+		players.add(computer1);
+		actionsOrder.add(computer1);
+		Player computer2 = new Computer(this, pos++);
+		players.add(computer2);
+		actionsOrder.add(computer2);
+		Player computer3 = new Computer(this, pos++);
+		players.add(computer3);
+		actionsOrder.add(computer3);
+		Player computer4 = new Computer(this, pos++);
+		players.add(computer4);
+		actionsOrder.add(computer4);
+		round = new Round(this);
+		new Timer().schedule(display = new Display(this), 0, 250);
+		takeBlinds();
+		takeAnte();
+		display.setRoundTitle();
+		round.preFlop();
 	}
 
-	public int getSmallBlindIndex() {
-		return smallBlindIndex;
-	}
-
-	public Display getDisplay() {
-		return display;
-	}
-
-	public Table getTable() {
-		return table;
-	}
-
-	public Round getRound() {
-		return round;
-	}
-
-	public Player getUser() {
-		return user;
-	}
-
-	public int getBigBlind() {
-		return BIGBLIND;
-	}
-
-	public int getSmallBlind() {
-		return SMALLBLIND;
-	}
-
-	public int getDealerIndex() {
-		return dealerIndex;
-	}
 
 	public int getMaxBetAmount() {
 		int max = 0;
 		for (Player p : players) {
-			if (p.getBetAmount() > max) {
+			if (p.getBetAmount() > max) 
 				max = p.getBetAmount();
-			}
 		}
 		return max;
 	}
 
-	public void setDealerIndex(int index) {
-		if (index >= players.size())
-			dealerIndex = 0;
-		else
-			dealerIndex = index;
-	}
-
-	// Index 0 Is A Player, The Rest Are Computers
-	public ArrayList<Player> getPlayers() {
-		return players;
+	public void incrementDealer() {
+		// TODO: Increment Dealer By Rotating Using Collections
 	}
 
 	public ArrayList<Player> getActivePlayers() {
@@ -89,83 +81,48 @@ public class HoldemGame {
 		return active;
 	}
 
-	public ArrayList<Player> getActiveComputers() {
-		ArrayList<Player> active = new ArrayList<>();
-		for (Player p : players) {
-			if (!p.isFolded() && p.getPosition()!=0) // p.getPosition() != 0 &&
-				active.add(p);
-		}
-		return active;
-	}
-
 	public void allComputersTakeAction() {
 		new Thread(new Runnable() {
 			@SuppressWarnings("static-access")
 			public void run() {
-				ArrayList<Player> computers = getActiveComputers();
-				for (Player computer : computers) {
-					computer.takeAction();
-					try {
-						Thread.currentThread().sleep(((int)(Math.random()*3) + 1) * 1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+				ArrayList<Player> everyone = getActionsOrder();
+				for (Player computer : everyone) {
+					if (!computer.isFolded()) {
+						if (computer != getUser()) {
+							computer.takeAction();
+							try {
+								Thread.currentThread().sleep(((int) (Math.random() * 3) + 1) * 1000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							if (getRound().moveOn())
+								break;
+						} else {
+							System.out.println("User Turn");
+						}
 					}
-					if (getRound().moveOn())
-						break;
 				}
 			}
 		}).start();
 	}
 
-	public HoldemGame() {
-		int pos = 0;
-		table = new Table();
-		user = new Player(this, pos++);
-		players.add(user);
-		Player computer1 = new Computer(this, pos++);
-		players.add(computer1);
-		Player computer2 = new Computer(this, pos++);
-		players.add(computer2);
-		Player computer3 = new Computer(this, pos++);
-		players.add(computer3);
-		Player computer4 = new Computer(this, pos++);
-		players.add(computer4);
-		round = new Round(this);
-		new Timer().schedule(display = new Display(this), 0, 250);
-		takeBlinds();
-		takeAnte();
-		display.setRoundTitle();
-		round.preFlop();
-	}
-
 	// Takes The Blinds
 	public void takeBlinds() {
-		// Set Index Of Big Blind Player
-		bigBlindIndex = dealerIndex - 1;
-		if (bigBlindIndex < 0){
-			bigBlindIndex = players.size()-1;
-		}
-		players.get(bigBlindIndex).setBigBlind(true);
-		players.get(bigBlindIndex).raise(BIGBLIND);
-
-		// Set Index Of Small Blind Player
-		smallBlindIndex = bigBlindIndex - 1;
-		if (smallBlindIndex < 0){
-			smallBlindIndex = players.size()-1;
-		}
-		players.get(smallBlindIndex).setSmallBlind(true);
-		players.get(smallBlindIndex).setBetAmount(SMALLBLIND);
-
-		// Takes The Big And Small Blind
-		System.out.println(bigBlindIndex);
-		players.get(smallBlindIndex).setPoints(players.get(smallBlindIndex).getPoints() - SMALLBLIND);
-		players.get(smallBlindIndex).setPointsInvested(SMALLBLIND);
+		Collections.rotate(actionsOrder, -1);
+		actionsOrder.get(0).setSmallBlind(true);
+		actionsOrder.get(0).setBetAmount(SMALLBLIND);
+		actionsOrder.get(0).setPoints(actionsOrder.get(0).getPoints() - SMALLBLIND);
+		actionsOrder.get(0).setPointsInvested(SMALLBLIND);
 		round.setPot(round.getPot() + SMALLBLIND);
+
+		Collections.rotate(actionsOrder, -1);
+		actionsOrder.get(0).setBigBlind(true);
+		actionsOrder.get(0).raise(BIGBLIND);
 	}
 
 	// Takes Ante
 	public void takeAnte() {
-		for (Player p : players) {
+		for (Player p : actionsOrder) {
 			if (!p.isBigBlind() && !p.isSmallBlind()) {
 				p.setPoints(p.getPoints() - ANTE);
 				p.setPointsInvested(ANTE);
@@ -177,112 +134,110 @@ public class HoldemGame {
 
 	// Pays Out Money In Pot To Winner
 	public void payout() {
-		ArrayList<Integer> strongestPlayersIndex = new ArrayList<>();
-		strongestPlayersIndex.add(0);
+		ArrayList<Player> strongestPlayersIndex = new ArrayList<>();
 		// TODO: Add In Kickers And High Card
-		for (int i = 1; i < getActivePlayers().size(); i++) {
-			// If One User's Hand Strength Is Better Than The Best Currently
-			if (getActivePlayers().get(i).getHand().updateHandStrength() > getActivePlayers()
-					.get(strongestPlayersIndex.get(0)).getHand().updateHandStrength()) {
-				strongestPlayersIndex = new ArrayList<Integer>();
-				strongestPlayersIndex.add(i);
-			}
-			// If Final Hand Strengths Are Equal
-			else if (getActivePlayers().get(i).getHand().updateHandStrength() == getActivePlayers()
-					.get(strongestPlayersIndex.get(0)).getHand().updateHandStrength()) {
-				// Four Of A Kind
-				if (getActivePlayers().get(i).getHand().getCurrentHandStrengthString().equals("Four Of A Kind")) {
-					if (getActivePlayers().get(i).getHand().getQuads() == getActivePlayers()
-							.get(strongestPlayersIndex.get(0)).getHand().getQuads())
-						strongestPlayersIndex.add(i);
-					else if (getActivePlayers().get(i).getHand().getQuads() > getActivePlayers()
-							.get(strongestPlayersIndex.get(0)).getHand().getQuads()) {
-						strongestPlayersIndex = new ArrayList<Integer>();
-						strongestPlayersIndex.add(i);
-					}
+		//Add First Active Player As Strongest Player
+		for(Player p : players) if(!p.isFolded()){ strongestPlayersIndex.add(p); break;}
+		for (Player p : players) {
+			// If Not Folded
+			if (!p.isFolded()) {
+				// If One User's Hand Strength Is Better Than The Best Currently
+				if (p.getHand().updateHandStrength() > strongestPlayersIndex.get(0).getHand()
+						.updateHandStrength()) {
+					strongestPlayersIndex = new ArrayList<Player>();
+					strongestPlayersIndex.add(p);
 				}
-
-				// Full House
-				if (getActivePlayers().get(i).getHand().getCurrentHandStrengthString().equals("Full House")) {
-					if (getActivePlayers().get(i).getHand().getFullHouse().get(0) == getActivePlayers()
-							.get(strongestPlayersIndex.get(0)).getHand().getFullHouse().get(0))
-						// If The Triples Are Equivalent
-						if (getActivePlayers().get(i).getHand().getFullHouse().get(1) == getActivePlayers()
-								.get(strongestPlayersIndex.get(0)).getHand().getFullHouse().get(1))
-						strongestPlayersIndex.add(i);
-						else if (getActivePlayers().get(i).getHand().getFullHouse().get(1) > getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getFullHouse().get(1)) {
-						strongestPlayersIndex = new ArrayList<Integer>();
-						strongestPlayersIndex.add(i);
-						} else if (getActivePlayers().get(i).getHand().getFullHouse().get(0) > getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getFullHouse().get(0)) {
-						strongestPlayersIndex = new ArrayList<Integer>();
-						strongestPlayersIndex.add(i);
+				// If Final Hand Strengths Are Equal
+				else if (p.getHand().updateHandStrength() == strongestPlayersIndex.get(0)
+						.getHand().updateHandStrength() && p!=strongestPlayersIndex.get(0)) {
+					// Four Of A Kind
+					if (p.getHand().getCurrentHandStrengthString().equals("Four Of A Kind")) {
+						if (p.getHand().getQuads() == strongestPlayersIndex.get(0).getHand()
+								.getQuads())
+							strongestPlayersIndex.add(p);
+						else if (p.getHand().getQuads() > strongestPlayersIndex.get(0).getHand()
+								.getQuads()) {
+							strongestPlayersIndex = new ArrayList<Player>();
+							strongestPlayersIndex.add(p);
 						}
-				}
-
-				// Flush
-				if (getActivePlayers().get(i).getHand().getCurrentHandStrengthString().equals("Flush")) {
-					strongestPlayersIndex.add(i);
-				}
-
-				// Straight
-				if (getActivePlayers().get(i).getHand().getCurrentHandStrengthString().equals("Straight")) {
-					if (getActivePlayers().get(i).getHand().getStraight() == getActivePlayers()
-							.get(strongestPlayersIndex.get(0)).getHand().getStraight())
-						strongestPlayersIndex.add(i);
-					else if (getActivePlayers().get(i).getHand().getStraight() > getActivePlayers()
-							.get(strongestPlayersIndex.get(0)).getHand().getStraight()) {
-						strongestPlayersIndex = new ArrayList<Integer>();
-						strongestPlayersIndex.add(i);
 					}
-				}
 
-				// Three Of A Kind
-				if (getActivePlayers().get(i).getHand().getCurrentHandStrengthString().equals("Three Of A Kind")) {
-					if (getActivePlayers().get(i).getHand().getTrips() == getActivePlayers()
-							.get(strongestPlayersIndex.get(0)).getHand().getTrips())
-						strongestPlayersIndex.add(i);
-					else if (getActivePlayers().get(i).getHand().getTrips() > getActivePlayers()
-							.get(strongestPlayersIndex.get(0)).getHand().getTrips()) {
-						strongestPlayersIndex = new ArrayList<Integer>();
-						strongestPlayersIndex.add(i);
+					// Full House
+					if (p.getHand().getCurrentHandStrengthString().equals("Full House")) {
+						if (p.getHand().getFullHouse().get(0) == strongestPlayersIndex.get(0)
+								.getHand().getFullHouse().get(0))
+							// If The Triples Are Equivalent
+							if (p.getHand().getFullHouse().get(1) == strongestPlayersIndex.get(0).getHand().getFullHouse().get(1))
+							strongestPlayersIndex.add(p);
+							else if (p.getHand().getFullHouse().get(1) > strongestPlayersIndex.get(0).getHand().getFullHouse().get(1)) {
+							strongestPlayersIndex = new ArrayList<Player>();
+							strongestPlayersIndex.add(p);
+							} 
 					}
-				}
 
-				// Two Pair
-				if (getActivePlayers().get(i).getHand().getCurrentHandStrengthString().equals("Two-Pair")) {
-					if (getActivePlayers().get(i).getHand().getTwoPair().get(0) == getActivePlayers()
-							.get(strongestPlayersIndex.get(0)).getHand().getTwoPair().get(0))
-						// If The High Pair Are Equivalent
-						if (getActivePlayers().get(i).getHand().getTwoPair().get(1) == getActivePlayers()
-								.get(strongestPlayersIndex.get(0)).getHand().getTwoPair().get(1))
-						strongestPlayersIndex.add(i);
-						else if (getActivePlayers().get(i).getHand().getTwoPair().get(1) > getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getTwoPair().get(1)) {
-						strongestPlayersIndex = new ArrayList<Integer>();
-						strongestPlayersIndex.add(i);
-						} else if (getActivePlayers().get(i).getHand().getTwoPair().get(0) > getActivePlayers().get(strongestPlayersIndex.get(0)).getHand().getTwoPair().get(0)) {
-						strongestPlayersIndex = new ArrayList<Integer>();
-						strongestPlayersIndex.add(i);
+					// Flush
+					if (p.getHand().getCurrentHandStrengthString().equals("Flush")) {
+						strongestPlayersIndex.add(p);
+					}
+
+					// Straight
+					if (p.getHand().getCurrentHandStrengthString().equals("Straight")) {
+						if (p.getHand().getStraight() == strongestPlayersIndex.get(0).getHand()
+								.getStraight())
+							strongestPlayersIndex.add(p);
+						else if (p.getHand().getStraight() > strongestPlayersIndex.get(0)
+								.getHand().getStraight()) {
+							strongestPlayersIndex = new ArrayList<Player>();
+							strongestPlayersIndex.add(p);
 						}
-				}
+					}
 
-				// Pair
-				if (getActivePlayers().get(i).getHand().getCurrentHandStrengthString().equals("Pair")) {
-					if (getActivePlayers().get(i).getHand().getPair() == getActivePlayers()
-							.get(strongestPlayersIndex.get(0)).getHand().getPair())
-						strongestPlayersIndex.add(i);
-					else if (getActivePlayers().get(i).getHand().getPair() > getActivePlayers()
-							.get(strongestPlayersIndex.get(0)).getHand().getPair()) {
-						strongestPlayersIndex = new ArrayList<Integer>();
-						strongestPlayersIndex.add(i);
+					// Three Of A Kind
+					if (p.getHand().getCurrentHandStrengthString().equals("Three Of A Kind")) {
+						if (p.getHand().getTrips() == strongestPlayersIndex.get(0).getHand()
+								.getTrips())
+							strongestPlayersIndex.add(p);
+						else if (p.getHand().getTrips() > strongestPlayersIndex.get(0).getHand()
+								.getTrips()) {
+							strongestPlayersIndex = new ArrayList<Player>();
+							strongestPlayersIndex.add(p);
+						}
+					}
+
+					// Two Pair
+					if (p.getHand().getCurrentHandStrengthString().equals("Two-Pair")) {
+						if (p.getHand().getTwoPair().get(0) == strongestPlayersIndex.get(0)
+								.getHand().getTwoPair().get(0))
+							// If The High Pair Are Equivalent
+							if (p.getHand().getTwoPair().get(1) == strongestPlayersIndex.get(0)
+									.getHand().getTwoPair().get(1))
+							strongestPlayersIndex.add(p);
+							else if (p.getHand().getTwoPair().get(1) > strongestPlayersIndex.get(0).getHand().getTwoPair().get(1)) {
+							strongestPlayersIndex = new ArrayList<Player>();
+							strongestPlayersIndex.add(p);
+							} else if (p.getHand().getTwoPair().get(0) > strongestPlayersIndex.get(0).getHand().getTwoPair().get(0)) {
+							strongestPlayersIndex = new ArrayList<Player>();
+							strongestPlayersIndex.add(p);
+							}
+					}
+
+					// Pair
+					if (p.getHand().getCurrentHandStrengthString().equals("Pair")) {
+						if (p.getHand().getPair() == strongestPlayersIndex.get(0).getHand()
+								.getPair())
+							strongestPlayersIndex.add(p);
+						else if (p.getHand().getPair() > strongestPlayersIndex.get(0).getHand()
+								.getPair()) {
+							strongestPlayersIndex = new ArrayList<Player>();
+							strongestPlayersIndex.add(p);
+						}
 					}
 				}
-
 			}
 		}
 		int numberShared = strongestPlayersIndex.size();
-		for (int i : strongestPlayersIndex) {
-			getActivePlayers().get(i)
-					.setPoints((int) (getActivePlayers().get(i).getPoints() + round.getPot() / numberShared));
+		for (Player p : strongestPlayersIndex) {
+			p.setPoints((int) (p.getPoints() + round.getPot() / numberShared));
 		}
 		newRound();
 	}
@@ -313,7 +268,7 @@ public class HoldemGame {
 			p.resetActionBoolean();
 		}
 		resetPlayerBetAmount();
-		setDealerIndex(dealerIndex += 1);
+		incrementDealer();
 		table = new Table();
 		round = new Round(this);
 		takeBlinds();

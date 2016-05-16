@@ -1,5 +1,7 @@
 package holdem;
 
+import java.util.Collections;
+
 public class Round {
 
 	private static int roundNumber = 0;
@@ -23,50 +25,20 @@ public class Round {
 		}
 	}
 
-	public int getRoundNumber() {
-		return roundNumber;
-	}
-
-	public int getPot() {
-		return pot;
-	}
-
-	public int getMinBet() {
-		return minBet;
-	}
-
-	public void setPot(int amt) {
-		pot = amt;
-	}
-
-	public void setMinBet(int amt) {
-		minBet = amt;
-	}
-
-	// Before Flop Actions
-	public void preFlop() {
-		// Prints Out Hand Before Flop, Then Deals Flop
-		minBet = game.getBigBlind();
-
-	}
-
-	// Before Turn Actions
+	public int getRoundNumber() {return roundNumber;}
+	public int getPot() {return pot;}
+	public int getMinBet() {return minBet;}
+	public void setPot(int amt) {pot = amt;}
+	public void setMinBet(int amt) {minBet = amt;}
+	public void preFlop() {	
+		Collections.rotate(game.getActionsOrder(), -1);
+		minBet = game.getBigBlind();}
 	public void preTurn() {
+		Collections.rotate(game.getActionsOrder(), -2);
 		minBet = game.getBigBlind();
-		if(game.getUser().isFolded()) game.allComputersTakeAction(); 
 	}
-
-	// Before River Actions
-	public void preRiver() {
-		minBet = game.getBigBlind();
-		if(game.getUser().isFolded()) game.allComputersTakeAction(); 
-	}
-
-	// After River Actions (Final Actions)
-	public void postRiver() {
-		minBet = game.getBigBlind();
-		if(game.getUser().isFolded()) game.allComputersTakeAction(); 
-	}
+	public void preRiver() {minBet = game.getBigBlind();}
+	public void postRiver() {minBet = game.getBigBlind();}
 
 	// Check To See If Should Move To Next Round
 	public boolean moveOn() {
@@ -84,7 +56,7 @@ public class Round {
 				raise++;
 		}
 
-		if (check != game.getActivePlayers().size() && ((call + raise) != game.getActivePlayers().size() && raise >= 1)) {
+		if (check != game.getActivePlayers().size() && ((call + raise) != game.getActivePlayers().size() || raise > 1)) {
 			System.out.println("Failed Move-On");	
 			return false;
 		}
