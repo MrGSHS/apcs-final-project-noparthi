@@ -12,8 +12,10 @@ public class BlackPlayer {
 		balance=2000;
 	}
 	//sees if over 21
-	{
-	
+	public boolean isIn(){
+		return calc()>21;
+	}
+		
 	//Calculate value of the hand
 	public int calc(){
 		int points=0;
@@ -37,6 +39,12 @@ public class BlackPlayer {
 		}
 		return points;
 	}
+	//adds a card to hand
+	public boolean hit(){
+		hand.addCard();
+		return isIn();
+	}
+	
 	//Makes a bet. returns money bet or zero if not possible
 	public int makeBet(int money){
 		boolean can = money<=balance;
@@ -51,7 +59,7 @@ public class BlackPlayer {
 	}
 	//adds betted amount
 	public void demGains(){
-		balance+=bet;
+		balance+=bet*2;
 		bet=0;
 	}
 
