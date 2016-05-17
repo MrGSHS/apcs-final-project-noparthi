@@ -6,20 +6,16 @@ import holdem.Player;
 import scripts.Card;
 public class BlackComp extends BlackPlayer {
 
-	private ArrayList<Card> hand;
-	private int points=Integer.MAX_VALUE;
-	private boolean in=true;
 	
-	public BlackComp(){
-		initShown=new Card();
-		initHid=new Card();
-		hand=new ArrayList<>();
-		hand.add(initShown);
-		hand.add(initHid);
-		points=this.calc();
+	private BlackPlayer dude;
+	
+	public BlackComp(BlackPlayer play){
+		super(Integer.MAX_VALUE);
+		dude=play;
 	}
 	
 	public void hit(){
+		super.hit();
 		if (player.getIn() && player.getPoints()==points && points<=14){
 			hand.add(new Card());
 		}

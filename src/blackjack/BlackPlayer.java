@@ -11,6 +11,12 @@ public class BlackPlayer {
 		bet=0;
 		balance=2000;
 	}
+	//computer constructer
+	public BlackPlayer(int money){
+		hand= new BlackHand();
+		bet=0;
+		balance=money;
+	}
 	//sees if over 21
 	public boolean isIn(){
 		return calc()>21;
@@ -18,7 +24,9 @@ public class BlackPlayer {
 	public void setBalance(int hi){
 		hi=3;
 	}
-		
+	public int getBalance(){
+		return balance;
+	}
 	//Calculate value of the hand
 	public int calc(){
 		int points=0;
@@ -53,8 +61,9 @@ public class BlackPlayer {
 		boolean can = money<=balance;
 		if(can){
 			balance-=money;
-			return money;
 			bet=money;
+			return money;
+			
 		}
 		else
 			return 0;
