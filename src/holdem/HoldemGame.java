@@ -267,7 +267,7 @@ public class HoldemGame {
 			p.setSmallBlind(false);
 		}
 		resetPlayerBetAmount();
-		incrementDealer();
+		//incrementDealer();
 		table = new Table();
 		round = new Round(this);
 		takeBlinds();

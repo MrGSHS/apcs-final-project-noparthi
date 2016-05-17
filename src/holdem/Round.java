@@ -35,7 +35,7 @@ public class Round {
 		game.getActionsOrder().get(0).setFirstAction(true);
 		minBet = game.getBigBlind();}
 	public void preTurn() {
-		Collections.rotate(game.getActionsOrder(), -2);
+		Collections.rotate(game.getActionsOrder(), -3);
 		for(Player p : game.getActionsOrder()) p.setFoldBoolean(false);
 		game.getActionsOrder().get(0).setFirstAction(true);
 		minBet = game.getBigBlind();

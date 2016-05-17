@@ -47,7 +47,7 @@ public class Computer extends Player {
 		// Actions Based Off Of The Player Before This
 		// If Player Before Checked
 		if (game.getActionsOrder().get(indexBefore).getCheckBoolean()
-				|| game.getActionsOrder().get(indexBefore).getFirstAction()) {
+				|| game.getPlayers().get(getPosition()).getFirstAction()) {
 			// Otherwise Continue
 			if (currentHandStrength > 7 || (int) (Math.random() * 11) + 1 <= 2)
 				raise(game.getBigBlind() * 2);
@@ -114,7 +114,8 @@ public class Computer extends Player {
 
 		// Actions Based Off Of Player Before This
 		// If Player Before Checked
-		if (game.getActionsOrder().get(indexBefore).getCheckBoolean() || game.getUser().isFolded()) {
+		if (game.getActionsOrder().get(indexBefore).getCheckBoolean()
+				|| game.getPlayers().get(getPosition()).getFirstAction()) {
 			if ((int) (Math.random() * 11) + 1 <= 1)
 				raise(game.getBigBlind() * ((int) (Math.random() * 20) + 1));
 			else if (currentHandStrength >= 7 || (int) (Math.random() * 11) + 1 <= 1)
