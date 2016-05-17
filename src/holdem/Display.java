@@ -554,6 +554,21 @@ public class Display extends TimerTask {
 			}
 		}
 
+		// Actual Button Removal
+		public void buttonRemoval(Graphics g) {
+			if (game.getUser().hasUserMoved()) {
+				removeAllButtons();
+			} else if (!game.getUser().isFolded()) {
+				addAllButtons();
+				// Removes Check If Necessary
+				if (game.getMaxBetAmount() - game.getUser().getBetAmount() == 0) {
+					addCheck();
+				} else {
+					removeCheck();
+				}
+			}
+		}
+
 		public void paintComponent(Graphics g) {
 			// Initialize Stuff
 			g.setFont(new Font("Calibri", Font.BOLD, 20));
@@ -606,6 +621,9 @@ public class Display extends TimerTask {
 
 			// Congratulations You Wasted Money - Tip
 			addTipEffects(g);
+
+			// Button Removal
+			buttonRemoval(g);
 		}
 	}
 
@@ -731,19 +749,6 @@ public class Display extends TimerTask {
 				frame.repaint();
 			}
 		});
-
-		// Removes All Buttons If Necessary
-		if (game.getPlayers().get(0).isFolded()) {
-			removeAllButtons();
-		} else {
-			addAllButtons();
-			// Removes Check If Necessary
-			if (game.getMaxBetAmount() - game.getUser().getBetAmount() == 0) {
-				addCheck();
-			} else {
-				removeCheck();
-			}
-		}
 	}
 
 	private void reloadImages() {

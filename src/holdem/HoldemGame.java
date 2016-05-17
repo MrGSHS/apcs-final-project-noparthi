@@ -102,7 +102,6 @@ public class HoldemGame {
 			@SuppressWarnings("static-access")
 			public void run() {
 				for (Player computer : actionsOrder) {
-					System.out.println(computer.getPosition());
 					if (!computer.isFolded()) {
 						if (computer != getUser()) {
 							try {
@@ -295,7 +294,6 @@ public class HoldemGame {
 			p.setSmallBlind(false);
 		}
 		resetPlayerBetAmount();
-		// incrementDealer();
 		table = new Table();
 		round = new Round(this);
 		takeBlinds();
