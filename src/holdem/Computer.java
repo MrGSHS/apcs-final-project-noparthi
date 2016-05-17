@@ -28,188 +28,140 @@ public class Computer extends Player {
 		}
 
 		// Index Equals Index Of Active Player Before This Player In
-		// ActivePlayers
-		int index = getPosition() - 1;
-		for (int i = 1; i < game.getActivePlayers().size(); i++) {
-			if (game.getActivePlayers().get(i) == game.getPlayers().get(getPosition())) {
-				index = i;
-				index--;
+		// ActionPlayers
+		int indexBefore = -100;
+		for (int i = 0; i < game.getActionsOrder().size(); i++) {
+			if (game.getActionsOrder().get(i) == game.getPlayers().get(getPosition())) {
+				indexBefore = i - 1;
+				if (indexBefore < 0)
+					indexBefore = game.getActionsOrder().size() - 1;
+				while (game.getActionsOrder().get(indexBefore).isFolded()) {
+					indexBefore -= 1;
+					if (indexBefore < 0)
+						indexBefore = game.getActionsOrder().size() - 1;
+				}
 				break;
 			}
 		}
 
-		// Index Equals Index Of Active Player Before This Player In Players
-		for (int j = 1; j < game.getPlayers().size(); j++) {
-			if (game.getPlayers().get(j) == game.getActivePlayers().get(index)) {
-				index = j;
-				break;
-			}
-		}
-		System.out.println("Index: " + index);
 		// Actions Based Off Of The Player Before This
-		
 		// If Player Before Checked
-		if (game.getPlayers().get(index).getCheckBoolean() || game.getUser().isFolded()) {
+		if (game.getActionsOrder().get(indexBefore).getCheckBoolean()
+				|| game.getActionsOrder().get(indexBefore).getFirstAction()) {
 			// Otherwise Continue
-			if (currentHandStrength > 7 || (int) (Math.random() * 11) + 1 <= 2) {
+			if (currentHandStrength > 7 || (int) (Math.random() * 11) + 1 <= 2)
 				raise(game.getBigBlind() * 2);
-				return;
-			} else {
+			else {
 				// For Pre-Flop, Making People Call Big Blind
 				if (game.getTable().getCardsOnTable().size() == 0) {
-					if (game.getPlayers().get(getPosition()).getBetAmount() < maxBet) {
+					if (game.getPlayers().get(getPosition()).getBetAmount() < maxBet)
 						call();
-						return;
-					}
-				}
-				// Otherwise Call
-				else {
-					check();
-					return;
+					// Otherwise Check
+					else
+						check();
 				}
 			}
+			return;
 		}
 		// If Player Before Raised Or Called
-		else if (game.getPlayers().get(index).getRaiseBoolean() || game.getPlayers().get(index).getCallBoolean()) {
-			if (currentHandStrength == 10) {
+		else if (game.getActionsOrder().get(indexBefore).getRaiseBoolean()
+				|| game.getActionsOrder().get(indexBefore).getCallBoolean()) {
+			if (currentHandStrength == 10)
 				call();
-				return;
-			}
-			if (game.getMaxBetAmount() > 0.50 * getPoints()) {
-				if (currentHandStrength >= 9) {
+			else if (game.getMaxBetAmount() > 0.50 * getPoints()) {
+				if (currentHandStrength >= 9)
 					call();
-					return;
-				} else {
+				else
 					fold();
-					;
-					return;
-				}
-			}
-			if (game.getMaxBetAmount() > 0.25 * getPoints()) {
-				if (currentHandStrength >= 8 || (int) (Math.random() * 11) + 1 == 1) {
+			} else if (game.getMaxBetAmount() > 0.25 * getPoints()) {
+				if (currentHandStrength >= 8 || (int) (Math.random() * 11) + 1 == 1)
 					call();
-					return;
-				} else {
+				else
 					fold();
-					return;
-				}
-			}
-			if (game.getMaxBetAmount() > 0.10 * getPoints()) {
-				if (currentHandStrength >= 7 || (int) (Math.random() * 11) + 1 <= 2) {
+			} else if (game.getMaxBetAmount() > 0.10 * getPoints()) {
+				if (currentHandStrength >= 7 || (int) (Math.random() * 11) + 1 <= 2)
 					call();
-					return;
-				} else {
+				else
 					fold();
-					return;
-				}
-			} else {
+			} else
 				call();
-				return;
-			}
+			return;
 		}
 		// If Reaches Here, The Game Broke
 		else {
 			System.out.println("BROKEN.");
-			System.exit(1);
 		}
 	}
 
 	public void logic() {
 		currentHandStrength = getHand().updateHandStrength();
 		// Index Equals Index Of Active Player Before This Player In
-		// ActivePlayers
-		int index = getPosition() - 1;
-		for (int i = 1; i < game.getActivePlayers().size(); i++) {
-			if (game.getActivePlayers().get(i) == game.getPlayers().get(getPosition())) {
-				index = i;
-				index--;
+		// ActionPlayers
+		int indexBefore = -100;
+		for (int i = 0; i < game.getActionsOrder().size(); i++) {
+			if (game.getActionsOrder().get(i) == game.getPlayers().get(getPosition())) {
+				indexBefore = i - 1;
+				if (indexBefore < 0)
+					indexBefore = game.getActionsOrder().size() - 1;
+				while (game.getActionsOrder().get(indexBefore).isFolded()) {
+					indexBefore -= 1;
+					if (indexBefore < 0)
+						indexBefore = game.getActionsOrder().size() - 1;
+				}
 				break;
 			}
 		}
-
-		// Index Equals Index Of Active Player Before This Player In Players
-		for (int j = 1; j < game.getPlayers().size(); j++) {
-			if (game.getPlayers().get(j) == game.getActivePlayers().get(index)) {
-				index = j;
-				break;
-			}
-		}
-
-		System.out.println("Index: " + index);
 
 		// Actions Based Off Of Player Before This
 		// If Player Before Checked
-		if (game.getPlayers().get(index).getCheckBoolean() || game.getUser().isFolded()) {
-			if ((int) (Math.random() * 11) + 1 <= 1) {
+		if (game.getActionsOrder().get(indexBefore).getCheckBoolean() || game.getUser().isFolded()) {
+			if ((int) (Math.random() * 11) + 1 <= 1)
 				raise(game.getBigBlind() * ((int) (Math.random() * 20) + 1));
-				return;
-			} else if (currentHandStrength >= 7 || (int) (Math.random() * 11) + 1 <= 1) {
+			else if (currentHandStrength >= 7 || (int) (Math.random() * 11) + 1 <= 1)
 				raise(game.getBigBlind() * ((int) (Math.random() * 15) + 1));
-				return;
-			} else if (currentHandStrength == 6 || (int) (Math.random() * 11) + 1 <= 1) {
+			else if (currentHandStrength == 6 || (int) (Math.random() * 11) + 1 <= 1)
 				raise(game.getBigBlind() * ((int) (Math.random() * 14) + 1));
-				return;
-			} else if (currentHandStrength == 5 || (int) (Math.random() * 11) + 1 <= 1) {
+			else if (currentHandStrength == 5 || (int) (Math.random() * 11) + 1 <= 1)
 				raise(game.getBigBlind() * ((int) (Math.random() * 13) + 1));
-				return;
-			} else if (currentHandStrength == 4 || (int) (Math.random() * 11) + 1 <= 1) {
+			else if (currentHandStrength == 4 || (int) (Math.random() * 11) + 1 <= 1)
 				raise(game.getBigBlind() * ((int) (Math.random() * 12) + 1));
-				return;
-			} else if (currentHandStrength == 3 || (int) (Math.random() * 11) + 1 <= 2) {
+			else if (currentHandStrength == 3 || (int) (Math.random() * 11) + 1 <= 2)
 				raise(game.getBigBlind() * ((int) (Math.random() * 11) + 1));
-				return;
-			} else {
+			else
 				check();
-				return;
-			}
+			return;
 		}
 		// If Player Before Raised
-		else if (game.getPlayers().get(index).getRaiseBoolean()) {
-			if (currentHandStrength == 10) {
+		else if (game.getActionsOrder().get(indexBefore).getRaiseBoolean()) {
+			if (currentHandStrength == 10)
 				call();
-				return;
-			}
-			if (game.getMaxBetAmount() > 0.5 * getPoints()) {
-				if (currentHandStrength >= 7) {
+			else if (game.getMaxBetAmount() > 0.5 * getPoints()) {
+				if (currentHandStrength >= 7)
 					call();
-					return;
-				} else {
+				else
 					fold();
-					return;
-				}
-			}
-			if (game.getMaxBetAmount() > 0.25 * getPoints()) {
-				if (currentHandStrength >= 6 || (int) (Math.random() * 11) + 1 <= 1) {
+			} else if (game.getMaxBetAmount() > 0.25 * getPoints()) {
+				if (currentHandStrength >= 6 || (int) (Math.random() * 11) + 1 <= 1)
 					call();
-					return;
-				} else {
+				else
 					fold();
-					return;
-				}
-			}
-			if (game.getMaxBetAmount() > 0.1 * getPoints()) {
-				if (currentHandStrength >= 5 || (int) (Math.random() * 11) + 1 <= 1) {
+			} else if (game.getMaxBetAmount() > 0.1 * getPoints()) {
+				if (currentHandStrength >= 5 || (int) (Math.random() * 11) + 1 <= 1)
 					call();
-					return;
-				} else {
+				else
 					fold();
-					return;
-				}
 			} else {
-				if (currentHandStrength >= 4 || (int) (Math.random() * 11) + 1 <= 1) {
+				if (currentHandStrength >= 4 || (int) (Math.random() * 11) + 1 <= 1)
 					raise(game.getMaxBetAmount() * ((int) (Math.random() * 3) + 2));
-					return;
-				} else if (currentHandStrength >= 2 || (int) (Math.random() * 11) + 1 <= 1) {
+				else if (currentHandStrength >= 2 || (int) (Math.random() * 11) + 1 <= 1)
 					call();
-					return;
-				} else {
+				else
 					fold();
-					return;
-				}
 			}
+			return;
 		}
 		// If Player Before Called
-		else if (game.getPlayers().get(index).getCallBoolean()) {
+		else if (game.getActionsOrder().get(indexBefore).getCallBoolean()) {
 			call();
 			return;
 		}

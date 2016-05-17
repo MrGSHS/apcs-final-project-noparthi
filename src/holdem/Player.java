@@ -15,9 +15,10 @@ public class Player {
 	private boolean folded;
 	private boolean bigBlind;
 	private boolean smallBlind;
-	public boolean checkBoolean = false;
-	public boolean raiseBoolean = false;
-	public boolean callBoolean = false;
+	private boolean firstAction = false;
+	private boolean checkBoolean = false;
+	private boolean raiseBoolean = false;
+	private boolean callBoolean = false;
 	
 	public Player(HoldemGame game, int position){
 		this.game = game;
@@ -29,6 +30,7 @@ public class Player {
 	public boolean getCheckBoolean(){return checkBoolean;}
 	public boolean getRaiseBoolean(){return raiseBoolean;}
 	public boolean getCallBoolean(){return callBoolean;}
+	public boolean getFirstAction(){return firstAction;}
 	
 	public int getPosition(){return position;}	
 	public int getPoints() { return points; }
@@ -40,6 +42,7 @@ public class Player {
 	public boolean isSmallBlind() {return smallBlind; }
 	public boolean isFolded(){ return folded; }	
 
+	public void setFirstAction(boolean sfa){firstAction = sfa;}
 	public void setPoints(int num) { points = num; }
 	public void setBigBlind(boolean bb){ bigBlind = bb; }
     public void setSmallBlind(boolean sb) {smallBlind = sb;}

@@ -32,9 +32,12 @@ public class Round {
 	public void setMinBet(int amt) {minBet = amt;}
 	public void preFlop() {	
 		Collections.rotate(game.getActionsOrder(), -1);
+		game.getActionsOrder().get(0).setFirstAction(true);
 		minBet = game.getBigBlind();}
 	public void preTurn() {
 		Collections.rotate(game.getActionsOrder(), -2);
+		for(Player p : game.getActionsOrder()) p.setFoldBoolean(false);
+		game.getActionsOrder().get(0).setFirstAction(true);
 		minBet = game.getBigBlind();
 	}
 	public void preRiver() {minBet = game.getBigBlind();}
@@ -47,21 +50,24 @@ public class Round {
 		int check = 0;
 		int call = 0;
 		int raise = 0;
-		for (Player p : game.getActivePlayers()) {
+		int fold = 0;
+		for (Player p : game.getActionsOrder()) {
 			if (p.getCheckBoolean())
 				check++;
 			if (p.getCallBoolean())
 				call++;
 			if (p.getRaiseBoolean())
 				raise++;
+			if(p.isFolded())
+				fold++;
 		}
 
-		if (check != game.getActivePlayers().size() && ((call + raise) != game.getActivePlayers().size() || raise > 1)) {
-			System.out.println("Failed Move-On");	
+		if (check + fold != game.getActionsOrder().size() && ((call + raise + fold) != game.getActionsOrder().size() || raise > 1)) {
+			//System.out.println("Failed Move-On");	
 			return false;
 		}
 
-		System.out.println("Move-On Successful");
+		//System.out.println("Move-On Successful");
 
 		// Else Reset Stuff
 		game.resetPlayerBetAmount();

@@ -69,24 +69,15 @@ public class HoldemGame {
 	}
 
 	public void incrementDealer() {
-		// TODO: Increment Dealer By Rotating Using Collections
-	}
-
-	public ArrayList<Player> getActivePlayers() {
-		ArrayList<Player> active = new ArrayList<>();
-		for (Player p : players) {
-			if (!p.isFolded())
-				active.add(p);
-		}
-		return active;
+		Collections.rotate(actionsOrder, -1);
 	}
 
 	public void allComputersTakeAction() {
 		new Thread(new Runnable() {
 			@SuppressWarnings("static-access")
 			public void run() {
-				ArrayList<Player> everyone = getActionsOrder();
-				for (Player computer : everyone) {
+				for (Player computer : actionsOrder) {
+					System.out.println(computer.getPosition());
 					if (!computer.isFolded()) {
 						if (computer != getUser()) {
 							computer.takeAction();
@@ -98,7 +89,7 @@ public class HoldemGame {
 							if (getRound().moveOn())
 								break;
 						} else {
-							System.out.println("User Turn");
+							//TODO: Check User Turn And Wait Until User Makes A Move
 						}
 					}
 				}
@@ -250,7 +241,12 @@ public class HoldemGame {
 
 	// Checks To See If 2 Or More Players Are Still Active
 	public boolean isRoundActive() {
-		if (getActivePlayers().size() > 1)
+		int total = 0;
+		for(Player p : players){
+			if (!p.isFolded())
+				total++;
+		}
+		if (total > 1)
 			return true;
 		payout();
 		return false;
@@ -266,6 +262,9 @@ public class HoldemGame {
 			p.unFold();
 			p.resetPointsInvested();
 			p.resetActionBoolean();
+			p.setFirstAction(false);
+			p.setBigBlind(false);
+			p.setSmallBlind(false);
 		}
 		resetPlayerBetAmount();
 		incrementDealer();

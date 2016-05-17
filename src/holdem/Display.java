@@ -308,7 +308,6 @@ public class Display extends TimerTask {
 					g.setColor(Color.WHITE);
 					g.drawString("SM. Blind", game.playerPositions.get(p.getPosition())[0] + 13,
 							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
-					System.out.println(p.getPosition());
 				} else if (p.isBigBlind()) {
 					g.setFont(new Font("Calibri", Font.BOLD, 14));
 					g.setColor(modifiedGrey);
@@ -317,7 +316,6 @@ public class Display extends TimerTask {
 					g.setColor(Color.WHITE);
 					g.drawString("Big Blind", game.playerPositions.get(p.getPosition())[0] + 13,
 							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
-					System.out.println(p.getPosition());
 				}
 			}
 		}
