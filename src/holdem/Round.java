@@ -25,32 +25,54 @@ public class Round {
 		}
 	}
 
-	public int getRoundNumber() {return roundNumber;}
-	public int getPot() {return pot;}
-	public int getMinBet() {return minBet;}
-	public void setPot(int amt) {pot = amt;}
-	public void setMinBet(int amt) {minBet = amt;}
-	public void preFlop() {	
+	public int getRoundNumber() {
+		return roundNumber;
+	}
+
+	public int getPot() {
+		return pot;
+	}
+
+	public int getMinBet() {
+		return minBet;
+	}
+
+	public void setPot(int amt) {
+		pot = amt;
+	}
+
+	public void setMinBet(int amt) {
+		minBet = amt;
+	}
+
+	public void preFlop() {
 		Collections.rotate(game.getActionsOrder(), -1);
-		game.getActionsOrder().get(0).setFirstAction(true);
-		game.allComputersTakeAction();
-		minBet = game.getBigBlind();}
-	public void preTurn() {
-		game.getUser().setUserMove(false);
-		Collections.rotate(game.getActionsOrder(), -3);
-		for(Player p : game.getActionsOrder()) p.setFoldBoolean(false);
 		game.getActionsOrder().get(0).setFirstAction(true);
 		game.allComputersTakeAction();
 		minBet = game.getBigBlind();
 	}
+
+	public void preTurn() {
+		game.getUser().setUserMove(false);
+		Collections.rotate(game.getActionsOrder(), -3);
+		for (Player p : game.getActionsOrder())
+			p.setFoldBoolean(false);
+		game.getActionsOrder().get(0).setFirstAction(true);
+		game.allComputersTakeAction();
+		minBet = game.getBigBlind();
+	}
+
 	public void preRiver() {
 		game.getUser().setUserMove(false);
+		game.allComputersTakeAction();
 		minBet = game.getBigBlind();
-		}
+	}
+
 	public void postRiver() {
 		game.getUser().setUserMove(false);
+		game.allComputersTakeAction();
 		minBet = game.getBigBlind();
-		}
+	}
 
 	// Check To See If Should Move To Next Round
 	public boolean moveOn() {
@@ -67,16 +89,17 @@ public class Round {
 				call++;
 			if (p.getRaiseBoolean())
 				raise++;
-			if(p.isFolded())
+			if (p.isFolded())
 				fold++;
 		}
 
-		if (check + fold != game.getActionsOrder().size() && ((call + raise + fold) != game.getActionsOrder().size() || raise > 1)) {
-			//System.out.println("Failed Move-On");	
+		if (check + fold != game.getActionsOrder().size()
+				&& ((call + raise + fold) != game.getActionsOrder().size() || raise > 1)) {
+			// System.out.println("Failed Move-On");
 			return false;
 		}
 
-		//System.out.println("Move-On Successful");
+		// System.out.println("Move-On Successful");
 
 		// Else Reset Stuff
 		game.resetPlayerBetAmount();

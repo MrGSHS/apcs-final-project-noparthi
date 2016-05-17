@@ -114,8 +114,6 @@ public class HoldemGame {
 							if (getRound().moveOn())
 								break;
 						} else {
-							// TODO: Check User Turn And Wait Until User Makes A
-							// Move
 							while (!getUser().hasUserMoved()) {
 								try {
 									Thread.currentThread().sleep(100);

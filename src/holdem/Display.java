@@ -324,7 +324,7 @@ public class Display extends TimerTask {
 		public void drawAction(Graphics g) {
 			g.setFont(new Font("Calibri", Font.BOLD, 14));
 			g.setColor(modifiedGrey);
-			
+
 			for (Player p : game.getPlayers()) {
 				int srcX = game.playerPositions.get(p.getPosition())[0] + 80;
 				int rectWidth = 80;
@@ -336,20 +336,19 @@ public class Display extends TimerTask {
 				}
 				if (p.isFolded()) {
 					g.setColor(Color.RED);
-					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(), rectWidth, 18, 10,
-							10);
+					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(),
+							rectWidth, 18, 10, 10);
 					g.setColor(Color.BLACK);
 					g.drawString("Fold", game.playerPositions.get(p.getPosition())[0] + 110 - stringOffset,
 							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
 				}
-				if (p.isBigBlind() && game.getTable().getCardsOnTable().size() == 0
-						&& p.getRaiseBoolean() && p.getPointsInvested() == game.getBigBlind()) {
-				} else if (!p.getCheckBoolean() && !p.getCallBoolean()
-						&& !p.getRaiseBoolean()) {
+				if (p.isBigBlind() && game.getTable().getCardsOnTable().size() == 0 && p.getRaiseBoolean()
+						&& p.getPointsInvested() == game.getBigBlind()) {
+				} else if (!p.getCheckBoolean() && !p.getCallBoolean() && !p.getRaiseBoolean()) {
 				} else if (p.getCheckBoolean() || p.getCallBoolean()) {
 					g.setColor(new Color(53, 192, 18));
-					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(), rectWidth, 18, 10,
-							10);
+					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(),
+							rectWidth, 18, 10, 10);
 					g.setColor(Color.BLACK);
 
 					if (p.getCheckBoolean())
@@ -360,8 +359,8 @@ public class Display extends TimerTask {
 								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
 				} else if (p.getRaiseBoolean()) {
 					g.setColor(Color.YELLOW);
-					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(), rectWidth, 18, 10,
-							10);
+					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(),
+							rectWidth, 18, 10, 10);
 					g.setColor(Color.BLACK);
 					g.drawString("Raise", game.playerPositions.get(p.getPosition())[0] + 105 - stringOffset,
 							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);

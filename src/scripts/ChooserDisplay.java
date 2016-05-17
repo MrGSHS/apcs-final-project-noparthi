@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.ToolTipManager;
 
 import blackjack.BlackGame;
 import holdem.HoldemGame;
@@ -44,6 +45,8 @@ public class ChooserDisplay {
 
 			imgURL = getClass().getResource("/menu/holdem.jpg");
 			Icon pokerIcon = new ImageIcon(imgURL);
+			
+			ToolTipManager.sharedInstance().setInitialDelay(1000); 
 
 			blackJackBtn = new JButton(blackJackIcon);
 			blackJackBtn.setSize(blackJackIcon.getIconWidth(), blackJackIcon.getIconHeight());
@@ -52,10 +55,12 @@ public class ChooserDisplay {
 			blackJackBtn.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					int reply = JOptionPane.showConfirmDialog(null, "Would you like to view a quick tutorial on the rules of Black Jack?", "Black Jack Tutorial", JOptionPane.YES_NO_OPTION);
+					int reply = JOptionPane.showConfirmDialog(null,
+							"Would you like to view a quick tutorial on the rules of Black Jack?",
+							"Black Jack Tutorial", JOptionPane.YES_NO_OPTION);
 					if (reply == JOptionPane.YES_OPTION) {
 						JOptionPane.showMessageDialog(null, "HELLO");
-					} else if(reply == JOptionPane.NO_OPTION){
+					} else if (reply == JOptionPane.NO_OPTION) {
 						new BlackGame();
 					} else {
 						System.exit(0);
@@ -71,10 +76,12 @@ public class ChooserDisplay {
 			holdemBtn.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					int reply = JOptionPane.showConfirmDialog(null, "Would you like to view a quick tutorial on the rules of Hold'em?", "Hold'em Tutorial", JOptionPane.YES_NO_OPTION);
+					int reply = JOptionPane.showConfirmDialog(null,
+							"Would you like to view a quick tutorial on the rules of Hold'em?", "Hold'em Tutorial",
+							JOptionPane.YES_NO_OPTION);
 					if (reply == JOptionPane.YES_OPTION) {
 						JOptionPane.showMessageDialog(null, "HELLO");
-					} else if(reply == JOptionPane.NO_OPTION){
+					} else if (reply == JOptionPane.NO_OPTION) {
 						new HoldemGame();
 						frame.dispose();
 					} else {
@@ -82,10 +89,9 @@ public class ChooserDisplay {
 					}
 				}
 			});
-			
+
 			frame.add(blackJackBtn);
 			frame.add(holdemBtn);
-
 		}
-
-}}
+	}
+}
