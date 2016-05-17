@@ -187,8 +187,8 @@ public class Display extends TimerTask {
 		tablePanel.addKeyListener(new KeyListener() {
 
 			@Override
-			public void keyPressed(KeyEvent arg0) {
-				new HelpDisplay();
+			public void keyPressed(KeyEvent ke) {
+				if(ke.getKeyCode() == KeyEvent.VK_ESCAPE) new HelpDisplay();
 			}
 
 			@Override
@@ -196,7 +196,7 @@ public class Display extends TimerTask {
 			}
 
 			@Override
-			public void keyTyped(KeyEvent arg0) {
+			public void keyTyped(KeyEvent key) {
 			}
 
 		});
