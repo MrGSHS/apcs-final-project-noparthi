@@ -1,27 +1,40 @@
 package blackjack;
 
-import holdem.Player;
 
 public class BlackRound {
 	private static int roundNumber = 0;
-	Player 
-
-	public Round(Game game) {
+	private static BlackPlayer play=new BlackPlayer();
+	private static BlackComp deal=new BlackComp(play);
+	private int bet;
+	private Deck use;
+	private boolean whoWins;
+	public BlackRound(int playerBet){
+		play.makeBet(playerBet);
+		bet=playerBet;
+		use=new Deck();
+		roundNumber++;
 		
+	}
+	public boolean tryHit(){
+		boolean isIn=play.hit();
+		if (!isIn) {
+			whoWins=false;
 		}
+		
+	}
 	
-
-	public int getRoundNumber() {
+	public int getRound(){
 		return roundNumber;
 	}
-
 	
-
-	//Check To See If Should Move To Next Round
-	public boolean moveOn() {
-		
+	public void setPlayer(Player a){
+		play=a;
 	}
 	
-}
+		
+	}
+		
+	}
+
 
 

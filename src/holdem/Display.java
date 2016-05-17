@@ -52,10 +52,10 @@ public class Display extends TimerTask {
 		}
 	};
 	private String USERNAME;
-	private String COMP1NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
-	private String COMP2NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
-	private final String COMP3NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
-	private final String COMP4NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+	private String COMP1NAME;
+	private String COMP2NAME;
+	private String COMP3NAME;
+	private String COMP4NAME;
 
 	private ArrayList<BufferedImage> LABELS = new ArrayList<BufferedImage>() {
 		private static final long serialVersionUID = 1L;
@@ -142,9 +142,19 @@ public class Display extends TimerTask {
 		} else {
 			System.exit(0);
 		}
-
+		
+		//Removes User Name From Naming List If Exists
+		for(String name : NAMES)
+			if(USERNAME.equals(name)) NAMES.remove(name);
+		
+		//Set Computer Names
+		COMP1NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+		COMP2NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+		COMP3NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+		COMP4NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+		
 		// Remind User that ESC opens hand chart
-		JOptionPane.showConfirmDialog(null, "Press ESC anytime to bring up the hand chart!", "Reminder",
+		JOptionPane.showConfirmDialog(null, "Press ESC Anytime To Bring Up The Hand Chart", "Reminder",
 				JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
 
 		try {
@@ -530,7 +540,7 @@ public class Display extends TimerTask {
 		// Add Tips
 		public void addTipEffects(Graphics g) {
 			if (userTip) {
-				if (counter != 6) {
+				if (counter != 200) {
 					String tipString = "Thanks " + USERNAME + "! You get " + extraCreditPoints
 							+ " extra credit points!";
 					g.setColor(Color.WHITE);
@@ -553,12 +563,12 @@ public class Display extends TimerTask {
 				}
 			}
 		}
-
-		// Actual Button Removal
-		public void buttonRemoval(Graphics g) {
+		
+		//Actual Button Removal
+		public void buttonRemoval(Graphics g){
 			if (game.getUser().hasUserMoved()) {
 				removeAllButtons();
-			} else if (!game.getUser().isFolded()) {
+			} else if(!game.getUser().isFolded()){
 				addAllButtons();
 				// Removes Check If Necessary
 				if (game.getMaxBetAmount() - game.getUser().getBetAmount() == 0) {
@@ -621,8 +631,8 @@ public class Display extends TimerTask {
 
 			// Congratulations You Wasted Money - Tip
 			addTipEffects(g);
-
-			// Button Removal
+			
+			//Button Removal
 			buttonRemoval(g);
 		}
 	}
