@@ -105,12 +105,12 @@ public class HoldemGame {
 					System.out.println(computer.getPosition());
 					if (!computer.isFolded()) {
 						if (computer != getUser()) {
-							computer.takeAction();
 							try {
 								Thread.currentThread().sleep(((int) (Math.random() * 3) + 1) * 1000);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
+							computer.takeAction();
 							if (getRound().moveOn())
 								break;
 						} else {
