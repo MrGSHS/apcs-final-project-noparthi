@@ -47,29 +47,30 @@ public class Round {
 
 	public void preFlop() {
 		Collections.rotate(game.getActionsOrder(), -1);
+		game.getUser().setUserTurn(false);
 		game.getActionsOrder().get(0).setFirstAction(true);
 		game.allComputersTakeAction();
 		minBet = game.getBigBlind();
 	}
 
 	public void preTurn() {
-		game.getUser().setUserMove(false);
 		Collections.rotate(game.getActionsOrder(), -3);
 		for (Player p : game.getActionsOrder())
 			p.setFoldBoolean(false);
+		game.getUser().setUserTurn(false);
 		game.getActionsOrder().get(0).setFirstAction(true);
 		game.allComputersTakeAction();
 		minBet = game.getBigBlind();
 	}
 
 	public void preRiver() {
-		game.getUser().setUserMove(false);
+		game.getUser().setUserTurn(false);
 		game.allComputersTakeAction();
 		minBet = game.getBigBlind();
 	}
 
 	public void postRiver() {
-		game.getUser().setUserMove(false);
+		game.getUser().setUserTurn(false);
 		game.allComputersTakeAction();
 		minBet = game.getBigBlind();
 	}

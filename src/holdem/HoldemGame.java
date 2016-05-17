@@ -104,8 +104,9 @@ public class HoldemGame {
 				for (Player computer : actionsOrder) {
 					if (!computer.isFolded()) {
 						if (computer != getUser()) {
+							getUser().setUserTurn(false);
 							try {
-								Thread.currentThread().sleep(((int) (Math.random() * 3) + 1) * 1000);
+								Thread.currentThread().sleep(((int) (Math.random() * 3) + 3) * 1000);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
@@ -113,7 +114,8 @@ public class HoldemGame {
 							if (getRound().moveOn())
 								break;
 						} else {
-							while (!getUser().hasUserMoved()) {
+							getUser().setUserTurn(true);
+							while (getUser().isUserTurn()) {
 								try {
 									Thread.currentThread().sleep(100);
 								} catch (InterruptedException e) {
@@ -139,12 +141,15 @@ public class HoldemGame {
 
 		Collections.rotate(actionsOrder, -1);
 		actionsOrder.get(0).setBigBlind(true);
-		actionsOrder.get(0).raise(BIGBLIND);
+		actionsOrder.get(0).setBetAmount(BIGBLIND);
+		actionsOrder.get(0).setPoints(actionsOrder.get(0).getPoints() - BIGBLIND);
+		actionsOrder.get(0).setPointsInvested(BIGBLIND);
+		round.setPot(round.getPot() + BIGBLIND);
 	}
 
 	// Takes Ante
 	public void takeAnte() {
-		for (Player p : actionsOrder) {
+		for (Player p : players) {
 			if (!p.isBigBlind() && !p.isSmallBlind()) {
 				p.setPoints(p.getPoints() - ANTE);
 				p.setPointsInvested(ANTE);
