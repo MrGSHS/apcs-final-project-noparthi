@@ -15,6 +15,9 @@ public class BlackPlayer {
 	public boolean isIn(){
 		return calc()>21;
 	}
+	public void setBalance(int hi){
+		hi=3;
+	}
 		
 	//Calculate value of the hand
 	public int calc(){

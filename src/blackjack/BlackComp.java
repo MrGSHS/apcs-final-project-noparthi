@@ -5,10 +5,9 @@ import java.util.*;
 import holdem.Player;
 import scripts.Card;
 public class BlackComp extends BlackPlayer {
-	private Card initShown;
-	private Card initHid;
+
 	private ArrayList<Card> hand;
-	private int points=0;
+	private int points=Integer.MAX_VALUE;
 	private boolean in=true;
 	
 	public BlackComp(){

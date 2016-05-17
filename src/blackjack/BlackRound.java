@@ -4,27 +4,24 @@ import holdem.Player;
 
 public class BlackRound {
 	private static int roundNumber = 0;
-	private static BlackPlayer play=new BlackPlayer();
-	private static BlackComp deal=new BlackComp();
-	private int bet;
-	public BlackRound(int playerBet){
-		play.makeBet(playerBet);
-		bet=playerBet;
+	Player 
+
+	public Round(Game game) {
 		
-	}
-	public void updateHandAfterPlayerHits (){
-		play.hit();
-		if (play.calc()>21){
-			deal.demGains(2*bet);
 		}
-			
-			
-	}
 	
-		
-	}
-		
+
+	public int getRoundNumber() {
+		return roundNumber;
 	}
 
+	
+
+	//Check To See If Should Move To Next Round
+	public boolean moveOn() {
+		
+	}
+	
+}
 
 
