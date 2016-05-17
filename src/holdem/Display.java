@@ -256,7 +256,7 @@ public class Display extends TimerTask {
 
 		// Draw User Cards
 		public void drawUserCards(Graphics g) {
-			if (!game.getPlayers().get(0).isFolded()) {
+			if (!game.getUser().isFolded()) {
 				g.drawImage(card1, game.playerPositions.get(0)[0] + CARD_WIDTH + 25,
 						game.playerPositions.get(0)[1] - 50, CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
 				g.drawImage(card2, game.playerPositions.get(0)[0] + 15, game.playerPositions.get(0)[1] - 50,
