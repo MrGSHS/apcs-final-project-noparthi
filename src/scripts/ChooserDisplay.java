@@ -125,7 +125,7 @@ public class ChooserDisplay {
 							"Would you like to view a quick tutorial on the rules of Hold'em?", "Hold'em Tutorial",
 							JOptionPane.YES_NO_OPTION);
 					if (reply == JOptionPane.YES_OPTION) {
-						JOptionPane.showMessageDialog(null, "HELLO");
+						new TutorialDisplay();
 					} else if (reply == JOptionPane.NO_OPTION) {
 						new HoldemGame();
 						frame.dispose();
