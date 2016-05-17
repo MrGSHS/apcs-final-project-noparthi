@@ -17,6 +17,7 @@ public class HoldemGame {
 	private Round round;
 	private Table table;
 	private int dealerIndex = 0;
+	private boolean payout;
 
 	public ArrayList<int[]> playerPositions = new ArrayList<>();
 	private ArrayList<Player> actionsOrder = new ArrayList<>();
@@ -36,6 +37,10 @@ public class HoldemGame {
 
 	public Player getUser() {
 		return user;
+	}
+	
+	public boolean isPayout(){
+		return payout;
 	}
 
 	public int getBigBlind() {
@@ -58,6 +63,10 @@ public class HoldemGame {
 		return players;
 	}
 
+	public void setPayout(boolean sp){
+		payout = sp;
+	}
+	
 	public HoldemGame() {
 		int pos = 0;
 		table = new Table();

@@ -128,8 +128,11 @@ public class Round {
 			System.out.println("Stage: " + stageOfRound);
 			game.getTable().dealRiver();
 			postRiver();
-		} else
+		} else{
+			game.setPayout(true);
 			game.payout();
+		}
+		game.setPayout(false);
 		return true;
 	}
 }
