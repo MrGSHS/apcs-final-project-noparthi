@@ -1,7 +1,13 @@
 package scripts;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.net.URL;
 
 import javax.swing.Icon;
@@ -20,6 +26,12 @@ public class ChooserDisplay {
 	private JFrame frame;
 	private ChooserPanel choosePanel;
 
+	private JButton blackJackBtn;
+	private JButton holdemBtn;
+
+	private boolean mouseOverBlackJack = false;
+	private boolean mouseOverHoldem = false;
+	
 	public ChooserDisplay() {
 		frame = new JFrame();
 		choosePanel = new ChooserPanel();
@@ -36,9 +48,7 @@ public class ChooserDisplay {
 
 		private static final long serialVersionUID = 1L;
 
-		private JButton blackJackBtn;
-		private JButton holdemBtn;
-
+		
 		public ChooserPanel() {
 			URL imgURL = getClass().getResource("/menu/blackjack.jpg");
 			Icon blackJackIcon = new ImageIcon(imgURL);
@@ -52,6 +62,41 @@ public class ChooserDisplay {
 			blackJackBtn.setSize(blackJackIcon.getIconWidth(), blackJackIcon.getIconHeight());
 			blackJackBtn.setLocation(25, 100);
 			blackJackBtn.setToolTipText("Black Jack");
+			blackJackBtn.addMouseListener(new MouseListener(){
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					mouseOverBlackJack = true;
+					frame.repaint();
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					mouseOverBlackJack = false;
+					frame.repaint();
+				}
+				
+			});
 			blackJackBtn.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
@@ -89,9 +134,51 @@ public class ChooserDisplay {
 					}
 				}
 			});
+			holdemBtn.addMouseListener(new MouseListener(){
 
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					mouseOverHoldem = true;
+					revalidate();
+					frame.repaint();
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					mouseOverHoldem = false;
+					revalidate();
+					frame.repaint();
+				}
+				
+			});
 			frame.add(blackJackBtn);
 			frame.add(holdemBtn);
+		}
+		private final int BORDER = 4;
+		public void paint(Graphics g){
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.setStroke(new BasicStroke(5));
+			g.setColor(Color.YELLOW);
+			if(mouseOverBlackJack) g.drawRect(blackJackBtn.getX()-BORDER, blackJackBtn.getY()-BORDER, blackJackBtn.getWidth()+2*BORDER, blackJackBtn.getHeight()+2*BORDER);
+			if(mouseOverHoldem)    g.drawRect(holdemBtn.getX()-BORDER, holdemBtn.getY()-BORDER, holdemBtn.getWidth()+2*BORDER, holdemBtn.getHeight()+2*BORDER);
 		}
 	}
 }
