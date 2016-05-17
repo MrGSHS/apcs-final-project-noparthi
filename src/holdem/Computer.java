@@ -29,7 +29,7 @@ public class Computer extends Player {
 
 		// Index Equals Index Of Active Player Before This Player In
 		// ActionPlayers
-		int indexBefore = -100;
+		int indexBefore = -1;
 		for (int i = 0; i < game.getActionsOrder().size(); i++) {
 			if (game.getActionsOrder().get(i) == game.getPlayers().get(getPosition())) {
 				indexBefore = i - 1;

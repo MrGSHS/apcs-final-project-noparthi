@@ -75,14 +75,14 @@ public class Hand {
 	public int initialHandStrength() {
 		strength = 0;
 		// Check High Card
-		if ((card1.getNumber() <= 5 || card2.getNumber() <= 4) && (card1.getNumber() >= 12 || card2.getNumber() <= 12))
-			strength += 2;
+		if ((card1.getNumber() <= 5 || card2.getNumber() <= 5) && (card1.getNumber() >= 12 || card2.getNumber() >= 12))
+			strength += 3;
 		else if (card1.getNumber() <= 6 && card2.getNumber() <= 6)
 			strength += 1;
 		else if (card1.getNumber() <= 10 || card2.getNumber() <= 10)
 			strength += 4;
 		else
-			strength += 7;
+			strength += 6;
 		// Check Straight Draws
 		if (Math.abs(card1.getNumber() - card2.getNumber()) == 1) {
 			strength += 1;

@@ -19,7 +19,7 @@ public class Player {
 	private boolean checkBoolean = false;
 	private boolean raiseBoolean = false;
 	private boolean callBoolean = false;
-	private boolean userMove = false;
+	public boolean userTurn = false;
 
 	public Player(HoldemGame game, int position) {
 		this.game = game;
@@ -29,6 +29,10 @@ public class Player {
 
 	//Overridden By Computer
 	public void takeAction() {
+	}
+
+	public boolean isUserTurn(){
+		return userTurn;
 	}
 
 	public boolean getCheckBoolean() {
@@ -45,10 +49,6 @@ public class Player {
 
 	public boolean getFirstAction() {
 		return firstAction;
-	}
-
-	public boolean hasUserMoved() {
-		return userMove;
 	}
 
 	public int getPosition() {
@@ -87,8 +87,8 @@ public class Player {
 		firstAction = sfa;
 	}
 
-	public void setUserMove(boolean sum) {
-		userMove = sum;
+	public void setUserTurn(boolean sut){
+		userTurn = sut;
 	}
 
 	public void setPoints(int num) {
