@@ -22,16 +22,42 @@ public class HoldemGame {
 	private ArrayList<Player> actionsOrder = new ArrayList<>();
 	private ArrayList<Player> players = new ArrayList<>();
 
-	public Display getDisplay() {return display;}
-	public Table getTable() {return table;}
-	public Round getRound() {return round;}
-	public Player getUser() {return user;}
-	public int getBigBlind() {return BIGBLIND;}
-	public int getSmallBlind() {return SMALLBLIND;}
-	public int getDealerIndex() {return dealerIndex;}
-	public ArrayList<Player> getActionsOrder() {return actionsOrder;}
-	public ArrayList<Player> getPlayers() {return players;}
-	
+	public Display getDisplay() {
+		return display;
+	}
+
+	public Table getTable() {
+		return table;
+	}
+
+	public Round getRound() {
+		return round;
+	}
+
+	public Player getUser() {
+		return user;
+	}
+
+	public int getBigBlind() {
+		return BIGBLIND;
+	}
+
+	public int getSmallBlind() {
+		return SMALLBLIND;
+	}
+
+	public int getDealerIndex() {
+		return dealerIndex;
+	}
+
+	public ArrayList<Player> getActionsOrder() {
+		return actionsOrder;
+	}
+
+	public ArrayList<Player> getPlayers() {
+		return players;
+	}
+
 	public HoldemGame() {
 		int pos = 0;
 		table = new Table();
@@ -58,11 +84,10 @@ public class HoldemGame {
 		round.preFlop();
 	}
 
-
 	public int getMaxBetAmount() {
 		int max = 0;
 		for (Player p : players) {
-			if (p.getBetAmount() > max) 
+			if (p.getBetAmount() > max)
 				max = p.getBetAmount();
 		}
 		return max;
@@ -89,7 +114,16 @@ public class HoldemGame {
 							if (getRound().moveOn())
 								break;
 						} else {
-							//TODO: Check User Turn And Wait Until User Makes A Move
+							// TODO: Check User Turn And Wait Until User Makes A
+							// Move
+							while (!getUser().hasUserMoved()) {
+								try {
+									Thread.currentThread().sleep(100);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
 						}
 					}
 				}
@@ -127,27 +161,28 @@ public class HoldemGame {
 	public void payout() {
 		ArrayList<Player> strongestPlayersIndex = new ArrayList<>();
 		// TODO: Add In Kickers And High Card
-		//Add First Active Player As Strongest Player
-		for(Player p : players) if(!p.isFolded()){ strongestPlayersIndex.add(p); break;}
+		// Add First Active Player As Strongest Player
+		for (Player p : players)
+			if (!p.isFolded()) {
+				strongestPlayersIndex.add(p);
+				break;
+			}
 		for (Player p : players) {
 			// If Not Folded
 			if (!p.isFolded()) {
 				// If One User's Hand Strength Is Better Than The Best Currently
-				if (p.getHand().updateHandStrength() > strongestPlayersIndex.get(0).getHand()
-						.updateHandStrength()) {
+				if (p.getHand().updateHandStrength() > strongestPlayersIndex.get(0).getHand().updateHandStrength()) {
 					strongestPlayersIndex = new ArrayList<Player>();
 					strongestPlayersIndex.add(p);
 				}
 				// If Final Hand Strengths Are Equal
-				else if (p.getHand().updateHandStrength() == strongestPlayersIndex.get(0)
-						.getHand().updateHandStrength() && p!=strongestPlayersIndex.get(0)) {
+				else if (p.getHand().updateHandStrength() == strongestPlayersIndex.get(0).getHand().updateHandStrength()
+						&& p != strongestPlayersIndex.get(0)) {
 					// Four Of A Kind
 					if (p.getHand().getCurrentHandStrengthString().equals("Four Of A Kind")) {
-						if (p.getHand().getQuads() == strongestPlayersIndex.get(0).getHand()
-								.getQuads())
+						if (p.getHand().getQuads() == strongestPlayersIndex.get(0).getHand().getQuads())
 							strongestPlayersIndex.add(p);
-						else if (p.getHand().getQuads() > strongestPlayersIndex.get(0).getHand()
-								.getQuads()) {
+						else if (p.getHand().getQuads() > strongestPlayersIndex.get(0).getHand().getQuads()) {
 							strongestPlayersIndex = new ArrayList<Player>();
 							strongestPlayersIndex.add(p);
 						}
@@ -155,15 +190,16 @@ public class HoldemGame {
 
 					// Full House
 					if (p.getHand().getCurrentHandStrengthString().equals("Full House")) {
-						if (p.getHand().getFullHouse().get(0) == strongestPlayersIndex.get(0)
-								.getHand().getFullHouse().get(0))
+						if (p.getHand().getFullHouse().get(0) == strongestPlayersIndex.get(0).getHand().getFullHouse()
+								.get(0))
 							// If The Triples Are Equivalent
-							if (p.getHand().getFullHouse().get(1) == strongestPlayersIndex.get(0).getHand().getFullHouse().get(1))
+							if (p.getHand().getFullHouse().get(1) == strongestPlayersIndex.get(0).getHand()
+									.getFullHouse().get(1))
 							strongestPlayersIndex.add(p);
 							else if (p.getHand().getFullHouse().get(1) > strongestPlayersIndex.get(0).getHand().getFullHouse().get(1)) {
 							strongestPlayersIndex = new ArrayList<Player>();
 							strongestPlayersIndex.add(p);
-							} 
+							}
 					}
 
 					// Flush
@@ -173,11 +209,9 @@ public class HoldemGame {
 
 					// Straight
 					if (p.getHand().getCurrentHandStrengthString().equals("Straight")) {
-						if (p.getHand().getStraight() == strongestPlayersIndex.get(0).getHand()
-								.getStraight())
+						if (p.getHand().getStraight() == strongestPlayersIndex.get(0).getHand().getStraight())
 							strongestPlayersIndex.add(p);
-						else if (p.getHand().getStraight() > strongestPlayersIndex.get(0)
-								.getHand().getStraight()) {
+						else if (p.getHand().getStraight() > strongestPlayersIndex.get(0).getHand().getStraight()) {
 							strongestPlayersIndex = new ArrayList<Player>();
 							strongestPlayersIndex.add(p);
 						}
@@ -185,11 +219,9 @@ public class HoldemGame {
 
 					// Three Of A Kind
 					if (p.getHand().getCurrentHandStrengthString().equals("Three Of A Kind")) {
-						if (p.getHand().getTrips() == strongestPlayersIndex.get(0).getHand()
-								.getTrips())
+						if (p.getHand().getTrips() == strongestPlayersIndex.get(0).getHand().getTrips())
 							strongestPlayersIndex.add(p);
-						else if (p.getHand().getTrips() > strongestPlayersIndex.get(0).getHand()
-								.getTrips()) {
+						else if (p.getHand().getTrips() > strongestPlayersIndex.get(0).getHand().getTrips()) {
 							strongestPlayersIndex = new ArrayList<Player>();
 							strongestPlayersIndex.add(p);
 						}
@@ -197,11 +229,11 @@ public class HoldemGame {
 
 					// Two Pair
 					if (p.getHand().getCurrentHandStrengthString().equals("Two-Pair")) {
-						if (p.getHand().getTwoPair().get(0) == strongestPlayersIndex.get(0)
-								.getHand().getTwoPair().get(0))
+						if (p.getHand().getTwoPair().get(0) == strongestPlayersIndex.get(0).getHand().getTwoPair()
+								.get(0))
 							// If The High Pair Are Equivalent
-							if (p.getHand().getTwoPair().get(1) == strongestPlayersIndex.get(0)
-									.getHand().getTwoPair().get(1))
+							if (p.getHand().getTwoPair().get(1) == strongestPlayersIndex.get(0).getHand().getTwoPair()
+									.get(1))
 							strongestPlayersIndex.add(p);
 							else if (p.getHand().getTwoPair().get(1) > strongestPlayersIndex.get(0).getHand().getTwoPair().get(1)) {
 							strongestPlayersIndex = new ArrayList<Player>();
@@ -214,11 +246,9 @@ public class HoldemGame {
 
 					// Pair
 					if (p.getHand().getCurrentHandStrengthString().equals("Pair")) {
-						if (p.getHand().getPair() == strongestPlayersIndex.get(0).getHand()
-								.getPair())
+						if (p.getHand().getPair() == strongestPlayersIndex.get(0).getHand().getPair())
 							strongestPlayersIndex.add(p);
-						else if (p.getHand().getPair() > strongestPlayersIndex.get(0).getHand()
-								.getPair()) {
+						else if (p.getHand().getPair() > strongestPlayersIndex.get(0).getHand().getPair()) {
 							strongestPlayersIndex = new ArrayList<Player>();
 							strongestPlayersIndex.add(p);
 						}
@@ -242,7 +272,7 @@ public class HoldemGame {
 	// Checks To See If 2 Or More Players Are Still Active
 	public boolean isRoundActive() {
 		int total = 0;
-		for(Player p : players){
+		for (Player p : players) {
 			if (!p.isFolded())
 				total++;
 		}
@@ -267,7 +297,7 @@ public class HoldemGame {
 			p.setSmallBlind(false);
 		}
 		resetPlayerBetAmount();
-		//incrementDealer();
+		// incrementDealer();
 		table = new Table();
 		round = new Round(this);
 		takeBlinds();

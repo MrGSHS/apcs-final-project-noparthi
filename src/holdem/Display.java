@@ -692,7 +692,7 @@ public class Display extends TimerTask {
 					int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
 
 					if (game.getUser().raise(intRaiseAmount)) {
-						game.allComputersTakeAction();
+						game.getUser().setUserMove(true);
 						game.getRound().moveOn();
 					} else {
 						return;
@@ -702,18 +702,16 @@ public class Display extends TimerTask {
 					System.out.println("User has cancelled raise.");
 				}
 			} else if (evt.getSource() == call) {
-				System.out.println("called");
 				game.getUser().call();
-				game.allComputersTakeAction();
+				game.getUser().setUserMove(true);
 				game.getRound().moveOn();
 			} else if (evt.getSource() == check) {
 				game.getUser().check();
-				game.allComputersTakeAction();
+				game.getUser().setUserMove(true);
 				game.getRound().moveOn();
 			} else if (evt.getSource() == fold) {
 				game.getPlayers().get(0).setFoldBoolean(true);
-				game.allComputersTakeAction();
-				// game.payout();
+				game.getUser().setUserMove(true);
 			}
 			if (evt.getSource() == tip) {
 				if (game.getUser().getPoints() >= 2000) {
