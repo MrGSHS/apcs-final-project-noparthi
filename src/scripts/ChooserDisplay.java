@@ -35,7 +35,7 @@ public class ChooserDisplay {
 	public ChooserDisplay() {
 		frame = new JFrame();
 		choosePanel = new ChooserPanel();
-		frame.setTitle("Welcome to Casino Simulator 2K16!");
+		frame.setTitle("Casino Simulator 2K16!");
 		frame.setSize(900, 600);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
