@@ -14,7 +14,7 @@ public class LogoDrop extends JFrame {
 	private BufferedImage logo;
 	private int logowait;
 	private boolean logodone = false;
-	private URL imgURL = getClass().getResource("/other/pFusionSplash.png");
+	private URL imgURL = getClass().getResource("/menu/droplogo.png");
 	
 	public boolean getLogoDone(){return logodone;}
 
