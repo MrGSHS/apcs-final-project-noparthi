@@ -33,11 +33,10 @@ public class GameName extends JFrame implements ActionListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		setSize(800, 600);
+		setSize(900, 600);
 		setTitle("Casino Simulator 2K16!");
 		setResizable(false);
-		setLocation(Toolkit.getDefaultToolkit().getScreenSize().width / 2 - 400,
-				Toolkit.getDefaultToolkit().getScreenSize().height / 2 - 300);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		setFocusable(true);
@@ -60,7 +59,7 @@ public class GameName extends JFrame implements ActionListener {
 	public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-        g2d.drawImage(gameName, 0, 0, 800, 600, null);
+        g2d.drawImage(gameName, 0, 0, 900, 600, null);
     }
 	
 	public static void main(String args []){

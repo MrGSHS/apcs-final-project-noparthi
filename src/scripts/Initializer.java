@@ -37,7 +37,7 @@ public class Initializer extends JFrame implements ActionListener {
 	}
 
 	public Initializer() {
-		//Read Images
+		// Read Images
 		try {
 			logo = ImageIO.read(imgURL);
 			logowait = -logo.getHeight();
@@ -48,19 +48,17 @@ public class Initializer extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 
-		//Set Frame Stuff
-		setSize(800, 600);
+		// Set Frame Stuff
+		setSize(900, 600);
 		setTitle("Casino Simulator 2K16!");
 		setResizable(false);
-		setLocation(Toolkit.getDefaultToolkit().getScreenSize().width / 2 - 400,
-				Toolkit.getDefaultToolkit().getScreenSize().height / 2 - 300);
-
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		setFocusable(true);
 		requestFocus();
 
-		//Starts Timer For GameName
+		// Starts Timer For GameName
 		timer = new Timer(90, this);
 		timer.start();
 
@@ -84,34 +82,34 @@ public class Initializer extends JFrame implements ActionListener {
 
 	@Override
 	public void paint(Graphics gg) {
-		//Drop Logo/FadeInGameName
+		// Drop Logo/FadeInGameName
 		if (!logodone) {
 			Image buffer = createImage(getWidth(), getHeight());
 			Graphics g = buffer.getGraphics();
 			draw(g);
 			gg.drawImage(buffer, 0, 0, null);
-			//Blanks Screen In Preparation For GameNameFadeIn If Needed
+			// Blanks Screen In Preparation For GameNameFadeIn If Needed
 			if (logowait >= 750) {
 				logodone = true;
 				try {
 					Thread.sleep(2500);
 					gg.setColor(Color.WHITE);
-					gg.fillRect(0, 0, 800, 600);
+					gg.fillRect(0, 0, 900, 600);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-				}		
+				}
 			}
 			g.dispose();
 		} else if (!gameNameDone) {
 			Graphics2D g2d = (Graphics2D) gg;
 			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-			g2d.drawImage(gameName, 0, 0, 800, 600, null);
+			g2d.drawImage(gameName, 0, 0, 900, 600, null);
 		}
 	}
 
-	//Draw LogoDrop
+	// Draw LogoDrop
 	public void draw(Graphics g2) {
-		if (logowait > getHeight() / 2 - logo.getHeight() / 2){
+		if (logowait > getHeight() / 2 - logo.getHeight() / 2) {
 			g2.setColor(new Color(logowait / 2.5 < 255 ? (int) (logowait / 2.5) : 255,
 					logowait / 2.5 < 255 ? (int) (logowait / 2.5) : 255,
 					logowait / 2.5 < 255 ? (int) (logowait / 2.5) : 255));
@@ -120,7 +118,7 @@ public class Initializer extends JFrame implements ActionListener {
 		if (!logodone) {
 			g2.drawImage(logo, getWidth() / 2 - logo.getWidth() / 2, logowait < getHeight() / 2 - logo.getHeight() / 2
 					? logowait : getHeight() / 2 - logo.getHeight() / 2, null);
-			
+
 		}
 	}
 

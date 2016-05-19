@@ -16,7 +16,7 @@ import holdem.HoldemGame;
 
 public class TutorialDisplay {
 	
-	private ArrayList<BufferedImage> images = new ArrayList<>(); 
+	ArrayList<BufferedImage> loadedImages = new ArrayList<>();
 	private JFrame frame;
 	private JPanel imagesPanel;
 	private JPanel buttonsPanel;
@@ -28,7 +28,7 @@ public class TutorialDisplay {
 		private static final long serialVersionUID = 1L;
 
 		public void paint(Graphics g){
-			g.drawImage(images.get(imageIndex), 0, -100, null);
+			g.drawImage(loadedImages.get(imageIndex), 0, -100, null);
 		}
 	}
 	
@@ -57,7 +57,7 @@ public class TutorialDisplay {
 			next.setLocation(700, 600);
 			next.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent ae){
-					if(imageIndex < images.size()-1) imageIndex++;
+					if(imageIndex < loadedImages.size()-1) imageIndex++;
 					imagesPanel.repaint();
 				}
 			});
@@ -76,16 +76,8 @@ public class TutorialDisplay {
 			frame.add(play);
 		}
 	}
-	public TutorialDisplay(){
-		for(int i = 2; i <= 7; i++){
-			String path = "/tutorial/slide-" + i + ".jpg";
-			try {
-				images.add(ImageIO.read(getClass().getResourceAsStream(path)));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
+	public TutorialDisplay(ArrayList<BufferedImage> images){
+		loadedImages = images;
 		frame = new JFrame();
 		imagesPanel = new ImagesPanel();
 		buttonsPanel = new ButtonsPanel();
@@ -97,7 +89,6 @@ public class TutorialDisplay {
 		frame.add(imagesPanel);
 		//frame.add(buttonsPanel);
 		frame.setVisible(true);
-		
 	}
 	
 }
