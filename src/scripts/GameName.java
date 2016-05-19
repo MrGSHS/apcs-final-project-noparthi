@@ -18,7 +18,7 @@ public class GameName extends JFrame implements ActionListener {
 	private BufferedImage gameName;
 	private URL imgURL = getClass().getResource("/menu/gamename.png");
 	private boolean gameNameDone;
-	private float alpha = 000f;
+	private float alpha = 0f;
 
 	Timer timer;
 
@@ -43,24 +43,14 @@ public class GameName extends JFrame implements ActionListener {
 		setFocusable(true);
 		requestFocus();
 		
-		timer = new Timer(50, this);
+		timer = new Timer(100, this);
 		timer.start();
 	}
-	
-	public GameName(float alpha) {
-		try {
-			gameName = ImageIO.read(imgURL);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        this.alpha = alpha;
-
-    }
 
 	public void actionPerformed(ActionEvent e) {
 		alpha += 0.001f;
-		if (alpha > 1) {
-			alpha = 1;
+		System.out.println(alpha);
+		if (alpha > .125) {
 			timer.stop();
 			gameNameDone = true;
 		}
@@ -69,7 +59,7 @@ public class GameName extends JFrame implements ActionListener {
 	
 	public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha));
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2d.drawImage(gameName, 0, 0, 800, 600, null);
     }
 	
