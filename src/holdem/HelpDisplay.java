@@ -10,21 +10,19 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class HelpDisplay extends JFrame {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private BufferedImage chart;
+	private BufferedImage iconImage;
 
 	public HelpDisplay() {
 		try {
 			chart = ImageIO.read(getClass().getResourceAsStream("/other/poker-hands.gif"));
+			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokericon.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		setTitle("Hand Chart");
+		setIconImage(iconImage);
 		setSize(chart.getWidth(), chart.getHeight() + 25);
 		setResizable(false);
 		setLocationRelativeTo(null);

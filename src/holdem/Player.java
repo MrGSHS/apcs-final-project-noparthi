@@ -107,10 +107,6 @@ public class Player {
 		pointsInvested = num;
 	}
 
-	public void setFoldBoolean(boolean fb) {
-		folded = fb;
-	}
-
 	public void resetPointsInvested() {
 		pointsInvested = 0;
 	}

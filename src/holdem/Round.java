@@ -60,7 +60,6 @@ public class Round {
 		minBet = game.getBigBlind();
 		Collections.rotate(game.getActionsOrder(), -3);
 		for (Player p : game.getPlayers()){
-			p.setFoldBoolean(false);
 			p.setIsTurn(false);
 		}
 		game.getActionsOrder().get(0).setFirstAction(true);
@@ -71,7 +70,6 @@ public class Round {
 	public void preRiver() {
 		minBet = game.getBigBlind();
 		for (Player p : game.getPlayers()){
-			p.setFoldBoolean(false);
 			p.setIsTurn(false);
 		}
 		game.getActionsOrder().get(0).setIsTurn(true);
@@ -81,7 +79,6 @@ public class Round {
 	public void postRiver() {
 		minBet = game.getBigBlind();
 		for (Player p : game.getPlayers()){
-			p.setFoldBoolean(false);
 			p.setIsTurn(false);
 		}
 		game.getActionsOrder().get(0).setIsTurn(true);;

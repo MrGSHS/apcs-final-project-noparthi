@@ -26,6 +26,8 @@ public class Initializer extends JFrame implements ActionListener {
 	private boolean gameNameDone;
 	private float alpha = 000f;
 	Timer timer;
+	
+	private BufferedImage iconImage;
 
 	public boolean getLogoDone() {
 		return logodone;
@@ -41,7 +43,7 @@ public class Initializer extends JFrame implements ActionListener {
 			logo = ImageIO.read(imgURL);
 			logowait = -logo.getHeight();
 			gameName = ImageIO.read(imgURL2);
-			setIconImage(ImageIO.read(this.getClass().getResource("/menu/pokericon.png")));
+			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokericon.png"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,6 +52,7 @@ public class Initializer extends JFrame implements ActionListener {
 		// Set Frame Stuff
 		setSize(900, 600);
 		setTitle("Casino Simulator 2K16!");
+		setIconImage(iconImage);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -38,22 +38,25 @@ public class Runner {
 		private JButton blackJackBtn;
 		private JButton holdemBtn;
 
+		private BufferedImage iconImage;
+		
 		private boolean mouseOverBlackJack = false;
 		private boolean mouseOverHoldem = false;
 
 		public ChooserDisplay() {
+			try {
+				iconImage = ImageIO.read(this.getClass().getResource("/menu/pokericon.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			frame = new JFrame();
 			choosePanel = new ChooserPanel();
 			frame.setTitle("Casino Simulator 2K16!");
+			frame.setIconImage(iconImage);
 			frame.setSize(900, 600);
 			frame.setResizable(false);
 			frame.setLocationRelativeTo(null);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			try {
-				frame.setIconImage(ImageIO.read(this.getClass().getResource("/menu/pokericon.png")));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 			frame.add(choosePanel);
 			frame.setVisible(true);
 		}
@@ -132,10 +135,10 @@ public class Runner {
 							new TutorialDisplay(images);
 						} else if (reply == JOptionPane.NO_OPTION) {
 							new HoldemGame();
-							frame.dispose();
 						} else {
 							System.exit(0);
 						}
+						frame.dispose();
 					}
 				});
 				holdemBtn.addMouseListener(new MouseListener() {

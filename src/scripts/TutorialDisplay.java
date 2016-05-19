@@ -17,10 +17,10 @@ import holdem.HoldemGame;
 public class TutorialDisplay {
 	
 	ArrayList<BufferedImage> loadedImages = new ArrayList<>();
+	private BufferedImage iconImage;
+	
 	private JFrame frame;
 	private JPanel imagesPanel;
-	
-	@SuppressWarnings("unused")
 	private JPanel buttonsPanel;
 	
 	private int imageIndex = 0;
@@ -83,13 +83,19 @@ public class TutorialDisplay {
 		frame = new JFrame();
 		imagesPanel = new ImagesPanel();
 		buttonsPanel = new ButtonsPanel();
+		try {
+			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokericon.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		frame.setTitle("Tutorial");
+		frame.setIconImage(iconImage);
 		frame.setSize(900, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
+		frame.add(buttonsPanel);
 		frame.add(imagesPanel);
-		//frame.add(buttonsPanel);
 		frame.setVisible(true);
 	}
 	

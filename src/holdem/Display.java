@@ -774,7 +774,8 @@ public class Display extends TimerTask {
 				game.getUser().check();
 				game.getRound().moveOn();
 			} else if (evt.getSource() == fold) {
-				game.getPlayers().get(0).setFoldBoolean(true);
+				game.getUser().fold();
+				game.getRound().moveOn();
 			}
 			if (evt.getSource() == tip) {
 				if (game.getUser().getPoints() >= 2000) {
