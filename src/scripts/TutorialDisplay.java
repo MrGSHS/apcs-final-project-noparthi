@@ -19,6 +19,8 @@ public class TutorialDisplay {
 	ArrayList<BufferedImage> loadedImages = new ArrayList<>();
 	private JFrame frame;
 	private JPanel imagesPanel;
+	
+	@SuppressWarnings("unused")
 	private JPanel buttonsPanel;
 	
 	private int imageIndex = 0;

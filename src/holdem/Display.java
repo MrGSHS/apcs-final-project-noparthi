@@ -162,7 +162,7 @@ public class Display extends TimerTask {
 		try {
 			dealer = ImageIO.read(getClass().getResourceAsStream("/other/dealer-face.png"));
 			table = ImageIO.read(getClass().getResourceAsStream("/other/poker-table.png"));
-			theme = ImageIO.read(getClass().getResourceAsStream("/themes/red-velvet.jpg"));
+			theme = ImageIO.read(getClass().getResourceAsStream("/themes/red-gradient.jpg"));
 			cardBack = ImageIO.read(getClass().getResourceAsStream("/other/card-back.png"));
 
 			chips1k = ImageIO.read(getClass().getResourceAsStream("/chips/1k.png"));
