@@ -1,9 +1,7 @@
 package blackjack;
 
-import java.util.*;
 
-import holdem.Player;
-import scripts.Card;
+
 public class BlackComp extends BlackPlayer {
 
 	
