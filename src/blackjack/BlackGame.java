@@ -1,6 +1,6 @@
 package blackjack;
 import java.util.*;
-public class BGame {
+public class BlackGame {
 	public static void main(String [] args){
 		Scanner sc = new Scanner (System.in);
 		String wants="y";
