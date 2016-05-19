@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.ToolTipManager;
 
+import blackjack.BGame;
 import blackjack.BlackGame;
 import holdem.HoldemGame;
 
@@ -110,7 +111,7 @@ public class Runner {
 						if (reply == JOptionPane.YES_OPTION) {
 							JOptionPane.showMessageDialog(null, "HELLO");
 						} else if (reply == JOptionPane.NO_OPTION) {
-							new BlackGame();
+							new BGame();
 						} else {
 							System.exit(0);
 						}
