@@ -19,7 +19,7 @@ public class Player {
 	private boolean checkBoolean = false;
 	private boolean raiseBoolean = false;
 	private boolean callBoolean = false;
-	public boolean userTurn = false;
+	public boolean isTurn = false;
 
 	public Player(HoldemGame game, int position) {
 		this.game = game;
@@ -31,8 +31,8 @@ public class Player {
 	public void takeAction() {
 	}
 
-	public boolean isUserTurn(){
-		return userTurn;
+	public boolean isTurn(){
+		return isTurn;
 	}
 
 	public boolean getCheckBoolean() {
@@ -87,8 +87,8 @@ public class Player {
 		firstAction = sfa;
 	}
 
-	public void setUserTurn(boolean sut){
-		userTurn = sut;
+	public void setIsTurn(boolean sit){
+		isTurn = sit;
 	}
 
 	public void setPoints(int num) {
@@ -129,6 +129,7 @@ public class Player {
 	// Fold Method
 	public void fold() {
 		folded = true;
+		isTurn = false;
 		betAmount = 0;
 		resetActionBoolean();
 		game.isRoundActive();
@@ -143,6 +144,7 @@ public class Player {
 		resetActionBoolean();
 		betAmount = 0;
 		checkBoolean = true;
+		isTurn = false;
 	}
 
 	// Call Method
@@ -165,6 +167,7 @@ public class Player {
 		// Reset Stuff
 		resetActionBoolean();
 		callBoolean = true;
+		isTurn = false;
 	}
 
 	// Raise Method
@@ -184,6 +187,7 @@ public class Player {
 
 				resetActionBoolean();
 				raiseBoolean = true;
+				isTurn = false;
 				return true;
 			}
 			// Not All-In
@@ -195,6 +199,7 @@ public class Player {
 
 			resetActionBoolean();
 			raiseBoolean = true;
+			isTurn = false;
 			return true;
 		}
 		// Not Legal Message

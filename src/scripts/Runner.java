@@ -202,7 +202,7 @@ public class Runner {
 		}
 
 		protected void done() {
-			System.out.println("done!");
+			System.out.println("Done!");
 		}
 	}
 

@@ -46,33 +46,46 @@ public class Round {
 	}
 
 	public void preFlop() {
-		Collections.rotate(game.getActionsOrder(), -1);
-		game.getUser().setUserTurn(false);
-		game.getActionsOrder().get(0).setFirstAction(true);
-		game.allComputersTakeAction();
 		minBet = game.getBigBlind();
+		Collections.rotate(game.getActionsOrder(), -1);
+		for (Player p : game.getPlayers()) {
+			p.setIsTurn(false);
+		}
+		game.getActionsOrder().get(0).setFirstAction(true);
+		game.getActionsOrder().get(0).setIsTurn(true);
+		game.allComputersTakeAction();
 	}
 
 	public void preTurn() {
-		Collections.rotate(game.getActionsOrder(), -3);
-		for (Player p : game.getActionsOrder())
-			p.setFoldBoolean(false);
-		game.getUser().setUserTurn(false);
-		game.getActionsOrder().get(0).setFirstAction(true);
-		game.allComputersTakeAction();
 		minBet = game.getBigBlind();
+		Collections.rotate(game.getActionsOrder(), -3);
+		for (Player p : game.getPlayers()){
+			p.setFoldBoolean(false);
+			p.setIsTurn(false);
+		}
+		game.getActionsOrder().get(0).setFirstAction(true);
+		game.getActionsOrder().get(0).setIsTurn(true);
+		game.allComputersTakeAction();
 	}
 
 	public void preRiver() {
-		game.getUser().setUserTurn(false);
-		game.allComputersTakeAction();
 		minBet = game.getBigBlind();
+		for (Player p : game.getPlayers()){
+			p.setFoldBoolean(false);
+			p.setIsTurn(false);
+		}
+		game.getActionsOrder().get(0).setIsTurn(true);
+		game.allComputersTakeAction();;
 	}
 
 	public void postRiver() {
-		game.getUser().setUserTurn(false);
-		game.allComputersTakeAction();
 		minBet = game.getBigBlind();
+		for (Player p : game.getPlayers()){
+			p.setFoldBoolean(false);
+			p.setIsTurn(false);
+		}
+		game.getActionsOrder().get(0).setIsTurn(true);;
+		game.allComputersTakeAction();
 	}
 
 	// Check To See If Should Move To Next Round
@@ -128,7 +141,7 @@ public class Round {
 			System.out.println("Stage: " + stageOfRound);
 			game.getTable().dealRiver();
 			postRiver();
-		} else{
+		} else {
 			game.setPayout(true);
 			game.payout();
 		}

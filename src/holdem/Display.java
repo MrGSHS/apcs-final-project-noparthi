@@ -96,6 +96,7 @@ public class Display extends TimerTask {
 	private BufferedImage theme;
 	private BufferedImage table;
 	private BufferedImage dealer;
+	private BufferedImage iconImage;
 
 	private BufferedImage cardBack;
 	private BufferedImage card1;
@@ -170,6 +171,7 @@ public class Display extends TimerTask {
 			chips10k = ImageIO.read(getClass().getResourceAsStream("/chips/10k.png"));
 			chips25k = ImageIO.read(getClass().getResourceAsStream("/chips/25k.png"));
 			chips50k = ImageIO.read(getClass().getResourceAsStream("/chips/50k.png"));
+			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokericon.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -177,6 +179,7 @@ public class Display extends TimerTask {
 		// Main Frame
 		frame = new JFrame();
 		frame.setTitle("Texas Holdem: Round ");
+		frame.setIconImage(iconImage);
 		tablePanel = new TableDisplayPanel();
 		actionsPanel = new ActionsDisplayPanel();
 		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -188,7 +191,8 @@ public class Display extends TimerTask {
 
 			@Override
 			public void keyPressed(KeyEvent ke) {
-				if(ke.getKeyCode() == KeyEvent.VK_ESCAPE) new HelpDisplay();
+				if (ke.getKeyCode() == KeyEvent.VK_ESCAPE)
+					new HelpDisplay();
 			}
 
 			@Override
@@ -268,10 +272,10 @@ public class Display extends TimerTask {
 
 		// Draw Computer Cards
 		public void drawComputerCards(Graphics g) {
-			//If Is Payout...Otherwise...
+			// If Is Payout...Otherwise...
 			if (game.isPayout()) {
 				faceUpComputerCards = new ArrayList<BufferedImage>();
-				//Adds Computer Cards To Array
+				// Adds Computer Cards To Array
 				for (int i = 1; i < game.getPlayers().size(); i++) {
 					try {
 						String card1Path = "/cards/"
@@ -285,17 +289,18 @@ public class Display extends TimerTask {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				}				
-				//Draws In Cards For Non-Folded Players
+				}
+				// Draws In Cards For Non-Folded Players
 				for (int i = 1; i < game.getPlayers().size(); i++) {
 					if (!game.getPlayers().get(i).isFolded()) {
-						g.drawImage(faceUpComputerCards.get(i*2-2), game.playerPositions.get(i)[0] + CARD_WIDTH + 25,
-								game.playerPositions.get(i)[1] - 50, CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
-						g.drawImage(faceUpComputerCards.get(i*2-1), game.playerPositions.get(i)[0] + 15, game.playerPositions.get(i)[1] - 50,
+						g.drawImage(faceUpComputerCards.get(i * 2 - 2),
+								game.playerPositions.get(i)[0] + CARD_WIDTH + 25, game.playerPositions.get(i)[1] - 50,
 								CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
+						g.drawImage(faceUpComputerCards.get(i * 2 - 1), game.playerPositions.get(i)[0] + 15,
+								game.playerPositions.get(i)[1] - 50, CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
 					}
 				}
-				//Waits For A While
+				// Waits For A While
 				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException e) {
@@ -303,7 +308,7 @@ public class Display extends TimerTask {
 					e.printStackTrace();
 				}
 			} else {
-				//Draws In CardBack For Non-Folded Players
+				// Draws In CardBack For Non-Folded Players
 				for (int i = 1; i < game.getPlayers().size(); i++) {
 					if (!game.getPlayers().get(i).isFolded()) {
 						g.drawImage(cardBack, game.playerPositions.get(i)[0] + CARD_WIDTH + 25,
@@ -311,6 +316,18 @@ public class Display extends TimerTask {
 						g.drawImage(cardBack, game.playerPositions.get(i)[0] + 15, game.playerPositions.get(i)[1] - 50,
 								CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
 					}
+				}
+			}
+		}
+
+		// Draw Whose Turn It Is Turn Around Label
+		public void drawTurnBorder(Graphics g) {
+			g.setColor(Color.GREEN);
+			for (Player p : game.getPlayers()) {
+				if (p.isTurn) {
+					g.fillRoundRect(game.playerPositions.get(p.getPosition())[0] - 3,
+							game.playerPositions.get(p.getPosition())[1] - 3, userLabel.getWidth() + 6,
+							userLabel.getHeight() + 6, 30, 30);
 				}
 			}
 		}
@@ -588,7 +605,7 @@ public class Display extends TimerTask {
 
 		// Actual Button Removal
 		public void buttonRemoval(Graphics g) {
-			if (!game.getUser().isUserTurn()) {
+			if (!game.getUser().isTurn()) {
 				removeAllButtons();
 			} else if (!game.getUser().isFolded()) {
 				addAllButtons();
@@ -619,6 +636,7 @@ public class Display extends TimerTask {
 			drawComputerCards(g);
 
 			// Draw Labels
+			drawTurnBorder(g);
 			drawUserLabel(g);
 			drawComputerLabels(g);
 
@@ -741,7 +759,6 @@ public class Display extends TimerTask {
 					int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
 
 					if (game.getUser().raise(intRaiseAmount)) {
-						game.getUser().setUserTurn(false);
 						game.getRound().moveOn();
 					} else {
 						return;
@@ -752,15 +769,12 @@ public class Display extends TimerTask {
 				}
 			} else if (evt.getSource() == call) {
 				game.getUser().call();
-				game.getUser().setUserTurn(false);
 				game.getRound().moveOn();
 			} else if (evt.getSource() == check) {
 				game.getUser().check();
-				game.getUser().setUserTurn(false);
 				game.getRound().moveOn();
 			} else if (evt.getSource() == fold) {
 				game.getPlayers().get(0).setFoldBoolean(true);
-				game.getUser().setUserTurn(false);
 			}
 			if (evt.getSource() == tip) {
 				if (game.getUser().getPoints() >= 2000) {

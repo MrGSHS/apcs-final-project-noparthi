@@ -113,18 +113,20 @@ public class HoldemGame {
 				for (Player computer : actionsOrder) {
 					if (!computer.isFolded()) {
 						if (computer != getUser()) {
-							getUser().setUserTurn(false);
+							getUser().setIsTurn(false);
+							computer.setIsTurn(true);
 							try {
 								Thread.currentThread().sleep(((int) (Math.random() * 3) + 3) * 1000);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
 							computer.takeAction();
+							computer.setIsTurn(false);
 							if (getRound().moveOn())
 								break;
 						} else {
-							getUser().setUserTurn(true);
-							while (getUser().isUserTurn()) {
+							getUser().setIsTurn(true);
+							while (getUser().isTurn()) {
 								try {
 									Thread.currentThread().sleep(100);
 								} catch (InterruptedException e) {
