@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import javax.swing.ToolTipManager;
 
-import blackjack.BGame;
+import blackjack.BlackGame;
 import holdem.HoldemGame;
 
 public class Runner {
@@ -45,7 +45,7 @@ public class Runner {
 
 		public ChooserDisplay() {
 			try {
-				iconImage = ImageIO.read(this.getClass().getResource("/menu/pokericon.png"));
+				iconImage = ImageIO.read(this.getClass().getResource("/menu/pokerIcon.png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -113,7 +113,7 @@ public class Runner {
 						if (reply == JOptionPane.YES_OPTION) {
 							JOptionPane.showMessageDialog(null, "HELLO");
 						} else if (reply == JOptionPane.NO_OPTION) {
-							new BGame();
+							new BlackGame();
 						} else {
 							System.exit(0);
 						}
@@ -211,15 +211,15 @@ public class Runner {
 
 	public Runner() {
 		new ImageLoader().execute();
-		Initializer dropLogo = new Initializer();
-		while (!dropLogo.getGameNameDone()) {
+		Initializer init = new Initializer();
+		while (!init.getGameNameDone()) {
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		dropLogo.dispose();
+		init.dispose();
 		new ChooserDisplay();
 	}
 

@@ -84,7 +84,7 @@ public class TutorialDisplay {
 		imagesPanel = new ImagesPanel();
 		buttonsPanel = new ButtonsPanel();
 		try {
-			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokericon.png"));
+			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokerIcon.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

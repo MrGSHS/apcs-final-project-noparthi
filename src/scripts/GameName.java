@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 public class GameName extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private BufferedImage gameName;
-	private URL imgURL = getClass().getResource("/menu/gamename.png");
+	private URL imgURL = getClass().getResource("/menu/gameName.png");
 	private boolean gameNameDone;
 	private float alpha = 0f;
 
@@ -28,7 +28,7 @@ public class GameName extends JFrame implements ActionListener {
 	public GameName() {
 		try {
 			gameName = ImageIO.read(imgURL);
-			setIconImage(ImageIO.read(this.getClass().getResource("/menu/pokericon.png")));
+			setIconImage(ImageIO.read(this.getClass().getResource("/menu/pokerIcon.png")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -19,10 +19,10 @@ public class Initializer extends JFrame implements ActionListener {
 	private BufferedImage logo;
 	private int logowait;
 	private boolean logodone = false;
-	private URL imgURL = getClass().getResource("/menu/droplogo.png");
+	private URL imgURL = getClass().getResource("/menu/dropLogo.png");
 
 	private BufferedImage gameName;
-	private URL imgURL2 = getClass().getResource("/menu/gamename.png");
+	private URL imgURL2 = getClass().getResource("/menu/gameName.png");
 	private boolean gameNameDone;
 	private float alpha = 000f;
 	Timer timer;
@@ -37,13 +37,17 @@ public class Initializer extends JFrame implements ActionListener {
 		return gameNameDone;
 	}
 
+	public static void main(String args[]){
+		new Initializer();
+	}
+	
 	public Initializer() {
 		// Read Images
 		try {
 			logo = ImageIO.read(imgURL);
 			logowait = -logo.getHeight();
 			gameName = ImageIO.read(imgURL2);
-			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokericon.png"));
+			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokerIcon.png"));
 
 		} catch (Exception e) {
 			e.printStackTrace();

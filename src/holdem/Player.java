@@ -115,6 +115,7 @@ public class Player {
 		hand = new Hand(game, game.getTable().getDeck().deal(), game.getTable().getDeck().deal());
 	}
 
+	// Fold Method
 	// Reset The Action Booleans
 	public void resetActionBoolean() {
 		checkBoolean = false;
@@ -122,7 +123,6 @@ public class Player {
 		callBoolean = false;
 	}
 
-	// Fold Method
 	public void fold() {
 		folded = true;
 		isTurn = false;

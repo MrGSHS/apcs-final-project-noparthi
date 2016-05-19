@@ -171,7 +171,7 @@ public class Display extends TimerTask {
 			chips10k = ImageIO.read(getClass().getResourceAsStream("/chips/10k.png"));
 			chips25k = ImageIO.read(getClass().getResourceAsStream("/chips/25k.png"));
 			chips50k = ImageIO.read(getClass().getResourceAsStream("/chips/50k.png"));
-			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokericon.png"));
+			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokerIcon.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

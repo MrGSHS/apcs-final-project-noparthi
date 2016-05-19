@@ -17,7 +17,7 @@ public class HelpDisplay extends JFrame {
 	public HelpDisplay() {
 		try {
 			chart = ImageIO.read(getClass().getResourceAsStream("/other/poker-hands.gif"));
-			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokericon.png"));
+			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokerIcon.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
