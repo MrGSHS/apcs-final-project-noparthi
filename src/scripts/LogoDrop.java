@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class LogoDrop extends JFrame {
+	private static final long serialVersionUID = 1L;
 	private BufferedImage logo;
 	private int logowait;
 	private boolean logodone = false;
@@ -22,7 +23,7 @@ public class LogoDrop extends JFrame {
 		try {
 			logo = ImageIO.read(imgURL);
 			logowait = -logo.getHeight();
-			// setIconImage(ImageIO.read(this.getClass().getResource("zlogo.png")));
+			setIconImage(ImageIO.read(this.getClass().getResource("/menu/pokericon.png")));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,11 +45,10 @@ public class LogoDrop extends JFrame {
 			public void run() {
 				while (true) {
 					repaint();
-
 					if (!logodone)
-						logowait += 5;
+						logowait += 1;
 					try {
-						Thread.sleep(20);
+						Thread.sleep(5);
 
 					} catch (Exception e) {
 						e.printStackTrace();

@@ -8,8 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -40,6 +42,11 @@ public class ChooserDisplay {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		try {
+			frame.setIconImage(ImageIO.read(this.getClass().getResource("/menu/pokericon.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		frame.add(choosePanel);
 		frame.setVisible(true);
 	}

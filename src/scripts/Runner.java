@@ -7,6 +7,11 @@ public class Runner {
 			System.out.print("Loading...");
 		}
 		dropLogo.dispose();
+		GameName nameGame = new GameName();
+		while(!nameGame.getGameNameDone()){
+			System.out.print("Loading...");
+		}
+		nameGame.dispose();
 		new ChooserDisplay();
 	}
 
