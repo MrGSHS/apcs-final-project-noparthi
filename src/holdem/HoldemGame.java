@@ -122,7 +122,7 @@ public class HoldemGame {
 							getUser().setIsTurn(false);
 							computer.setIsTurn(true);
 							try {
-								Thread.currentThread().sleep(((int) (Math.random() * 3) + 1) * 1000);
+								Thread.currentThread().sleep(((int) (Math.random() * 3) + 3) * 1000);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}

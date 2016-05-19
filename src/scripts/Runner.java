@@ -24,7 +24,6 @@ import javax.swing.SwingWorker;
 import javax.swing.ToolTipManager;
 
 import blackjack.BGame;
-import blackjack.BlackGame;
 import holdem.HoldemGame;
 
 public class Runner {

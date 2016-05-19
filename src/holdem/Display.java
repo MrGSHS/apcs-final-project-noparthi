@@ -1,6 +1,5 @@
 package holdem;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -346,16 +345,6 @@ public class Display extends TimerTask {
 			g.drawImage(computer3Label, game.playerPositions.get(3)[0], game.playerPositions.get(3)[1], null);
 			g.drawImage(computer4Label, game.playerPositions.get(4)[0], game.playerPositions.get(4)[1], null);
 		}
-		
-		// Draw Box around Label to clarify whose turn it is
-		public void drawLabelBox(Graphics g){
-			int border = 5;
-			int index = game.getCurrentPosOfPlayer();
-			Graphics2D g2d = (Graphics2D) g;
-			g2d.setStroke(new BasicStroke(5));
-			g.setColor(new Color(0, 191, 255));
-			g.drawRoundRect(game.playerPositions.get(index)[0], game.playerPositions.get(index)[1], userLabel.getWidth(), userLabel.getHeight(), 15, 15);
-		}
 
 		// Draw Blinds
 		public void drawBlinds(Graphics g) {
@@ -656,9 +645,6 @@ public class Display extends TimerTask {
 
 			// Draw Action
 			drawAction(g);
-			
-			// Draw label box
-			drawLabelBox(g);
 			
 			// Add Names To Labels
 			addPlayerName(g);
