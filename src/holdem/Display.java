@@ -799,7 +799,8 @@ public class Display extends TimerTask {
 
 	private void reloadImages() {
 		tableCards = new ArrayList<BufferedImage>();
-		for (Card card : cardsOnTable) {
+		for (int i = 0; i < cardsOnTable.size(); i++) {
+			Card card = cardsOnTable.get(i);
 			String fileName = "/cards/" + card.getNumber().toString() + "_of_" + card.getSuiteValue() + ".jpg";
 			try {
 				tableCards.add(ImageIO.read(getClass().getResourceAsStream(fileName)));
