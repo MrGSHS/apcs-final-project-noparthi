@@ -22,6 +22,7 @@ public class HoldemGame {
 	public ArrayList<int[]> playerPositions = new ArrayList<>();
 	private ArrayList<Player> actionsOrder = new ArrayList<>();
 	private ArrayList<Player> players = new ArrayList<>();
+	private int currentPosOfPlayer = dealerIndex + 3;
 
 	public Display getDisplay() {
 		return display;
@@ -53,6 +54,10 @@ public class HoldemGame {
 
 	public int getDealerIndex() {
 		return dealerIndex;
+	}
+	
+	public int getCurrentPosOfPlayer(){
+		return currentPosOfPlayer;
 	}
 
 	public ArrayList<Player> getActionsOrder() {
@@ -112,10 +117,11 @@ public class HoldemGame {
 			public void run() {
 				for (Player computer : actionsOrder) {
 					if (!computer.isFolded()) {
+						currentPosOfPlayer = computer.getPosition();
 						if (computer != getUser()) {
 							getUser().setUserTurn(false);
 							try {
-								Thread.currentThread().sleep(((int) (Math.random() * 3) + 3) * 1000);
+								Thread.currentThread().sleep(((int) (Math.random() * 3) + 1) * 1000);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
