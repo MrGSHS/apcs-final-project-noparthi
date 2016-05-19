@@ -48,9 +48,6 @@ public class Round {
 	public void preFlop() {
 		minBet = game.getBigBlind();
 		Collections.rotate(game.getActionsOrder(), -1);
-		for (Player p : game.getPlayers()) {
-			p.setIsTurn(false);
-		}
 		game.getActionsOrder().get(0).setFirstAction(true);
 		game.getActionsOrder().get(0).setIsTurn(true);
 		game.allComputersTakeAction();
@@ -58,30 +55,22 @@ public class Round {
 
 	public void preTurn() {
 		minBet = game.getBigBlind();
+		game.getActionsOrder().get(0).setFirstAction(false);
 		Collections.rotate(game.getActionsOrder(), -3);
-		for (Player p : game.getPlayers()){
-			p.setIsTurn(false);
-		}
 		game.getActionsOrder().get(0).setFirstAction(true);
-		game.getActionsOrder().get(0).setIsTurn(true);
-		game.allComputersTakeAction();
-	}
-
-	public void preRiver() {
-		minBet = game.getBigBlind();
-		for (Player p : game.getPlayers()){
-			p.setIsTurn(false);
-		}
 		game.getActionsOrder().get(0).setIsTurn(true);
 		game.allComputersTakeAction();;
 	}
 
+	public void preRiver() {
+		minBet = game.getBigBlind();
+		game.getActionsOrder().get(0).setIsTurn(true);
+		game.allComputersTakeAction();
+	}
+
 	public void postRiver() {
 		minBet = game.getBigBlind();
-		for (Player p : game.getPlayers()){
-			p.setIsTurn(false);
-		}
-		game.getActionsOrder().get(0).setIsTurn(true);;
+		game.getActionsOrder().get(0).setIsTurn(true);
 		game.allComputersTakeAction();
 	}
 
@@ -114,12 +103,9 @@ public class Round {
 
 		// Else Reset Stuff
 		game.resetPlayerBetAmount();
-		for (Player p : game.getPlayers())
-			p.resetActionBoolean();
-
 		for (Player p : game.getPlayers()) {
-			p.setBigBlind(false);
-			p.setSmallBlind(false);
+			p.resetActionBoolean();
+			p.setIsTurn(false);
 		}
 
 		// And Proceeds To Next Round If None Of The Above Are True

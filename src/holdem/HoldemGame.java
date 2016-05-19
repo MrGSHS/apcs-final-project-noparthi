@@ -22,7 +22,6 @@ public class HoldemGame {
 	public ArrayList<int[]> playerPositions = new ArrayList<>();
 	private ArrayList<Player> actionsOrder = new ArrayList<>();
 	private ArrayList<Player> players = new ArrayList<>();
-	private int currentPosOfPlayer = dealerIndex + 3;
 
 	public Display getDisplay() {
 		return display;
@@ -56,10 +55,6 @@ public class HoldemGame {
 		return dealerIndex;
 	}
 	
-	public int getCurrentPosOfPlayer(){
-		return currentPosOfPlayer;
-	}
-
 	public ArrayList<Player> getActionsOrder() {
 		return actionsOrder;
 	}
@@ -117,7 +112,6 @@ public class HoldemGame {
 			public void run() {
 				for (Player computer : actionsOrder) {
 					if (!computer.isFolded()) {
-						currentPosOfPlayer = computer.getPosition();
 						if (computer != getUser()) {
 							getUser().setIsTurn(false);
 							computer.setIsTurn(true);
@@ -136,7 +130,6 @@ public class HoldemGame {
 								try {
 									Thread.currentThread().sleep(100);
 								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 							}
@@ -145,6 +138,7 @@ public class HoldemGame {
 				}
 			}
 		}).start();
+		System.out.println("Break");
 	}
 
 	// Takes The Blinds
@@ -180,12 +174,13 @@ public class HoldemGame {
 	public void payout() {
 		ArrayList<Player> strongestPlayersIndex = new ArrayList<>();
 		// TODO: Add In Kickers And High Card
-		// Add First Active Player As Strongest Player
-		for (Player p : players)
+		// Add First Player As Strongest Player
+		for (Player p : players){
 			if (!p.isFolded()) {
 				strongestPlayersIndex.add(p);
 				break;
 			}
+		}
 		for (Player p : players) {
 			// If Not Folded
 			if (!p.isFolded()) {

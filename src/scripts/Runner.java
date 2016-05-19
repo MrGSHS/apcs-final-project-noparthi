@@ -109,15 +109,15 @@ public class Runner {
 					public void actionPerformed(ActionEvent arg0) {
 						int reply = JOptionPane.showConfirmDialog(null,
 								"Would you like to view a quick tutorial on the rules of Black Jack?",
-								"Black Jack Tutorial", JOptionPane.YES_NO_OPTION);
+								"Black Jack Tutorial", JOptionPane.YES_NO_CANCEL_OPTION);
 						if (reply == JOptionPane.YES_OPTION) {
 							JOptionPane.showMessageDialog(null, "HELLO");
 						} else if (reply == JOptionPane.NO_OPTION) {
 							new BlackGame();
-						} else {
-							System.exit(0);
 						}
-						frame.dispose();
+						if(reply != JOptionPane.CANCEL_OPTION && reply != JOptionPane.CLOSED_OPTION){
+							frame.dispose();
+						}
 					}
 				});
 
@@ -130,15 +130,15 @@ public class Runner {
 					public void actionPerformed(ActionEvent arg0) {
 						int reply = JOptionPane.showConfirmDialog(null,
 								"Would you like to view a quick tutorial on the rules of Hold'em?", "Hold'em Tutorial",
-								JOptionPane.YES_NO_OPTION);
+								JOptionPane.YES_NO_CANCEL_OPTION);
 						if (reply == JOptionPane.YES_OPTION) {
 							new TutorialDisplay(images);
 						} else if (reply == JOptionPane.NO_OPTION) {
 							new HoldemGame();
-						} else {
-							System.exit(0);
-						}
-						frame.dispose();
+						} 
+						if(reply != JOptionPane.CANCEL_OPTION && reply != JOptionPane.CLOSED_OPTION){
+							frame.dispose();
+						}		
 					}
 				});
 				holdemBtn.addMouseListener(new MouseListener() {

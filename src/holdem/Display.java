@@ -320,6 +320,29 @@ public class Display extends TimerTask {
 			}
 		}
 
+		// Draw Blinds
+		public void drawBlinds(Graphics g) {
+			for (Player p : game.getPlayers()) {
+				if (p.isSmallBlind()) {
+					g.setFont(new Font("Calibri", Font.BOLD, 14));
+					g.setColor(modifiedGrey);
+					g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight()+3, 80, 18, 10, 10);
+					g.setColor(Color.WHITE);
+					g.drawString("SM. Blind", game.playerPositions.get(p.getPosition())[0] + 13,
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 16);
+				} else if (p.isBigBlind()) {
+					g.setFont(new Font("Calibri", Font.BOLD, 14));
+					g.setColor(modifiedGrey);
+					g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight()+3, 80, 18, 10, 10);
+					g.setColor(Color.WHITE);
+					g.drawString("Big Blind", game.playerPositions.get(p.getPosition())[0] + 13,
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 16);
+				}
+			}
+		}
+
 		// Draw Whose Turn It Is Turn Around Label
 		public void drawTurnBorder(Graphics g) {
 			g.setColor(Color.GREEN);
@@ -344,29 +367,6 @@ public class Display extends TimerTask {
 			g.drawImage(computer2Label, game.playerPositions.get(2)[0], game.playerPositions.get(2)[1], null);
 			g.drawImage(computer3Label, game.playerPositions.get(3)[0], game.playerPositions.get(3)[1], null);
 			g.drawImage(computer4Label, game.playerPositions.get(4)[0], game.playerPositions.get(4)[1], null);
-		}
-
-		// Draw Blinds
-		public void drawBlinds(Graphics g) {
-			for (Player p : game.getPlayers()) {
-				if (p.isSmallBlind()) {
-					g.setFont(new Font("Calibri", Font.BOLD, 14));
-					g.setColor(modifiedGrey);
-					g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
-							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(), 80, 18, 10, 10);
-					g.setColor(Color.WHITE);
-					g.drawString("SM. Blind", game.playerPositions.get(p.getPosition())[0] + 13,
-							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
-				} else if (p.isBigBlind()) {
-					g.setFont(new Font("Calibri", Font.BOLD, 14));
-					g.setColor(modifiedGrey);
-					g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
-							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(), 80, 18, 10, 10);
-					g.setColor(Color.WHITE);
-					g.drawString("Big Blind", game.playerPositions.get(p.getPosition())[0] + 13,
-							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
-				}
-			}
 		}
 
 		// Draw Check/Call/Raise/Fold
@@ -537,7 +537,7 @@ public class Display extends TimerTask {
 			g.setColor(modifiedGrey);
 			g.fillRoundRect(game.playerPositions.get(0)[0] + 90, game.playerPositions.get(0)[1] - 90, 60, 20, 15, 15);
 			g.setColor(Color.WHITE);
-			g.drawString("" + (double) game.getPlayers().get(0).getPointsInvested() / 1000 + "K",
+			g.drawString("" + (double) game.getPlayers().get(0).getBetAmount() / 1000 + "K",
 					game.playerPositions.get(0)[0] + 100, game.playerPositions.get(0)[1] - 75);
 			// Computer
 			g.setColor(modifiedGrey);
@@ -549,14 +549,14 @@ public class Display extends TimerTask {
 			g.fillRoundRect(game.playerPositions.get(4)[0] - 85, game.playerPositions.get(4)[1], 60, 20, 15, 15);
 
 			g.setColor(Color.WHITE);
-			g.drawString("" + (double) game.getPlayers().get(1).getPointsInvested() / 1000 + "K",
+			g.drawString("" + (double) game.getPlayers().get(1).getBetAmount() / 1000 + "K",
 					game.playerPositions.get(1)[0] + 195, game.playerPositions.get(1)[1] + 15);
-			g.drawString("" + (double) game.getPlayers().get(2).getPointsInvested() / 1000 + "K",
+			g.drawString("" + (double) game.getPlayers().get(2).getBetAmount() / 1000 + "K",
 					game.playerPositions.get(2)[0] + userLabel.getWidth() + 60,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() + 15);
-			g.drawString("" + (double) game.getPlayers().get(3).getPointsInvested() / 1000 + "K",
+			g.drawString("" + (double) game.getPlayers().get(3).getBetAmount() / 1000 + "K",
 					game.playerPositions.get(3)[0] - 90, game.playerPositions.get(3)[1] + userLabel.getHeight() + 15);
-			g.drawString("" + (double) game.getPlayers().get(4).getPointsInvested() / 1000 + "K",
+			g.drawString("" + (double) game.getPlayers().get(4).getBetAmount() / 1000 + "K",
 					game.playerPositions.get(4)[0] - 75, game.playerPositions.get(4)[1] + 15);
 		}
 
@@ -635,17 +635,17 @@ public class Display extends TimerTask {
 			drawUserCards(g);
 			drawComputerCards(g);
 
+			// DrawBlinds
+			drawBlinds(g);
+
 			// Draw Labels
 			drawTurnBorder(g);
 			drawUserLabel(g);
 			drawComputerLabels(g);
 
-			// DrawBlinds
-			drawBlinds(g);
-
 			// Draw Action
 			drawAction(g);
-			
+
 			// Add Names To Labels
 			addPlayerName(g);
 			addComputerNames(g);

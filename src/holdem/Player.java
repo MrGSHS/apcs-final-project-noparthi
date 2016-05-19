@@ -156,7 +156,8 @@ public class Player {
 		maxBet -= betAmount;
 		game.getRound().setPot(game.getRound().getPot() + maxBet);
 
-		// Sets Points Invested And Removes Points
+		// Sets Points Invested, BetAmount And Removes Points
+		betAmount +=maxBet;
 		pointsInvested += maxBet;
 		points -= maxBet;
 
