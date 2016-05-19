@@ -30,10 +30,14 @@ public class BlackGame {
 				}
 				
 			}
-			
-			
-			sc.nextLine();
-			String hit
+			if (hit.equals("no")) continue;
+			for (int i=0; i<10; i++){
+				int curVal=thisOne.getComputer().getHand().calc();
+				if(!thisOne.getComputer().hit() && ){
+					
+				}
+				
+			}
 			
 			System.out.println("Would you like to play a round of Black Jack? y/n");
 			wants=sc.nextLine();
