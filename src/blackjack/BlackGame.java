@@ -1,85 +1,42 @@
 package blackjack;
-import java.util.ArrayList;
-import holdem.Computer;
-import holdem.Display;
-import holdem.Player;
-import holdem.Round;
-import holdem.Table;
+import java.util.*;
 public class BlackGame {
-	
-
-
-
-	public class Game {
-
-		private Display display;
-		
-		private ArrayList<Player> players = new ArrayList<>();
-
-		
-		private Round round;
-		private Table table;
-		private int dealerIndex = 0;
-
-		public ArrayList<int[]> playerPositions = new ArrayList<>();
-
-		
-		public Display getDisplay() {
-			return display;
-		}
-
-		public Table getTable() {
-			return table;
-		}
-
-		public Round getRound() {
-			return round;
-		}
-
-
-
-		// Index 0 Is A Player, The Rest Are Computers
-		public ArrayList<Player> getPlayers() {
-			return players;
-		}
-
-
-
-
-
-		public Game() {
-			int pos = 0;
-			table = new Table();
-			Player dealer = new dealer();
-			players.add(dealer);
-			round = new Round(this);
-			display = new Display(this);
-			display.setRoundTitle();
-		}
-
-
-
-		// Pays Out Money In Pot To Winner
-		public void payout() {
+	public static void main(String [] args){
+		Scanner sc = new Scanner (System.in);
+		String wants="y";
+		while (wants.equals("y")){
+			System.out.println("How much would you like to bet?");
 			
-		}
-
-
-		// Creates New Round
-		public void newRound() {
-			for (Player p : players) {
-				p.unFold();
-				p.resetPointsInvested();
+			BlackRound thisOne=new BlackRound(sc.nextInt());
+			System.out.println("Your cards: "+thisOne.getPlayer().getHand().getCards());
+			System.out.println("The computer's cards"+thisOne().getComputer().getHand().getCards().get(0));
+			System.out.println("Would you like to hit? y/n");
+			String hit=sc.nextLine();
+			while (hit.equals("y")){
+				thisOne.getPlayer().hit();
+				System.out.println("Your cards: "+thisOne.getPlayer().getHand().getCards());
+				System.out.println("Your hand value"+thisOne.getPlayer().calc());
+				
+				
+				
+				if (thisOne.getPlayer().calc()>21) {
+					System.out.println("Your hand value is > 21. You lose.")
+					hit="no";
+				}
+				else{
+					System.out.println("Would you like to hit? y/n");
+					hit=sc.nextLine();
+					
+				}
+				
 			}
-			resetPlayerBetAmount();
-			setDealerIndex(dealerIndex += 1);
-			table = new Table();
-			round = new Round(this);
-			takeBlinds();
-			takeAnte();
-			display.setRoundTitle();
-			round.preFlop();
+			
+			
+			sc.nextLine();
+			String hit
+			
+			System.out.println("Would you like to play a round of Black Jack? y/n");
+			wants=sc.nextLine();
 		}
 	}
-
 }
