@@ -13,14 +13,14 @@ public class BlackComp extends BlackPlayer {
 		super(Integer.MAX_VALUE);
 		dude=play;
 	}
-	
-	public void hit(){
-		super.hit();
-		if (player.getIn() && player.getPoints()==points && points<=14){
-			hand.add(new Card());
+//"hits" and returns whether or not added card
+	public boolean hit(){
+		if (dude.isIn() && dude.calc()==super.calc()&&dude.calc()<=14){
+			super.hit();
+			return true;
+			
 		}
-		points=this.calc();
-		if (points>21) in=false;
+		return false;
 	}
 
 }
