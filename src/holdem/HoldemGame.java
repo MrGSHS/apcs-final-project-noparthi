@@ -106,9 +106,10 @@ public class HoldemGame {
 		new Thread(new Runnable() {
 			@SuppressWarnings("static-access")
 			public void run() {
+				int raises = 0;
 				for (Player computer : actionsOrder) {
 					if (!computer.isFolded()) {
-						if (computer != getUser()) {
+						if (!computer.equals(getUser())) {
 							getUser().setIsTurn(false);
 							computer.setIsTurn(true);
 							try {
@@ -134,6 +135,10 @@ public class HoldemGame {
 						}
 					}
 				}
+				for(Player player : actionsOrder){
+					if(player.getRaiseBoolean()) raises++;
+				}
+				if(raises > 1) run();
 			}
 		}).start();
 	}
