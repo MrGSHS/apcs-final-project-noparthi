@@ -235,8 +235,15 @@ public class Display extends TimerTask {
 
 		// Button Background
 		public void drawButtonBackground(Graphics g) {
+			//Box
 			g.setColor(new Color(32, 32, 32));
 			g.fillRect(0, 525, FRAME_WIDTH, 50);
+			//Lines Separating Each Action
+			g.setColor(Color.BLACK);
+			g.drawLine(FRAME_WIDTH/4, 525, FRAME_WIDTH/4, 575);
+			g.drawLine(FRAME_WIDTH/2, 525, FRAME_WIDTH/2, 575);
+			g.drawLine(3*FRAME_WIDTH/4, 525, 3*FRAME_WIDTH/4, 575);
+			//String
 			g.setColor(Color.WHITE);
 			g.setFont(buttonFont);
 			g.drawString("Fold", FRAME_WIDTH / 10, 555);

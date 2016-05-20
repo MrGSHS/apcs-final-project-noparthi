@@ -38,8 +38,8 @@ public class HoldemGame {
 	public Player getUser() {
 		return user;
 	}
-	
-	public boolean isPayout(){
+
+	public boolean isPayout() {
 		return payout;
 	}
 
@@ -54,7 +54,7 @@ public class HoldemGame {
 	public int getDealerIndex() {
 		return dealerIndex;
 	}
-	
+
 	public ArrayList<Player> getActionsOrder() {
 		return actionsOrder;
 	}
@@ -63,10 +63,10 @@ public class HoldemGame {
 		return players;
 	}
 
-	public void setPayout(boolean sp){
+	public void setPayout(boolean sp) {
 		payout = sp;
 	}
-	
+
 	public HoldemGame() {
 		int pos = 0;
 		table = new Table();
@@ -122,8 +122,10 @@ public class HoldemGame {
 							}
 							computer.takeAction();
 							computer.setIsTurn(false);
-							if (getRound().moveOn())
+							if (getRound().moveOn()) {
+								System.out.println("Break");
 								break;
+							}
 						} else {
 							getUser().setIsTurn(true);
 							while (getUser().isTurn()) {
@@ -138,7 +140,6 @@ public class HoldemGame {
 				}
 			}
 		}).start();
-		System.out.println("Break");
 	}
 
 	// Takes The Blinds
@@ -175,7 +176,7 @@ public class HoldemGame {
 		ArrayList<Player> strongestPlayersIndex = new ArrayList<>();
 		// TODO: Add In Kickers And High Card
 		// Add First Player As Strongest Player
-		for (Player p : players){
+		for (Player p : players) {
 			if (!p.isFolded()) {
 				strongestPlayersIndex.add(p);
 				break;
