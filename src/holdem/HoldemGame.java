@@ -23,6 +23,7 @@ public class HoldemGame {
 	private ArrayList<Player> actionsOrder = new ArrayList<>();
 	private ArrayList<Player> players = new ArrayList<>();
 
+	private ArrayList<Player> strongestPlayersIndex = new ArrayList<>();
 	public Display getDisplay() {
 		return display;
 	}
@@ -113,7 +114,7 @@ public class HoldemGame {
 							getUser().setIsTurn(false);
 							computer.setIsTurn(true);
 							try {
-								Thread.currentThread().sleep(((int) (Math.random() * 3) + 3) * 1000);
+								Thread.currentThread().sleep(((int) (Math.random() * 3) + 3)  * 1000);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
@@ -174,7 +175,7 @@ public class HoldemGame {
 
 	// Pays Out Money In Pot To Winner
 	public void payout() {
-		ArrayList<Player> strongestPlayersIndex = new ArrayList<>();
+		strongestPlayersIndex = new ArrayList<Player>();
 		payout = true;
 		// TODO: Add In Kickers And High Card
 		// Add First Player As Strongest Player
@@ -273,11 +274,21 @@ public class HoldemGame {
 				}
 			}
 		}
+		new Thread(new Runnable(){
+			public void run(){
+		try {
+			System.out.println("Going to sleep now !");
+			Thread.currentThread().sleep(5000);
+			newRound();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		int numberShared = strongestPlayersIndex.size();
 		for (Player p : strongestPlayersIndex) {
 			p.setPoints((int) (p.getPoints() + round.getPot() / numberShared));
 		}
-		newRound();
+			}
+		}).start();
 	}
 
 	// Reset Each Players Bet Amount At End Of Each Turn

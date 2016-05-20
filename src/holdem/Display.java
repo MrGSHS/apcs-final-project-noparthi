@@ -308,11 +308,6 @@ public class Display extends TimerTask {
 					}
 				}
 				// Waits For A While
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			} else {
 				// Draws In CardBack For Non-Folded Players
 				for (int i = 1; i < game.getPlayers().size(); i++) {
