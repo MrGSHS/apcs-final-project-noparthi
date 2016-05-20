@@ -41,6 +41,20 @@ public class Hand {
 	public String getCurrentHandStrengthString() {
 		return currentHandString;
 	}
+	
+	public Card getHighestCard(){
+		if(card1.getNumber()>card2.getNumber()){
+			return card1;
+		}
+		return card2;
+	}
+	
+	public Card getLowestCard(){
+		if(card1.getNumber()<card2.getNumber()){
+			return card1;
+		}
+		return card2;
+	}
 
 	public int getPair() {
 		return pair;
@@ -198,7 +212,27 @@ public class Hand {
 
 	// Checks For Royal Flush - Never Will Happen
 	public boolean royalFlush() {
-		return false;
+		int royalFlushCounter = 0;
+		if(getStraight() == 10){
+			for(Card card : totalCards){
+				if(card.getSuite() == getFlush() && card.getNumber() == 10){
+					royalFlushCounter++;
+				}
+				else if(card.getSuite() == getFlush() && card.getNumber() == 11){
+					royalFlushCounter++;
+				}
+				else if(card.getSuite() == getFlush() && card.getNumber() == 12){
+					royalFlushCounter++;
+				}
+				else if(card.getSuite() == getFlush() && card.getNumber() == 13){
+					royalFlushCounter++;
+				}
+				else if(card.getSuite() == getFlush() && card.getNumber() == 14){
+					royalFlushCounter++;
+				}
+			}
+		}
+		return (royalFlushCounter == 5);
 	}
 
 	// Checks For Straight Flush

@@ -19,7 +19,7 @@ public class Player {
 	private boolean checkBoolean = false;
 	private boolean raiseBoolean = false;
 	private boolean callBoolean = false;
-	public boolean isTurn = false;
+	private boolean isTurn = false;
 
 	public Player(HoldemGame game, int position) {
 		this.game = game;

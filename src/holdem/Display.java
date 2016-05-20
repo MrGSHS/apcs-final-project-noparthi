@@ -324,40 +324,26 @@ public class Display extends TimerTask {
 		// Draw Blinds
 		public void drawBlinds(Graphics g) {
 			for (Player p : game.getPlayers()) {
+				int isTurnBorder = 0;
 				g.setFont(new Font("Calibri", Font.BOLD, 14));
 				g.setColor(modifiedGrey);
+				if (p.isTurn()) {
+					isTurnBorder = 3;
+				}
 				if (p.isSmallBlind()) {
-					if (p.isTurn()) {
-						g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
-								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 3, 80, 18, 10,
-								10);
-						g.setColor(Color.WHITE);
-						g.drawString("SM. Blind", game.playerPositions.get(p.getPosition())[0] + 13,
-								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 16);
-					} else {
-						g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
-								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(), 80, 18, 10, 10);
-						g.setColor(Color.WHITE);
-						g.drawString("SM. Blind", game.playerPositions.get(p.getPosition())[0] + 13,
-								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
-					}
+					g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + isTurnBorder, 80, 18,
+							10, 10);
+					g.setColor(Color.WHITE);
+					g.drawString("SM. Blind", game.playerPositions.get(p.getPosition())[0] + 13,
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + isTurnBorder + 13);
 				} else if (p.isBigBlind()) {
-					if (p.isTurn()) {
-						g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
-								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 3, 80, 18, 10,
-								10);
-						g.setColor(Color.WHITE);
-						g.drawString("Big Blind", game.playerPositions.get(p.getPosition())[0] + 13,
-								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 16);
-					}
-					else{
-						g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
-								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(), 80, 18, 10,
-								10);
-						g.setColor(Color.WHITE);
-						g.drawString("Big Blind", game.playerPositions.get(p.getPosition())[0] + 13,
-								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
-					}
+					g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + isTurnBorder, 80, 18,
+							10, 10);
+					g.setColor(Color.WHITE);
+					g.drawString("Big Blind", game.playerPositions.get(p.getPosition())[0] + 13,
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + isTurnBorder + 13);
 				}
 			}
 		}
@@ -366,7 +352,7 @@ public class Display extends TimerTask {
 		public void drawTurnBorder(Graphics g) {
 			g.setColor(Color.GREEN);
 			for (Player p : game.getPlayers()) {
-				if (p.isTurn) {
+				if (p.isTurn()) {
 					g.fillRoundRect(game.playerPositions.get(p.getPosition())[0] - 3,
 							game.playerPositions.get(p.getPosition())[1] - 3, userLabel.getWidth() + 6,
 							userLabel.getHeight() + 6, 30, 30);
@@ -394,9 +380,13 @@ public class Display extends TimerTask {
 			g.setColor(modifiedGrey);
 
 			for (Player p : game.getPlayers()) {
+				int isTurnBorder = 0;
 				int srcX = game.playerPositions.get(p.getPosition())[0] + 80;
 				int rectWidth = 80;
 				int stringOffset = 0;
+				if (p.isTurn()) {
+					isTurnBorder = 3;
+				}
 				if (!p.isBigBlind() && !p.isSmallBlind()) {
 					srcX = game.playerPositions.get(p.getPosition())[0];
 					rectWidth = userLabel.getWidth();
@@ -415,23 +405,25 @@ public class Display extends TimerTask {
 				} else if (!p.getCheckBoolean() && !p.getCallBoolean() && !p.getRaiseBoolean()) {
 				} else if (p.getCheckBoolean() || p.getCallBoolean()) {
 					g.setColor(new Color(53, 192, 18));
-					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(),
+					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + isTurnBorder,
 							rectWidth, 18, 10, 10);
+					
 					g.setColor(Color.BLACK);
-
 					if (p.getCheckBoolean())
 						g.drawString("Check", game.playerPositions.get(p.getPosition())[0] + 100 - stringOffset,
-								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
+								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + isTurnBorder
+										+ 13);
 					else
 						g.drawString("Call", game.playerPositions.get(p.getPosition())[0] + 110 - stringOffset,
-								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
+								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + isTurnBorder
+										+ 13);
 				} else if (p.getRaiseBoolean()) {
 					g.setColor(Color.YELLOW);
-					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(),
+					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + isTurnBorder,
 							rectWidth, 18, 10, 10);
 					g.setColor(Color.BLACK);
 					g.drawString("Raise", game.playerPositions.get(p.getPosition())[0] + 105 - stringOffset,
-							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + isTurnBorder + 13);
 				}
 			}
 		}
