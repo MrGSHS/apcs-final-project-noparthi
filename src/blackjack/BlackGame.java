@@ -4,10 +4,11 @@ public class BlackGame {
 	public static void main(String [] args){
 		Scanner sc = new Scanner (System.in);
 		String wants="y";
+		System.out.println("How much would you like to bet?");
+		
+		BlackRound thisOne=new BlackRound(sc.nextInt());
 		while (wants.equals("y")){
-			System.out.println("How much would you like to bet?");
 			
-			BlackRound thisOne=new BlackRound(sc.nextInt());
 			System.out.println("Your cards: "+thisOne.getPlayer().getHand().getCards());
 			System.out.println("The computer's cards"+thisOne().getComputer().getHand().getCards().get(0));
 			System.out.println("Would you like to hit? y/n");
@@ -23,6 +24,11 @@ public class BlackGame {
 					System.out.println("Your hand value is > 21. You lose.")
 					hit="no";
 				}
+				else if (thisOne.getPlayer().calc()==21){
+					thisOne.getPlayer().demGains();
+					break;
+				}
+				}
 				else{
 					System.out.println("Would you like to hit? y/n");
 					hit=sc.nextLine();
@@ -30,17 +36,32 @@ public class BlackGame {
 				}
 				
 			}
-			if (hit.equals("no")) continue;
-			for (int i=0; i<10; i++){
-				int curVal=thisOne.getComputer().getHand().calc();
-				if(!thisOne.getComputer().hit() && ){
-					
-				}
+			System.out.println("Computer's cards: "+thisOne().getComputer().getHand().getCards());
+			
+			while (thisOne.getComputer().hit()){
+				
+				System.out.println("Computer's cards: "+thisOne().getComputer().getHand());
 				
 			}
+			if (hit.equals("no")) continue;
+			else if (thisOne.getComputer().calc()<thisOne().getPlayer().calc() || thisOne.getComputer().calc()>21){
+				thisOne.getPlayer().demGains();
+				
+				System.out.println("You win! Your new balance: $"+thisOne.getPlayer().getBalance());
+				
+			}
+			else if (thisOne.getComputer().calc()==thisOne.getPlayer() && thisOne.getComputer().calc()<=21){
+				System.out.println("Push");
+			}
+			else{
+				System.out.println("You lose!");
+			}
 			
-			System.out.println("Would you like to play a round of Black Jack? y/n");
+			System.out.println("Would you like to play another round of Black Jack? y/n");
 			wants=sc.nextLine();
+			thisOne.getPlayer().getHand().restart();
+			thisOne.getPlayer().getHand().reset();
+			thisOne.getComputer().getHand().reset();
 		}
 	}
 }

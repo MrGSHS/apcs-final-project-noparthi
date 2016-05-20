@@ -28,4 +28,10 @@ public class BlackHand {
 	public void restart(){
 		deck1=new Deck();
 	}
+	public reset(){
+		hand1= new ArrayList<Card>();
+		hand1.add(deck1.deal());
+		hand1.add(deck1.deal());
+	}
+	
 }

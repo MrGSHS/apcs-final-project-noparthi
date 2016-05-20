@@ -13,7 +13,7 @@ public class BlackComp extends BlackPlayer {
 	}
 //"hits" and returns whether or not added card
 	public boolean hit(){
-		if (dude.isIn() && dude.calc()==super.calc()&&dude.calc()<=14){
+		if ((dude.isIn() && dude.calc()>super.calc()&&super.calc()<21)||(dude.isIn()&&dude.calc==super.calc()&&super.calc<=14)){
 			super.hit();
 			return true;
 			

@@ -74,6 +74,8 @@ public class BlackPlayer {
 		balance+=bet*2;
 		bet=0;
 	}
-
+	public BlackHand getHand(){
+		return hand;
+	}
 
 }

@@ -30,7 +30,13 @@ public class BlackRound {
 	public void setPlayer(Player a){
 		play=a;
 	}
-	
+	public BlackPlayer getPlayer(){
+		return play;
+		
+	}
+	public BlackComp getComputer(){
+		return deal;
+	}
 		
 	}
 		
