@@ -764,7 +764,7 @@ public class Display extends TimerTask {
 						maxBet = bet;
 				}
 				// Ask For User Input
-				String stringRaiseAmount = (String) JOptionPane.showInputDialog(frame, "Enter Raise Amount:", maxBet);
+				String stringRaiseAmount = (String) JOptionPane.showInputDialog(frame, "Enter Raise Amount:", maxBet + 500);
 				try {
 					stringRaiseAmount = stringRaiseAmount.replaceAll("[^0-9]", "");
 					int intRaiseAmount = Integer.parseInt(stringRaiseAmount);
