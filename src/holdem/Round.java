@@ -59,7 +59,8 @@ public class Round {
 		Collections.rotate(game.getActionsOrder(), -3);
 		game.getActionsOrder().get(0).setFirstAction(true);
 		game.getActionsOrder().get(0).setIsTurn(true);
-		game.allComputersTakeAction();;
+		game.allComputersTakeAction();
+		;
 	}
 
 	public void preRiver() {
@@ -78,29 +79,26 @@ public class Round {
 	public boolean moveOn() {
 		// Skips If Someone Had Raised, And Resets All Action Booleans Back To
 		// Null
-		int check = 0;
-		int call = 0;
-		int raise = 0;
-		int fold = 0;
+		int highestBetAmount = 1;
+		int totalActive = 0;
 		for (Player p : game.getActionsOrder()) {
-			if (p.getCheckBoolean())
-				check++;
-			if (p.getCallBoolean())
-				call++;
-			if (p.getRaiseBoolean())
-				raise++;
-			if (p.isFolded())
-				fold++;
+			if (!p.isFolded()) {
+				if (p.getBetAmount() > highestBetAmount) {
+					highestBetAmount = p.getBetAmount();
+				}
+				totalActive++;
+			}
 		}
-
-		if (check + fold != game.getActionsOrder().size()
-				&& ((call + raise + fold) != game.getActionsOrder().size() || raise > 1)) {
-			// System.out.println("Failed Move-On");
+		for (Player p : game.getActionsOrder()) {
+			if (!p.isFolded()) {
+				if (p.getBetAmount() == highestBetAmount)
+					totalActive--;
+			}
+		}
+		
+		if(totalActive != 0){
 			return false;
 		}
-
-		// System.out.println("Move-On Successful");
-
 		// Else Reset Stuff
 		game.resetPlayerBetAmount();
 		for (Player p : game.getPlayers()) {

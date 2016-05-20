@@ -395,21 +395,23 @@ public class HoldemGame {
 				}
 			}
 		}
-
+		for (Player p : strongestPlayersIndex) {
+			p.setPoints((int) (p.getPoints() + round.getPot() / strongestPlayersIndex.size()));
+		}
 		// Slows Down Before Payout
 		new Thread(new Runnable() {
 			@SuppressWarnings("static-access")
 			public void run() {
 				try {
-					Thread.currentThread().sleep(5000);
+					Thread.currentThread().sleep(10000);
 					newRound();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				int numberShared = strongestPlayersIndex.size();
-				for (Player p : strongestPlayersIndex) {
-					p.setPoints((int) (p.getPoints() + round.getPot() / numberShared));
-				}
+				//int numberShared = strongestPlayersIndex.size();
+				//for (Player p : strongestPlayersIndex) {
+					//p.setPoints((int) (p.getPoints() + round.getPot() / numberShared));
+				//}
 			}
 		}).start();
 	}
