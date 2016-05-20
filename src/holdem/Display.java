@@ -235,15 +235,15 @@ public class Display extends TimerTask {
 
 		// Button Background
 		public void drawButtonBackground(Graphics g) {
-			//Box
+			// Box
 			g.setColor(new Color(32, 32, 32));
 			g.fillRect(0, 525, FRAME_WIDTH, 50);
-			//Lines Separating Each Action
+			// Lines Separating Each Action
 			g.setColor(Color.BLACK);
-			g.drawLine(FRAME_WIDTH/4, 525, FRAME_WIDTH/4, 575);
-			g.drawLine(FRAME_WIDTH/2, 525, FRAME_WIDTH/2, 575);
-			g.drawLine(3*FRAME_WIDTH/4, 525, 3*FRAME_WIDTH/4, 575);
-			//String
+			g.drawLine(FRAME_WIDTH / 4, 525, FRAME_WIDTH / 4, 575);
+			g.drawLine(FRAME_WIDTH / 2, 525, FRAME_WIDTH / 2, 575);
+			g.drawLine(3 * FRAME_WIDTH / 4, 525, 3 * FRAME_WIDTH / 4, 575);
+			// String
 			g.setColor(Color.WHITE);
 			g.setFont(buttonFont);
 			g.drawString("Fold", FRAME_WIDTH / 10, 555);
@@ -279,7 +279,7 @@ public class Display extends TimerTask {
 
 		// Draw Computer Cards
 		public void drawComputerCards(Graphics g) {
-			// If Is Payout...Otherwise...
+			// If Is Pay-out...Otherwise...
 			if (game.isPayout()) {
 				faceUpComputerCards = new ArrayList<BufferedImage>();
 				// Adds Computer Cards To Array
@@ -311,7 +311,6 @@ public class Display extends TimerTask {
 				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {
@@ -330,22 +329,40 @@ public class Display extends TimerTask {
 		// Draw Blinds
 		public void drawBlinds(Graphics g) {
 			for (Player p : game.getPlayers()) {
+				g.setFont(new Font("Calibri", Font.BOLD, 14));
+				g.setColor(modifiedGrey);
 				if (p.isSmallBlind()) {
-					g.setFont(new Font("Calibri", Font.BOLD, 14));
-					g.setColor(modifiedGrey);
-					g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
-							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight()+3, 80, 18, 10, 10);
-					g.setColor(Color.WHITE);
-					g.drawString("SM. Blind", game.playerPositions.get(p.getPosition())[0] + 13,
-							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 16);
+					if (p.isTurn()) {
+						g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
+								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 3, 80, 18, 10,
+								10);
+						g.setColor(Color.WHITE);
+						g.drawString("SM. Blind", game.playerPositions.get(p.getPosition())[0] + 13,
+								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 16);
+					} else {
+						g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
+								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(), 80, 18, 10, 10);
+						g.setColor(Color.WHITE);
+						g.drawString("SM. Blind", game.playerPositions.get(p.getPosition())[0] + 13,
+								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
+					}
 				} else if (p.isBigBlind()) {
-					g.setFont(new Font("Calibri", Font.BOLD, 14));
-					g.setColor(modifiedGrey);
-					g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
-							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight()+3, 80, 18, 10, 10);
-					g.setColor(Color.WHITE);
-					g.drawString("Big Blind", game.playerPositions.get(p.getPosition())[0] + 13,
-							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 16);
+					if (p.isTurn()) {
+						g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
+								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 3, 80, 18, 10,
+								10);
+						g.setColor(Color.WHITE);
+						g.drawString("Big Blind", game.playerPositions.get(p.getPosition())[0] + 13,
+								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 16);
+					}
+					else{
+						g.fillRoundRect(game.playerPositions.get(p.getPosition())[0],
+								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight(), 80, 18, 10,
+								10);
+						g.setColor(Color.WHITE);
+						g.drawString("Big Blind", game.playerPositions.get(p.getPosition())[0] + 13,
+								game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + 13);
+					}
 				}
 			}
 		}

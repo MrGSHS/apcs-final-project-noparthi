@@ -63,10 +63,6 @@ public class HoldemGame {
 		return players;
 	}
 
-	public void setPayout(boolean sp) {
-		payout = sp;
-	}
-
 	public HoldemGame() {
 		int pos = 0;
 		table = new Table();
@@ -174,6 +170,7 @@ public class HoldemGame {
 	// Pays Out Money In Pot To Winner
 	public void payout() {
 		ArrayList<Player> strongestPlayersIndex = new ArrayList<>();
+		payout = true;
 		// TODO: Add In Kickers And High Card
 		// Add First Player As Strongest Player
 		for (Player p : players) {
@@ -314,6 +311,7 @@ public class HoldemGame {
 		resetPlayerBetAmount();
 		table = new Table();
 		round = new Round(this);
+		payout = false;
 		takeBlinds();
 		takeAnte();
 		display.setRoundTitle();

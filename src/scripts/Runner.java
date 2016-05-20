@@ -91,14 +91,12 @@ public class Runner {
 
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						// TODO Auto-generated method stub
 						mouseOverBlackJack = true;
 						frame.repaint();
 					}
 
 					@Override
 					public void mouseExited(MouseEvent e) {
-						// TODO Auto-generated method stub
 						mouseOverBlackJack = false;
 						frame.repaint();
 					}
