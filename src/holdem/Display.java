@@ -152,13 +152,13 @@ public class Display {
 
 		// Set Computer Names
 		COMP1NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
-		game.getPlayers().get(4).setName(COMP1NAME);
+		game.getPlayers().get(1).setName(COMP1NAME);
 		COMP2NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
-		game.getPlayers().get(3).setName(COMP2NAME);
+		game.getPlayers().get(2).setName(COMP2NAME);
 		COMP3NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
-		game.getPlayers().get(2).setName(COMP3NAME);
+		game.getPlayers().get(3).setName(COMP3NAME);
 		COMP4NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
-		game.getPlayers().get(1).setName(COMP4NAME);
+		game.getPlayers().get(4).setName(COMP4NAME);
 
 		// Remind User that ESC opens hand chart
 		JOptionPane.showConfirmDialog(null, "Press ESC Anytime To Bring Up The Hand Chart", "Reminder",
@@ -448,17 +448,17 @@ public class Display {
 		public void addComputerNames(Graphics g) {
 			g.setFont(new Font("Calibri", Font.PLAIN, 16));
 			g.drawString(COMP1NAME,
-					game.playerPositions.get(4)[0] + 48 + (128 - g.getFontMetrics().stringWidth(COMP1NAME)) / 3,
-					game.playerPositions.get(4)[1] + 20);
+					game.playerPositions.get(1)[0] + 48 + (128 - g.getFontMetrics().stringWidth(COMP1NAME)) / 3,
+					game.playerPositions.get(1)[1] + 20);
 			g.drawString(COMP2NAME,
-					game.playerPositions.get(3)[0] + 48 + (128 - g.getFontMetrics().stringWidth(COMP2NAME)) / 3,
-					game.playerPositions.get(3)[1] + 20);
-			g.drawString(COMP3NAME,
 					game.playerPositions.get(2)[0] + 48 + (128 - g.getFontMetrics().stringWidth(COMP2NAME)) / 3,
 					game.playerPositions.get(2)[1] + 20);
+			g.drawString(COMP3NAME,
+					game.playerPositions.get(3)[0] + 48 + (128 - g.getFontMetrics().stringWidth(COMP3NAME)) / 3,
+					game.playerPositions.get(3)[1] + 20);
 			g.drawString(COMP4NAME,
-					game.playerPositions.get(1)[0] + 48 + (128 - g.getFontMetrics().stringWidth(COMP2NAME)) / 3,
-					game.playerPositions.get(1)[1] + 20);
+					game.playerPositions.get(4)[0] + 48 + (128 - g.getFontMetrics().stringWidth(COMP4NAME)) / 3,
+					game.playerPositions.get(4)[1] + 20);
 		}
 
 		// Add Player Points
@@ -596,7 +596,7 @@ public class Display {
 		// Add Tips
 		public void addTipEffects(Graphics g) {
 			if (userTip) {
-				if (counter != 8) {
+				if (counter <= 8) {
 					String tipString = "Thanks " + USERNAME + "! You get " + extraCreditPoints
 							+ " extra credit points!";
 					g.setColor(Color.WHITE);
@@ -623,7 +623,7 @@ public class Display {
 		//Draw Payout
 		public void drawPayout(Graphics g){
 			if (game.isPayout()) {
-				if (counter != 40) {
+				if (counter <= 40) {
 					String payoutString = "";
 					if (game.getStrongestPlayers().size() == 1) {
 						payoutString = game.getStrongestPlayers().get(0).getName() + " Has Won With: "
@@ -654,6 +654,9 @@ public class Display {
 					System.out.println("Drawing Payout");
 					counter++;
 				}
+			}
+			else if(!userTip){
+				counter = 0;
 			}
 		}
 
@@ -821,9 +824,8 @@ public class Display {
 					} else {
 						return;
 					}
-
 				} catch (NullPointerException e) {
-					System.out.println("User has cancelled raise.");
+					System.out.println("Raise Cancelled");
 				}
 			} else if (evt.getSource() == call) {
 				game.getUser().call();
@@ -837,9 +839,9 @@ public class Display {
 			}
 			if (evt.getSource() == tip) {
 				if (game.getUser().getPoints() >= 2000) {
-					game.getUser().setPoints(game.getUser().getPoints() - 2000);
-					run();
+					game.getUser().setPoints(game.getUser().getPoints() - 4*game.getBigBlind());
 					userTip = true;
+					frame.repaint();
 				}
 			}
 		}
@@ -877,7 +879,6 @@ public class Display {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	// Set Round Title (1,2,3,4, etc.)
