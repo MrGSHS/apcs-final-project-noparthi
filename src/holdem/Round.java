@@ -9,9 +9,7 @@ public class Round {
 
 	private int pot;
 	private int minBet;
-	/*
-	 * 0 = pre flop 1 = pre turn 2 = pre river 3 = post river
-	 */
+
 	public int stageOfRound;
 
 	public Round(HoldemGame game) {
@@ -64,12 +62,14 @@ public class Round {
 
 	public void preRiver() {
 		minBet = game.getBigBlind();
+		game.getActionsOrder().get(0).setFirstAction(true);
 		game.getActionsOrder().get(0).setIsTurn(true);
 		game.allPlayersTakeAction();
 	}
 
 	public void postRiver() {
 		minBet = game.getBigBlind();
+		game.getActionsOrder().get(0).setFirstAction(true);
 		game.getActionsOrder().get(0).setIsTurn(true);
 		game.allPlayersTakeAction();
 	}
@@ -78,7 +78,6 @@ public class Round {
 	public boolean moveOn() {
 		int highestBetAmount = 0;
 		int totalActive = 0;
-		int check = 0;
 		int call = 0;
 		int raise = 0;
 		int fold = 0;
@@ -87,9 +86,7 @@ public class Round {
 				if (p.getBetAmount() > highestBetAmount) {
 					highestBetAmount = p.getBetAmount();
 				}
-				if (p.getCheckBoolean()) {
-					check++;
-				} else if (p.getCallBoolean()) {
+				if (p.getCallBoolean()) {
 					call++;
 				} else if (p.getRaiseBoolean()) {
 					raise++;

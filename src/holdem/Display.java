@@ -144,6 +144,7 @@ public class Display extends TimerTask {
 		} else {
 			System.exit(0);
 		}
+		game.getPlayers().get(0).setName(USERNAME);
 
 		// Removes User Name From Naming List If Exists
 		for (String name : NAMES)
@@ -152,9 +153,13 @@ public class Display extends TimerTask {
 
 		// Set Computer Names
 		COMP1NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+		game.getPlayers().get(1).setName(COMP1NAME);
 		COMP2NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+		game.getPlayers().get(2).setName(COMP2NAME);
 		COMP3NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+		game.getPlayers().get(3).setName(COMP3NAME);
 		COMP4NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+		game.getPlayers().get(4).setName(COMP4NAME);
 
 		// Remind User that ESC opens hand chart
 		JOptionPane.showConfirmDialog(null, "Press ESC Anytime To Bring Up The Hand Chart", "Reminder",
@@ -405,9 +410,10 @@ public class Display extends TimerTask {
 				} else if (!p.getCheckBoolean() && !p.getCallBoolean() && !p.getRaiseBoolean()) {
 				} else if (p.getCheckBoolean() || p.getCallBoolean()) {
 					g.setColor(new Color(53, 192, 18));
-					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + isTurnBorder,
+					g.fillRoundRect(srcX,
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + isTurnBorder,
 							rectWidth, 18, 10, 10);
-					
+
 					g.setColor(Color.BLACK);
 					if (p.getCheckBoolean())
 						g.drawString("Check", game.playerPositions.get(p.getPosition())[0] + 100 - stringOffset,
@@ -419,7 +425,8 @@ public class Display extends TimerTask {
 										+ 13);
 				} else if (p.getRaiseBoolean()) {
 					g.setColor(Color.YELLOW);
-					g.fillRoundRect(srcX, game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + isTurnBorder,
+					g.fillRoundRect(srcX,
+							game.playerPositions.get(p.getPosition())[1] + userLabel.getHeight() + isTurnBorder,
 							rectWidth, 18, 10, 10);
 					g.setColor(Color.BLACK);
 					g.drawString("Raise", game.playerPositions.get(p.getPosition())[0] + 105 - stringOffset,
@@ -613,6 +620,42 @@ public class Display extends TimerTask {
 				}
 			}
 		}
+		
+		//Draw Payout
+		public void drawPayout(Graphics g){
+			if (game.isPayout()) {
+				if (counter != 42) {
+					String payoutString = "";
+					if (game.getStrongestPlayers().size() == 1) {
+						payoutString = game.getStrongestPlayers().get(0).getName() + " Has Won With: "
+								+ game.getStrongestPlayers().get(0).getHand().getCurrentHandStrengthString();
+					} else {
+						for (Player p : game.getStrongestPlayers()) {
+							payoutString += p.getName() + ", ";
+						}
+						payoutString += " Wins With: "
+								+ game.getStrongestPlayers().get(0).getHand().getCurrentHandStrengthString();
+					}
+
+					g.setColor(Color.WHITE);
+					g.fillOval(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) - 15, -15,
+							g.getFontMetrics().stringWidth(payoutString) + 30, 60);
+
+					Polygon speechBubbleTail = new Polygon();
+					speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 30,
+							40);
+					speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 50,
+							40);
+					speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 95,
+							70);
+					g.fillPolygon(speechBubbleTail);
+
+					g.setColor(Color.BLACK);
+					g.drawString(payoutString, FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString), 20);
+					counter++;
+				}
+			}
+		}
 
 		// Actual Button Removal
 		public void buttonRemoval(Graphics g) {
@@ -682,6 +725,9 @@ public class Display extends TimerTask {
 
 			// Congratulations You Wasted Money - Tip
 			addTipEffects(g);
+			
+			//Draw Pay-out
+			drawPayout(g);
 
 			// Button Removal
 			buttonRemoval(g);
@@ -764,7 +810,8 @@ public class Display extends TimerTask {
 						maxBet = bet;
 				}
 				// Ask For User Input
-				String stringRaiseAmount = (String) JOptionPane.showInputDialog(frame, "Enter Raise Amount:", maxBet + 500);
+				String stringRaiseAmount = (String) JOptionPane.showInputDialog(frame, "Enter Raise Amount:",
+						maxBet + 500);
 				try {
 					stringRaiseAmount = stringRaiseAmount.replaceAll("[^0-9]", "");
 					int intRaiseAmount = Integer.parseInt(stringRaiseAmount);

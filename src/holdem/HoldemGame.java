@@ -22,8 +22,7 @@ public class HoldemGame {
 	public ArrayList<int[]> playerPositions = new ArrayList<>();
 	private ArrayList<Player> actionsOrder = new ArrayList<>();
 	private ArrayList<Player> players = new ArrayList<>();
-
-	private ArrayList<Player> strongestPlayersIndex = new ArrayList<>();
+	private ArrayList<Player> strongestPlayers = new ArrayList<>();
 
 	public Display getDisplay() {
 		return display;
@@ -35,6 +34,10 @@ public class HoldemGame {
 
 	public Round getRound() {
 		return round;
+	}
+	
+	public ArrayList<Player> getStrongestPlayers(){
+		return strongestPlayers;
 	}
 
 	public Player getUser() {
@@ -123,7 +126,6 @@ public class HoldemGame {
 							player.takeAction();
 							player.setIsTurn(false);
 							if (getRound().moveOn()) {
-								System.out.println("Break");
 								break;
 							}
 						} else {
@@ -195,63 +197,63 @@ public class HoldemGame {
 	// Pays Out Money In Pot To Winner
 	public void payout() {
 		payout = true;
-		strongestPlayersIndex = new ArrayList<Player>();
+		strongestPlayers = new ArrayList<Player>();
 
 		// Add First Player As Strongest Player
 		for (Player p : players) {
 			if (!p.isFolded()) {
-				strongestPlayersIndex.add(p);
+				strongestPlayers.add(p);
 				break;
 			}
 		}
 
-		// Adds In Strongest Players To StrongestPlayersIndex
+		// Adds In Strongest Players To strongestPlayers
 		for (Player p : players) {
 			// If Not Folded
 			if (!p.isFolded()) {
 				// If One User's Hand Strength Is Better Than The Best Currently
-				if (p.getHand().updateHandStrength() > strongestPlayersIndex.get(0).getHand().updateHandStrength()) {
-					strongestPlayersIndex = new ArrayList<Player>();
-					strongestPlayersIndex.add(p);
+				if (p.getHand().updateHandStrength() > strongestPlayers.get(0).getHand().updateHandStrength()) {
+					strongestPlayers = new ArrayList<Player>();
+					strongestPlayers.add(p);
 				}
 				// If Final Hand Strengths Are Equal
-				else if (p.getHand().updateHandStrength() == strongestPlayersIndex.get(0).getHand().updateHandStrength()
-						&& p != strongestPlayersIndex.get(0)) {
+				else if (p.getHand().updateHandStrength() == strongestPlayers.get(0).getHand().updateHandStrength()
+						&& p != strongestPlayers.get(0)) {
 
 					// Royal Flush
 					if (p.getHand().getCurrentHandStrengthString().equals("Royal Flush")) {
-						strongestPlayersIndex.add(p);
+						strongestPlayers.add(p);
 					}
 
 					// Four Of A Kind
 					else if (p.getHand().getCurrentHandStrengthString().equals("Four Of A Kind")) {
-						if (p.getHand().getQuads() > strongestPlayersIndex.get(0).getHand().getQuads()) {
-							strongestPlayersIndex = new ArrayList<Player>();
-							strongestPlayersIndex.add(p);
-						} else if (p.getHand().getQuads() == strongestPlayersIndex.get(0).getHand().getQuads()) {
-							strongestPlayersIndex.add(p);
+						if (p.getHand().getQuads() > strongestPlayers.get(0).getHand().getQuads()) {
+							strongestPlayers = new ArrayList<Player>();
+							strongestPlayers.add(p);
+						} else if (p.getHand().getQuads() == strongestPlayers.get(0).getHand().getQuads()) {
+							strongestPlayers.add(p);
 						}
 					}
 
 					// Full House
 					else if (p.getHand().getCurrentHandStrengthString().equals("Full House")) {
 						// If Players Triple Is Greater
-						if (p.getHand().getFullHouse().get(0) > strongestPlayersIndex.get(0).getHand().getFullHouse()
+						if (p.getHand().getFullHouse().get(0) > strongestPlayers.get(0).getHand().getFullHouse()
 								.get(0)) {
-							strongestPlayersIndex = new ArrayList<Player>();
-							strongestPlayersIndex.add(p);
+							strongestPlayers = new ArrayList<Player>();
+							strongestPlayers.add(p);
 						}
 						// If The Triples Are Equivalent
-						else if (p.getHand().getFullHouse().get(0) == strongestPlayersIndex.get(0).getHand()
+						else if (p.getHand().getFullHouse().get(0) == strongestPlayers.get(0).getHand()
 								.getFullHouse().get(0)) {
 							// Check The Doubles
-							if (p.getHand().getFullHouse().get(1) == strongestPlayersIndex.get(0).getHand()
+							if (p.getHand().getFullHouse().get(1) == strongestPlayers.get(0).getHand()
 									.getFullHouse().get(1)) {
-								strongestPlayersIndex.add(p);
-							} else if (p.getHand().getFullHouse().get(1) > strongestPlayersIndex.get(0).getHand()
+								strongestPlayers.add(p);
+							} else if (p.getHand().getFullHouse().get(1) > strongestPlayers.get(0).getHand()
 									.getFullHouse().get(1)) {
-								strongestPlayersIndex = new ArrayList<Player>();
-								strongestPlayersIndex.add(p);
+								strongestPlayers = new ArrayList<Player>();
+								strongestPlayers.add(p);
 							}
 						}
 					}
@@ -263,58 +265,58 @@ public class HoldemGame {
 						// Grabs Highest Player Card On Suite
 						if (p.getHand().getFlush() == p.getHand().getHighestCard().getSuite()) {
 							highestCardInHandWithFlushP1 = p.getHand().getHighestCard().getNumber();
-						} else if (strongestPlayersIndex.get(0).getHand().getFlush() == p.getHand().getLowestCard()
+						} else if (strongestPlayers.get(0).getHand().getFlush() == p.getHand().getLowestCard()
 								.getSuite()) {
 							highestCardInHandWithFlushP1 = p.getHand().getLowestCard().getNumber();
 						}
 						// Grabs Highest StrongestPlayer Card On Suite
-						if (strongestPlayersIndex.get(0).getHand().getFlush() == strongestPlayersIndex.get(0).getHand()
+						if (strongestPlayers.get(0).getHand().getFlush() == strongestPlayers.get(0).getHand()
 								.getHighestCard().getSuite()) {
-							highestCardInHandWithFlushSP1 = strongestPlayersIndex.get(0).getHand().getHighestCard()
+							highestCardInHandWithFlushSP1 = strongestPlayers.get(0).getHand().getHighestCard()
 									.getNumber();
-						} else if (strongestPlayersIndex.get(0).getHand().getFlush() == strongestPlayersIndex.get(0)
+						} else if (strongestPlayers.get(0).getHand().getFlush() == strongestPlayers.get(0)
 								.getHand().getLowestCard().getSuite()) {
-							highestCardInHandWithFlushSP1 = strongestPlayersIndex.get(0).getHand().getLowestCard()
+							highestCardInHandWithFlushSP1 = strongestPlayers.get(0).getHand().getLowestCard()
 									.getNumber();
 						}
 						// Calculates Who Is Strongest Player
 						if (highestCardInHandWithFlushP1 > highestCardInHandWithFlushSP1) {
-							strongestPlayersIndex = new ArrayList<Player>();
-							strongestPlayersIndex.add(p);
+							strongestPlayers = new ArrayList<Player>();
+							strongestPlayers.add(p);
 						} else if (highestCardInHandWithFlushP1 == highestCardInHandWithFlushSP1) {
-							strongestPlayersIndex.add(p);
+							strongestPlayers.add(p);
 						}
 					}
 
 					// Straight
 					else if (p.getHand().getCurrentHandStrengthString().equals("Straight")) {
-						if (p.getHand().getStraight() > strongestPlayersIndex.get(0).getHand().getStraight()) {
-							strongestPlayersIndex = new ArrayList<Player>();
-							strongestPlayersIndex.add(p);
-						} else if (p.getHand().getStraight() == strongestPlayersIndex.get(0).getHand().getStraight())
-							strongestPlayersIndex.add(p);
+						if (p.getHand().getStraight() > strongestPlayers.get(0).getHand().getStraight()) {
+							strongestPlayers = new ArrayList<Player>();
+							strongestPlayers.add(p);
+						} else if (p.getHand().getStraight() == strongestPlayers.get(0).getHand().getStraight())
+							strongestPlayers.add(p);
 					}
 
 					// Three Of A Kind
 					else if (p.getHand().getCurrentHandStrengthString().equals("Three Of A Kind")) {
-						if (p.getHand().getTrips() > strongestPlayersIndex.get(0).getHand().getTrips()) {
-							strongestPlayersIndex = new ArrayList<Player>();
-							strongestPlayersIndex.add(p);
+						if (p.getHand().getTrips() > strongestPlayers.get(0).getHand().getTrips()) {
+							strongestPlayers = new ArrayList<Player>();
+							strongestPlayers.add(p);
 						}
-						if (p.getHand().getTrips() == strongestPlayersIndex.get(0).getHand().getTrips()) {
-							if (p.getHand().getHighestCard().getNumber() > strongestPlayersIndex.get(0).getHand()
+						if (p.getHand().getTrips() == strongestPlayers.get(0).getHand().getTrips()) {
+							if (p.getHand().getHighestCard().getNumber() > strongestPlayers.get(0).getHand()
 									.getHighestCard().getNumber()) {
-								strongestPlayersIndex = new ArrayList<Player>();
-								strongestPlayersIndex.add(p);
-							} else if (p.getHand().getHighestCard().getNumber() == strongestPlayersIndex.get(0)
+								strongestPlayers = new ArrayList<Player>();
+								strongestPlayers.add(p);
+							} else if (p.getHand().getHighestCard().getNumber() == strongestPlayers.get(0)
 									.getHand().getHighestCard().getNumber()) {
-								if (p.getHand().getLowestCard().getNumber() == strongestPlayersIndex.get(0).getHand()
+								if (p.getHand().getLowestCard().getNumber() == strongestPlayers.get(0).getHand()
 										.getLowestCard().getNumber()) {
-									strongestPlayersIndex.add(p);
-								} else if (p.getHand().getLowestCard().getNumber() > strongestPlayersIndex.get(0)
+									strongestPlayers.add(p);
+								} else if (p.getHand().getLowestCard().getNumber() > strongestPlayers.get(0)
 										.getHand().getLowestCard().getNumber()) {
-									strongestPlayersIndex = new ArrayList<Player>();
-									strongestPlayersIndex.add(p);
+									strongestPlayers = new ArrayList<Player>();
+									strongestPlayers.add(p);
 								}
 							}
 						}
@@ -322,81 +324,81 @@ public class HoldemGame {
 
 					// Two Pair
 					else if (p.getHand().getCurrentHandStrengthString().equals("Two-Pair")) {
-						if (p.getHand().getTwoPair().get(0) > strongestPlayersIndex.get(0).getHand().getTwoPair()
+						if (p.getHand().getTwoPair().get(0) > strongestPlayers.get(0).getHand().getTwoPair()
 								.get(0)) {
-							strongestPlayersIndex = new ArrayList<Player>();
-							strongestPlayersIndex.add(p);
+							strongestPlayers = new ArrayList<Player>();
+							strongestPlayers.add(p);
 						}
 						// If The High Pair Are Equivalent
-						else if (p.getHand().getTwoPair().get(0) == strongestPlayersIndex.get(0).getHand().getTwoPair()
+						else if (p.getHand().getTwoPair().get(0) == strongestPlayers.get(0).getHand().getTwoPair()
 								.get(0)) {
-							if (p.getHand().getTwoPair().get(1) == strongestPlayersIndex.get(0).getHand().getTwoPair()
+							if (p.getHand().getTwoPair().get(1) == strongestPlayers.get(0).getHand().getTwoPair()
 									.get(1)) {
 								// Check Kicker
-								if (p.getHand().getHighestCard().getNumber() == strongestPlayersIndex.get(0).getHand()
+								if (p.getHand().getHighestCard().getNumber() == strongestPlayers.get(0).getHand()
 										.getHighestCard().getNumber()) {
-									strongestPlayersIndex.add(p);
-								} else if (p.getHand().getHighestCard().getNumber() > strongestPlayersIndex.get(0)
+									strongestPlayers.add(p);
+								} else if (p.getHand().getHighestCard().getNumber() > strongestPlayers.get(0)
 										.getHand().getHighestCard().getNumber()) {
-									strongestPlayersIndex = new ArrayList<Player>();
-									strongestPlayersIndex.add(p);
+									strongestPlayers = new ArrayList<Player>();
+									strongestPlayers.add(p);
 								}
-							} else if (p.getHand().getTwoPair().get(1) > strongestPlayersIndex.get(0).getHand()
+							} else if (p.getHand().getTwoPair().get(1) > strongestPlayers.get(0).getHand()
 									.getTwoPair().get(1)) {
-								strongestPlayersIndex = new ArrayList<Player>();
-								strongestPlayersIndex.add(p);
+								strongestPlayers = new ArrayList<Player>();
+								strongestPlayers.add(p);
 							}
 						}
 					}
 
 					// Pair
 					else if (p.getHand().getCurrentHandStrengthString().equals("Pair")) {
-						if (p.getHand().getPair() > strongestPlayersIndex.get(0).getHand().getPair()) {
-							strongestPlayersIndex = new ArrayList<Player>();
-							strongestPlayersIndex.add(p);
-						} else if (p.getHand().getPair() == strongestPlayersIndex.get(0).getHand().getPair()) {
+						if (p.getHand().getPair() > strongestPlayers.get(0).getHand().getPair()) {
+							strongestPlayers = new ArrayList<Player>();
+							strongestPlayers.add(p);
+						} else if (p.getHand().getPair() == strongestPlayers.get(0).getHand().getPair()) {
 							// Check Kicker
-							if (p.getHand().getHighestCard().getNumber() == strongestPlayersIndex.get(0).getHand()
+							if (p.getHand().getHighestCard().getNumber() == strongestPlayers.get(0).getHand()
 									.getHighestCard().getNumber()) {
-								if (p.getHand().getLowestCard().getNumber() == strongestPlayersIndex.get(0).getHand()
+								if (p.getHand().getLowestCard().getNumber() == strongestPlayers.get(0).getHand()
 										.getLowestCard().getNumber()) {
-									strongestPlayersIndex.add(p);
-								} else if (p.getHand().getLowestCard().getNumber() > strongestPlayersIndex.get(0)
+									strongestPlayers.add(p);
+								} else if (p.getHand().getLowestCard().getNumber() > strongestPlayers.get(0)
 										.getHand().getLowestCard().getNumber()) {
-									strongestPlayersIndex = new ArrayList<Player>();
-									strongestPlayersIndex.add(p);
+									strongestPlayers = new ArrayList<Player>();
+									strongestPlayers.add(p);
 								}
-							} else if (p.getHand().getHighestCard().getNumber() > strongestPlayersIndex.get(0).getHand()
+							} else if (p.getHand().getHighestCard().getNumber() > strongestPlayers.get(0).getHand()
 									.getHighestCard().getNumber()) {
-								strongestPlayersIndex = new ArrayList<Player>();
-								strongestPlayersIndex.add(p);
+								strongestPlayers = new ArrayList<Player>();
+								strongestPlayers.add(p);
 							}
 						}
 					}
 
 					// High Card
 					else {
-						if (p.getHand().getHighestCard().getNumber() > strongestPlayersIndex.get(0).getHand()
+						if (p.getHand().getHighestCard().getNumber() > strongestPlayers.get(0).getHand()
 								.getHighestCard().getNumber()) {
-							strongestPlayersIndex = new ArrayList<Player>();
-							strongestPlayersIndex.add(p);
-						} else if (p.getHand().getHighestCard().getNumber() == strongestPlayersIndex.get(0).getHand()
+							strongestPlayers = new ArrayList<Player>();
+							strongestPlayers.add(p);
+						} else if (p.getHand().getHighestCard().getNumber() == strongestPlayers.get(0).getHand()
 								.getHighestCard().getNumber()) {
-							if (p.getHand().getLowestCard().getNumber() == strongestPlayersIndex.get(0).getHand()
+							if (p.getHand().getLowestCard().getNumber() == strongestPlayers.get(0).getHand()
 									.getLowestCard().getNumber()) {
-								strongestPlayersIndex.add(p);
-							} else if (p.getHand().getLowestCard().getNumber() > strongestPlayersIndex.get(0).getHand()
+								strongestPlayers.add(p);
+							} else if (p.getHand().getLowestCard().getNumber() > strongestPlayers.get(0).getHand()
 									.getLowestCard().getNumber()) {
-								strongestPlayersIndex = new ArrayList<Player>();
-								strongestPlayersIndex.add(p);
+								strongestPlayers = new ArrayList<Player>();
+								strongestPlayers.add(p);
 							}
 						}
 					}
 				}
 			}
 		}
-		for (Player p : strongestPlayersIndex) {
-			p.setPoints((int) (p.getPoints() + round.getPot() / strongestPlayersIndex.size()));
+		for (Player p : strongestPlayers) {
+			p.setPoints((int) (p.getPoints() + round.getPot() / strongestPlayers.size()));
 		}
 		// Slows Down Before Payout
 		new Thread(new Runnable() {
@@ -408,8 +410,8 @@ public class HoldemGame {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				//int numberShared = strongestPlayersIndex.size();
-				//for (Player p : strongestPlayersIndex) {
+				//int numberShared = strongestPlayers.size();
+				//for (Player p : strongestPlayers) {
 					//p.setPoints((int) (p.getPoints() + round.getPot() / numberShared));
 				//}
 			}

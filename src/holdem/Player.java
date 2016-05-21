@@ -11,6 +11,8 @@ public class Player {
 	private int points;
 	private int betAmount;
 	private int pointsInvested;
+	
+	private String name;
 
 	private boolean folded;
 	private boolean bigBlind;
@@ -31,6 +33,10 @@ public class Player {
 	public void takeAction() {
 	}
 
+	public String getName(){
+		return name;
+	}
+	
 	public boolean isTurn(){
 		return isTurn;
 	}
@@ -83,6 +89,10 @@ public class Player {
 		return folded;
 	}
 
+	public void setName(String name){
+		this.name = name;
+	}
+	
 	public void setFirstAction(boolean sfa) {
 		firstAction = sfa;
 	}
@@ -141,6 +151,7 @@ public class Player {
 		betAmount = 0;
 		checkBoolean = true;
 		isTurn = false;
+		firstAction = false;
 	}
 
 	// Call Method
@@ -165,6 +176,7 @@ public class Player {
 		resetActionBoolean();
 		callBoolean = true;
 		isTurn = false;
+		firstAction = false;
 	}
 
 	// Raise Method
@@ -185,6 +197,7 @@ public class Player {
 				resetActionBoolean();
 				raiseBoolean = true;
 				isTurn = false;
+				firstAction = false;
 				return true;
 			}
 			// Not All-In
@@ -197,6 +210,7 @@ public class Player {
 			resetActionBoolean();
 			raiseBoolean = true;
 			isTurn = false;
+			firstAction = false;
 			return true;
 		}
 		// Not Legal Message

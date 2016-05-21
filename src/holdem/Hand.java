@@ -89,7 +89,7 @@ public class Hand {
 	public int initialHandStrength() {
 		strength = 0;
 		// Check High Card
-		if ((card1.getNumber() <= 5 || card2.getNumber() <= 5) && (card1.getNumber() >= 12 || card2.getNumber() >= 12))
+		if ((card1.getNumber() <= 5 || card2.getNumber() <= 5) && (card1.getNumber() == 14 || card2.getNumber() == 14))
 			strength += 3;
 		else if (card1.getNumber() <= 6 && card2.getNumber() <= 6)
 			strength += 1;
