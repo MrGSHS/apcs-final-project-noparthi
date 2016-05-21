@@ -112,6 +112,7 @@ public class HoldemGame {
 			@SuppressWarnings("static-access")
 			public void run() {
 				int numberOfRaises = 0;
+				boolean check = false;
 				boolean checkRaise = false;
 				for (Player player : actionsOrder) {
 					if (!player.isFolded()) {
@@ -151,11 +152,14 @@ public class HoldemGame {
 				}
 				// If Previous Person Checks, Then A Following One Raises, Then
 				// Run Another Rotation
-				for (int i = 0; i < actionsOrder.size()-1; i++) {
-					if(actionsOrder.get(i).getCheckBoolean()){
-						if(actionsOrder.get(i+1).getRaiseBoolean()){
+				for (Player p : actionsOrder) {
+					if(check){
+						if(p.getRaiseBoolean()){
 							checkRaise = true;
 						}
+					}
+					if(p.getCheckBoolean()){
+						check = true;
 					}
 				}
 				if (checkRaise) {

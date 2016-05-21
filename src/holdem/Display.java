@@ -140,7 +140,6 @@ public class Display extends TimerTask {
 				USERNAME = txt.getText();
 			else
 				USERNAME = NAMES.remove((int) (Math.random() * NAMES.size()));
-			;
 		} else {
 			System.exit(0);
 		}
@@ -153,13 +152,13 @@ public class Display extends TimerTask {
 
 		// Set Computer Names
 		COMP1NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
-		game.getPlayers().get(1).setName(COMP1NAME);
+		game.getPlayers().get(4).setName(COMP1NAME);
 		COMP2NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
-		game.getPlayers().get(2).setName(COMP2NAME);
+		game.getPlayers().get(3).setName(COMP2NAME);
 		COMP3NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
-		game.getPlayers().get(3).setName(COMP3NAME);
+		game.getPlayers().get(2).setName(COMP3NAME);
 		COMP4NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
-		game.getPlayers().get(4).setName(COMP4NAME);
+		game.getPlayers().get(1).setName(COMP4NAME);
 
 		// Remind User that ESC opens hand chart
 		JOptionPane.showConfirmDialog(null, "Press ESC Anytime To Bring Up The Hand Chart", "Reminder",
@@ -355,7 +354,7 @@ public class Display extends TimerTask {
 
 		// Draw Whose Turn It Is Turn Around Label
 		public void drawTurnBorder(Graphics g) {
-			g.setColor(Color.GREEN);
+			g.setColor(new Color(30,30,180));
 			for (Player p : game.getPlayers()) {
 				if (p.isTurn()) {
 					g.fillRoundRect(game.playerPositions.get(p.getPosition())[0] - 3,
@@ -624,7 +623,7 @@ public class Display extends TimerTask {
 		//Draw Payout
 		public void drawPayout(Graphics g){
 			if (game.isPayout()) {
-				if (counter != 42) {
+				if (counter != 40) {
 					String payoutString = "";
 					if (game.getStrongestPlayers().size() == 1) {
 						payoutString = game.getStrongestPlayers().get(0).getName() + " Has Won With: "
@@ -652,6 +651,7 @@ public class Display extends TimerTask {
 
 					g.setColor(Color.BLACK);
 					g.drawString(payoutString, FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString), 20);
+					System.out.println("Drawing Payout");
 					counter++;
 				}
 			}
