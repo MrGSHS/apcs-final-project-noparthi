@@ -92,7 +92,7 @@ public class HoldemGame {
 		actionsOrder.add(computer4);
 		round = new Round(this);
 		display = new Display(this);
-		display.setRoundTitle();
+		new Timer().schedule(display, 0, 250);
 		takeBlinds();
 		takeAnte();
 		round.preFlop();
@@ -123,7 +123,6 @@ public class HoldemGame {
 						if (!player.equals(getUser())) {
 							getUser().setIsTurn(false);
 							player.setIsTurn(true);
-							display.run();
 							try {
 								Thread.currentThread().sleep(((int) (Math.random() * 3) + 3) * 1000);
 							} catch (InterruptedException e) {
@@ -136,7 +135,6 @@ public class HoldemGame {
 							}
 						} else {
 							getUser().setIsTurn(true);
-							display.run();
 							while (getUser().isTurn()) {
 								try {
 									Thread.currentThread().sleep(100);

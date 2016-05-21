@@ -29,7 +29,7 @@ import javax.swing.SwingUtilities;
 
 import scripts.Card;
 
-public class Display {
+public class Display extends TimerTask {
 
 	private ArrayList<String> NAMES = new ArrayList<String>() {
 		private static final long serialVersionUID = 1L;
@@ -354,7 +354,7 @@ public class Display {
 
 		// Draw Whose Turn It Is Turn Around Label
 		public void drawTurnBorder(Graphics g) {
-			g.setColor(new Color(30,30,180));
+			g.setColor(new Color(30, 30, 180));
 			for (Player p : game.getPlayers()) {
 				if (p.isTurn()) {
 					g.fillRoundRect(game.playerPositions.get(p.getPosition())[0] - 3,
@@ -517,7 +517,7 @@ public class Display {
 			// Hand Strength Bar Background
 			g.setColor(Color.DARK_GRAY);
 			g.fillRoundRect(600, 494, 296, 31, 10, 10);
-			//Fills In Little Ridge
+			// Fills In Little Ridge
 			g.fillRect(600, 490, 5, 10);
 
 			// Writes In Hand Strength
@@ -621,43 +621,36 @@ public class Display {
 				}
 			}
 		}
-		
-		//Draw Payout
-		public void drawPayout(Graphics g){
-			if (game.isPayout()) {
-				if (counter <= 40) {
-					String payoutString = "";
-					if (game.getStrongestPlayers().size() == 1) {
-						payoutString = game.getStrongestPlayers().get(0).getName() + " Has Won With: "
-								+ game.getStrongestPlayers().get(0).getHand().getCurrentHandStrengthString();
-					} else {
-						for (Player p : game.getStrongestPlayers()) {
-							payoutString += p.getName() + ", ";
-						}
-						payoutString += " Wins With: "
-								+ game.getStrongestPlayers().get(0).getHand().getCurrentHandStrengthString();
+
+		// Draw Pay-out
+		public void drawWinner(Graphics g) {
+			if (counter <= 40) {
+				String payoutString = "";
+				if (game.getStrongestPlayers().size() == 1) {
+					payoutString = game.getStrongestPlayers().get(0).getName() + " Wins With: "
+							+ game.getStrongestPlayers().get(0).getHand().getCurrentHandStrengthString();
+				} else {
+					for (Player p : game.getStrongestPlayers()) {
+						payoutString += p.getName() + ", ";
 					}
-
-					g.setColor(Color.WHITE);
-					g.fillOval(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) - 15, -15,
-							g.getFontMetrics().stringWidth(payoutString) + 30, 60);
-
-					Polygon speechBubbleTail = new Polygon();
-					speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 30,
-							40);
-					speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 50,
-							40);
-					speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 95,
-							70);
-					g.fillPolygon(speechBubbleTail);
-
-					g.setColor(Color.BLACK);
-					g.drawString(payoutString, FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString), 20);
-					System.out.println("Drawing Payout");
-					counter++;
+					payoutString += " Wins With: "
+							+ game.getStrongestPlayers().get(0).getHand().getCurrentHandStrengthString();
 				}
-			}
-			else if(!userTip){
+
+				g.setColor(Color.WHITE);
+				g.fillOval(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) - 15, -15,
+						g.getFontMetrics().stringWidth(payoutString) + 30, 60);
+
+				Polygon speechBubbleTail = new Polygon();
+				speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 30, 40);
+				speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 50, 40);
+				speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 95, 70);
+				g.fillPolygon(speechBubbleTail);
+
+				g.setColor(Color.BLACK);
+				g.drawString(payoutString, FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString), 20);
+				counter++;
+			} else if (!userTip) {
 				counter = 0;
 			}
 		}
@@ -730,10 +723,11 @@ public class Display {
 
 			// Congratulations You Wasted Money - Tip
 			addTipEffects(g);
-			
-			//Draw Pay-out
-			drawPayout(g);
 
+			// Draw Pay-out If Necessary
+			if (game.isPayout()) {
+				drawWinner(g);
+			}
 			// Button Removal
 			buttonRemoval(g);
 		}
@@ -841,7 +835,7 @@ public class Display {
 			}
 			if (evt.getSource() == tip) {
 				if (game.getUser().getPoints() >= 2000) {
-					game.getUser().setPoints(game.getUser().getPoints() - 4*game.getBigBlind());
+					game.getUser().setPoints(game.getUser().getPoints() - 4 * game.getBigBlind());
 					userTip = true;
 					frame.repaint();
 				}
