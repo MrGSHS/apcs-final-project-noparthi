@@ -29,7 +29,7 @@ import javax.swing.SwingUtilities;
 
 import scripts.Card;
 
-public class Display extends TimerTask {
+public class Display {
 
 	private ArrayList<String> NAMES = new ArrayList<String>() {
 		private static final long serialVersionUID = 1L;

@@ -24,6 +24,10 @@ public class HoldemGame {
 	private ArrayList<Player> players = new ArrayList<>();
 	private ArrayList<Player> strongestPlayers = new ArrayList<>();
 
+	private HoldemGame getGame() {
+		return this;
+	}
+
 	public Display getDisplay() {
 		return display;
 	}
@@ -35,8 +39,8 @@ public class HoldemGame {
 	public Round getRound() {
 		return round;
 	}
-	
-	public ArrayList<Player> getStrongestPlayers(){
+
+	public ArrayList<Player> getStrongestPlayers() {
 		return strongestPlayers;
 	}
 
@@ -87,10 +91,10 @@ public class HoldemGame {
 		players.add(computer4);
 		actionsOrder.add(computer4);
 		round = new Round(this);
-		new Timer().schedule(display = new Display(this), 0, 250);
+		display = new Display(this);
+		display.setRoundTitle();
 		takeBlinds();
 		takeAnte();
-		display.setRoundTitle();
 		round.preFlop();
 	}
 
@@ -119,6 +123,7 @@ public class HoldemGame {
 						if (!player.equals(getUser())) {
 							getUser().setIsTurn(false);
 							player.setIsTurn(true);
+							display.run();
 							try {
 								Thread.currentThread().sleep(((int) (Math.random() * 3) + 3) * 1000);
 							} catch (InterruptedException e) {
@@ -131,6 +136,7 @@ public class HoldemGame {
 							}
 						} else {
 							getUser().setIsTurn(true);
+							display.run();
 							while (getUser().isTurn()) {
 								try {
 									Thread.currentThread().sleep(100);
@@ -153,12 +159,12 @@ public class HoldemGame {
 				// If Previous Person Checks, Then A Following One Raises, Then
 				// Run Another Rotation
 				for (Player p : actionsOrder) {
-					if(check){
-						if(p.getRaiseBoolean()){
+					if (check) {
+						if (p.getRaiseBoolean()) {
 							checkRaise = true;
 						}
 					}
-					if(p.getCheckBoolean()){
+					if (p.getCheckBoolean()) {
 						check = true;
 					}
 				}
@@ -248,11 +254,11 @@ public class HoldemGame {
 							strongestPlayers.add(p);
 						}
 						// If The Triples Are Equivalent
-						else if (p.getHand().getFullHouse().get(0) == strongestPlayers.get(0).getHand()
-								.getFullHouse().get(0)) {
+						else if (p.getHand().getFullHouse().get(0) == strongestPlayers.get(0).getHand().getFullHouse()
+								.get(0)) {
 							// Check The Doubles
-							if (p.getHand().getFullHouse().get(1) == strongestPlayers.get(0).getHand()
-									.getFullHouse().get(1)) {
+							if (p.getHand().getFullHouse().get(1) == strongestPlayers.get(0).getHand().getFullHouse()
+									.get(1)) {
 								strongestPlayers.add(p);
 							} else if (p.getHand().getFullHouse().get(1) > strongestPlayers.get(0).getHand()
 									.getFullHouse().get(1)) {
@@ -278,8 +284,8 @@ public class HoldemGame {
 								.getHighestCard().getSuite()) {
 							highestCardInHandWithFlushSP1 = strongestPlayers.get(0).getHand().getHighestCard()
 									.getNumber();
-						} else if (strongestPlayers.get(0).getHand().getFlush() == strongestPlayers.get(0)
-								.getHand().getLowestCard().getSuite()) {
+						} else if (strongestPlayers.get(0).getHand().getFlush() == strongestPlayers.get(0).getHand()
+								.getLowestCard().getSuite()) {
 							highestCardInHandWithFlushSP1 = strongestPlayers.get(0).getHand().getLowestCard()
 									.getNumber();
 						}
@@ -312,13 +318,13 @@ public class HoldemGame {
 									.getHighestCard().getNumber()) {
 								strongestPlayers = new ArrayList<Player>();
 								strongestPlayers.add(p);
-							} else if (p.getHand().getHighestCard().getNumber() == strongestPlayers.get(0)
-									.getHand().getHighestCard().getNumber()) {
+							} else if (p.getHand().getHighestCard().getNumber() == strongestPlayers.get(0).getHand()
+									.getHighestCard().getNumber()) {
 								if (p.getHand().getLowestCard().getNumber() == strongestPlayers.get(0).getHand()
 										.getLowestCard().getNumber()) {
 									strongestPlayers.add(p);
-								} else if (p.getHand().getLowestCard().getNumber() > strongestPlayers.get(0)
-										.getHand().getLowestCard().getNumber()) {
+								} else if (p.getHand().getLowestCard().getNumber() > strongestPlayers.get(0).getHand()
+										.getLowestCard().getNumber()) {
 									strongestPlayers = new ArrayList<Player>();
 									strongestPlayers.add(p);
 								}
@@ -328,8 +334,7 @@ public class HoldemGame {
 
 					// Two Pair
 					else if (p.getHand().getCurrentHandStrengthString().equals("Two-Pair")) {
-						if (p.getHand().getTwoPair().get(0) > strongestPlayers.get(0).getHand().getTwoPair()
-								.get(0)) {
+						if (p.getHand().getTwoPair().get(0) > strongestPlayers.get(0).getHand().getTwoPair().get(0)) {
 							strongestPlayers = new ArrayList<Player>();
 							strongestPlayers.add(p);
 						}
@@ -342,13 +347,13 @@ public class HoldemGame {
 								if (p.getHand().getHighestCard().getNumber() == strongestPlayers.get(0).getHand()
 										.getHighestCard().getNumber()) {
 									strongestPlayers.add(p);
-								} else if (p.getHand().getHighestCard().getNumber() > strongestPlayers.get(0)
-										.getHand().getHighestCard().getNumber()) {
+								} else if (p.getHand().getHighestCard().getNumber() > strongestPlayers.get(0).getHand()
+										.getHighestCard().getNumber()) {
 									strongestPlayers = new ArrayList<Player>();
 									strongestPlayers.add(p);
 								}
-							} else if (p.getHand().getTwoPair().get(1) > strongestPlayers.get(0).getHand()
-									.getTwoPair().get(1)) {
+							} else if (p.getHand().getTwoPair().get(1) > strongestPlayers.get(0).getHand().getTwoPair()
+									.get(1)) {
 								strongestPlayers = new ArrayList<Player>();
 								strongestPlayers.add(p);
 							}
@@ -367,8 +372,8 @@ public class HoldemGame {
 								if (p.getHand().getLowestCard().getNumber() == strongestPlayers.get(0).getHand()
 										.getLowestCard().getNumber()) {
 									strongestPlayers.add(p);
-								} else if (p.getHand().getLowestCard().getNumber() > strongestPlayers.get(0)
-										.getHand().getLowestCard().getNumber()) {
+								} else if (p.getHand().getLowestCard().getNumber() > strongestPlayers.get(0).getHand()
+										.getLowestCard().getNumber()) {
 									strongestPlayers = new ArrayList<Player>();
 									strongestPlayers.add(p);
 								}
@@ -414,10 +419,11 @@ public class HoldemGame {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				//int numberShared = strongestPlayers.size();
-				//for (Player p : strongestPlayers) {
-					//p.setPoints((int) (p.getPoints() + round.getPot() / numberShared));
-				//}
+				// int numberShared = strongestPlayers.size();
+				// for (Player p : strongestPlayers) {
+				// p.setPoints((int) (p.getPoints() + round.getPot() /
+				// numberShared));
+				// }
 			}
 		}).start();
 	}
