@@ -517,6 +517,8 @@ public class Display {
 			// Hand Strength Bar Background
 			g.setColor(Color.DARK_GRAY);
 			g.fillRoundRect(600, 494, 296, 31, 10, 10);
+			//Fills In Little Ridge
+			g.fillRect(600, 490, 5, 10);
 
 			// Writes In Hand Strength
 			Map<TextAttribute, Object> map = new Hashtable<TextAttribute, Object>();
