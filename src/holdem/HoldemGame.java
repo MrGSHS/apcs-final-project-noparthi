@@ -104,24 +104,24 @@ public class HoldemGame {
 		Collections.rotate(actionsOrder, -1);
 	}
 
-	public void allComputersTakeAction() {
+	public void allPlayersTakeAction() {
 		new Thread(new Runnable() {
 			@SuppressWarnings("static-access")
 			public void run() {
 				int numberOfRaises = 0;
 				boolean checkRaise = false;
-				for (Player computer : actionsOrder) {
-					if (!computer.isFolded()) {
-						if (!computer.equals(getUser())) {
+				for (Player player : actionsOrder) {
+					if (!player.isFolded()) {
+						if (!player.equals(getUser())) {
 							getUser().setIsTurn(false);
-							computer.setIsTurn(true);
+							player.setIsTurn(true);
 							try {
 								Thread.currentThread().sleep(((int) (Math.random() * 3) + 3) * 1000);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
-							computer.takeAction();
-							computer.setIsTurn(false);
+							player.takeAction();
+							player.setIsTurn(false);
 							if (getRound().moveOn()) {
 								System.out.println("Break");
 								break;

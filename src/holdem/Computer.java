@@ -43,7 +43,6 @@ public class Computer extends Player {
 				break;
 			}
 		}
-		System.out.println("Index Before: " + game.getActionsOrder().get(indexBefore).getPosition());
 		
 		// Actions Based Off Of The Player Before This
 		// If Player Before Checked
@@ -112,7 +111,6 @@ public class Computer extends Player {
 				break;
 			}
 		}
-		System.out.println("Index Before: " + game.getActionsOrder().get(indexBefore).getPosition());
 
 		// Actions Based Off Of Player Before This
 		// If Player Before Checked
