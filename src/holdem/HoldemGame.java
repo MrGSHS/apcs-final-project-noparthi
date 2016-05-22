@@ -215,7 +215,7 @@ public class HoldemGame {
 				break;
 			}
 		}
-		
+
 		// Adds In Strongest Players To strongestPlayers
 		for (Player p : players) {
 			// If Not Folded
@@ -228,10 +228,20 @@ public class HoldemGame {
 				// If Final Hand Strengths Are Equal
 				else if (p.getHand().updateHandStrength() == strongestPlayers.get(0).getHand().updateHandStrength()
 						&& p != strongestPlayers.get(0)) {
-
-					// Royal Flush
+					// Checks Straight Flush, Four Of A Kind and Full House As
+					// They Have The Same Strength Number TODO:
 					if (p.getHand().getCurrentHandStrengthString().equals("Royal Flush")) {
 						strongestPlayers.add(p);
+					}
+					
+					//Straight Flush
+					else if(p.getHand().getCurrentHandStrengthString().equals("Straight Flush")){
+						if(p.getHand().getStraight() > strongestPlayers.get(0).getHand().getStraight()){
+							strongestPlayers = new ArrayList<Player>();
+							strongestPlayers.add(p);
+						}else if (p.getHand().getStraight() == strongestPlayers.get(0).getHand().getStraight()){
+							strongestPlayers.add(p);
+						}
 					}
 
 					// Four Of A Kind
@@ -302,8 +312,9 @@ public class HoldemGame {
 						if (p.getHand().getStraight() > strongestPlayers.get(0).getHand().getStraight()) {
 							strongestPlayers = new ArrayList<Player>();
 							strongestPlayers.add(p);
-						} else if (p.getHand().getStraight() == strongestPlayers.get(0).getHand().getStraight())
+						} else if (p.getHand().getStraight() == strongestPlayers.get(0).getHand().getStraight()){
 							strongestPlayers.add(p);
+						}
 					}
 
 					// Three Of A Kind
