@@ -214,7 +214,7 @@ public class HoldemGame {
 				break;
 			}
 		}
-
+		
 		// Adds In Strongest Players To strongestPlayers
 		for (Player p : players) {
 			// If Not Folded

@@ -189,9 +189,8 @@ public class Runner {
 
 		@Override
 		protected ArrayList<BufferedImage> doInBackground() throws IOException {
-
-			for (int i = 2; i <= 7; i++) {
-				String path = "/tutorial/slide-" + i + ".jpg";
+			for (int i = 1; i <= 5; i++) {
+				String path = "/tutorial/holdem-slide" + i + ".png";
 				try {
 					images.add(ImageIO.read(getClass().getResourceAsStream(path)));
 				} catch (IOException e) {
@@ -199,7 +198,6 @@ public class Runner {
 				}
 			}
 			return images;
-
 		}
 
 		protected void done() {
@@ -222,7 +220,7 @@ public class Runner {
 	}
 
 	public static void main(String[] args) {
-		new HoldemGame();
+		new Runner();
 	}
 
 }

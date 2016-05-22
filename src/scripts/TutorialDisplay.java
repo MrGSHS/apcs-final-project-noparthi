@@ -30,7 +30,7 @@ public class TutorialDisplay {
 		private static final long serialVersionUID = 1L;
 
 		public void paint(Graphics g){
-			g.drawImage(loadedImages.get(imageIndex), 0, -100, null);
+			g.drawImage(loadedImages.get(imageIndex), 0, 0, null);
 		}
 	}
 	
@@ -47,7 +47,7 @@ public class TutorialDisplay {
 			play = new JButton("Play");
 			
 			back.setSize(100, 50);
-			back.setLocation(100, 600);
+			back.setLocation(100, 607);
 			back.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent ae){
 					if(imageIndex > 0) imageIndex--;
@@ -56,7 +56,7 @@ public class TutorialDisplay {
 			});
 			
 			next.setSize(100, 50);
-			next.setLocation(700, 600);
+			next.setLocation(700, 607);
 			next.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent ae){
 					if(imageIndex < loadedImages.size()-1) imageIndex++;
@@ -65,7 +65,7 @@ public class TutorialDisplay {
 			});
 			
 			play.setSize(200, 50);
-			play.setLocation(350, 600);
+			play.setLocation(350, 607);
 			play.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent ae){
 					new HoldemGame();

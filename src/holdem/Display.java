@@ -143,8 +143,8 @@ public class Display extends TimerTask {
 		} else {
 			System.exit(0);
 		}
-		game.getPlayers().get(0).setName(USERNAME);
 
+		game.getPlayers().get(0).setName(USERNAME);
 		// Removes User Name From Naming List If Exists
 		for (String name : NAMES)
 			if (USERNAME.equals(name))
@@ -182,7 +182,7 @@ public class Display extends TimerTask {
 
 		// Main Frame
 		frame = new JFrame();
-		frame.setTitle("Texas Holdem: Round ");
+		frame.setTitle("Texas Holdem: Round 1");
 		frame.setIconImage(iconImage);
 		tablePanel = new TableDisplayPanel();
 		actionsPanel = new ActionsDisplayPanel();

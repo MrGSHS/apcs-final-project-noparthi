@@ -4,7 +4,7 @@ import java.util.Collections;
 
 public class Round {
 
-	private static int roundNumber = 0;
+	private static int roundNumber = 1;
 	private HoldemGame game;
 
 	private int pot;
