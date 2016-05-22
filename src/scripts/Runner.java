@@ -140,30 +140,24 @@ public class Runner {
 					}
 				});
 				holdemBtn.addMouseListener(new MouseListener() {
-
 					@Override
 					public void mouseClicked(MouseEvent e) {}
-
 					@Override
 					public void mousePressed(MouseEvent e) {}
-
 					@Override
 					public void mouseReleased(MouseEvent e) {}
-
 					@Override
 					public void mouseEntered(MouseEvent e) {
 						mouseOverHoldem = true;
 						revalidate();
 						frame.repaint();
 					}
-
 					@Override
 					public void mouseExited(MouseEvent e) {
 						mouseOverHoldem = false;
 						revalidate();
 						frame.repaint();
 					}
-
 				});
 				frame.add(blackJackBtn);
 				frame.add(holdemBtn);
@@ -185,11 +179,10 @@ public class Runner {
 		}
 	}
 
-	protected class ImageLoader extends SwingWorker<ArrayList<BufferedImage>, String> {
-
+	protected class ImageLoader extends SwingWorker<ArrayList<BufferedImage>, String>{
 		@Override
 		protected ArrayList<BufferedImage> doInBackground() throws IOException {
-			for (int i = 1; i <= 15; i++) {
+			for (int i = 1; i <= 17; i++) {
 				String path = "/tutorial/holdem-slide" + i + ".png";
 				try {
 					images.add(ImageIO.read(getClass().getResourceAsStream(path)));
@@ -198,10 +191,6 @@ public class Runner {
 				}
 			}
 			return images;
-		}
-
-		protected void done() {
-			System.out.println("Done!");
 		}
 	}
 
@@ -218,9 +207,8 @@ public class Runner {
 		init.dispose();
 		new ChooserDisplay();
 	}
-
+	
 	public static void main(String[] args) {
 		new Runner();
 	}
-
 }

@@ -24,6 +24,7 @@ public class HoldemGame {
 	private ArrayList<Player> players = new ArrayList<>();
 	private ArrayList<Player> strongestPlayers = new ArrayList<>();
 
+	@SuppressWarnings("unused")
 	private HoldemGame getGame() {
 		return this;
 	}

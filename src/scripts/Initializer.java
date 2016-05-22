@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-public class Initializer extends JFrame implements ActionListener {
+public class Initializer extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private BufferedImage logo;
 	private int logowait;

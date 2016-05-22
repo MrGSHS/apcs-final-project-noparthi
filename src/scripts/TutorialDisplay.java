@@ -1,5 +1,6 @@
 package scripts;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -96,6 +97,7 @@ public class TutorialDisplay {
 		frame.setTitle("Tutorial");
 		frame.setIconImage(iconImage);
 		frame.setSize(900, 700);
+		frame.setBackground(Color.WHITE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
