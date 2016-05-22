@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -29,26 +28,47 @@ import javax.swing.SwingUtilities;
 
 import scripts.Card;
 
-public class Display extends TimerTask {
+public class Display {
 
 	private ArrayList<String> NAMES = new ArrayList<String>() {
 		private static final long serialVersionUID = 1L;
 		{
-			add("Andrew");
+			add("Aaron");
 			add("Amy");
+			add("Alex");
 			add("Caitlyn");
-			add("David");
-			add("Ethan");
-			add("Jerry");
+			add("Andrew");
 			add("Jessica");
-			add("Jonathan");
+			add("Artsiom");
 			add("Julia");
+			add("Daniel");
 			add("Lily");
-			add("Michael");
+			add("Deepak");
 			add("Sophia");
-			add("Srikar");
+			add("Jerry");
 			add("Taylor");
+			add("John");
 			add("Zoe");
+			add("Jonathan");
+			add("Emma");
+			add("Maor");
+			add("Olivia");
+			add("Marcus");
+			add("Isabella");
+			add("Matthew");
+			add("Ava");
+			add("Matthias");
+			add("Mia");
+			add("Patrick");
+			add("Emily");
+			add("Samarth");
+			add("Abby");
+			add("Sanketh");
+			add("Madison");
+			add("Steven");
+			add("Victoria");
+			add("Wilson");
+			add("Grace");
 		}
 	};
 	private String USERNAME;
@@ -597,8 +617,8 @@ public class Display extends TimerTask {
 
 		// Add Tips
 		public void addTipEffects(Graphics g) {
-			if (userTip) {
-				if (counter <= 8) {
+			if (userTip && !game.getUser().isTurn()) {
+				if (counter <= 2) {
 					String tipString = "Thanks " + USERNAME + "! You get " + extraCreditPoints
 							+ " extra credit points!";
 					g.setColor(Color.WHITE);
@@ -624,35 +644,31 @@ public class Display extends TimerTask {
 
 		// Draw Pay-out
 		public void drawWinner(Graphics g) {
-			if (counter <= 40) {
-				String payoutString = "";
-				if (game.getStrongestPlayers().size() == 1) {
-					payoutString = game.getStrongestPlayers().get(0).getName() + " Wins With: "
-							+ game.getStrongestPlayers().get(0).getHand().getCurrentHandStrengthString();
-				} else {
-					for (Player p : game.getStrongestPlayers()) {
-						payoutString += p.getName() + ", ";
-					}
-					payoutString += " Wins With: "
-							+ game.getStrongestPlayers().get(0).getHand().getCurrentHandStrengthString();
+			String payoutString = "";
+			if (game.getStrongestPlayers().size() == 1) {
+				payoutString = game.getStrongestPlayers().get(0).getName() + " Wins With: "
+						+ game.getStrongestPlayers().get(0).getHand().getCurrentHandStrengthString();
+			} else {
+				for (Player p : game.getStrongestPlayers()) {
+					payoutString += p.getName() + ", ";
 				}
-
-				g.setColor(Color.WHITE);
-				g.fillOval(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) - 15, -15,
-						g.getFontMetrics().stringWidth(payoutString) + 30, 60);
-
-				Polygon speechBubbleTail = new Polygon();
-				speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 30, 40);
-				speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 50, 40);
-				speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 95, 70);
-				g.fillPolygon(speechBubbleTail);
-
-				g.setColor(Color.BLACK);
-				g.drawString(payoutString, FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString), 20);
-				counter++;
-			} else if (!userTip) {
-				counter = 0;
+				payoutString += " Wins With: "
+						+ game.getStrongestPlayers().get(0).getHand().getCurrentHandStrengthString();
 			}
+
+			g.setColor(Color.WHITE);
+			g.fillOval(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) - 15, -15,
+					g.getFontMetrics().stringWidth(payoutString) + 30, 60);
+
+			Polygon speechBubbleTail = new Polygon();
+			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 30, 40);
+			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 50, 40);
+			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 95, 70);
+			g.fillPolygon(speechBubbleTail);
+
+			g.setColor(Color.BLACK);
+			g.drawString(payoutString, FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString), 20);
+			counter++;
 		}
 
 		// Actual Button Removal
@@ -834,16 +850,16 @@ public class Display extends TimerTask {
 				game.getRound().moveOn();
 			}
 			if (evt.getSource() == tip) {
-				if (game.getUser().getPoints() >= 2000) {
+				if (game.getUser().getPoints() >= 2000 && !game.getUser().isTurn()) {
 					game.getUser().setPoints(game.getUser().getPoints() - 4 * game.getBigBlind());
 					userTip = true;
-					frame.repaint();
+					update();
 				}
 			}
 		}
 	}
 
-	public void run() {
+	public void update() {
 		cardsOnTable = game.getTable().getCardsOnTable();
 		reloadImages();
 		SwingUtilities.invokeLater(new Runnable() {
