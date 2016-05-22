@@ -15,6 +15,8 @@ public class Deck {
 	// Shuffles The Deck
 	public void shuffle() {
 		Collections.shuffle(deck);
+		Collections.shuffle(deck);
+		Collections.shuffle(deck);
 	}
 
 	// Deals Top Card In The Deck
@@ -24,9 +26,11 @@ public class Deck {
 
 	// Creates A Deck Of 52 Different Cards And Shuffles It
 	public ArrayList<Card> make() {
-		deck = new ArrayList<>();
-		for (int i = 0; i < 52; i++) {
-			deck.add(new Card());
+		deck = new ArrayList<Card>();
+		for (int sui = 0; sui < 4; sui++) {
+			for (int num = 2; num < 15; num++) {
+				deck.add(new Card(num,sui));
+			}
 		}
 		shuffle();
 		return deck;

@@ -303,7 +303,7 @@ public class Display extends TimerTask {
 				}
 				// Draws In Cards For Non-Folded Players
 				for (int i = 1; i < game.getPlayers().size(); i++) {
-					if (!game.getPlayers().get(i).isFolded()) {
+					if (!game.getPlayers().get(i).isFolded() && faceUpComputerCards.size() != 0) {
 						g.drawImage(faceUpComputerCards.get(i * 2 - 2),
 								game.playerPositions.get(i)[0] + CARD_WIDTH + 25, game.playerPositions.get(i)[1] - 50,
 								CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
@@ -311,7 +311,6 @@ public class Display extends TimerTask {
 								game.playerPositions.get(i)[1] - 50, CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
 					}
 				}
-				// Waits For A While
 			} else {
 				// Draws In CardBack For Non-Folded Players
 				for (int i = 1; i < game.getPlayers().size(); i++) {
@@ -667,6 +666,11 @@ public class Display extends TimerTask {
 				} else {
 					removeCheck();
 				}
+			}
+			if (!game.getUser().isTurn()) {
+				tip.setVisible(true);
+			} else {
+				tip.setVisible(false);
 			}
 		}
 

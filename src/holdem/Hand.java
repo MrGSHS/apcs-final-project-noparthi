@@ -32,8 +32,6 @@ public class Hand {
 		card2 = scard;
 		totalCards.add(card1);
 		totalCards.add(card2);
-		fullHouse.add(0); fullHouse.add(0); 
-		twoPair.add(0); twoPair.add(0);
 	}
 
 	public Card[] getHand() {
@@ -43,16 +41,16 @@ public class Hand {
 	public String getCurrentHandStrengthString() {
 		return currentHandString;
 	}
-	
-	public Card getHighestCard(){
-		if(card1.getNumber()>card2.getNumber()){
+
+	public Card getHighestCard() {
+		if (card1.getNumber() > card2.getNumber()) {
 			return card1;
 		}
 		return card2;
 	}
-	
-	public Card getLowestCard(){
-		if(card1.getNumber()<card2.getNumber()){
+
+	public Card getLowestCard() {
+		if (card1.getNumber() < card2.getNumber()) {
 			return card1;
 		}
 		return card2;
@@ -215,23 +213,17 @@ public class Hand {
 	// Checks For Royal Flush
 	public boolean royalFlush() {
 		int royalFlushCounter = 0;
-		if(getStraight() == 10){
-			for(Card card : totalCards){
-				if(card.getSuite() == getFlush() && card.getNumber() == 10){
-					royalFlushCounter++;
-				}
-				else if(card.getSuite() == getFlush() && card.getNumber() == 11){
-					royalFlushCounter++;
-				}
-				else if(card.getSuite() == getFlush() && card.getNumber() == 12){
-					royalFlushCounter++;
-				}
-				else if(card.getSuite() == getFlush() && card.getNumber() == 13){
-					royalFlushCounter++;
-				}
-				else if(card.getSuite() == getFlush() && card.getNumber() == 14){
-					royalFlushCounter++;
-				}
+		for (Card card : totalCards) {
+			if (card.getSuite() == getFlush() && card.getNumber() == 10) {
+				royalFlushCounter++;
+			} else if (card.getSuite() == getFlush() && card.getNumber() == 11) {
+				royalFlushCounter++;
+			} else if (card.getSuite() == getFlush() && card.getNumber() == 12) {
+				royalFlushCounter++;
+			} else if (card.getSuite() == getFlush() && card.getNumber() == 13) {
+				royalFlushCounter++;
+			} else if (card.getSuite() == getFlush() && card.getNumber() == 14) {
+				royalFlushCounter++;
 			}
 		}
 		return (royalFlushCounter == 5);
@@ -239,7 +231,21 @@ public class Hand {
 
 	// Checks For Straight Flush
 	public boolean straightFlush() {
-		return (flush() && straight());
+		int straightFlushCounter = 0;
+		for (Card card : totalCards) {
+			if (card.getSuite() == getFlush() && card.getNumber() == getStraight()) {
+				straightFlushCounter++;
+			} else if (card.getSuite() == getFlush() && card.getNumber() == getStraight()+1) {
+				straightFlushCounter++;
+			} else if (card.getSuite() == getFlush() && card.getNumber() == getStraight()+2) {
+				straightFlushCounter++;
+			} else if (card.getSuite() == getFlush() && card.getNumber() == getStraight()+3) {
+				straightFlushCounter++;
+			} else if (card.getSuite() == getFlush() && card.getNumber() == getStraight()+4) {
+				straightFlushCounter++;
+			}
+		}
+		return (straightFlushCounter >= 5);
 	}
 
 	// Checks For Quads

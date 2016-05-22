@@ -220,6 +220,8 @@ public class HoldemGame {
 		for (Player p : players) {
 			// If Not Folded
 			if (!p.isFolded()) {
+				String playerString = p.getHand().getCurrentHandStrengthString();
+				String strongestPlayerString = strongestPlayers.get(0).getHand().getCurrentHandStrengthString();
 				// If One User's Hand Strength Is Better Than The Best Currently
 				if (p.getHand().updateHandStrength() > strongestPlayers.get(0).getHand().updateHandStrength()) {
 					strongestPlayers = new ArrayList<Player>();
@@ -228,24 +230,24 @@ public class HoldemGame {
 				// If Final Hand Strengths Are Equal
 				else if (p.getHand().updateHandStrength() == strongestPlayers.get(0).getHand().updateHandStrength()
 						&& p != strongestPlayers.get(0)) {
-					// Checks Straight Flush, Four Of A Kind and Full House As
-					// They Have The Same Strength Number TODO:
-					if (p.getHand().getCurrentHandStrengthString().equals("Royal Flush")) {
+					// Straight Flush, Four Of A Kind, Full House: Flush,
+					// Straight All Have Same Hand Strength Number
+					if (playerString.equals("Royal Flush")) {
 						strongestPlayers.add(p);
 					}
-					
-					//Straight Flush
-					else if(p.getHand().getCurrentHandStrengthString().equals("Straight Flush")){
-						if(p.getHand().getStraight() > strongestPlayers.get(0).getHand().getStraight()){
+
+					// Straight Flush
+					else if (playerString.equals("Straight Flush")) {
+						if (p.getHand().getStraight() > strongestPlayers.get(0).getHand().getStraight()) {
 							strongestPlayers = new ArrayList<Player>();
 							strongestPlayers.add(p);
-						}else if (p.getHand().getStraight() == strongestPlayers.get(0).getHand().getStraight()){
+						} else if (p.getHand().getStraight() == strongestPlayers.get(0).getHand().getStraight()) {
 							strongestPlayers.add(p);
 						}
 					}
 
 					// Four Of A Kind
-					else if (p.getHand().getCurrentHandStrengthString().equals("Four Of A Kind")) {
+					else if (playerString.equals("Four Of A Kind") && !strongestPlayerString.equals("Straight Flush")) {
 						if (p.getHand().getQuads() > strongestPlayers.get(0).getHand().getQuads()) {
 							strongestPlayers = new ArrayList<Player>();
 							strongestPlayers.add(p);
@@ -255,7 +257,8 @@ public class HoldemGame {
 					}
 
 					// Full House
-					else if (p.getHand().getCurrentHandStrengthString().equals("Full House")) {
+					else if (playerString.equals("Full House") && !strongestPlayerString.equals("Straight Flush")
+							&& !strongestPlayerString.equals("Four Of A Kind")) {
 						// If Players Triple Is Greater
 						if (p.getHand().getFullHouse().get(0) > strongestPlayers.get(0).getHand().getFullHouse()
 								.get(0)) {
@@ -278,7 +281,7 @@ public class HoldemGame {
 					}
 
 					// Flush
-					else if (p.getHand().getCurrentHandStrengthString().equals("Flush")) {
+					else if (playerString.equals("Flush")) {
 						int highestCardInHandWithFlushP1 = -1;
 						int highestCardInHandWithFlushSP1 = -1;
 						// Grabs Highest Player Card On Suite
@@ -308,17 +311,17 @@ public class HoldemGame {
 					}
 
 					// Straight
-					else if (p.getHand().getCurrentHandStrengthString().equals("Straight")) {
+					else if (playerString.equals("Straight") && !strongestPlayerString.equals("Flush")) {
 						if (p.getHand().getStraight() > strongestPlayers.get(0).getHand().getStraight()) {
 							strongestPlayers = new ArrayList<Player>();
 							strongestPlayers.add(p);
-						} else if (p.getHand().getStraight() == strongestPlayers.get(0).getHand().getStraight()){
+						} else if (p.getHand().getStraight() == strongestPlayers.get(0).getHand().getStraight()) {
 							strongestPlayers.add(p);
 						}
 					}
 
 					// Three Of A Kind
-					else if (p.getHand().getCurrentHandStrengthString().equals("Three Of A Kind")) {
+					else if (playerString.equals("Three Of A Kind")) {
 						if (p.getHand().getTrips() > strongestPlayers.get(0).getHand().getTrips()) {
 							strongestPlayers = new ArrayList<Player>();
 							strongestPlayers.add(p);
@@ -343,7 +346,7 @@ public class HoldemGame {
 					}
 
 					// Two Pair
-					else if (p.getHand().getCurrentHandStrengthString().equals("Two-Pair")) {
+					else if (playerString.equals("Two-Pair")) {
 						if (p.getHand().getTwoPair().get(0) > strongestPlayers.get(0).getHand().getTwoPair().get(0)) {
 							strongestPlayers = new ArrayList<Player>();
 							strongestPlayers.add(p);
@@ -371,7 +374,7 @@ public class HoldemGame {
 					}
 
 					// Pair
-					else if (p.getHand().getCurrentHandStrengthString().equals("Pair")) {
+					else if (playerString.equals("Pair")) {
 						if (p.getHand().getPair() > strongestPlayers.get(0).getHand().getPair()) {
 							strongestPlayers = new ArrayList<Player>();
 							strongestPlayers.add(p);

@@ -5,12 +5,10 @@ public class Card {
 	private Integer number;
 	private int suite;
 	private String suiteValue;
-	private static int tempSuite = 0;
-	public static int id = 0;
 
-	public Card() {
-		number = id % 13 + 2; // Ace = 14
-		suite = tempSuite;
+	public Card(int num, int sui) {
+		number = num;
+		suite = sui; // Ace = 14
 		if (suite == 3) {
 			suiteValue = "spades";
 		} else if (suite == 2) {
@@ -19,11 +17,6 @@ public class Card {
 			suiteValue = "clubs";
 		} else if (suite == 0) {
 			suiteValue = "diamonds";
-		}
-		id++;
-		if(id == 13){
-			id = 0;
-			tempSuite ++;
 		}
 	}
 
