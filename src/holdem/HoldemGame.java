@@ -2,7 +2,6 @@ package holdem;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Timer;
 
 import javax.swing.SwingUtilities;
 
@@ -23,11 +22,6 @@ public class HoldemGame {
 	private ArrayList<Player> actionsOrder = new ArrayList<>();
 	private ArrayList<Player> players = new ArrayList<>();
 	private ArrayList<Player> strongestPlayers = new ArrayList<>();
-
-	@SuppressWarnings("unused")
-	private HoldemGame getGame() {
-		return this;
-	}
 
 	public Display getDisplay() {
 		return display;
@@ -93,7 +87,6 @@ public class HoldemGame {
 		actionsOrder.add(computer4);
 		round = new Round(this);
 		display = new Display(this);
-		new Timer().schedule(display, 0, 250);
 		takeBlinds();
 		takeAnte();
 		round.preFlop();
@@ -124,8 +117,9 @@ public class HoldemGame {
 						if (!player.equals(getUser())) {
 							getUser().setIsTurn(false);
 							player.setIsTurn(true);
+							display.update();
 							try {
-								Thread.currentThread().sleep(((int) (Math.random() * 3) + 3) * 1000);
+								Thread.currentThread().sleep(((int) (Math.random() * 3) + 2) * 1000);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
@@ -136,6 +130,7 @@ public class HoldemGame {
 							}
 						} else {
 							getUser().setIsTurn(true);
+							display.update();
 							while (getUser().isTurn()) {
 								try {
 									Thread.currentThread().sleep(100);
