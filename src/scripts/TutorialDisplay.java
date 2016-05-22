@@ -1,5 +1,6 @@
 package scripts;
 
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +25,7 @@ public class TutorialDisplay {
 	private JPanel buttonsPanel;
 	
 	private int imageIndex = 0;
+	private String slideTitle = "";
 	
 	private class ImagesPanel extends JPanel{		
 
@@ -31,6 +33,9 @@ public class TutorialDisplay {
 
 		public void paint(Graphics g){
 			g.drawImage(loadedImages.get(imageIndex), 0, 0, null);
+			g.setFont(new Font("Times New Roman", Font.BOLD, 52));
+			slideTitle = "Slide "+ (imageIndex+1) + "/"+ loadedImages.size();
+			g.drawString(slideTitle, (900 - g.getFontMetrics().stringWidth(slideTitle))/2, 45);
 		}
 	}
 	

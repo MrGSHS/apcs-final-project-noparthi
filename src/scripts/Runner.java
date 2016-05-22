@@ -189,7 +189,7 @@ public class Runner {
 
 		@Override
 		protected ArrayList<BufferedImage> doInBackground() throws IOException {
-			for (int i = 1; i <= 5; i++) {
+			for (int i = 1; i <= 8; i++) {
 				String path = "/tutorial/holdem-slide" + i + ".png";
 				try {
 					images.add(ImageIO.read(getClass().getResourceAsStream(path)));
