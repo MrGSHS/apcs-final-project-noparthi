@@ -23,7 +23,7 @@ public class Hand {
 	private int trips = 0;
 	private ArrayList<Integer> fullHouse = new ArrayList<>();
 	private int straight = 0;
-	private int flush = 0;
+	private int flush = -1;
 	private int quads = 0;
 
 	public Hand(HoldemGame game, Card fcard, Card scard) {
@@ -32,6 +32,8 @@ public class Hand {
 		card2 = scard;
 		totalCards.add(card1);
 		totalCards.add(card2);
+		fullHouse.add(0); fullHouse.add(0); 
+		twoPair.add(0); twoPair.add(0);
 	}
 
 	public Card[] getHand() {
@@ -210,7 +212,7 @@ public class Hand {
 		return dupes;
 	}
 
-	// Checks For Royal Flush - Never Will Happen
+	// Checks For Royal Flush
 	public boolean royalFlush() {
 		int royalFlushCounter = 0;
 		if(getStraight() == 10){
@@ -263,7 +265,7 @@ public class Hand {
 	// Checks For Flush
 	public boolean flush() {
 		ArrayList<Integer> temp = dupeSuitLogic();
-		flush = 0;
+		flush = -1;
 		int inARow = 1;
 		int maxInARow = 1;
 
