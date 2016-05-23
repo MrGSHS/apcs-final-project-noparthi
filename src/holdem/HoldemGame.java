@@ -422,6 +422,7 @@ public class HoldemGame {
 			@SuppressWarnings("static-access")
 			public void run() {
 				try {
+					display.update();
 					Thread.currentThread().sleep(10000);
 					newRound();
 				} catch (InterruptedException e) {
