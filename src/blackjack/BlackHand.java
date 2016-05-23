@@ -47,9 +47,10 @@ public class BlackHand {
 				cards+="Ace";
 			else
 				cards+=c.getNumber();
-			cards+="of";
-			cards+=c.getSuiteValue();
+			cards+=" of ";
+			cards+=c.getSuiteValue()+" ";
 		}
+		cards+="\b}";
 		return cards;
 	}
 }
