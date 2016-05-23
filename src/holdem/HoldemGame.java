@@ -10,7 +10,7 @@ public class HoldemGame {
 	private Display display;
 	private final int BIGBLIND = 500;
 	private final int SMALLBLIND = 250;
-	private final int ANTE = 125;
+	private final int ANTE = 100;
 
 	private Player user;
 	private Round round;
@@ -456,11 +456,6 @@ public class HoldemGame {
 		return false;
 	}
 
-	public boolean onMainThread() {
-		return SwingUtilities.isEventDispatchThread();
-	}
-
-	// Creates New Round
 	public void newRound() {
 		for (Player p : players) {
 			p.unFold();

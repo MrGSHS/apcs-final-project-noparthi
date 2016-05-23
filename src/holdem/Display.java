@@ -598,26 +598,26 @@ public class Display {
 			//User Bet Amount
 			g.setColor(Color.BLUE.brighter());
 			g.setFont(new Font("Calibri", Font.BOLD, 14));
-			if(game.getPlayers().get(0).getBetAmount() > 1){
+			if(game.getPlayers().get(0).getBetAmount() > 1 && game.getPlayers().get(0).getRaiseBoolean()){
 				g.drawString("+" + (double) game.getPlayers().get(0).getBetAmount() / 1000 + "",
 						game.playerPositions.get(0)[0] + 100, game.playerPositions.get(0)[1] - 95);
 			}
-			if(game.getPlayers().get(1).getBetAmount() > 1){
+			if(game.getPlayers().get(1).getBetAmount() > 1 && game.getPlayers().get(1).getRaiseBoolean()){
 				g.drawString("+" + (double) game.getPlayers().get(1).getBetAmount() / 1000,
 						game.playerPositions.get(1)[0] + 205, game.playerPositions.get(1)[1] - 2);
 			}
-			if(game.getPlayers().get(2).getBetAmount() > 1){
+			if(game.getPlayers().get(2).getBetAmount() > 1 && game.getPlayers().get(2).getRaiseBoolean()){
 				g.drawString("+" + (double) game.getPlayers().get(2).getBetAmount() / 1000,
 						game.playerPositions.get(2)[0] + userLabel.getWidth() + 60,
 						game.playerPositions.get(2)[1] + userLabel.getHeight() + 30);
 			}
-			if(game.getPlayers().get(3).getBetAmount() > 1){
+			if(game.getPlayers().get(3).getBetAmount() > 1 && game.getPlayers().get(3).getRaiseBoolean()){
 				g.drawString("+" + (double) game.getPlayers().get(3).getBetAmount() / 1000,
 						game.playerPositions.get(3)[0] - 90, game.playerPositions.get(3)[1] + userLabel.getHeight() + 30);
 			}
-			if(game.getPlayers().get(4).getBetAmount() > 1){
+			if(game.getPlayers().get(4).getBetAmount() > 1 && game.getPlayers().get(4).getRaiseBoolean()){
 				g.drawString("+" + (double) game.getPlayers().get(4).getBetAmount() / 1000,
-						game.playerPositions.get(4)[0] - 65, game.playerPositions.get(4)[1] - 2);
+						game.playerPositions.get(4)[0] - 75, game.playerPositions.get(4)[1] - 2);
 			}
 		}
 
@@ -625,11 +625,11 @@ public class Display {
 		public void addChips(Graphics g) {
 			int chipsWidth = chips5k.getWidth();
 			int chipsHeight = chips5k.getHeight();
-			g.drawImage(calculateChips(game.getPlayers().get(0)), FRAME_WIDTH / 2 - chipsWidth / 2 - 10,
+			g.drawImage(calculateChips(game.getPlayers().get(0)), FRAME_WIDTH / 2 - chipsWidth / 2 - 13,
 					game.playerPositions.get(0)[1] - chipsHeight * 2 - 20, null);
-			g.drawImage(calculateChips(game.getPlayers().get(1)), game.playerPositions.get(1)[0] + 175,
+			g.drawImage(calculateChips(game.getPlayers().get(1)), game.playerPositions.get(1)[0] + 160,
 					game.playerPositions.get(1)[1] + userLabel.getHeight() - 110, null);
-			g.drawImage(calculateChips(game.getPlayers().get(2)), game.playerPositions.get(2)[0] + 170,
+			g.drawImage(calculateChips(game.getPlayers().get(2)), game.playerPositions.get(2)[0] + 165,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() - 10, null);
 			g.drawImage(calculateChips(game.getPlayers().get(3)), game.playerPositions.get(3)[0] - 40,
 					game.playerPositions.get(3)[1] + userLabel.getHeight() - 10, null);
@@ -694,22 +694,22 @@ public class Display {
 				payoutString = game.getStrongestPlayers().get(0).getName() + " Wins!";
 			}
 
-			int strWidth = g.getFontMetrics().stringWidth(payoutString);
-			int buffer = (BUFFER-strWidth)/2;
+			int strWidth = BUFFER;
+			int buffer = BUFFER;
 			// Draws String
 			g.setColor(Color.WHITE);
-			g.fillOval(FRAME_WIDTH / 2 - strWidth - 15 - buffer, -15,
+			g.fillOval(FRAME_WIDTH / 2 - strWidth - 15 , -15,
 					strWidth + 30, 60);
 
 			Polygon speechBubbleTail = new Polygon();
-			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - strWidth / 2 + 30 - buffer, 40);
-			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - strWidth / 2 + 50 - buffer, 20);
-			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - strWidth / 2 + 95 - buffer, 70);
+			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - strWidth / 2 + 30, 40);
+			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - strWidth / 2 + 50, 20);
+			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - strWidth / 2 + 95, 70);
 			g.fillPolygon(speechBubbleTail);
 
 			g.setColor(Color.BLACK);
 			
-			g.drawString(payoutString, FRAME_WIDTH / 2 - strWidth - buffer, 20);
+			g.drawString(payoutString, FRAME_WIDTH / 2 - strWidth/2, 20);
 		}
 
 		// Actual Button Removal
@@ -910,7 +910,6 @@ public class Display {
 		reloadImages();
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				// System.out.println(SwingUtilities.isEventDispatchThread());
 				frame.repaint();
 			}
 		});
