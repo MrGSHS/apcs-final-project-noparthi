@@ -202,7 +202,7 @@ public class Display {
 
 		// Main Frame
 		frame = new JFrame();
-		frame.setTitle("Texas Holdem: Round 1");
+		frame.setTitle("Texas Holdem: Round " + game.getRound().getRoundNumber());
 		frame.setIconImage(iconImage);
 		tablePanel = new TableDisplayPanel();
 		actionsPanel = new ActionsDisplayPanel();
@@ -210,9 +210,7 @@ public class Display {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
-		// frame.setLayout(null);
 		tablePanel.addKeyListener(new KeyListener() {
-
 			@Override
 			public void keyPressed(KeyEvent ke) {
 				if (ke.getKeyCode() == KeyEvent.VK_ESCAPE)
@@ -646,12 +644,12 @@ public class Display {
 			game.getRound().setPot(0);
 			int numPlayersActive = 0;
 			String payoutString = "";
-			for(Player p : game.getPlayers()){
-				if(!p.isFolded()){
+			for (Player p : game.getPlayers()) {
+				if (!p.isFolded()) {
 					numPlayersActive++;
 				}
 			}
-			//Grammatical Check
+			// Grammatical Check
 			if (game.getStrongestPlayers().size() == 1) {
 				payoutString = game.getStrongestPlayers().get(0).getName() + " Wins With: "
 						+ game.getStrongestPlayers().get(0).getHand().getCurrentHandStrengthString();
@@ -662,16 +660,16 @@ public class Display {
 				payoutString += " Wins With: "
 						+ game.getStrongestPlayers().get(0).getHand().getCurrentHandStrengthString();
 			}
-			//If Only Player Left
-			if(numPlayersActive == 1){
+			// If Only Player Left
+			if (numPlayersActive == 1) {
 				payoutString = game.getStrongestPlayers().get(0).getName() + " Wins!";
 			}
 
-			//Draws String
+			// Draws String
 			g.setColor(Color.WHITE);
 			g.fillOval(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) - 15, -15,
 					g.getFontMetrics().stringWidth(payoutString) + 30, 60);
-			
+
 			Polygon speechBubbleTail = new Polygon();
 			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 30, 40);
 			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 50, 40);

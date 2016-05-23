@@ -19,7 +19,12 @@ public class Round {
 		this.game = game;
 		roundNumber++;
 		for (Player p : game.getPlayers()) {
-			p.newHand();
+			if (p.getPoints() <= 0) {
+				game.getPlayers().remove(p);
+				game.getActionsOrder().remove(p);
+			} else {
+				p.newHand();
+			}
 		}
 	}
 
