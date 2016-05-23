@@ -573,7 +573,7 @@ public class Display {
 			g.setColor(modifiedGrey);
 			g.fillRoundRect(game.playerPositions.get(0)[0] + 90, game.playerPositions.get(0)[1] - 90, 60, 20, 15, 15);
 			g.setColor(Color.WHITE);
-			g.drawString("" + (double) game.getPlayers().get(0).getBetAmount() / 1000 + "K",
+			g.drawString("" + (double) game.getPlayers().get(0).getPointsInvested() / 1000 + "K",
 					game.playerPositions.get(0)[0] + 100, game.playerPositions.get(0)[1] - 75);
 			// Computer
 			g.setColor(modifiedGrey);
@@ -585,15 +585,40 @@ public class Display {
 			g.fillRoundRect(game.playerPositions.get(4)[0] - 85, game.playerPositions.get(4)[1], 60, 20, 15, 15);
 
 			g.setColor(Color.WHITE);
-			g.drawString("" + (double) game.getPlayers().get(1).getBetAmount() / 1000 + "K",
+			g.drawString("" + (double) game.getPlayers().get(1).getPointsInvested() / 1000 + "K",
 					game.playerPositions.get(1)[0] + 195, game.playerPositions.get(1)[1] + 15);
-			g.drawString("" + (double) game.getPlayers().get(2).getBetAmount() / 1000 + "K",
+			g.drawString("" + (double) game.getPlayers().get(2).getPointsInvested() / 1000 + "K",
 					game.playerPositions.get(2)[0] + userLabel.getWidth() + 60,
 					game.playerPositions.get(2)[1] + userLabel.getHeight() + 15);
-			g.drawString("" + (double) game.getPlayers().get(3).getBetAmount() / 1000 + "K",
+			g.drawString("" + (double) game.getPlayers().get(3).getPointsInvested() / 1000 + "K",
 					game.playerPositions.get(3)[0] - 90, game.playerPositions.get(3)[1] + userLabel.getHeight() + 15);
-			g.drawString("" + (double) game.getPlayers().get(4).getBetAmount() / 1000 + "K",
+			g.drawString("" + (double) game.getPlayers().get(4).getPointsInvested() / 1000 + "K",
 					game.playerPositions.get(4)[0] - 75, game.playerPositions.get(4)[1] + 15);
+			
+			//User Bet Amount
+			g.setColor(Color.BLUE.brighter());
+			g.setFont(new Font("Calibri", Font.BOLD, 14));
+			if(game.getPlayers().get(0).getBetAmount() > 1){
+				g.drawString("+" + (double) game.getPlayers().get(0).getBetAmount() / 1000 + "",
+						game.playerPositions.get(0)[0] + 100, game.playerPositions.get(0)[1] - 95);
+			}
+			if(game.getPlayers().get(1).getBetAmount() > 1){
+				g.drawString("+" + (double) game.getPlayers().get(1).getBetAmount() / 1000,
+						game.playerPositions.get(1)[0] + 205, game.playerPositions.get(1)[1] - 2);
+			}
+			if(game.getPlayers().get(2).getBetAmount() > 1){
+				g.drawString("+" + (double) game.getPlayers().get(2).getBetAmount() / 1000,
+						game.playerPositions.get(2)[0] + userLabel.getWidth() + 60,
+						game.playerPositions.get(2)[1] + userLabel.getHeight() + 30);
+			}
+			if(game.getPlayers().get(3).getBetAmount() > 1){
+				g.drawString("+" + (double) game.getPlayers().get(3).getBetAmount() / 1000,
+						game.playerPositions.get(3)[0] - 90, game.playerPositions.get(3)[1] + userLabel.getHeight() + 30);
+			}
+			if(game.getPlayers().get(4).getBetAmount() > 1){
+				g.drawString("+" + (double) game.getPlayers().get(4).getBetAmount() / 1000,
+						game.playerPositions.get(4)[0] - 65, game.playerPositions.get(4)[1] - 2);
+			}
 		}
 
 		// Add Chips
@@ -631,15 +656,18 @@ public class Display {
 					g.setColor(Color.BLACK);
 					g.drawString(tipString, FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString), 20);
 					counter++;
+					System.out.println(g.getFontMetrics().stringWidth(tipString));
 				} else {
 					extraCreditPoints++;
 					counter = 0;
 					userTip = false;
 				}
+
 			}
 		}
 
 		// Draw Pay-out
+		private final int BUFFER = 290;
 		public void drawWinner(Graphics g) {
 			game.getRound().setPot(0);
 			int numPlayersActive = 0;
@@ -649,6 +677,7 @@ public class Display {
 					numPlayersActive++;
 				}
 			}
+			
 			// Grammatical Check
 			if (game.getStrongestPlayers().size() == 1) {
 				payoutString = game.getStrongestPlayers().get(0).getName() + " Wins With: "
@@ -665,20 +694,22 @@ public class Display {
 				payoutString = game.getStrongestPlayers().get(0).getName() + " Wins!";
 			}
 
+			int strWidth = g.getFontMetrics().stringWidth(payoutString);
+			int buffer = (BUFFER-strWidth)/2;
 			// Draws String
 			g.setColor(Color.WHITE);
-			g.fillOval(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) - 15, -15,
-					g.getFontMetrics().stringWidth(payoutString) + 30, 60);
+			g.fillOval(FRAME_WIDTH / 2 - strWidth - 15 - buffer, -15,
+					strWidth + 30, 60);
 
 			Polygon speechBubbleTail = new Polygon();
-			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 30, 40);
-			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 50, 40);
-			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 95, 70);
+			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - strWidth / 2 + 30 - buffer, 40);
+			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - strWidth / 2 + 50 - buffer, 20);
+			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - strWidth / 2 + 95 - buffer, 70);
 			g.fillPolygon(speechBubbleTail);
 
 			g.setColor(Color.BLACK);
-			g.drawString(payoutString, FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString), 20);
-			counter++;
+			
+			g.drawString(payoutString, FRAME_WIDTH / 2 - strWidth - buffer, 20);
 		}
 
 		// Actual Button Removal
