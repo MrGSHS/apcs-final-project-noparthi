@@ -33,5 +33,23 @@ public class BlackHand {
 		hand1.add(deck1.deal());
 		hand1.add(deck1.deal());
 	}
-	
+	public String toString(){
+		String cards="{";
+		for(Card c: hand1){
+			
+			if(c.getNumber()==11)
+				cards+="Jack";
+			else if(c.getNumber()==12)
+				cards+="Queen";
+			else if(c.getNumber()==13)
+				cards+="King";
+			else if(c.getNumber()==14)
+				cards+="Ace";
+			else
+				cards+=c.getNumber();
+			cards+="of";
+			cards+=c.getSuiteValue();
+		}
+		return cards;
+	}
 }

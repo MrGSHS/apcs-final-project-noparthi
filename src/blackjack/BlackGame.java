@@ -1,5 +1,6 @@
 package blackjack;
 import java.util.*;
+import scripts.Card;
 public class BlackGame {
 	public static void main(String [] args){
 		Scanner sc = new Scanner (System.in);
@@ -9,13 +10,14 @@ public class BlackGame {
 		BlackRound thisOne=new BlackRound(sc.nextInt());
 		while (wants.equals("y")){
 			
-			System.out.println("Your cards: "+thisOne.getPlayer().getHand().getCards());
+			System.out.println("Your cards: "+thisOne.getPlayer().getHand());
+			
 			System.out.println("The computer's cards"+thisOne.getComputer().getHand().getCards().get(0));
 			System.out.println("Would you like to hit? y/n");
 			String hit=sc.nextLine();
 			while (hit.equals("y")){
 				thisOne.getPlayer().hit();
-				System.out.println("Your cards: "+thisOne.getPlayer().getHand().getCards());
+				System.out.println("Your cards: "+thisOne.getPlayer().getHand());
 				System.out.println("Your hand value"+thisOne.getPlayer().calc());
 				
 				
@@ -36,7 +38,7 @@ public class BlackGame {
 				}
 				
 			}
-			System.out.println("Computer's cards: "+thisOne.getComputer().getHand().getCards());
+			System.out.println("Computer's cards: "+thisOne.getComputer().getHand());
 			
 			while (thisOne.getComputer().hit()){
 				

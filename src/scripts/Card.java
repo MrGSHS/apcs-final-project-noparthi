@@ -31,5 +31,22 @@ public class Card {
 	public String getSuiteValue() {
 		return suiteValue;
 	}
-
+	public String toString(){
+		String cards="";
+		if(getNumber()==11)
+			cards+="Jack";
+		else if(getNumber()==12)
+			cards+="Queen";
+		else if(getNumber()==13)
+			cards+="King";
+		else if(getNumber()==14)
+			cards+="Ace";
+		else
+			cards+=getNumber();
+		cards+="of";
+		cards+=getSuiteValue();
+	
+	return cards;
+	}
+	
 }
