@@ -1,5 +1,5 @@
 package blackjack;
-
+import scripts.Deck;
 
 public class BlackRound {
 	private static int roundNumber = 0;
@@ -15,19 +15,13 @@ public class BlackRound {
 		roundNumber++;
 		
 	}
-	public boolean tryHit(){
-		boolean isIn=play.hit();
-		if (!isIn) {
-			whoWins=false;
-		}
-		
-	}
+
 	
 	public int getRound(){
 		return roundNumber;
 	}
 	
-	public void setPlayer(Player a){
+	public void setPlayer(BlackPlayer a){
 		play=a;
 	}
 	public BlackPlayer getPlayer(){
@@ -40,7 +34,7 @@ public class BlackRound {
 		
 	}
 		
-	}
+	
 
 
 
