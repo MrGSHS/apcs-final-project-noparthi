@@ -8,31 +8,28 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class WinLoseScreen {
-	private final int FRAME_WIDTH = 900;
-	private final int FRAME_HEIGHT = 600;
 	private drawStuffPanel drawStuff;
 	private ArrayList<Confetti> confettiList = new ArrayList<>();
 
 	public WinLoseScreen(JFrame frame) {
 		// Creates 100 Confetti Pieces
-		for (int i = 1; i <= 100; i++) {
-			confettiList.add(new Confetti((int) (Math.random() * 900), (int) (Math.random() * 501),
-					(int) (Math.random() * 6 + 10)));
+		for (int i = 1; i <= 150; i++) {
+			confettiList.add(new Confetti((int) (Math.random() * 900), (int) (Math.random() * 901),
+					(int) (Math.random() * 11 + 5)));
 		}
 		drawStuff = new drawStuffPanel();
-		frame.setOpacity(0f);
-		frame.add(drawStuff);
-		frame.setVisible(true);
+		frame.setBackground(Color.BLACK);
+		frame.setContentPane(drawStuff);
 		frame.repaint();
 	}
 
 	private class drawStuffPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 		private ArrayList<Integer> removeIndex;
-
+		
 		public void paintComponent(Graphics g) {
 			removeIndex = new ArrayList<>();
-			g.fillRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+			g.fillRect(0, 0, 900, 600);
 			for (int i = 0; i < confettiList.size(); i++) {
 				g.setColor(confettiList.get(i).getColor());
 				g.fillOval(confettiList.get(i).getX(), confettiList.get(i).getY(), confettiList.get(i).getDiameter(),
@@ -44,8 +41,8 @@ public class WinLoseScreen {
 			}
 			for (int remove : removeIndex) {
 				confettiList.remove(remove);
-				confettiList.add(new Confetti((int) (Math.random() * 900), (int) (Math.random() * 301),
-						(int) (Math.random() * 6 + 10)));
+				confettiList.add(new Confetti((int) (Math.random() * 900), (int) (Math.random() * 250),
+						(int) (Math.random() * 11 + 5)));
 			}
 			repaint();
 		}

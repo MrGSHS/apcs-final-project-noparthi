@@ -230,7 +230,6 @@ public class Display {
 		frame.add(actionsPanel);
 		frame.add(tablePanel);
 		frame.setVisible(true);
-		new WinLoseScreen(frame);
 	}
 
 	public JFrame getFrame() {
@@ -597,26 +596,26 @@ public class Display {
 					game.playerPositions.get(4)[0] - 75, game.playerPositions.get(4)[1] + 15);
 			
 			//User Bet Amount
-			g.setColor(Color.BLUE.brighter());
+			g.setColor(Color.BLUE.brighter().brighter().brighter());
 			g.setFont(new Font("Calibri", Font.BOLD, 14));
-			if(game.getPlayers().get(0).getBetAmount() > 1 && game.getPlayers().get(0).getRaiseBoolean()){
+			if(game.getPlayers().get(0).getBetAmount() > 1){
 				g.drawString("+" + (double) game.getPlayers().get(0).getBetAmount() / 1000 + "",
 						game.playerPositions.get(0)[0] + 100, game.playerPositions.get(0)[1] - 95);
 			}
-			if(game.getPlayers().get(1).getBetAmount() > 1 && game.getPlayers().get(1).getRaiseBoolean()){
+			if(game.getPlayers().get(1).getBetAmount() > 1){
 				g.drawString("+" + (double) game.getPlayers().get(1).getBetAmount() / 1000,
 						game.playerPositions.get(1)[0] + 205, game.playerPositions.get(1)[1] - 2);
 			}
-			if(game.getPlayers().get(2).getBetAmount() > 1 && game.getPlayers().get(2).getRaiseBoolean()){
+			if(game.getPlayers().get(2).getBetAmount() > 1){
 				g.drawString("+" + (double) game.getPlayers().get(2).getBetAmount() / 1000,
 						game.playerPositions.get(2)[0] + userLabel.getWidth() + 60,
 						game.playerPositions.get(2)[1] + userLabel.getHeight() + 30);
 			}
-			if(game.getPlayers().get(3).getBetAmount() > 1 && game.getPlayers().get(3).getRaiseBoolean()){
+			if(game.getPlayers().get(3).getBetAmount() > 1){
 				g.drawString("+" + (double) game.getPlayers().get(3).getBetAmount() / 1000,
 						game.playerPositions.get(3)[0] - 90, game.playerPositions.get(3)[1] + userLabel.getHeight() + 30);
 			}
-			if(game.getPlayers().get(4).getBetAmount() > 1 && game.getPlayers().get(4).getRaiseBoolean()){
+			if(game.getPlayers().get(4).getBetAmount() > 1){
 				g.drawString("+" + (double) game.getPlayers().get(4).getBetAmount() / 1000,
 						game.playerPositions.get(4)[0] - 75, game.playerPositions.get(4)[1] - 2);
 			}
@@ -696,7 +695,6 @@ public class Display {
 			}
 
 			int strWidth = BUFFER;
-			int buffer = BUFFER;
 			// Draws String
 			g.setColor(Color.WHITE);
 			g.fillOval(FRAME_WIDTH / 2 - strWidth - 15 , -15,
@@ -710,7 +708,7 @@ public class Display {
 
 			g.setColor(Color.BLACK);
 			
-			g.drawString(payoutString, FRAME_WIDTH / 2 - strWidth/2, 20);
+			g.drawString(payoutString, (FRAME_WIDTH-strWidth)/2, 20);
 		}
 
 		// Actual Button Removal
