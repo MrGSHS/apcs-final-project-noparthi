@@ -209,7 +209,6 @@ public class Runner {
 	}
 	
 	public static void main(String[] args) {
-		//TODO : Make sure to change this to new Runner() before Thursday
 		new HoldemGame();
 	}
 }

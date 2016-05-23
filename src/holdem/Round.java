@@ -46,8 +46,13 @@ public class Round {
 	public void preFlop() {
 		minBet = game.getBigBlind();
 		Collections.rotate(game.getActionsOrder(), -1);
-		game.getActionsOrder().get(0).setFirstAction(true);
-		game.getActionsOrder().get(0).setIsTurn(true);
+		for (Player p : game.getActionsOrder()) {
+			if (!p.isFolded()) {
+				p.setFirstAction(true);
+				p.setIsTurn(true);
+				break;
+			}
+		}
 		game.allPlayersTakeAction();
 	}
 
@@ -55,22 +60,37 @@ public class Round {
 		minBet = game.getBigBlind();
 		game.getActionsOrder().get(0).setFirstAction(false);
 		Collections.rotate(game.getActionsOrder(), -3);
-		game.getActionsOrder().get(0).setFirstAction(true);
-		game.getActionsOrder().get(0).setIsTurn(true);
+		for (Player p : game.getActionsOrder()) {
+			if (!p.isFolded()) {
+				p.setFirstAction(true);
+				p.setIsTurn(true);
+				break;
+			}
+		}
 		game.allPlayersTakeAction();
 	}
 
 	public void preRiver() {
 		minBet = game.getBigBlind();
-		game.getActionsOrder().get(0).setFirstAction(true);
-		game.getActionsOrder().get(0).setIsTurn(true);
+		for (Player p : game.getActionsOrder()) {
+			if (!p.isFolded()) {
+				p.setFirstAction(true);
+				p.setIsTurn(true);
+				break;
+			}
+		}
 		game.allPlayersTakeAction();
 	}
 
 	public void postRiver() {
 		minBet = game.getBigBlind();
-		game.getActionsOrder().get(0).setFirstAction(true);
-		game.getActionsOrder().get(0).setIsTurn(true);
+		for (Player p : game.getActionsOrder()) {
+			if (!p.isFolded()) {
+				p.setFirstAction(true);
+				p.setIsTurn(true);
+				break;
+			}
+		}
 		game.allPlayersTakeAction();
 	}
 
@@ -78,6 +98,7 @@ public class Round {
 	public boolean moveOn() {
 		int highestBetAmount = 0;
 		int totalActive = 0;
+		int check = 0;
 		int call = 0;
 		int raise = 0;
 		int fold = 0;
@@ -86,7 +107,9 @@ public class Round {
 				if (p.getBetAmount() > highestBetAmount) {
 					highestBetAmount = p.getBetAmount();
 				}
-				if (p.getCallBoolean()) {
+				if (p.getCheckBoolean()) {
+					check++;
+				} else if (p.getCallBoolean()) {
 					call++;
 				} else if (p.getRaiseBoolean()) {
 					raise++;
@@ -104,7 +127,8 @@ public class Round {
 			}
 		}
 
-		if (totalActive != 0 || (call + raise + fold) != game.getActionsOrder().size()) {
+		if (totalActive != 0 || ((call + raise + fold) != game.getActionsOrder().size()
+				&& (check + fold) != game.getActionsOrder().size())) {
 			return false;
 		}
 
@@ -118,19 +142,27 @@ public class Round {
 		// And Proceeds To Next Round
 		if (stageOfRound == 0) {
 			stageOfRound++;
-			System.out.println("Stage: " + stageOfRound);
-			game.getTable().dealFlop();
-			preTurn();
+			if (!game.isPayout()) {
+				System.out.println("Stage: " + stageOfRound);
+				game.getTable().dealFlop();
+				preTurn();
+			} else {
+				Collections.rotate(game.getActionsOrder(), -3);
+			}
 		} else if (stageOfRound == 1) {
 			stageOfRound++;
-			System.out.println("Stage: " + stageOfRound);
-			game.getTable().dealTurn();
-			preRiver();
+			if (!game.isPayout()) {
+				System.out.println("Stage: " + stageOfRound);
+				game.getTable().dealTurn();
+				preRiver();
+			}
 		} else if (stageOfRound == 2) {
 			stageOfRound++;
-			System.out.println("Stage: " + stageOfRound);
-			game.getTable().dealRiver();
-			postRiver();
+			if (!game.isPayout()) {
+				System.out.println("Stage: " + stageOfRound);
+				game.getTable().dealRiver();
+				postRiver();
+			}
 		} else {
 			game.payout();
 		}

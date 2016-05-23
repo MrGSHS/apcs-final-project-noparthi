@@ -643,7 +643,15 @@ public class Display {
 
 		// Draw Pay-out
 		public void drawWinner(Graphics g) {
+			game.getRound().setPot(0);
+			int numPlayersActive = 0;
 			String payoutString = "";
+			for(Player p : game.getPlayers()){
+				if(!p.isFolded()){
+					numPlayersActive++;
+				}
+			}
+			//Grammatical Check
 			if (game.getStrongestPlayers().size() == 1) {
 				payoutString = game.getStrongestPlayers().get(0).getName() + " Wins With: "
 						+ game.getStrongestPlayers().get(0).getHand().getCurrentHandStrengthString();
@@ -654,11 +662,16 @@ public class Display {
 				payoutString += " Wins With: "
 						+ game.getStrongestPlayers().get(0).getHand().getCurrentHandStrengthString();
 			}
+			//If Only Player Left
+			if(numPlayersActive == 1){
+				payoutString = game.getStrongestPlayers().get(0).getName() + " Wins!";
+			}
 
+			//Draws String
 			g.setColor(Color.WHITE);
 			g.fillOval(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) - 15, -15,
 					g.getFontMetrics().stringWidth(payoutString) + 30, 60);
-
+			
 			Polygon speechBubbleTail = new Polygon();
 			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 30, 40);
 			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(payoutString) / 2 + 50, 40);
@@ -682,6 +695,11 @@ public class Display {
 				} else {
 					removeCheck();
 				}
+			}
+			if (!game.getUser().isTurn()) {
+				tip.setVisible(true);
+			} else {
+				tip.setVisible(false);
 			}
 		}
 

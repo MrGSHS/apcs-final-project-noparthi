@@ -48,7 +48,6 @@ public class Computer extends Player {
 		// If Player Before Checked
 		if (game.getActionsOrder().get(indexBefore).getCheckBoolean()
 				|| game.getPlayers().get(getPosition()).getFirstAction()) {
-			// Otherwise Continue
 			if (currentHandStrength > 7 || (int) (Math.random() * 11) + 1 <= 2)
 				raise(game.getBigBlind() * 2);
 			else {
