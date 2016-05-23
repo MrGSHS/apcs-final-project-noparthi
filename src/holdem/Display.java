@@ -329,7 +329,6 @@ public class Display {
 								CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
 						g.drawImage(faceUpComputerCards.get(i * 2 - 1), game.playerPositions.get(i)[0] + 15,
 								game.playerPositions.get(i)[1] - 50, CARD_WIDTH + 10, CARD_HEIGHT + 20, null);
-						System.out.println(i);
 					}
 				}
 			} else {
