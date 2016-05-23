@@ -10,7 +10,7 @@ public class BlackGame {
 		while (wants.equals("y")){
 			
 			System.out.println("Your cards: "+thisOne.getPlayer().getHand().getCards());
-			System.out.println("The computer's cards"+thisOne().getComputer().getHand().getCards().get(0));
+			System.out.println("The computer's cards"+thisOne.getComputer().getHand().getCards().get(0));
 			System.out.println("Would you like to hit? y/n");
 			String hit=sc.nextLine();
 			while (hit.equals("y")){
@@ -21,14 +21,14 @@ public class BlackGame {
 				
 				
 				if (thisOne.getPlayer().calc()>21) {
-					System.out.println("Your hand value is > 21. You lose.")
+					System.out.println("Your hand value is > 21. You lose.");
 					hit="no";
 				}
 				else if (thisOne.getPlayer().calc()==21){
 					thisOne.getPlayer().demGains();
 					break;
 				}
-				}
+				
 				else{
 					System.out.println("Would you like to hit? y/n");
 					hit=sc.nextLine();
@@ -36,21 +36,21 @@ public class BlackGame {
 				}
 				
 			}
-			System.out.println("Computer's cards: "+thisOne().getComputer().getHand().getCards());
+			System.out.println("Computer's cards: "+thisOne.getComputer().getHand().getCards());
 			
 			while (thisOne.getComputer().hit()){
 				
-				System.out.println("Computer's cards: "+thisOne().getComputer().getHand());
+				System.out.println("Computer's cards: "+thisOne.getComputer().getHand());
 				
 			}
 			if (hit.equals("no")) continue;
-			else if (thisOne.getComputer().calc()<thisOne().getPlayer().calc() || thisOne.getComputer().calc()>21){
+			else if (thisOne.getComputer().calc()<thisOne.getPlayer().calc() || thisOne.getComputer().calc()>21){
 				thisOne.getPlayer().demGains();
 				
 				System.out.println("You win! Your new balance: $"+thisOne.getPlayer().getBalance());
 				
 			}
-			else if (thisOne.getComputer().calc()==thisOne.getPlayer() && thisOne.getComputer().calc()<=21){
+			else if (thisOne.getComputer().calc()==thisOne.getPlayer().calc() && thisOne.getComputer().calc()<=21){
 				System.out.println("Push");
 			}
 			else{
