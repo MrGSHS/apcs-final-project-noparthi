@@ -683,11 +683,6 @@ public class Display {
 					removeCheck();
 				}
 			}
-			if (!game.getUser().isTurn()) {
-				tip.setVisible(true);
-			} else {
-				tip.setVisible(false);
-			}
 		}
 
 		public void paintComponent(Graphics g) {
