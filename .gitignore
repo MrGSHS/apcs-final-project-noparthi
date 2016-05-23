@@ -50,3 +50,6 @@ Temporary Items
 package.bluej
 *.ctxt
 *.class
+
+# Error Logs
+*.log
