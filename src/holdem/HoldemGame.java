@@ -447,6 +447,7 @@ public class HoldemGame {
 		}
 		if (total > 1)
 			return true;
+		payout();
 		return false;
 	}
 

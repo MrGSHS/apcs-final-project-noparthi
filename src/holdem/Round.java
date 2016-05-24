@@ -20,7 +20,7 @@ public class Round {
 		roundNumber++;
 		for (Player p : game.getPlayers()) {
 			if (p.getPoints() <= 0) {
-				game.getPlayers().remove(p);
+				//game.getPlayers().remove(p);
 				game.getActionsOrder().remove(p);
 			} else {
 				p.newHand();
