@@ -43,7 +43,7 @@ public class Card {
 			cards+="Ace";
 		else
 			cards+=getNumber();
-		cards+="of";
+		cards+=" of ";
 		cards+=getSuiteValue();
 	
 	return cards;
