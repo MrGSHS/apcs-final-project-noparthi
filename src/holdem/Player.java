@@ -26,7 +26,7 @@ public class Player {
 	public Player(HoldemGame game, int position) {
 		this.game = game;
 		this.position = position;
-		points = 1000;
+		points = 100000;
 	}
 
 	//Overridden By Computer
