@@ -10,8 +10,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class LoseScreen {
-	private drawLosePanel drawLose;
+public class LoseScreen extends JFrame{
+	private TransparentPane tp;
 	private ArrayList<Confetti> rainDropList = new ArrayList<>();
 
 	public static void main(String[] args){
@@ -19,27 +19,27 @@ public class LoseScreen {
 	}
 	
 	public LoseScreen() {
-		JFrame frame = new JFrame();
-		frame.setTitle("You Lose");
-		frame.setSize(900, 600);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-		drawLose = new drawLosePanel();
-		frame.setContentPane(drawLose);
-		frame.setVisible(true);
-		frame.repaint();
+		setTitle("You Lose");
+		setSize(900, 600);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		tp = new TransparentPane();
+		setUndecorated(true);
+		setBackground(new Color(1.0f,1.0f,1.0f,0f));
+		add(tp);
+		setVisible(true);
 	}
 
-	private class drawLosePanel extends JPanel {
+	private class TransparentPane extends JPanel {
 		private static final long serialVersionUID = 1L;
 		private BufferedImage loseBackground;
-		public drawLosePanel() {
+		public TransparentPane() {
 			try {
 				loseBackground = ImageIO.read(getClass().getResourceAsStream("/other/loseBackground.jpg"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			setOpaque(false);
 		}
 
 		public void paintComponent(Graphics g) {

@@ -13,8 +13,7 @@ public class WinScreen extends JFrame{
 	private TransparentPane tp;
 	
 	public WinScreen(){
-		
-		setTitle("something");
+		setTitle("You Win!!!");
 		setSize(900,600);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,8 +25,6 @@ public class WinScreen extends JFrame{
 	}
 
 	private class TransparentPane extends JPanel{
-
-
 		private static final long serialVersionUID = 1L;
 		private ArrayList<Confetti> confettiList = new ArrayList<>();
 		private ArrayList<Integer> removeIndex;
