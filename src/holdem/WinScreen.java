@@ -12,22 +12,27 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class WinScreen extends JFrame{
+public class WinScreen{
 	private static final long serialVersionUID = 1L;
 	private JButton newGame = new JButton("Start A New Game");
 	private JButton exit = new JButton("Exit");
 	private TransparentPane tp;
-
+	private JFrame frame;
+	
+	public static void main(String args[]){
+		new WinScreen();
+	}
+	
 	public WinScreen() {
-		setTitle("You Win!!!");
-		setSize(900, 600);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame = new JFrame();
+		frame.setTitle("You Win!!!");
+		frame.setSize(900, 600);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		tp = new TransparentPane();
-		setUndecorated(true);
-		setBackground(new Color(1.0f, 1.0f, 1.0f, 0f));
-		add(tp);
-		setVisible(true);
+		frame.setBackground(Color.black);
+		frame.add(tp);
+		frame.setVisible(true);
 	}
 
 	private class TransparentPane extends JPanel implements ActionListener{
@@ -42,20 +47,20 @@ public class WinScreen extends JFrame{
 			}
 			// Adds Button
 			setLayout(null);
-			newGame.addActionListener(this);
 			exit.addActionListener(this);
+			newGame.addActionListener(this);
 			
-			newGame.setPreferredSize(new Dimension(225, 50));
 			exit.setPreferredSize(new Dimension(225, 50));
+			newGame.setPreferredSize(new Dimension(225, 50));
 			
-			newGame.setFont(new Font("SansSerif", Font.PLAIN, 12));
 			exit.setFont(new Font("SansSerif", Font.PLAIN, 12));
+			newGame.setFont(new Font("SansSerif", Font.PLAIN, 12));
 			
-			newGame.setBounds(50, 525, 225, 50);
-			exit.setBounds(625, 525, 225, 50);
+			exit.setBounds(50, 525, 225, 50);
+			newGame.setBounds(625, 525, 225, 50);
 
-			add(newGame);
-			add(exit);
+			frame.add(newGame);
+			frame.add(exit);
 			
 			setOpaque(false);
 		}
@@ -63,8 +68,8 @@ public class WinScreen extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == newGame) {
-				new HoldemGame();
-				dispose();
+				frame.dispose();
+				new HoldemGame();			
 			}
 			if (evt.getSource() == exit) {
 				System.exit(0);
@@ -73,6 +78,8 @@ public class WinScreen extends JFrame{
 		
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, 900, 600);
 			removeIndex = new ArrayList<>();
 			for (int i = 0; i < confettiList.size(); i++) {
 				g.setColor(confettiList.get(i).getColor());
