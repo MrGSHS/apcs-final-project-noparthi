@@ -2,19 +2,20 @@ package blackjack;
 import java.util.*;
 import scripts.Card;
 public class BlackGame {
-	public static void main(String [] args){
+	public BlackGame(){
 		Scanner sc = new Scanner (System.in);
 		
 		String wants="y";
 		
+		new BlackDisplay(this);
 		
 		while (wants.equals("y")){
 			
 			System.out.println("How much would you like to bet?");
 			BlackRound thisOne=new BlackRound(sc.nextInt());
 			System.out.println("Your cards: "+thisOne.getPlayer().getHand());
-			System.out.println("Your hand value "+thisOne.getPlayer().calc());
-			System.out.println("The computer's cards "+thisOne.getComputer().getHand().getCards().get(0));
+			
+			System.out.println("The computer's cards"+thisOne.getComputer().getHand().getCards().get(0));
 			System.out.println("Would you like to hit? y/n");
 			sc.nextLine();
 			String hit=sc.nextLine();
