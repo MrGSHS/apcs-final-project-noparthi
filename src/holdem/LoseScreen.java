@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class LoseScreen {
-	private drawStuffPanel drawStuff;
+	private drawLosePanel drawLose;
 	private ArrayList<Confetti> rainDropList = new ArrayList<>();
 
 	public static void main(String[] args){
@@ -25,16 +25,16 @@ public class LoseScreen {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
-		drawStuff = new drawStuffPanel();
-		frame.setContentPane(drawStuff);
+		drawLose = new drawLosePanel();
+		frame.setContentPane(drawLose);
 		frame.setVisible(true);
 		frame.repaint();
 	}
 
-	private class drawStuffPanel extends JPanel {
+	private class drawLosePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 		private BufferedImage loseBackground;
-		public drawStuffPanel() {
+		public drawLosePanel() {
 			try {
 				loseBackground = ImageIO.read(getClass().getResourceAsStream("/other/loseBackground.jpg"));
 			} catch (IOException e) {

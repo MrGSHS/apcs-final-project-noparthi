@@ -3,11 +3,11 @@ package holdem;
 import java.awt.Color;
 
 public class Confetti {
-	Color randColor;
-	int x;
-	int y;
-	int diameter;
-	boolean delete;
+	private Color randColor;
+	private int x;
+	private int y;
+	private int diameter;
+	private boolean delete;
 
 	public Confetti(int x, int y, int diameter) {
 		this.x = x;
@@ -29,10 +29,10 @@ public class Confetti {
 		return diameter;
 	}
 
-	public boolean shouldDelete(){
+	public boolean getDelete() {
 		return delete;
 	}
-	
+
 	public Color getColor() {
 		return randColor;
 	}
@@ -40,8 +40,8 @@ public class Confetti {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
-	public void setDelete(boolean delete){
+
+	public void setDelete(boolean delete) {
 		this.delete = delete;
 	}
 }
