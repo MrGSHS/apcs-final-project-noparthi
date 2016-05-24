@@ -48,7 +48,7 @@ public class BlackHand {
 			else
 				cards+=c.getNumber();
 			cards+=" of ";
-			cards+=c.getSuiteValue()+" ";
+			cards+=c.getSuiteValue()+"... ";
 		}
 		cards+="\b}";
 		return cards;

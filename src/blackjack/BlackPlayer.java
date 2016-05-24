@@ -43,13 +43,22 @@ public class BlackPlayer {
 			else {
 				points+=compare;
 			}
-			if ((compare==14) && (points>21)) {
-				points-=10;
+		}
+		for(int i = 0;i<4;i++){
+			if (points>21){
+				for (int ind=0;ind<hand.length();ind++){
+					int compare=hand.getCards().get(ind).getNumber();
+					if (compare==14){
+						points-=10;
+						i=hand.length();
+					}
+				}
 			}
 			
 		}
 		return points;
 	}
+		
 	//adds a card to hand
 	public boolean hit(){
 		hand.addCard();
