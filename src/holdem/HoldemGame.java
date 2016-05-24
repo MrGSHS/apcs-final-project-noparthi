@@ -428,11 +428,6 @@ public class HoldemGame {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				// int numberShared = strongestPlayers.size();
-				// for (Player p : strongestPlayers) {
-				// p.setPoints((int) (p.getPoints() + round.getPot() /
-				// numberShared));
-				// }
 			}
 		}).start();
 	}
@@ -452,7 +447,6 @@ public class HoldemGame {
 		}
 		if (total > 1)
 			return true;
-		payout();
 		return false;
 	}
 

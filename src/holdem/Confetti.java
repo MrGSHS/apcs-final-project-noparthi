@@ -7,6 +7,7 @@ public class Confetti {
 	int x;
 	int y;
 	int diameter;
+	boolean delete;
 
 	public Confetti(int x, int y, int diameter) {
 		this.x = x;
@@ -28,11 +29,19 @@ public class Confetti {
 		return diameter;
 	}
 
+	public boolean shouldDelete(){
+		return delete;
+	}
+	
 	public Color getColor() {
 		return randColor;
 	}
 
 	public void setY(int y) {
 		this.y = y;
+	}
+	
+	public void setDelete(boolean delete){
+		this.delete = delete;
 	}
 }

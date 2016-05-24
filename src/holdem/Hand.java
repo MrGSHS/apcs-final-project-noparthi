@@ -23,7 +23,7 @@ public class Hand {
 	private int trips = 0;
 	private ArrayList<Integer> fullHouse = new ArrayList<>();
 	private int straight = 0;
-	private int flush = -1;
+	private int flush = 0;
 	private int quads = 0;
 
 	public Hand(HoldemGame game, Card fcard, Card scard) {
@@ -271,7 +271,6 @@ public class Hand {
 	// Checks For Flush
 	public boolean flush() {
 		ArrayList<Integer> temp = dupeSuitLogic();
-		flush = -1;
 		int inARow = 1;
 		int maxInARow = 1;
 

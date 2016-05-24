@@ -168,7 +168,7 @@ public class Round {
 				game.getTable().dealRiver();
 				postRiver();
 			}
-		} else {
+		} else{
 			game.payout();
 		}
 		return true;

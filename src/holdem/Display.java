@@ -14,8 +14,10 @@ import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -594,28 +596,29 @@ public class Display {
 					game.playerPositions.get(3)[0] - 90, game.playerPositions.get(3)[1] + userLabel.getHeight() + 15);
 			g.drawString("" + (double) game.getPlayers().get(4).getPointsInvested() / 1000 + "K",
 					game.playerPositions.get(4)[0] - 75, game.playerPositions.get(4)[1] + 15);
-			
-			//User Bet Amount
-			g.setColor(Color.BLUE.brighter().brighter().brighter());
+
+			// User Bet Amount
+			g.setColor(Color.BLUE.darker().darker());
 			g.setFont(new Font("Calibri", Font.BOLD, 14));
-			if(game.getPlayers().get(0).getBetAmount() > 1){
+			if (game.getPlayers().get(0).getBetAmount() > 1) {
 				g.drawString("+" + (double) game.getPlayers().get(0).getBetAmount() / 1000 + "",
-						game.playerPositions.get(0)[0] + 100, game.playerPositions.get(0)[1] - 95);
+						game.playerPositions.get(0)[0] + 100, game.playerPositions.get(0)[1] - 92);
 			}
-			if(game.getPlayers().get(1).getBetAmount() > 1){
+			if (game.getPlayers().get(1).getBetAmount() > 1) {
 				g.drawString("+" + (double) game.getPlayers().get(1).getBetAmount() / 1000,
 						game.playerPositions.get(1)[0] + 205, game.playerPositions.get(1)[1] - 2);
 			}
-			if(game.getPlayers().get(2).getBetAmount() > 1){
+			if (game.getPlayers().get(2).getBetAmount() > 1) {
 				g.drawString("+" + (double) game.getPlayers().get(2).getBetAmount() / 1000,
 						game.playerPositions.get(2)[0] + userLabel.getWidth() + 60,
 						game.playerPositions.get(2)[1] + userLabel.getHeight() + 30);
 			}
-			if(game.getPlayers().get(3).getBetAmount() > 1){
+			if (game.getPlayers().get(3).getBetAmount() > 1) {
 				g.drawString("+" + (double) game.getPlayers().get(3).getBetAmount() / 1000,
-						game.playerPositions.get(3)[0] - 90, game.playerPositions.get(3)[1] + userLabel.getHeight() + 30);
+						game.playerPositions.get(3)[0] - 90,
+						game.playerPositions.get(3)[1] + userLabel.getHeight() + 30);
 			}
-			if(game.getPlayers().get(4).getBetAmount() > 1){
+			if (game.getPlayers().get(4).getBetAmount() > 1) {
 				g.drawString("+" + (double) game.getPlayers().get(4).getBetAmount() / 1000,
 						game.playerPositions.get(4)[0] - 75, game.playerPositions.get(4)[1] - 2);
 			}
@@ -641,8 +644,12 @@ public class Display {
 		public void addTipEffects(Graphics g) {
 			if (userTip && !game.getUser().isTurn()) {
 				if (counter <= 2) {
-					String tipString = "Thanks " + USERNAME + "! You get " + extraCreditPoints
-							+ " extra credit points!";
+					String tipString = "";
+					if (extraCreditPoints == 1) {
+						tipString = "Thanks " + USERNAME + "! You get an extra credit point!";
+					} else {
+						tipString = "Thanks " + USERNAME + "! You get " + extraCreditPoints + " extra credit points!";
+					}
 					g.setColor(Color.WHITE);
 					g.fillOval(FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString) - 15, -15,
 							g.getFontMetrics().stringWidth(tipString) + 30, 60);
@@ -668,8 +675,8 @@ public class Display {
 
 		// Draw Pay-out
 		private final int BUFFER = 290;
+
 		public void drawWinner(Graphics g) {
-			game.getRound().setPot(0);
 			int numPlayersActive = 0;
 			String payoutString = "";
 			for (Player p : game.getPlayers()) {
@@ -677,7 +684,7 @@ public class Display {
 					numPlayersActive++;
 				}
 			}
-			
+
 			// Grammatical Check
 			if (game.getStrongestPlayers().size() == 1) {
 				payoutString = game.getStrongestPlayers().get(0).getName() + " Wins With: "
@@ -697,8 +704,7 @@ public class Display {
 			int strWidth = BUFFER;
 			// Draws String
 			g.setColor(Color.WHITE);
-			g.fillOval(FRAME_WIDTH / 2 - strWidth - 15 , -15,
-					strWidth + 30, 60);
+			g.fillOval(FRAME_WIDTH / 2 - strWidth - 15, -15, strWidth + 30, 60);
 
 			Polygon speechBubbleTail = new Polygon();
 			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - strWidth / 2 + 30, 40);
@@ -707,8 +713,8 @@ public class Display {
 			g.fillPolygon(speechBubbleTail);
 
 			g.setColor(Color.BLACK);
-			
-			g.drawString(payoutString, (FRAME_WIDTH-strWidth)/2, 20);
+
+			g.drawString(payoutString, ((FRAME_WIDTH / 2 - strWidth - 15) + (FRAME_WIDTH/2 + 15)) / 2 - strWidth/2, 20);
 		}
 
 		// Actual Button Removal
@@ -915,16 +921,20 @@ public class Display {
 	}
 
 	private void reloadImages() {
+		Set<Card> set = new HashSet<>();
 		tableCards = new ArrayList<BufferedImage>();
 		for (int i = 0; i < cardsOnTable.size(); i++) {
 			Card card = cardsOnTable.get(i);
-			String fileName = "/cards/" + card.getNumber().toString() + "_of_" + card.getSuiteValue() + ".jpg";
-			try {
-				tableCards.add(ImageIO.read(getClass().getResourceAsStream(fileName)));
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (set.add(card)) {
+				String fileName = "/cards/" + card.getNumber().toString() + "_of_" + card.getSuiteValue() + ".jpg";
+				try {
+					tableCards.add(ImageIO.read(getClass().getResourceAsStream(fileName)));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
+
 		try {
 			String card1Path = "/cards/" + game.getUser().getCurrentHand()[0].getNumber().toString() + "_of_"
 					+ game.getUser().getCurrentHand()[0].getSuiteValue() + ".jpg";
