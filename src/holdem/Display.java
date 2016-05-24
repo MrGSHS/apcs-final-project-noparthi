@@ -232,6 +232,7 @@ public class Display {
 		frame.add(actionsPanel);
 		frame.add(tablePanel);
 		frame.setVisible(true);
+		new WinScreen();
 	}
 
 	public JFrame getFrame() {
