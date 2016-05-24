@@ -30,7 +30,7 @@ public class Runner {
 
 	private ArrayList<BufferedImage> images = new ArrayList<>();
 
-	private class ChooserDisplay {
+	public class ChooserDisplay {
 
 		private JFrame frame;
 		private ChooserPanel choosePanel;
