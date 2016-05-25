@@ -40,12 +40,10 @@ public class LoseScreen {
 		private static final long serialVersionUID = 1L;
 		private BufferedImage loseBackground;
 		private ArrayList<Raindrop> raindropList = new ArrayList<>();
-		private ArrayList<Raindrop> removeList;
-		private int initialX = -500;
-		private int initialY = 0;
+		private int x1 = -600;
+		private int y1 = 0;
 		private int addX = 0;
 		private int addY = 0;
-		private int grayShade;
 
 		public drawLosePanel() {
 			try {
@@ -53,17 +51,17 @@ public class LoseScreen {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
-			// Adds In Raindrop Lines
-			for (int i = 0; i <= 54; i++) {
-				grayShade = (int) (Math.random() * 181 + 75);
-				addX = (int) (Math.random() * 5 + 5);
-				addY = (int) (Math.random() * 11 + 15);
-				raindropList.add(new Raindrop(initialX, initialY, initialX + addX, initialY + addY,
-						new Color(grayShade, grayShade, grayShade)));
-				raindropList.get(0).setX1Y1(initialX,  initialY);
-				raindropList.get(0).setX2Y2(initialX + addX, initialY + addY);
-				initialX += addX + 20;
+
+			// Adds In Raindrop Lines, Row 1
+			for (int j = 0; j < 12; j++) {
+				y1 = j * 50;
+				x1 = -600;
+				for (int i = 1; i <= 55; i++) {
+					addX = (int) (Math.random() * 5 + 5);
+					addY = (int) (Math.random() * 11 + 15);
+					raindropList.add(new Raindrop(x1, y1, x1 + addX, y1 + addY));
+					x1 += addX + 20;
+				}
 			}
 
 			// Adds Button
@@ -96,40 +94,24 @@ public class LoseScreen {
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			g.drawImage(loseBackground, 0, 0, 900, 600, null);
-			removeList = new ArrayList<>();
-			//Draws Raindrop
-			for(Raindrop raindrop : raindropList){
-				g.setColor(raindrop.getWhiteShade());
+			// Draws Raindrop
+			for (Raindrop raindrop : raindropList) {
+				g.setColor(raindrop.getGrayShade());
 				g.drawLine(raindrop.getx1(), raindrop.gety1(), raindrop.getx2(), raindrop.gety2());
-				raindrop.setX1Y1(raindrop.getx1() + 10, raindrop.gety1() + 10);
-				raindrop.setX2Y2(raindrop.getx2() + 10, raindrop.gety2() + 10);
-				if(raindrop.getx2() > 900 || raindrop.gety2() > 600){
-					removeList.add(raindrop);
-				}
+				raindrop.move();
 			}
-			//Removes Raindrop And Adds In New Ones
-			for(Raindrop raindrop : removeList){
-				raindropList.remove(raindrop);
-				
-				grayShade = (int) (Math.random() * 181 + 75);
-				addX = (int) (Math.random() * 5 + 5);
-				addY = (int) (Math.random() * 11 + 15);
-				Raindrop r1 = new Raindrop(initialX, initialY, initialX + addX, initialY + addY,
-						new Color(grayShade, grayShade, grayShade));
-				r1.setX1Y1(initialX,  initialY);
-				r1.setX2Y2(initialX + addX, initialY + addY);
-				raindropList.add(r1);
-				
-				initialX += addX + 20;
-				if(initialX > 900){
-					initialX = -500;
-				}
-			}
-			
-			//Lightning
-			if((int)(Math.random()*101 + 1)==1){
+
+			// Lightning
+			if ((int) (Math.random() * 101) == 0) {
 				g.setColor(Color.WHITE);
 				g.fillRect(0, 0, 900, 600);
+			}
+			
+			//Waits Before Repainting
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 			repaint();
 		}
