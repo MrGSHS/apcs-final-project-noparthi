@@ -20,12 +20,18 @@ public class LoseScreen {
 	private drawLosePanel dwp;
 	private JButton newGame = new JButton("Start A New Game");
 	private JButton exit = new JButton("Exit");
+	private BufferedImage iconImage;
 
 	public static void main(String[] args) {
 		new LoseScreen();
 	}
 
 	public LoseScreen() {
+		try {
+			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokerIcon.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		frame = new JFrame();
 		frame.setTitle("You Lose ☹☹☹");
 		frame.setSize(900, 600);
@@ -33,6 +39,7 @@ public class LoseScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		dwp = new drawLosePanel();
 		frame.add(dwp);
+		frame.setIconImage(iconImage);
 		frame.setVisible(true);
 	}
 
