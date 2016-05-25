@@ -2,39 +2,44 @@ package blackjack;
 import java.util.*;
 import scripts.Card;
 public class BlackGame {
+	private BlackRound round;
+	private String cont = "y";
+	
+	public BlackRound getRound(){
+		return round;
+	}
+	
 	public BlackGame(){
+
+		
 		Scanner sc = new Scanner (System.in);
 		
-		String wants="y";
+		System.out.println("How much would you like to bet?");
+		round=new BlackRound(sc.nextInt());
 		
 		new BlackDisplay(this);
 		
-		while (wants.equals("y")){
+		while (cont.equals("y")){
 			
-			System.out.println("How much would you like to bet?");
-			BlackRound thisOne=new BlackRound(sc.nextInt());
-			System.out.println("Your cards: "+thisOne.getPlayer().getHand());
+			System.out.println("Your cards: "+round.getPlayer().getHand());
 			
-			System.out.println("The computer's cards"+thisOne.getComputer().getHand().getCards().get(0));
+			System.out.println("The computer's cards"+round.getComputer().getHand().getCards().get(0));
 			System.out.println("Would you like to hit? y/n");
 			sc.nextLine();
 			String hit=sc.nextLine();
 			while (hit.equals("y")){
-				thisOne.getPlayer().hit();
-				System.out.println("Your cards: "+thisOne.getPlayer().getHand());
-				System.out.println("Your hand value "+thisOne.getPlayer().calc());
+				round.getPlayer().hit();
+				System.out.println("Your cards: "+round.getPlayer().getHand());
+				System.out.println("Your hand value "+round.getPlayer().calc());
 				
-				
-				
-				if (thisOne.getPlayer().calc()>21) {
+				if (round.getPlayer().calc()>21) {
 					System.out.println("Your hand value is > 21. You lose.");
 					hit="no";
 				}
-				else if (thisOne.getPlayer().calc()==21){
-					thisOne.getPlayer().demGains();
+				else if (round.getPlayer().calc()==21){
+					round.getPlayer().demGains();
 					break;
 				}
-				
 				else{
 					System.out.println("Would you like to hit? y/n");
 					hit=sc.nextLine();
@@ -42,21 +47,20 @@ public class BlackGame {
 				}
 				
 			}
-			System.out.println("Computer's cards: "+thisOne.getComputer().getHand());
-			
-			while (thisOne.getComputer().hit()){
+			System.out.println("Computer's cards: "+round.getComputer().getHand());
+			while (round.getComputer().hit()){
 				
-				System.out.println("Computer's cards: "+thisOne.getComputer().getHand());
+				System.out.println("Computer's cards: "+round.getComputer().getHand());
 				
 			}
 			if (hit.equals("no")) continue;
-			else if (thisOne.getComputer().calc()<thisOne.getPlayer().calc() || thisOne.getComputer().calc()>21){
-				thisOne.getPlayer().demGains();
+			else if (round.getComputer().calc()<round.getPlayer().calc() || round.getComputer().calc()>21){
+				round.getPlayer().demGains();
 				
-				System.out.println("You win! Your new balance: $"+thisOne.getPlayer().getBalance());
+				System.out.println("You win! Your new balance: $"+round.getPlayer().getBalance());
 				
 			}
-			else if (thisOne.getComputer().calc()==thisOne.getPlayer().calc() && thisOne.getComputer().calc()<=21){
+			else if (round.getComputer().calc()==round.getPlayer().calc() && round.getComputer().calc()<=21){
 				System.out.println("Push");
 			}
 			else{
@@ -64,10 +68,10 @@ public class BlackGame {
 			}
 			
 			System.out.println("Would you like to play another round of Black Jack? y/n");
-			wants=sc.nextLine();
-			thisOne.getPlayer().getHand().restart();
-			thisOne.getPlayer().getHand().reset();
-			thisOne.getComputer().getHand().reset();
+			cont=sc.nextLine();
+			round.getPlayer().getHand().restart();
+			round.getPlayer().getHand().reset();
+			round.getComputer().getHand().reset();
 		}
 	}
 }

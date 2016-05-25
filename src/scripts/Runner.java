@@ -112,6 +112,7 @@ public class Runner {
 							JOptionPane.showMessageDialog(null, "HELLO");
 						} else if (reply == JOptionPane.NO_OPTION) {
 							new BlackGame();
+							frame.dispose();
 						}
 						if(reply != JOptionPane.CANCEL_OPTION && reply != JOptionPane.CLOSED_OPTION){
 							frame.dispose();
@@ -209,6 +210,6 @@ public class Runner {
 	}
 	
 	public static void main(String[] args) {
-		new Runner();
+		new BlackGame();
 	}
 }

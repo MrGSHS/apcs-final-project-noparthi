@@ -124,15 +124,11 @@ public class BlackDisplay {
 	private BufferedImage chips10k;
 	private BufferedImage chips25k;
 	private BufferedImage chips50k;
-	private ArrayList<BufferedImage> tableCards;
-	private ArrayList<BufferedImage> faceUpComputerCards;
 
 	private BlackGame game;
 
 	private JButton hit = new JButton("hit");
-	private JButton check = new JButton("Check");
 	private JButton stand = new JButton("stand");
-	private JButton raise = new JButton("Raise");
 	private JButton tip = new JButton("Tip Mr. G");
 
 	public boolean userTip = false;
@@ -142,7 +138,6 @@ public class BlackDisplay {
 
 	public BlackDisplay(BlackGame game) {
 		this.game = game;
-		tableCards = new ArrayList<BufferedImage>();
 
 		// Prompt For User Name
 		String[] options = { "OK" };
@@ -151,7 +146,7 @@ public class BlackDisplay {
 		JTextField txt = new JTextField(10);
 		panel.add(lbl);
 		panel.add(txt);
-		int selectedOption = JOptionPane.showOptionDialog(null, panel, "Welcome to Texas Hold'em",
+		int selectedOption = JOptionPane.showOptionDialog(null, panel, "Welcome to Black Jack",
 				JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 		if (selectedOption == 0) {
 			if (!txt.getText().trim().equals(""))
@@ -306,19 +301,7 @@ public class BlackDisplay {
 			g.fillRoundRect(FRAME_WIDTH / 2 - 70, FRAME_HEIGHT / 2 + CARD_WIDTH - 55, 140, 20, 15, 15);
 			g.setColor(new Color(246, 246, 246));
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
-			
-			//TODO: add pot size 
-			/*
-			String potSize = "POT: " + game.getRound().getPot() + " Pts";
-			int potSizeWidth = g.getFontMetrics().stringWidth(potSize);
-			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 40);
-		*/
 		}
-
-		
-		
-
-		
 
 		// Add Bets
 		public void addBets(Graphics g) {
@@ -328,9 +311,7 @@ public class BlackDisplay {
 		// Add Chips
 		public void addChips(Graphics g) {
 			int chipsWidth = chips5k.getWidth();
-			int chipsHeight = chips5k.getHeight();
-		
-			
+			int chipsHeight = chips5k.getHeight();			
 		}
 
 		public void paintComponent(Graphics g) {
@@ -342,8 +323,6 @@ public class BlackDisplay {
 			// Draw Background
 			drawBackground(g);
 			drawButtonBackground(g);
-
-			
 			
 			// Draw Cards
 			drawUserCards(g);
@@ -374,7 +353,7 @@ public class BlackDisplay {
 	}
 
 	public BufferedImage calculateChips(BlackPlayer p) {
-		
+		return null;
 	}
 
 	// Adds Buttons To JFrame
@@ -382,30 +361,23 @@ public class BlackDisplay {
 
 		private static final long serialVersionUID = 1L;
 
-		private final int BUTTON_WIDTH = FRAME_WIDTH / 4;
+		private final int BUTTON_WIDTH = FRAME_WIDTH / 2;
 		private final int BUTTON_HEIGHT = 50;
 
 		public ActionsDisplayPanel() {
 			hit.addActionListener(new ButtonListener());
-			check.addActionListener(new ButtonListener());
 			stand.addActionListener(new ButtonListener());
-			raise.addActionListener(new ButtonListener());
 			tip.addActionListener(new ButtonListener());
 
 			hit.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-			check.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			stand.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
-			raise.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			tip.setSize(2 * BUTTON_WIDTH / 3, BUTTON_HEIGHT / 2);
-
-			raise.setLocation((FRAME_WIDTH - BUTTON_WIDTH), 525);
-			stand.setLocation((FRAME_WIDTH - 2 * BUTTON_WIDTH), 525);
-			check.setLocation((FRAME_WIDTH - 3 * BUTTON_WIDTH), 525);
+			
+			stand.setLocation((FRAME_WIDTH / 2), 525);
 			hit.setLocation(0, 525);
-			tip.setLocation(373, 130);
+			tip.setLocation(FRAME_WIDTH/2, 100);
 
-			raise.setFont(buttonFont);
-			check.setFont(buttonFont);
+		
 			stand.setFont(buttonFont);
 			hit.setFont(buttonFont);
 			tip.setFont(buttonFont);
@@ -417,9 +389,7 @@ public class BlackDisplay {
 			tip.setForeground(Color.WHITE);
 
 			frame.add(hit);
-			frame.add(check);
 			frame.add(stand);
-			frame.add(raise);
 			frame.add(tip);
 		}
 
@@ -429,7 +399,7 @@ public class BlackDisplay {
 	public class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == hit) {
-
+				game.getRound().getPlayer().hit();
 			} else if (evt.getSource() == stand) {
 
 			}
