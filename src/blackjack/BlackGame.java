@@ -23,7 +23,7 @@ public class BlackGame {
 			
 			System.out.println("Your cards: "+round.getPlayer().getHand());
 			
-			System.out.println("The computer's cards"+round.getComputer().getHand().getCards().get(0));
+			System.out.println("The computer's cards "+round.getComputer().getHand().getCards().get(0));
 			System.out.println("Would you like to hit? y/n");
 			sc.nextLine();
 			String hit=sc.nextLine();
