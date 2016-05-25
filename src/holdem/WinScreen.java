@@ -6,8 +6,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,20 +20,26 @@ public class WinScreen {
 	private JButton exit = new JButton("Exit");
 	private drawWinPanel dwp;
 	private JFrame frame;
+	private BufferedImage iconImage;
 
 	public static void main(String args[]) {
 		new WinScreen();
 	}
 
 	public WinScreen() {
+		try {
+			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokerIcon.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		frame = new JFrame();
 		frame.setTitle("You Win!!!");
 		frame.setSize(900, 600);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		dwp = new drawWinPanel();
-		frame.setBackground(Color.black);
 		frame.add(dwp);
+		frame.setIconImage(iconImage);		
 		frame.setVisible(true);
 	}
 
