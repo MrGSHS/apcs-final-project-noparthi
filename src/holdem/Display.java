@@ -798,6 +798,18 @@ public class Display {
 			}
 			// Button Removal
 			buttonRemoval(g);
+			
+			//Win Screen
+			if(game.getActionsOrder().size() == 1 && game.getActionsOrder().get(0)==game.getUser()){
+				new WinScreen();
+				frame.dispose();
+			}
+			
+			//Lose Screen
+			if(game.getActionsOrder().size() == 1 && game.getActionsOrder().get(0)!=game.getUser()){
+				new LoseScreen();
+				frame.dispose();
+			}
 		}
 	}
 
