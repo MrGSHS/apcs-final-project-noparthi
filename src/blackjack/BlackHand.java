@@ -16,6 +16,15 @@ public class BlackHand {
 		return hand1;
 		
 	}
+	
+	public int sumOfCards(){
+		int tot = 0;
+		for(Card card : hand1)
+		{
+			tot += card.getNumber();
+		}
+		return tot;
+	}
 	public ArrayList<Card> addCard(){
 		hand1.add(deck1.deal());
 		return hand1;

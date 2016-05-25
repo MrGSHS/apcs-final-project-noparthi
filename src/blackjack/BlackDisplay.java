@@ -4,20 +4,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Set;
+import java.util.Collections;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -75,7 +68,6 @@ public class BlackDisplay {
 	};
 	private String USERNAME;
 	private String COMP1NAME;
-	
 
 	private ArrayList<BufferedImage> LABELS = new ArrayList<BufferedImage>() {
 		private static final long serialVersionUID = 1L;
@@ -94,7 +86,6 @@ public class BlackDisplay {
 	};
 	private BufferedImage userLabel = LABELS.remove((int) (Math.random() * LABELS.size()));
 	private BufferedImage computer1Label = LABELS.remove((int) (Math.random() * LABELS.size()));
-	
 
 	private final int CARD_WIDTH = 55;
 	private final int CARD_HEIGHT = 80;
@@ -134,11 +125,11 @@ public class BlackDisplay {
 	public boolean userTip = false;
 	private int extraCreditPoints = 1;
 	private int counter = 0;
-	private ArrayList<Card> cardsOnTable;
+	private ArrayList<BufferedImage> cardsInHand = new ArrayList<>();
+	private ArrayList<BufferedImage> computerCards = new ArrayList<>();
 
 	public BlackDisplay(BlackGame game) {
 		this.game = game;
-
 		// Prompt For User Name
 		String[] options = { "OK" };
 		JPanel panel = new JPanel();
@@ -146,8 +137,8 @@ public class BlackDisplay {
 		JTextField txt = new JTextField(10);
 		panel.add(lbl);
 		panel.add(txt);
-		int selectedOption = JOptionPane.showOptionDialog(null, panel, "Welcome to Black Jack",
-				JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+		int selectedOption = JOptionPane.showOptionDialog(null, panel, "Welcome to Black Jack", JOptionPane.NO_OPTION,
+				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 		if (selectedOption == 0) {
 			if (!txt.getText().trim().equals(""))
 				USERNAME = txt.getText();
@@ -164,10 +155,6 @@ public class BlackDisplay {
 
 		// Set Computer Names
 		COMP1NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
-
-		// Remind User that ESC opens hand chart
-		JOptionPane.showConfirmDialog(null, "Press ESC Anytime To Bring Up The Hand Chart", "Reminder",
-				JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
 
 		try {
 			dealer = ImageIO.read(getClass().getResourceAsStream("/other/dealer-face.png"));
@@ -198,6 +185,25 @@ public class BlackDisplay {
 		frame.add(actionsPanel);
 		frame.add(tablePanel);
 		frame.setVisible(true);
+
+		
+		panel = new JPanel();
+		lbl = new JLabel("Enter initial bet: ");
+		txt = new JTextField(10);
+		panel.add(lbl);
+		panel.add(txt);
+		selectedOption = JOptionPane.showOptionDialog(null, panel, "Round", JOptionPane.NO_OPTION,
+				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+		if (selectedOption == 0) {
+			if (!txt.getText().trim().equals("")) {
+				Integer r1;
+				r1 = Integer.parseInt(txt.getText());
+				game.getUser().setBalance(r1);
+			} else
+				USERNAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+		} else {
+			System.exit(0);
+		}
 		// WinScreen();
 	}
 
@@ -243,23 +249,23 @@ public class BlackDisplay {
 			g.drawString("Raise", 3 * FRAME_WIDTH / 4 + FRAME_WIDTH / 10, 555);
 		}
 
-		
-	
-
 		// Draw User Cards
 		public void drawUserCards(Graphics g) {
-
+			for (int i = 0; i < cardsInHand.size(); i++) {
+				g.drawImage(cardsInHand.get(i), 277 + (CARD_WIDTH + 15) * i, 350, CARD_WIDTH, CARD_HEIGHT, null);
+			}
 		}
 
 		// Draw Computer Cards
 		public void drawComputerCards(Graphics g) {
-			
+			for (int i = 0; i < computerCards.size(); i++) {
+				if (i == 0)
+					g.drawImage(computerCards.get(i), 277 + (CARD_WIDTH + 15) * i, 100, CARD_WIDTH, CARD_HEIGHT, null);
+				else {
+					g.drawImage(cardBack, 277 + (CARD_WIDTH + 15) * i, 100, CARD_WIDTH, CARD_HEIGHT, null);
+				}
+			}
 		}
-
-		
-		
-
-	
 
 		// Draw User Label
 		public void drawUserLabel(Graphics g) {
@@ -270,25 +276,23 @@ public class BlackDisplay {
 		// Draw Computer Labels
 		public void drawComputerLabels(Graphics g) {
 			g.drawImage(computer1Label, 100, 100, null);
-			
 		}
 
-		
 		// Add Player Names
 		public void addPlayerName(Graphics g) {
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
 			g.setColor(Color.BLACK);
-			//TODO: add name
+			// TODO: add name
 		}
 
 		// Add Computer Names
 		public void addComputerNames(Graphics g) {
-			
+
 		}
 
 		// Add Player Points
 		public void addPlayerPoints(Graphics g) {
-			
+
 		}
 
 		// Add Computer Points
@@ -305,13 +309,13 @@ public class BlackDisplay {
 
 		// Add Bets
 		public void addBets(Graphics g) {
-			
+
 		}
 
 		// Add Chips
 		public void addChips(Graphics g) {
 			int chipsWidth = chips5k.getWidth();
-			int chipsHeight = chips5k.getHeight();			
+			int chipsHeight = chips5k.getHeight();
 		}
 
 		public void paintComponent(Graphics g) {
@@ -323,14 +327,15 @@ public class BlackDisplay {
 			// Draw Background
 			drawBackground(g);
 			drawButtonBackground(g);
-			
+
 			// Draw Cards
-			drawUserCards(g);
+			if (cardsInHand.size() > 0)
+				drawUserCards(g);
 			drawComputerCards(g);
 
-			// Draw Labels		
+			// Draw Labels
 			drawUserLabel(g);
-			drawComputerLabels(g);			
+			drawComputerLabels(g);
 
 			// Add Names To Labels
 			addPlayerName(g);
@@ -350,6 +355,7 @@ public class BlackDisplay {
 			addChips(g);
 
 		}
+
 	}
 
 	public BufferedImage calculateChips(BlackPlayer p) {
@@ -372,12 +378,11 @@ public class BlackDisplay {
 			hit.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			stand.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 			tip.setSize(2 * BUTTON_WIDTH / 3, BUTTON_HEIGHT / 2);
-			
+
 			stand.setLocation((FRAME_WIDTH / 2), 525);
 			hit.setLocation(0, 525);
-			tip.setLocation(FRAME_WIDTH/2, 100);
+			tip.setLocation(FRAME_WIDTH / 2, 100);
 
-		
 			stand.setFont(buttonFont);
 			hit.setFont(buttonFont);
 			tip.setFont(buttonFont);
@@ -399,11 +404,38 @@ public class BlackDisplay {
 	public class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == hit) {
-				game.getRound().getPlayer().hit();
+				game.getUser().hit();
 			} else if (evt.getSource() == stand) {
-
+				game.getUser().setStand(true);
 			}
 		}
+	}
+	
+	private void showPrompt(){
+		String[] options = { "OK" };
+		JPanel panel = new JPanel();
+		JLabel lbl = new JLabel("Enter initial bet: ");
+		JTextField txt = new JTextField(10);
+		panel.add(lbl);
+		panel.add(txt);
+		int selectedOption = JOptionPane.showOptionDialog(null, panel, "Round", JOptionPane.NO_OPTION,
+				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+		if (selectedOption == 0) {
+			if (!txt.getText().trim().equals("")) {
+				Integer r1;
+				r1 = Integer.parseInt(txt.getText());
+				game.getUser().setBalance(r1);
+			} else
+				USERNAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+		} else {
+			System.exit(0);
+		}
+	}
+	public void restart(boolean won) {
+		cardsInHand = new ArrayList<BufferedImage>();
+		computerCards = new ArrayList<BufferedImage>();
+		update();
+		showPrompt();
 	}
 
 	public void update() {
@@ -416,6 +448,31 @@ public class BlackDisplay {
 	}
 
 	private void reloadImages() {
+		ArrayList<Card> cardHand = new ArrayList<Card>(game.getUser().getHand().getCards());
+		Collections.copy(cardHand, game.getUser().getHand().getCards());
+
+		ArrayList<Card> tempComputerHand = new ArrayList<Card>(game.getComputer().getHand().getCards());
+		Collections.copy(tempComputerHand, game.getComputer().getHand().getCards());
+
+		cardsInHand = new ArrayList<BufferedImage>();
+		computerCards = new ArrayList<BufferedImage>();
+
+		for (Card card : cardHand) {
+			String url = "/cards/" + card.getNumber() + "_of_" + card.getSuiteValue() + ".jpg";
+			try {
+				cardsInHand.add(ImageIO.read(getClass().getResourceAsStream(url)));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		for (Card card : tempComputerHand) {
+			String url = "/cards/" + card.getNumber() + "_of_" + card.getSuiteValue() + ".jpg";
+			try {
+				computerCards.add(ImageIO.read(getClass().getResourceAsStream(url)));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 	}
 
