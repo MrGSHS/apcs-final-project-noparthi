@@ -37,13 +37,15 @@ public class WinScreen {
 	private class drawWinPanel extends JPanel implements ActionListener {
 		private static final long serialVersionUID = 1L;
 		private ArrayList<Confetti> confettiList = new ArrayList<>();
-		private ArrayList<Integer> removeIndex;
+		private ArrayList<Confetti> removeList;
 
 		public drawWinPanel() {
+			//Adds In Confetti
 			for (int i = 1; i <= 150; i++) {
 				confettiList.add(new Confetti((int) (Math.random() * 900), (int) (Math.random() * 901),
 						(int) (Math.random() * 11 + 5)));
 			}
+			
 			// Adds Button
 			setLayout(null);
 			exit.addActionListener(this);
@@ -56,7 +58,7 @@ public class WinScreen {
 			newGame.setFont(new Font("SansSerif", Font.PLAIN, 12));
 
 			exit.setBounds(25, 500, 255, 50);
-			newGame.setBounds(625, 500, 225, 50);
+			newGame.setBounds(635, 500, 225, 50);
 			add(newGame);
 			add(exit);
 		}
@@ -75,17 +77,19 @@ public class WinScreen {
 			super.paintComponent(g);
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, 900, 600);
-			removeIndex = new ArrayList<>();
-			for (int i = 0; i < confettiList.size(); i++) {
-				g.setColor(confettiList.get(i).getColor());
-				g.fillOval(confettiList.get(i).getX(), confettiList.get(i).getY(), confettiList.get(i).getDiameter(),
-						confettiList.get(i).getDiameter());
-				confettiList.get(i).setY(confettiList.get(i).getY() + 1);
-				if (confettiList.get(i).getY() > 850) {
-					removeIndex.add(i);
+			removeList = new ArrayList<>();
+			//Draws Confetti
+			for (Confetti confetti : confettiList) {
+				g.setColor(confetti.getColor());
+				g.fillOval(confetti.getX(), confetti.getY(), confetti.getDiameter(),
+						confetti.getDiameter());
+				confetti.setY(confetti.getY() + 1);
+				if (confetti.getY() > 850) {
+					removeList.add(confetti);
 				}
 			}
-			for (int remove : removeIndex) {
+			//Removes Confetti And Adds In New Ones
+			for (Confetti remove : removeList) {
 				confettiList.remove(remove);
 				confettiList.add(new Confetti((int) (Math.random() * 900), (int) (Math.random() * 250),
 						(int) (Math.random() * 11 + 5)));

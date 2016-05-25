@@ -38,12 +38,16 @@ public class Raindrop {
 		return delete;
 	}
 
+	public Color getWhiteShade(){
+		return whiteShade;
+	}
+	
 	public void setX1Y1(int x1, int y1) {
 		this.x1= x1;
 		this.y1 = y1;
 	}
 
-	public void sety1(int x2, int y2){
+	public void setX2Y2(int x2, int y2){
 		this.x2 = x2;
 		this.y2 = y2;
 	}
