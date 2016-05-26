@@ -148,6 +148,7 @@ public class Display {
 	private int counter = 0;
 	private ArrayList<Card> cardsOnTable;
 
+	@SuppressWarnings("static-access")
 	public Display(HoldemGame game) {
 		this.game = game;
 		tableCards = new ArrayList<BufferedImage>();
@@ -205,16 +206,16 @@ public class Display {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//Add Music
+		// Add Music
 		try {
-	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("displayMusic.wav").getAbsoluteFile());
-	        Clip clip = AudioSystem.getClip();
-	        clip.open(audioInputStream);
-	        clip.loop(0);
-	    } catch(Exception ex) {
-	        System.out.println("Error with playing sound.");
-	        ex.printStackTrace();
-	    }
+			AudioInputStream audioInputStream = AudioSystem
+					.getAudioInputStream(new File("dubstepMusic.wav").getAbsoluteFile());
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.loop(clip.LOOP_CONTINUOUSLY);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 
 		// Main Frame
 		frame = new JFrame();
@@ -729,7 +730,8 @@ public class Display {
 
 			g.setColor(Color.BLACK);
 
-			g.drawString(payoutString, ((FRAME_WIDTH / 2 - strWidth - 15) + (FRAME_WIDTH/2 + 15)) / 2 - strWidth/2, 20);
+			g.drawString(payoutString, ((FRAME_WIDTH / 2 - strWidth - 15) + (FRAME_WIDTH / 2 + 15)) / 2 - strWidth / 2,
+					20);
 		}
 
 		// Actual Button Removal
@@ -812,15 +814,15 @@ public class Display {
 			}
 			// Button Removal
 			buttonRemoval(g);
-			
-			//Win Screen
-			if(game.getActionsOrder().size() == 1 && game.getActionsOrder().get(0)==game.getUser()){
+
+			// Win Screen
+			if (game.getActionsOrder().size() == 1 && game.getActionsOrder().get(0) == game.getUser()) {
 				new WinScreen();
 				frame.dispose();
 			}
-			
-			//Lose Screen
-			if(game.getActionsOrder().size() == 1 && game.getActionsOrder().get(0)!=game.getUser()){
+
+			// Lose Screen
+			if (game.getActionsOrder().size() == 1 && game.getActionsOrder().get(0) != game.getUser()) {
 				new LoseScreen();
 				frame.dispose();
 			}

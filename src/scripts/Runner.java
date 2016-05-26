@@ -9,11 +9,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -66,14 +70,25 @@ public class Runner {
 			private static final long serialVersionUID = 1L;
 
 			public ChooserPanel() {
+				// Add Music
+				try {
+					AudioInputStream audioInputStream = AudioSystem
+							.getAudioInputStream(new File("mysteriousIntroMusic.wav").getAbsoluteFile());
+					Clip clip = AudioSystem.getClip();
+					clip.open(audioInputStream);
+					clip.start();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				//Images
 				URL imgURL = getClass().getResource("/menu/blackjack.jpg");
 				Icon blackJackIcon = new ImageIcon(imgURL);
 
 				imgURL = getClass().getResource("/menu/holdem.jpg");
 				Icon pokerIcon = new ImageIcon(imgURL);
 
+				//BJack Button
 				ToolTipManager.sharedInstance().setInitialDelay(1000);
-
 				blackJackBtn = new JButton(blackJackIcon);
 				blackJackBtn.setSize(blackJackIcon.getIconWidth(), blackJackIcon.getIconHeight());
 				blackJackBtn.setLocation(25, 100);
@@ -103,7 +118,6 @@ public class Runner {
 						mouseOverBlackJack = false;
 						frame.repaint();
 					}
-
 				});
 				blackJackBtn.addActionListener(new ActionListener() {
 					@Override
@@ -113,6 +127,7 @@ public class Runner {
 					}
 				});
 
+				//Hold'em Button
 				holdemBtn = new JButton(pokerIcon);
 				holdemBtn.setSize(pokerIcon.getIconWidth(), pokerIcon.getIconHeight());
 				holdemBtn.setLocation(475, 100);
@@ -160,6 +175,7 @@ public class Runner {
 						frame.repaint();
 					}
 				});
+				//Adding To Frame
 				frame.add(blackJackBtn);
 				frame.add(holdemBtn);
 			}

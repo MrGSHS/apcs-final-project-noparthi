@@ -30,23 +30,25 @@ public class WinScreen {
 		new WinScreen();
 	}
 
+	@SuppressWarnings("static-access")
 	public WinScreen() {
-		//Rain Sound
+		// Rain Sound
 		try {
-	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("rainSound.wav").getAbsoluteFile());
-	        Clip clip = AudioSystem.getClip();
-	        clip.open(audioInputStream);
-	        clip.loop(0);
-	    } catch(Exception ex) {
-	        ex.printStackTrace();
-	    }
-		//Icon Image
+			AudioInputStream audioInputStream = AudioSystem
+					.getAudioInputStream(new File("trumpetsMusic.wav").getAbsoluteFile());
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.loop(clip.LOOP_CONTINUOUSLY);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		// Icon Image
 		try {
 			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokerIcon.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//New Frame
+		// New Frame
 		frame = new JFrame();
 		frame.setTitle("You Win!!!");
 		frame.setSize(900, 600);
@@ -54,7 +56,7 @@ public class WinScreen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		dwp = new drawWinPanel();
 		frame.add(dwp);
-		frame.setIconImage(iconImage);		
+		frame.setIconImage(iconImage);
 		frame.setVisible(true);
 	}
 
@@ -64,12 +66,12 @@ public class WinScreen {
 		private ArrayList<Confetti> removeList;
 
 		public drawWinPanel() {
-			//Adds In Confetti
+			// Adds In Confetti
 			for (int i = 1; i <= 150; i++) {
 				confettiList.add(new Confetti((int) (Math.random() * 900), (int) (Math.random() * 901),
 						(int) (Math.random() * 11 + 5)));
 			}
-			
+
 			// Adds Button
 			setLayout(null);
 			exit.addActionListener(this);
@@ -86,7 +88,7 @@ public class WinScreen {
 			add(newGame);
 			add(exit);
 		}
-		
+
 		public void actionPerformed(ActionEvent evt) {
 			if (evt.getSource() == newGame) {
 				frame.dispose();
@@ -102,17 +104,16 @@ public class WinScreen {
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, 900, 600);
 			removeList = new ArrayList<>();
-			//Draws Confetti
+			// Draws Confetti
 			for (Confetti confetti : confettiList) {
 				g.setColor(confetti.getColor());
-				g.fillOval(confetti.getX(), confetti.getY(), confetti.getDiameter(),
-						confetti.getDiameter());
+				g.fillOval(confetti.getX(), confetti.getY(), confetti.getDiameter(), confetti.getDiameter());
 				confetti.setY(confetti.getY() + 1);
 				if (confetti.getY() > 850) {
 					removeList.add(confetti);
 				}
 			}
-			//Removes Confetti And Adds In New Ones
+			// Removes Confetti And Adds In New Ones
 			for (Confetti remove : removeList) {
 				confettiList.remove(remove);
 				confettiList.add(new Confetti((int) (Math.random() * 900), (int) (Math.random() * 250),

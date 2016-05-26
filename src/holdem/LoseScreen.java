@@ -30,6 +30,7 @@ public class LoseScreen {
 		new LoseScreen();
 	}
 
+	@SuppressWarnings("static-access")
 	public LoseScreen() {
 		// Rain Sound
 		try {
@@ -37,7 +38,7 @@ public class LoseScreen {
 					.getAudioInputStream(new File("rainSound.wav").getAbsoluteFile());
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
-			clip.loop(0);
+			clip.loop(clip.LOOP_CONTINUOUSLY);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

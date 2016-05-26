@@ -8,9 +8,13 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
@@ -42,6 +46,17 @@ public class Initializer extends JFrame implements ActionListener {
 	}
 
 	public Initializer() {
+		// Add Music
+		try {
+			AudioInputStream audioInputStream = AudioSystem
+					.getAudioInputStream(new File("mysteriousIntroMusic.wav").getAbsoluteFile());
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
 		// Read Images
 		try {
 			logo = ImageIO.read(imgURL);
