@@ -108,14 +108,6 @@ public class BlackDisplay {
 	private BufferedImage iconImage;
 
 	private BufferedImage cardBack;
-	private BufferedImage card1;
-	private BufferedImage card2;
-	private BufferedImage chips1k;
-	private BufferedImage chips5k;
-	private BufferedImage chips10k;
-	private BufferedImage chips25k;
-	private BufferedImage chips50k;
-
 	private BlackGame game;
 
 	private JButton hit = new JButton("hit");
@@ -161,12 +153,6 @@ public class BlackDisplay {
 			table = ImageIO.read(getClass().getResourceAsStream("/other/poker-table.png"));
 			theme = ImageIO.read(getClass().getResourceAsStream("/themes/red-gradient.jpg"));
 			cardBack = ImageIO.read(getClass().getResourceAsStream("/other/card-back.png"));
-
-			chips1k = ImageIO.read(getClass().getResourceAsStream("/chips/1k.png"));
-			chips5k = ImageIO.read(getClass().getResourceAsStream("/chips/5k.png"));
-			chips10k = ImageIO.read(getClass().getResourceAsStream("/chips/10k.png"));
-			chips25k = ImageIO.read(getClass().getResourceAsStream("/chips/25k.png"));
-			chips50k = ImageIO.read(getClass().getResourceAsStream("/chips/50k.png"));
 			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokerIcon.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -309,12 +295,6 @@ public class BlackDisplay {
 			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 40);
 		}
 
-		// Add Chips
-		public void addChips(Graphics g) {
-			int chipsWidth = chips5k.getWidth();
-			int chipsHeight = chips5k.getHeight();
-		}
-
 		public void paintComponent(Graphics g) {
 			// Initialize Stuff
 			g.setFont(new Font("Calibri", Font.BOLD, 20));
@@ -344,9 +324,6 @@ public class BlackDisplay {
 
 			// Add Pot
 			addPot(g);
-
-			// Add chips
-			addChips(g);
 
 			drawWinBar(g);
 		}
