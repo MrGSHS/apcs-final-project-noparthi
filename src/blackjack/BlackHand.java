@@ -2,6 +2,17 @@ package blackjack;
 import scripts.Card;
 import scripts.Deck;
 import java.util.*;
+
+/**
+* This class contains info stored in a 
+* black jack hand.
+* 
+* @author  Deepak Moparthi, Wilson Zhu
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class BlackHand {
 	private static Deck deck1=new Deck();
 	private ArrayList<Card> hand1;

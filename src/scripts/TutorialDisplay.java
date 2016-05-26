@@ -16,6 +16,15 @@ import javax.swing.JPanel;
 
 import holdem.HoldemGame;
 
+/**
+* This class starts a slide show 
+* with the tutorial for POKER.
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
 public class TutorialDisplay {
 	
 	ArrayList<BufferedImage> loadedImages = new ArrayList<>();

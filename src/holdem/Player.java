@@ -2,6 +2,15 @@ package holdem;
 
 import scripts.Card;
 
+/**
+* This player class contains actions 
+* and variables that any player uses.
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
 public class Player {
 
 	private HoldemGame game;

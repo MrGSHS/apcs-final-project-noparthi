@@ -7,6 +7,16 @@ import java.util.Set;
 
 import scripts.Card;
 
+/**
+* This class contains all the methods
+* in a hand
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class Hand {
 
 	private HoldemGame game;

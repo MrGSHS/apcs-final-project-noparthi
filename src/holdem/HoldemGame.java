@@ -3,6 +3,16 @@ package holdem;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+* The HoldemGame class contains functions
+* needed to run the POKER part of the project. 
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class HoldemGame {
 
 	private Display display;

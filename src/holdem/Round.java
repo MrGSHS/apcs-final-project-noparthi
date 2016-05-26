@@ -2,6 +2,16 @@ package holdem;
 
 import java.util.Collections;
 
+/**
+* This class contains the structure
+* for how every round of poker should go.
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class Round {
 
 	private static int roundNumber = 0;

@@ -9,6 +9,16 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+/**
+* This class creates frame which has
+* the poker hand rankings.
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class HelpDisplay extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private BufferedImage chart;

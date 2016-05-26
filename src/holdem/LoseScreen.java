@@ -19,6 +19,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+/**
+* This class initializes the 
+* lose screen.
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class LoseScreen {
 	private JFrame frame;
 	private drawLosePanel dwp;

@@ -34,6 +34,16 @@ import javax.swing.SwingUtilities;
 
 import scripts.Card;
 
+/**
+* This display class contains all the display
+* information and functions needed for POKER. 
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class Display {
 
 	private ArrayList<String> NAMES = new ArrayList<String>() {

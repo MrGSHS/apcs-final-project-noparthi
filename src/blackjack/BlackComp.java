@@ -1,5 +1,15 @@
 package blackjack;
 
+/**
+* Extension of BlackPlayer with logic
+* for computers. 
+* 
+* @author  Deepak Moparthi, Wilson Zhu
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class BlackComp extends BlackPlayer {
 	
 	public boolean takeAction() {

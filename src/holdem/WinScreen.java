@@ -18,6 +18,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.io.*;
+/**
+* This class initializes the win screen
+* in which confetti falls in a black background.
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
 
 public class WinScreen {
 	private JButton newGame = new JButton("Start A New Game");

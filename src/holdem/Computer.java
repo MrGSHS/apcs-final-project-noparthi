@@ -1,5 +1,15 @@
 package holdem;
 
+/**
+* This class contains logic for 
+* computers to make decisions.
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class Computer extends Player {
 	private HoldemGame game;
 	private int currentHandStrength;

@@ -5,6 +5,16 @@ import java.util.ArrayList;
 import scripts.Card;
 import scripts.Deck;
 
+/**
+* This class contains info for a table
+* in poker. 
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class Table {
 
 	private ArrayList<Card> cardsOnTable;

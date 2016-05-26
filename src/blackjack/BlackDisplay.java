@@ -23,6 +23,16 @@ import javax.swing.SwingUtilities;
 
 import scripts.Card;
 
+/**
+* This class initializes a display to 
+* contain the blackjack game. 
+* 
+* @author  Deepak Moparthi, Wilson Zhu
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class BlackDisplay {
 
 	private ArrayList<String> NAMES = new ArrayList<String>() {

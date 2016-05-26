@@ -1,5 +1,14 @@
 package scripts;
 
+/**
+* The card file holds information about each card
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class Card {
 
 	private Integer number;

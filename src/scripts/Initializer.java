@@ -18,6 +18,15 @@ import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
+/**
+* This class fades the intro logos and 
+* loads in the music
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
 public class Initializer extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private BufferedImage logo;

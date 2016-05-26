@@ -3,6 +3,16 @@ package scripts;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+* This class contains information for 
+* a Deck of cards.
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class Deck {
 
 	private ArrayList<Card> deck = new ArrayList<>();

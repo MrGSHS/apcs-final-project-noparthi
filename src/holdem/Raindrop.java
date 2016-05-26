@@ -2,6 +2,14 @@ package holdem;
 
 import java.awt.Color;
 
+/**
+* This class is used by the losescreen.java file
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
 public class Raindrop {
 	private int x1;
 	private int y1;

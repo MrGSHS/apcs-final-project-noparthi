@@ -30,6 +30,15 @@ import javax.swing.ToolTipManager;
 import blackjack.BlackGame;
 import holdem.HoldemGame;
 
+/**
+* This program allows you to play poker against 
+* other computer players. 
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
 public class Runner {
 
 	private ArrayList<BufferedImage> images = new ArrayList<>();

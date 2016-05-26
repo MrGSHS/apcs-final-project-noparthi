@@ -1,5 +1,15 @@
 package blackjack;
 
+/**
+* This class contains info for typical
+* blackjack player
+* 
+* @author  Deepak Moparthi, Wilson Zhu
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class BlackPlayer {
 	private BlackHand hand;
 	private int bet;

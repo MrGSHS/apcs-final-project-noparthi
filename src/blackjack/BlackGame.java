@@ -1,5 +1,15 @@
 package blackjack;
 
+/**
+* This class contains the structure for 
+* BlackGame
+* 
+* @author  Deepak Moparthi, Wilson Zhu
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class BlackGame {
 	private BlackDisplay display;
 	private BlackPlayer user = new BlackPlayer();

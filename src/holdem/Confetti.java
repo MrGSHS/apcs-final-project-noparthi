@@ -2,6 +2,17 @@ package holdem;
 
 import java.awt.Color;
 
+/**
+* This program contains methods and 
+* variables needed for confetti in
+* winscreen.java.
+* 
+* @author  Jerry Zhou, Jonathan Xue
+* @version 1.0
+* @since   2016-5-26
+*/
+
+
 public class Confetti {
 	private Color randColor;
 	private int x;
