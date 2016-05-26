@@ -23,6 +23,10 @@ public class Deck {
 	public Card deal() {
 		return deck.remove(0);
 	}
+	
+	public ArrayList<Card> getDeck(){
+		return deck;
+	}
 
 	// Creates A Deck Of 52 Different Cards And Shuffles It
 	public ArrayList<Card> make() {
