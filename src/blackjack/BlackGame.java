@@ -1,12 +1,7 @@
 package blackjack;
 
-import java.util.*;
-import scripts.Card;
-
 public class BlackGame {
 	private BlackDisplay display;
-	private BlackRound round;
-	private String cont = "y";
 	private BlackPlayer user = new BlackPlayer();
 	private BlackPlayer computer = new BlackComp();
 	private boolean payout = false;
@@ -15,10 +10,6 @@ public class BlackGame {
 	public void setPayout(boolean b){ payout = b;}
 	
 	public boolean getPayout(){return payout;}
-	public BlackRound getRound() {
-		return round;
-		
-	}
 
 	public BlackPlayer getUser() {
 		return user;
