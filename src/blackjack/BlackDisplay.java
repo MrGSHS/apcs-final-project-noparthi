@@ -263,7 +263,7 @@ public class BlackDisplay {
 		public void addPlayerPoints(Graphics g) {
 			g.setFont(new Font("Calibri", Font.PLAIN, 20));
 			g.setColor(new Color(5, 145, 60));
-			g.drawString(game.getUser().getBalance() + " Pts", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 30,
+			g.drawString(game.getUser().getBalance() + " Pts", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 60,
 					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 50);
 		}
 
