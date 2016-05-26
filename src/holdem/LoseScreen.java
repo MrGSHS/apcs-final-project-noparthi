@@ -109,7 +109,7 @@ public class LoseScreen {
 			}
 
 			// Lightning
-			if ((int) (Math.random() * 101) == 0) {
+			if ((int) (Math.random() * 151) == 0) {
 				g.setColor(Color.WHITE);
 				g.fillRect(0, 0, 900, 600);
 			}

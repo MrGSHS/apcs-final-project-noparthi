@@ -925,9 +925,9 @@ public class Display {
 
 	public void update() {
 		cardsOnTable = game.getTable().getCardsOnTable();
-		reloadImages();
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				reloadImages();
 				frame.repaint();
 			}
 		});

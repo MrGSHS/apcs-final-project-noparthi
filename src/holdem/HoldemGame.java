@@ -165,6 +165,26 @@ public class HoldemGame {
 				if (checkRaise) {
 					run();
 				}
+				//If MaxBet Doesn't Equal All Of The Bets, Run Another Rotation
+				int highestBetAmount = 0;
+				int totalActive = 0;
+				for (Player p : getActionsOrder()) {
+					if(!p.isFolded()){
+						if (p.getBetAmount() > highestBetAmount) {
+							highestBetAmount = p.getBetAmount();
+						}
+					}
+				}
+				for (Player p : getActionsOrder()) {
+					if (!p.isFolded()) {
+						totalActive++;
+						if (p.getBetAmount() == highestBetAmount)
+							totalActive--;
+					}
+				}
+				if(totalActive!=0){
+					run();
+				}
 			}
 		}).start();
 	}
