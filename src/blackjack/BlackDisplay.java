@@ -186,7 +186,6 @@ public class BlackDisplay {
 		frame.add(tablePanel);
 		frame.setVisible(true);
 
-		
 		panel = new JPanel();
 		lbl = new JLabel("Enter initial bet: (default is 100) ");
 		txt = new JTextField(10);
@@ -309,12 +308,6 @@ public class BlackDisplay {
 			int potSizeWidth = g.getFontMetrics().stringWidth(potSize);
 			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 40);
 		}
-	
-
-		// Add Bets
-		public void addBets(Graphics g) {
-
-		}
 
 		// Add Chips
 		public void addChips(Graphics g) {
@@ -339,7 +332,7 @@ public class BlackDisplay {
 
 			// Draw Labels
 			drawUserLabel(g);
-			drawComputerLabels(g);
+			// drawComputerLabels(g);
 
 			// Add Names To Labels
 			addPlayerName(g);
@@ -352,14 +345,28 @@ public class BlackDisplay {
 			// Add Pot
 			addPot(g);
 
-			// Add User + Computer's Bet
-			addBets(g);
-
 			// Add chips
 			addChips(g);
 
+			drawWinBar(g);
 		}
 
+	}
+
+	public void drawWinBar(Graphics g) {
+		if (game.getPayout()) {
+			try {
+				g.drawImage(ImageIO.read(getClass().getResourceAsStream("/other/bj-win.png")), 0, 525, null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (game.getPayout()) {
+			actionsPanel.removeButtons();
+		} else {
+			actionsPanel.addButtons();
+		}
 	}
 
 	public BufferedImage calculateChips(BlackPlayer p) {
@@ -402,6 +409,15 @@ public class BlackDisplay {
 			frame.add(tip);
 		}
 
+		public void removeButtons() {
+			hit.setVisible(false);
+			stand.setVisible(false);
+		}
+
+		public void addButtons() {
+			hit.setVisible(true);
+			stand.setVisible(true);
+		}
 	}
 
 	// Button Listeners
@@ -414,8 +430,8 @@ public class BlackDisplay {
 			}
 		}
 	}
-	
-	private void showPrompt(){
+
+	private void showPrompt() {
 		String[] options = { "OK" };
 		JPanel panel = new JPanel();
 		JLabel lbl = new JLabel("Enter initial bet: (default is 100)");
@@ -439,6 +455,7 @@ public class BlackDisplay {
 			game.start();
 		}
 	}
+
 	public void restart(boolean won) {
 		cardsInHand = new ArrayList<BufferedImage>();
 		computerCards = new ArrayList<BufferedImage>();

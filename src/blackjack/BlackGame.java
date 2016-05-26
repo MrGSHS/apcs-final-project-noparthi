@@ -9,7 +9,12 @@ public class BlackGame {
 	private String cont = "y";
 	private BlackPlayer user = new BlackPlayer();
 	private BlackPlayer computer = new BlackComp();
+	private boolean payout = false;
 	private int pot;
+	
+	public void setPayout(boolean b){ payout = b;}
+	
+	public boolean getPayout(){return payout;}
 	public BlackRound getRound() {
 		return round;
 		
@@ -59,6 +64,7 @@ public class BlackGame {
 					}
 					System.out.println("Computer total: " + computer.calc());
 					System.out.println("Player total: " + user.calc());
+					payout = true;
 					display.restart(false);
 				}
 			}

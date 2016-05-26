@@ -105,18 +105,8 @@ public class Runner {
 				blackJackBtn.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						int reply = JOptionPane.showConfirmDialog(null,
-								"Would you like to view a quick tutorial on the rules of Black Jack?",
-								"Black Jack Tutorial", JOptionPane.YES_NO_CANCEL_OPTION);
-						if (reply == JOptionPane.YES_OPTION) {
-							JOptionPane.showMessageDialog(null, "HELLO");
-						} else if (reply == JOptionPane.NO_OPTION) {
-							new BlackGame();
-							frame.dispose();
-						}
-						if(reply != JOptionPane.CANCEL_OPTION && reply != JOptionPane.CLOSED_OPTION){
-							frame.dispose();
-						}
+						new BlackGame();
+						frame.dispose();
 					}
 				});
 
