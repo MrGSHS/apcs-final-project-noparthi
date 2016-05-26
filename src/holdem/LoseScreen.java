@@ -7,10 +7,14 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,11 +31,23 @@ public class LoseScreen {
 	}
 
 	public LoseScreen() {
+		// Rain Sound
+		try {
+			AudioInputStream audioInputStream = AudioSystem
+					.getAudioInputStream(new File("rainSound.wav").getAbsoluteFile());
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.loop(0);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		// Icon Image
 		try {
 			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokerIcon.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		// New Frame
 		frame = new JFrame();
 		frame.setTitle("You Lose ☹☹☹");
 		frame.setSize(900, 600);
@@ -109,12 +125,12 @@ public class LoseScreen {
 			}
 
 			// Lightning
-			if ((int) (Math.random() * 151) == 0) {
+			if ((int) (Math.random() * 251) == 0) {
 				g.setColor(Color.WHITE);
 				g.fillRect(0, 0, 900, 600);
 			}
-			
-			//Waits Before Repainting
+
+			// Waits Before Repainting
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {

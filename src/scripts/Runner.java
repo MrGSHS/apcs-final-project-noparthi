@@ -9,11 +9,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -39,7 +43,7 @@ public class Runner {
 		private JButton holdemBtn;
 
 		private BufferedImage iconImage;
-		
+
 		private boolean mouseOverBlackJack = false;
 		private boolean mouseOverHoldem = false;
 
@@ -81,13 +85,16 @@ public class Runner {
 				blackJackBtn.addMouseListener(new MouseListener() {
 
 					@Override
-					public void mouseClicked(MouseEvent e) {}
+					public void mouseClicked(MouseEvent e) {
+					}
 
 					@Override
-					public void mousePressed(MouseEvent e) {}
+					public void mousePressed(MouseEvent e) {
+					}
 
 					@Override
-					public void mouseReleased(MouseEvent e) {}
+					public void mouseReleased(MouseEvent e) {
+					}
 
 					@Override
 					public void mouseEntered(MouseEvent e) {
@@ -124,25 +131,32 @@ public class Runner {
 							new TutorialDisplay(images);
 						} else if (reply == JOptionPane.NO_OPTION) {
 							new HoldemGame();
-						} 
-						if(reply != JOptionPane.CANCEL_OPTION && reply != JOptionPane.CLOSED_OPTION){
+						}
+						if (reply != JOptionPane.CANCEL_OPTION && reply != JOptionPane.CLOSED_OPTION) {
 							frame.dispose();
-						}		
+						}
 					}
 				});
 				holdemBtn.addMouseListener(new MouseListener() {
 					@Override
-					public void mouseClicked(MouseEvent e) {}
+					public void mouseClicked(MouseEvent e) {
+					}
+
 					@Override
-					public void mousePressed(MouseEvent e) {}
+					public void mousePressed(MouseEvent e) {
+					}
+
 					@Override
-					public void mouseReleased(MouseEvent e) {}
+					public void mouseReleased(MouseEvent e) {
+					}
+
 					@Override
 					public void mouseEntered(MouseEvent e) {
 						mouseOverHoldem = true;
 						revalidate();
 						frame.repaint();
 					}
+
 					@Override
 					public void mouseExited(MouseEvent e) {
 						mouseOverHoldem = false;
@@ -170,7 +184,7 @@ public class Runner {
 		}
 	}
 
-	protected class ImageLoader extends SwingWorker<ArrayList<BufferedImage>, String>{
+	protected class ImageLoader extends SwingWorker<ArrayList<BufferedImage>, String> {
 		@Override
 		protected ArrayList<BufferedImage> doInBackground() throws IOException {
 			for (int i = 1; i <= 17; i++) {
@@ -198,8 +212,8 @@ public class Runner {
 		init.dispose();
 		new ChooserDisplay();
 	}
-	
+
 	public static void main(String[] args) {
-		new BlackGame();
+		new Runner();
 	}
 }

@@ -7,13 +7,17 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import java.io.*;
 
 public class WinScreen {
 	private JButton newGame = new JButton("Start A New Game");
@@ -27,11 +31,22 @@ public class WinScreen {
 	}
 
 	public WinScreen() {
+		//Rain Sound
+		try {
+	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("rainSound.wav").getAbsoluteFile());
+	        Clip clip = AudioSystem.getClip();
+	        clip.open(audioInputStream);
+	        clip.loop(0);
+	    } catch(Exception ex) {
+	        ex.printStackTrace();
+	    }
+		//Icon Image
 		try {
 			iconImage = ImageIO.read(this.getClass().getResource("/menu/pokerIcon.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		//New Frame
 		frame = new JFrame();
 		frame.setTitle("You Win!!!");
 		frame.setSize(900, 600);

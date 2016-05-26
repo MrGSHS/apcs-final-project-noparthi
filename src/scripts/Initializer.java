@@ -8,13 +8,17 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-public class Initializer extends JFrame implements ActionListener{
+public class Initializer extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private BufferedImage logo;
 	private int logowait;
@@ -26,7 +30,7 @@ public class Initializer extends JFrame implements ActionListener{
 	private boolean gameNameDone;
 	private float alpha = 000f;
 	Timer timer;
-	
+
 	private BufferedImage iconImage;
 
 	public boolean getLogoDone() {
@@ -37,10 +41,10 @@ public class Initializer extends JFrame implements ActionListener{
 		return gameNameDone;
 	}
 
-	public static void main(String args[]){
+	public static void main(String args[]) {
 		new Initializer();
 	}
-	
+
 	public Initializer() {
 		// Read Images
 		try {
@@ -84,6 +88,17 @@ public class Initializer extends JFrame implements ActionListener{
 			}
 		};
 		th.start();
+
+		// Intro
+		try {
+			AudioInputStream audioInputStream = AudioSystem
+					.getAudioInputStream(new File("rainSound.wav").getAbsoluteFile());
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.loop(0);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	@Override

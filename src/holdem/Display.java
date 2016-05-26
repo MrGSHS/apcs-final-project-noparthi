@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,6 +21,9 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -201,6 +205,16 @@ public class Display {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		//Add Music
+		try {
+	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("displayMusic").getAbsoluteFile());
+	        Clip clip = AudioSystem.getClip();
+	        clip.open(audioInputStream);
+	        clip.loop(0);
+	    } catch(Exception ex) {
+	        System.out.println("Error with playing sound.");
+	        ex.printStackTrace();
+	    }
 
 		// Main Frame
 		frame = new JFrame();
