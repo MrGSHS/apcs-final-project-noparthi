@@ -67,7 +67,6 @@ public class BlackDisplay {
 		}
 	};
 	private String USERNAME;
-	private String COMP1NAME;
 
 	private ArrayList<BufferedImage> LABELS = new ArrayList<BufferedImage>() {
 		private static final long serialVersionUID = 1L;
@@ -115,8 +114,7 @@ public class BlackDisplay {
 	private JButton tip = new JButton("Tip Mr. G");
 
 	public boolean userTip = false;
-	private int extraCreditPoints = 1;
-	private int counter = 0;
+	
 	private ArrayList<BufferedImage> cardsInHand = new ArrayList<>();
 	private ArrayList<BufferedImage> computerCards = new ArrayList<>();
 
@@ -144,9 +142,6 @@ public class BlackDisplay {
 		for (String name : NAMES)
 			if (USERNAME.equals(name))
 				NAMES.remove(name);
-
-		// Set Computer Names
-		COMP1NAME = NAMES.remove((int) (Math.random() * NAMES.size()));
 
 		try {
 			dealer = ImageIO.read(getClass().getResourceAsStream("/other/dealer-face.png"));
@@ -258,26 +253,19 @@ public class BlackDisplay {
 					null);
 		}
 
-		// Draw Computer Labels
-		public void drawComputerLabels(Graphics g) {
-			g.drawImage(computer1Label, 100, 100, null);
-		}
-
 		// Add Player Names
 		public void addPlayerName(Graphics g) {
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
 			g.setColor(Color.BLACK);
 			// TODO: add name
 		}
-
-		// Add Computer Names
-		public void addComputerNames(Graphics g) {
-
-		}
-
+		
 		// Add Player Points
 		public void addPlayerPoints(Graphics g) {
-
+			g.setFont(new Font("Calibri", Font.PLAIN, 20));
+			g.setColor(new Color(5, 145, 60));
+			g.drawString(game.getUser().getBalance() + " Pts", FRAME_WIDTH / 2 - userLabel.getWidth() / 2 + 30,
+					FRAME_HEIGHT / 2 + TABLE_HEIGHT / 2 + 50);
 		}
 
 		// Add Computer Points
@@ -316,8 +304,7 @@ public class BlackDisplay {
 
 			// Add Names To Labels
 			addPlayerName(g);
-			addComputerNames(g);
-
+			
 			// Add Points To Labels
 			addPlayerPoints(g);
 			addComputerPoints(g);
@@ -332,11 +319,20 @@ public class BlackDisplay {
 
 	public void drawWinBar(Graphics g) {
 		if (game.getPayout()) {
-			try {
-				g.drawImage(ImageIO.read(getClass().getResourceAsStream("/other/bj-win.png")), 0, 525, null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (game.getUser().calc() <= 21 && game.getUser().calc() > game.getComputer().calc()) {
+				try {
+					g.drawImage(ImageIO.read(getClass().getResourceAsStream("/other/bj-win.png")), 0, 525, null);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					g.drawImage(ImageIO.read(getClass().getResourceAsStream("/other/bj-lost.png")), 0, 525, null);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		if (game.getPayout()) {
@@ -380,10 +376,9 @@ public class BlackDisplay {
 			tip.setContentAreaFilled(false);
 			tip.setBorderPainted(false);
 			tip.setForeground(Color.WHITE);
-
+			
 			frame.add(hit);
 			frame.add(stand);
-			frame.add(tip);
 		}
 
 		public void removeButtons() {
@@ -438,12 +433,14 @@ public class BlackDisplay {
 		computerCards = new ArrayList<BufferedImage>();
 		game.getUser().setStand(false);
 		game.getComputer().setStand(false);
+		if (won) {
+			game.getUser().setBalance(game.getUser().getBalance() + game.getPot());
+		}
 		game.setPot(0);
 		update();
 		game.getUser().getHand().reset();
 		game.getComputer().getHand().reset();
 		showPrompt();
-		update();
 	}
 
 	public void update() {
