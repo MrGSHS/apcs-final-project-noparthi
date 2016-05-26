@@ -3,8 +3,6 @@ package holdem;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.swing.SwingUtilities;
-
 public class HoldemGame {
 
 	private Display display;
@@ -110,6 +108,8 @@ public class HoldemGame {
 			@SuppressWarnings("static-access")
 			public void run() {
 				int numberOfRaises = 0;
+				int highestBetAmount = 0;
+				int totalActive = 0;
 				boolean check = false;
 				boolean checkRaise = false;
 				for (Player player : actionsOrder) {
@@ -166,8 +166,6 @@ public class HoldemGame {
 					run();
 				}
 				//If MaxBet Doesn't Equal All Of The Bets, Run Another Rotation
-				int highestBetAmount = 0;
-				int totalActive = 0;
 				for (Player p : getActionsOrder()) {
 					if(!p.isFolded()){
 						if (p.getBetAmount() > highestBetAmount) {
