@@ -49,7 +49,7 @@ public class Initializer extends JFrame implements ActionListener {
 		// Add Music
 		try {
 			AudioInputStream audioInputStream = AudioSystem
-					.getAudioInputStream(new File("mysteriousIntroMusic.wav").getAbsoluteFile());
+					.getAudioInputStream(new File("introMusic.wav").getAbsoluteFile());
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			clip.start();

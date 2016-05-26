@@ -84,7 +84,6 @@ public class BlackDisplay {
 		}
 	};
 	private BufferedImage userLabel = LABELS.remove((int) (Math.random() * LABELS.size()));
-	private BufferedImage computer1Label = LABELS.remove((int) (Math.random() * LABELS.size()));
 
 	private final int CARD_WIDTH = 55;
 	private final int CARD_HEIGHT = 80;
@@ -323,14 +322,12 @@ public class BlackDisplay {
 				try {
 					g.drawImage(ImageIO.read(getClass().getResourceAsStream("/other/bj-win.png")), 0, 525, null);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else {
 				try {
 					g.drawImage(ImageIO.read(getClass().getResourceAsStream("/other/bj-lost.png")), 0, 525, null);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

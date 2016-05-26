@@ -209,7 +209,7 @@ public class Display {
 		// Add Music
 		try {
 			AudioInputStream audioInputStream = AudioSystem
-					.getAudioInputStream(new File("dubstepMusic.wav").getAbsoluteFile());
+					.getAudioInputStream(new File("displayMusic.wav").getAbsoluteFile());
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			clip.loop(clip.LOOP_CONTINUOUSLY);

@@ -73,7 +73,7 @@ public class Runner {
 				// Add Music
 				try {
 					AudioInputStream audioInputStream = AudioSystem
-							.getAudioInputStream(new File("mysteriousIntroMusic.wav").getAbsoluteFile());
+							.getAudioInputStream(new File("chooserDisplayMusic.wav").getAbsoluteFile());
 					Clip clip = AudioSystem.getClip();
 					clip.open(audioInputStream);
 					clip.start();
@@ -222,6 +222,6 @@ public class Runner {
 	}
 
 	public static void main(String[] args) {
-		new HoldemGame();
+		new Runner();
 	}
 }

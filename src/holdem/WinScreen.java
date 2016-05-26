@@ -35,7 +35,7 @@ public class WinScreen {
 		// Rain Sound
 		try {
 			AudioInputStream audioInputStream = AudioSystem
-					.getAudioInputStream(new File("trumpetsMusic.wav").getAbsoluteFile());
+					.getAudioInputStream(new File("trumpetSound.wav").getAbsoluteFile());
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			clip.loop(clip.LOOP_CONTINUOUSLY);
