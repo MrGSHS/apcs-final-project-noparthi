@@ -36,10 +36,6 @@ public class LoseScreen {
 	private JButton exit = new JButton("Exit");
 	private BufferedImage iconImage;
 
-	public static void main(String[] args) {
-		new LoseScreen();
-	}
-
 	@SuppressWarnings("static-access")
 	public LoseScreen() {
 		// Rain Sound

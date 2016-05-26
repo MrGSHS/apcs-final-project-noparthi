@@ -50,10 +50,6 @@ public class Initializer extends JFrame implements ActionListener {
 		return gameNameDone;
 	}
 
-	public static void main(String args[]) {
-		new Initializer();
-	}
-
 	public Initializer() {
 		// Add Music
 		try {

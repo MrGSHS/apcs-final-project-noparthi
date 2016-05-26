@@ -34,10 +34,6 @@ public class WinScreen {
 	private JFrame frame;
 	private BufferedImage iconImage;
 
-	public static void main(String args[]) {
-		new WinScreen();
-	}
-
 	@SuppressWarnings("static-access")
 	public WinScreen() {
 		// Rain Sound
