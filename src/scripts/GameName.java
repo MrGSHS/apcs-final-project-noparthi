@@ -60,9 +60,4 @@ public class GameName extends JFrame implements ActionListener {
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         g2d.drawImage(gameName, 0, 0, 900, 600, null);
     }
-	
-	public static void main(String args []){
-		new GameName();
-	}
-	
 }
