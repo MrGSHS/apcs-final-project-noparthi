@@ -188,7 +188,7 @@ public class BlackDisplay {
 
 		
 		panel = new JPanel();
-		lbl = new JLabel("Enter initial bet: ");
+		lbl = new JLabel("Enter initial bet: (default is 100) ");
 		txt = new JTextField(10);
 		panel.add(lbl);
 		panel.add(txt);
@@ -198,11 +198,11 @@ public class BlackDisplay {
 			if (!txt.getText().trim().equals("")) {
 				Integer r1;
 				r1 = Integer.parseInt(txt.getText());
-				game.getUser().setBalance(r1);
+				game.setPot(r1);
 			} else
-				USERNAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+				game.setPot(100);
 		} else {
-			System.exit(0);
+			game.setPot(100);
 		}
 		// WinScreen();
 	}
@@ -305,7 +305,11 @@ public class BlackDisplay {
 			g.fillRoundRect(FRAME_WIDTH / 2 - 70, FRAME_HEIGHT / 2 + CARD_WIDTH - 55, 140, 20, 15, 15);
 			g.setColor(new Color(246, 246, 246));
 			g.setFont(new Font("Calibri", Font.BOLD, 16));
+			String potSize = "POT: " + game.getPot() + " Pts";
+			int potSizeWidth = g.getFontMetrics().stringWidth(potSize);
+			g.drawString(potSize, FRAME_WIDTH / 2 - (int) (potSizeWidth / 2), FRAME_HEIGHT / 2 + CARD_WIDTH - 40);
 		}
+	
 
 		// Add Bets
 		public void addBets(Graphics g) {
@@ -414,7 +418,7 @@ public class BlackDisplay {
 	private void showPrompt(){
 		String[] options = { "OK" };
 		JPanel panel = new JPanel();
-		JLabel lbl = new JLabel("Enter initial bet: ");
+		JLabel lbl = new JLabel("Enter initial bet: (default is 100)");
 		JTextField txt = new JTextField(10);
 		panel.add(lbl);
 		panel.add(txt);
@@ -424,18 +428,28 @@ public class BlackDisplay {
 			if (!txt.getText().trim().equals("")) {
 				Integer r1;
 				r1 = Integer.parseInt(txt.getText());
-				game.getUser().setBalance(r1);
-			} else
-				USERNAME = NAMES.remove((int) (Math.random() * NAMES.size()));
+				game.setPot(r1);
+				game.start();
+			} else {
+				game.setPot(100);
+				game.start();
+			}
 		} else {
-			System.exit(0);
+			game.setPot(100);
+			game.start();
 		}
 	}
 	public void restart(boolean won) {
 		cardsInHand = new ArrayList<BufferedImage>();
 		computerCards = new ArrayList<BufferedImage>();
+		game.getUser().setStand(false);
+		game.getComputer().setStand(false);
+		game.setPot(0);
 		update();
+		game.getUser().getHand().reset();
+		game.getComputer().getHand().reset();
 		showPrompt();
+		update();
 	}
 
 	public void update() {

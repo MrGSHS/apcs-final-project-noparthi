@@ -9,9 +9,10 @@ public class BlackGame {
 	private String cont = "y";
 	private BlackPlayer user = new BlackPlayer();
 	private BlackPlayer computer = new BlackComp();
-
+	private int pot;
 	public BlackRound getRound() {
 		return round;
+		
 	}
 
 	public BlackPlayer getUser() {
@@ -25,6 +26,13 @@ public class BlackGame {
 	public BlackGame() {
 		display = new BlackDisplay(this);
 		start();
+	}
+	
+	public int getPot(){
+		return 2*pot;
+	}
+	public void setPot(int pot){
+		this.pot=user.makeBet(pot);
 	}
 
 	public void start() {
@@ -48,11 +56,11 @@ public class BlackGame {
 							e.printStackTrace();
 						}
 						display.update();
-						
 					}
+					System.out.println("Computer total: " + computer.calc());
+					System.out.println("Player total: " + user.calc());
+					display.restart(false);
 				}
-				System.out.println("Computer total: " + computer.calc());
-				System.out.println("Player total: " + user.calc());
 			}
 		}).start();
 	}

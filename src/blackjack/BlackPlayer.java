@@ -6,18 +6,19 @@ public class BlackPlayer {
 	private int record = 0;
 	private int balance;
 	private boolean stand = false;
-	
+
 	private BlackGame game;
-	
+
 	public BlackPlayer() {
 		hand = new BlackHand();
 		bet = 0;
 		balance = 2000;
 	}
 
-	public BlackGame getGame(){
+	public BlackGame getGame() {
 		return game;
 	}
+
 	// computer constructer
 	public BlackPlayer(int money, BlackGame game) {
 		this.game = game;
@@ -29,10 +30,10 @@ public class BlackPlayer {
 	public void setStand(boolean b) {
 		stand = b;
 	}
+
 	public boolean getStand() {
 		return stand;
 	}
-
 
 	// sees if over 21
 	public boolean isIn() {
@@ -93,10 +94,11 @@ public class BlackPlayer {
 			balance -= money;
 			bet = money;
 			return money;
-
-		} else
-			return 0;
-
+		} else {
+			bet = balance;
+			balance = 0;
+			return bet;
+		}
 	}
 
 	// adds betted amount
