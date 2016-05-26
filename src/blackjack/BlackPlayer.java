@@ -3,7 +3,6 @@ package blackjack;
 public class BlackPlayer {
 	private BlackHand hand;
 	private int bet;
-	private int record = 0;
 	private int balance;
 	private boolean stand = false;
 

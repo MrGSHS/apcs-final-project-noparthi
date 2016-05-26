@@ -207,7 +207,7 @@ public class Display {
 		}
 		//Add Music
 		try {
-	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("displayMusic").getAbsoluteFile());
+	        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("displayMusic.wav").getAbsoluteFile());
 	        Clip clip = AudioSystem.getClip();
 	        clip.open(audioInputStream);
 	        clip.loop(0);
