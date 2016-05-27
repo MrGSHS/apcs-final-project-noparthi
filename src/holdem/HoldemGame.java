@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
-* The HoldemGame class contains functions
-* needed to run the POKER part of the project. 
-* 
-* @author  Jerry Zhou, Jonathan Xue
-* @version 1.0
-* @since   2016-5-26
-*/
-
+ * The HoldemGame class contains functions needed to run the POKER part of the
+ * project.
+ * 
+ * @author Jerry Zhou, Jonathan Xue
+ * @version 1.0
+ * @since 2016-5-26
+ */
 
 public class HoldemGame {
 
@@ -133,7 +132,11 @@ public class HoldemGame {
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							}
-							player.takeAction();
+							if (player.isAllIn()) {
+								player.check();
+							} else {
+								player.takeAction();
+							}
 							player.setIsTurn(false);
 							if (getRound().moveOn()) {
 								break;
@@ -175,9 +178,9 @@ public class HoldemGame {
 				if (checkRaise) {
 					run();
 				}
-				//If MaxBet Doesn't Equal All Of The Bets, Run Another Rotation
+				// If MaxBet Doesn't Equal All Of The Bets, Run Another Rotation
 				for (Player p : getActionsOrder()) {
-					if(!p.isFolded()){
+					if (!p.isFolded()) {
 						if (p.getBetAmount() > highestBetAmount) {
 							highestBetAmount = p.getBetAmount();
 						}
@@ -190,7 +193,7 @@ public class HoldemGame {
 							totalActive--;
 					}
 				}
-				if(totalActive!=0){
+				if (totalActive != 0) {
 					run();
 				}
 			}
@@ -487,6 +490,7 @@ public class HoldemGame {
 			p.setFirstAction(false);
 			p.setBigBlind(false);
 			p.setSmallBlind(false);
+			p.setIsAllIn(false);
 		}
 		resetPlayerBetAmount();
 		table = new Table();

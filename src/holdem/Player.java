@@ -29,12 +29,13 @@ public class Player {
 	private boolean checkBoolean = false;
 	private boolean raiseBoolean = false;
 	private boolean callBoolean = false;
+	private boolean isAllIn = false;
 	private boolean isTurn = false;
 
 	public Player(HoldemGame game, int position) {
 		this.game = game;
 		this.position = position;
-		points = 100000;
+		points = 1000;
 	}
 
 	// Overridden By Computer
@@ -47,6 +48,10 @@ public class Player {
 
 	public boolean isTurn() {
 		return isTurn;
+	}
+	
+	public boolean isAllIn(){
+		return isAllIn;
 	}
 
 	public boolean getCheckBoolean() {
@@ -107,6 +112,10 @@ public class Player {
 
 	public void setIsTurn(boolean sit) {
 		isTurn = sit;
+	}
+	
+	public void setIsAllIn(boolean siai){
+		isAllIn = siai;
 	}
 
 	public void setPoints(int num) {
@@ -185,6 +194,9 @@ public class Player {
 		callBoolean = true;
 		isTurn = false;
 		firstAction = false;
+		if(points <= 0){
+			isAllIn = true;
+		}
 	}
 
 	// Raise Method
@@ -197,6 +209,7 @@ public class Player {
 		if (amt >= game.getRound().getMinBet()) {
 			// All-In
 			if (amt >= points) {
+				isAllIn = true;
 				betAmount = points;
 				game.getRound().setPot(game.getRound().getPot() + points);
 				pointsInvested += points;

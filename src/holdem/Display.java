@@ -335,10 +335,10 @@ public class Display {
 					try {
 						String card1Path = "/cards/"
 								+ game.getPlayers().get(i).getCurrentHand()[0].getNumber().toString() + "_of_"
-								+  game.getPlayers().get(i).getCurrentHand()[0].getSuiteValue() + ".jpg";
+								+ game.getPlayers().get(i).getCurrentHand()[0].getSuiteValue() + ".jpg";
 						String card2Path = "/cards/"
 								+ game.getPlayers().get(i).getCurrentHand()[1].getNumber().toString() + "_of_"
-								+  game.getPlayers().get(i).getCurrentHand()[1].getSuiteValue() + ".jpg";
+								+ game.getPlayers().get(i).getCurrentHand()[1].getSuiteValue() + ".jpg";
 						faceUpComputerCards.add(ImageIO.read(getClass().getResourceAsStream(card1Path)));
 						faceUpComputerCards.add(ImageIO.read(getClass().getResourceAsStream(card2Path)));
 					} catch (IOException e) {
@@ -737,7 +737,7 @@ public class Display {
 			g.setColor(Color.BLACK);
 
 			g.drawString(payoutString, ((FRAME_WIDTH / 2 - BUFFER - 15) + (FRAME_WIDTH / 2 + 15)) / 2
-					- g.getFontMetrics().stringWidth(payoutString)/2, 20);
+					- g.getFontMetrics().stringWidth(payoutString) / 2, 20);
 		}
 
 		// Actual Button Removal
@@ -745,12 +745,16 @@ public class Display {
 			if (!game.getUser().isTurn()) {
 				removeAllButtons();
 			} else if (!game.getUser().isFolded()) {
-				addAllButtons();
-				// Removes Check If Necessary
-				if (game.getMaxBetAmount() - game.getUser().getBetAmount() == 0) {
-					addCheck();
+				if (game.getUser().isAllIn()) {
+					removeAllIn();
 				} else {
-					removeCheck();
+					addAllButtons();
+					// Removes Check If Necessary
+					if (game.getMaxBetAmount() - game.getUser().getBetAmount() == 0) {
+						addCheck();
+					} else {
+						removeCheck();
+					}
 				}
 			}
 			if (!game.getUser().isTurn()) {
@@ -828,7 +832,7 @@ public class Display {
 			}
 
 			// Lose Screen
-			if (game.getActionsOrder().size() == 1 && game.getActionsOrder().get(0) != game.getUser()) {
+			if (game.getUser().getPoints() <= 0) {
 				new LoseScreen();
 				frame.dispose();
 			}
@@ -1015,6 +1019,14 @@ public class Display {
 	public void removeAllButtons() {
 		fold.setVisible(false);
 		check.setVisible(false);
+		call.setVisible(false);
+		raise.setVisible(false);
+	}
+
+	// Remove Buttons For All In
+	public void removeAllIn() {
+		fold.setVisible(false);
+		check.setVisible(true);
 		call.setVisible(false);
 		raise.setVisible(false);
 	}
