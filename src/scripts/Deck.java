@@ -31,7 +31,8 @@ public class Deck {
 
 	// Deals Top Card In The Deck
 	public Card deal() {
-		return deck.remove(0);
+		Card removed = deck.remove(0);
+		return removed;
 	}
 	
 	public ArrayList<Card> getDeck(){

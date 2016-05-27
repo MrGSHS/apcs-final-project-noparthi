@@ -47,7 +47,6 @@ public class GameName extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		alpha += 0.001f;
-		System.out.println(alpha);
 		if (alpha > .125) {
 			timer.stop();
 			gameNameDone = true;

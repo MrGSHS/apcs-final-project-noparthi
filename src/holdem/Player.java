@@ -3,13 +3,12 @@ package holdem;
 import scripts.Card;
 
 /**
-* This player class contains actions 
-* and variables that any player uses.
-* 
-* @author  Jerry Zhou, Jonathan Xue
-* @version 1.0
-* @since   2016-5-26
-*/
+ * This player class contains actions and variables that any player uses.
+ * 
+ * @author Jerry Zhou, Jonathan Xue
+ * @version 1.0
+ * @since 2016-5-26
+ */
 
 public class Player {
 
@@ -20,7 +19,7 @@ public class Player {
 	private int points;
 	private int betAmount;
 	private int pointsInvested;
-	
+
 	private String name;
 
 	private boolean folded;
@@ -38,15 +37,15 @@ public class Player {
 		points = 100000;
 	}
 
-	//Overridden By Computer
+	// Overridden By Computer
 	public void takeAction() {
 	}
 
-	public String getName(){
+	public String getName() {
 		return name;
 	}
-	
-	public boolean isTurn(){
+
+	public boolean isTurn() {
 		return isTurn;
 	}
 
@@ -98,15 +97,15 @@ public class Player {
 		return folded;
 	}
 
-	public void setName(String name){
+	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public void setFirstAction(boolean sfa) {
 		firstAction = sfa;
 	}
 
-	public void setIsTurn(boolean sit){
+	public void setIsTurn(boolean sit) {
 		isTurn = sit;
 	}
 
@@ -177,7 +176,7 @@ public class Player {
 		game.getRound().setPot(game.getRound().getPot() + maxBet);
 
 		// Sets Points Invested, BetAmount And Removes Points
-		betAmount +=maxBet;
+		betAmount += maxBet;
 		pointsInvested += maxBet;
 		points -= maxBet;
 

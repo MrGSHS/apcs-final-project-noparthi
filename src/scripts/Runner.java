@@ -78,6 +78,7 @@ public class Runner {
 
 			private static final long serialVersionUID = 1L;
 
+			@SuppressWarnings("static-access")
 			public ChooserPanel() {
 				// Add Music
 				try {
@@ -85,7 +86,7 @@ public class Runner {
 							.getAudioInputStream(new File("chooserDisplayMusic.wav").getAbsoluteFile());
 					Clip clip = AudioSystem.getClip();
 					clip.open(audioInputStream);
-					clip.start();
+					clip.loop(clip.LOOP_CONTINUOUSLY);;
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}

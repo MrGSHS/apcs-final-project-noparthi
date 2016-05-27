@@ -35,14 +35,13 @@ import javax.swing.SwingUtilities;
 import scripts.Card;
 
 /**
-* This display class contains all the display
-* information and functions needed for POKER. 
-* 
-* @author  Jerry Zhou, Jonathan Xue
-* @version 1.0
-* @since   2016-5-26
-*/
-
+ * This display class contains all the display information and functions needed
+ * for POKER.
+ * 
+ * @author Jerry Zhou, Jonathan Xue
+ * @version 1.0
+ * @since 2016-5-26
+ */
 
 public class Display {
 
@@ -257,7 +256,6 @@ public class Display {
 		frame.add(actionsPanel);
 		frame.add(tablePanel);
 		frame.setVisible(true);
-		// WinScreen();
 	}
 
 	public JFrame getFrame() {
@@ -337,10 +335,10 @@ public class Display {
 					try {
 						String card1Path = "/cards/"
 								+ game.getPlayers().get(i).getCurrentHand()[0].getNumber().toString() + "_of_"
-								+ game.getUser().getCurrentHand()[0].getSuiteValue() + ".jpg";
+								+  game.getPlayers().get(i).getCurrentHand()[0].getSuiteValue() + ".jpg";
 						String card2Path = "/cards/"
 								+ game.getPlayers().get(i).getCurrentHand()[1].getNumber().toString() + "_of_"
-								+ game.getUser().getCurrentHand()[1].getSuiteValue() + ".jpg";
+								+  game.getPlayers().get(i).getCurrentHand()[1].getSuiteValue() + ".jpg";
 						faceUpComputerCards.add(ImageIO.read(getClass().getResourceAsStream(card1Path)));
 						faceUpComputerCards.add(ImageIO.read(getClass().getResourceAsStream(card2Path)));
 					} catch (IOException e) {
@@ -689,7 +687,6 @@ public class Display {
 					g.setColor(Color.BLACK);
 					g.drawString(tipString, FRAME_WIDTH / 2 - g.getFontMetrics().stringWidth(tipString), 20);
 					counter++;
-					System.out.println(g.getFontMetrics().stringWidth(tipString));
 				} else {
 					extraCreditPoints++;
 					counter = 0;
@@ -726,22 +723,21 @@ public class Display {
 			if (numPlayersActive == 1) {
 				payoutString = game.getStrongestPlayers().get(0).getName() + " Wins!";
 			}
-
-			int strWidth = BUFFER;
+			;
 			// Draws String
 			g.setColor(Color.WHITE);
-			g.fillOval(FRAME_WIDTH / 2 - strWidth - 15, -15, strWidth + 30, 60);
+			g.fillOval(FRAME_WIDTH / 2 - BUFFER - 15, -15, BUFFER + 30, 60);
 
 			Polygon speechBubbleTail = new Polygon();
-			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - strWidth / 2 + 30, 40);
-			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - strWidth / 2 + 50, 20);
-			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - strWidth / 2 + 95, 70);
+			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - BUFFER / 2 + 30, 40);
+			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - BUFFER / 2 + 50, 20);
+			speechBubbleTail.addPoint(FRAME_WIDTH / 2 - BUFFER / 2 + 95, 70);
 			g.fillPolygon(speechBubbleTail);
 
 			g.setColor(Color.BLACK);
 
-			g.drawString(payoutString, ((FRAME_WIDTH / 2 - strWidth - 15) + (FRAME_WIDTH / 2 + 15)) / 2 - strWidth / 2,
-					20);
+			g.drawString(payoutString, ((FRAME_WIDTH / 2 - BUFFER - 15) + (FRAME_WIDTH / 2 + 15)) / 2
+					- g.getFontMetrics().stringWidth(payoutString)/2, 20);
 		}
 
 		// Actual Button Removal
