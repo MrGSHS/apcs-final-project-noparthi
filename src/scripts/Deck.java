@@ -1,7 +1,6 @@
 package scripts;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 /**
 * This class contains information for 

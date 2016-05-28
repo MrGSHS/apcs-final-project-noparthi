@@ -1,7 +1,6 @@
 package holdem;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * The HoldemGame class contains functions needed to run the POKER part of the
